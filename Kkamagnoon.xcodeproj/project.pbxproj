@@ -16,6 +16,9 @@
 		0464F9DA27A578AE0054FD83 /* KkamagnoonTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0464F9D927A578AE0054FD83 /* KkamagnoonTests.swift */; };
 		0464F9E427A578AE0054FD83 /* KkamagnoonUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0464F9E327A578AE0054FD83 /* KkamagnoonUITests.swift */; };
 		0464F9E627A578AE0054FD83 /* KkamagnoonUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0464F9E527A578AE0054FD83 /* KkamagnoonUITestsLaunchTests.swift */; };
+		4772DCC31D58F618A0C97067 /* Pods_KkamagnoonTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BEA8A731D028EF2AE2C2F844 /* Pods_KkamagnoonTests.framework */; };
+		59262A405FB52911AA2ACCF1 /* Pods_Kkamagnoon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 21B18F934232A8239C156F77 /* Pods_Kkamagnoon.framework */; };
+		DA3759104807120025675467 /* Pods_Kkamagnoon_KkamagnoonUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D320D1CF105BFC278E7F0256 /* Pods_Kkamagnoon_KkamagnoonUITests.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +52,15 @@
 		0464F9DF27A578AE0054FD83 /* KkamagnoonUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = KkamagnoonUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		0464F9E327A578AE0054FD83 /* KkamagnoonUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KkamagnoonUITests.swift; sourceTree = "<group>"; };
 		0464F9E527A578AE0054FD83 /* KkamagnoonUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KkamagnoonUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		18CC5DE48442606CD4F34580 /* Pods-Kkamagnoon.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Kkamagnoon.release.xcconfig"; path = "Target Support Files/Pods-Kkamagnoon/Pods-Kkamagnoon.release.xcconfig"; sourceTree = "<group>"; };
+		21B18F934232A8239C156F77 /* Pods_Kkamagnoon.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Kkamagnoon.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		24838BE1B7D5491B5C97CEAF /* Pods-KkamagnoonTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KkamagnoonTests.release.xcconfig"; path = "Target Support Files/Pods-KkamagnoonTests/Pods-KkamagnoonTests.release.xcconfig"; sourceTree = "<group>"; };
+		3CAD58F2BFA2515C25236C96 /* Pods-Kkamagnoon-KkamagnoonUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Kkamagnoon-KkamagnoonUITests.release.xcconfig"; path = "Target Support Files/Pods-Kkamagnoon-KkamagnoonUITests/Pods-Kkamagnoon-KkamagnoonUITests.release.xcconfig"; sourceTree = "<group>"; };
+		A986D28ED4D456322F64EB2A /* Pods-KkamagnoonTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KkamagnoonTests.debug.xcconfig"; path = "Target Support Files/Pods-KkamagnoonTests/Pods-KkamagnoonTests.debug.xcconfig"; sourceTree = "<group>"; };
+		BB0DF68CBDDA26E710E01D6C /* Pods-Kkamagnoon-KkamagnoonUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Kkamagnoon-KkamagnoonUITests.debug.xcconfig"; path = "Target Support Files/Pods-Kkamagnoon-KkamagnoonUITests/Pods-Kkamagnoon-KkamagnoonUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		BEA8A731D028EF2AE2C2F844 /* Pods_KkamagnoonTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_KkamagnoonTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		C1B9332CCBFC0C9DE0C86E33 /* Pods-Kkamagnoon.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Kkamagnoon.debug.xcconfig"; path = "Target Support Files/Pods-Kkamagnoon/Pods-Kkamagnoon.debug.xcconfig"; sourceTree = "<group>"; };
+		D320D1CF105BFC278E7F0256 /* Pods_Kkamagnoon_KkamagnoonUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Kkamagnoon_KkamagnoonUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,6 +68,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				59262A405FB52911AA2ACCF1 /* Pods_Kkamagnoon.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -63,6 +76,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4772DCC31D58F618A0C97067 /* Pods_KkamagnoonTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -70,6 +84,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DA3759104807120025675467 /* Pods_Kkamagnoon_KkamagnoonUITests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -83,6 +98,8 @@
 				0464F9D827A578AE0054FD83 /* KkamagnoonTests */,
 				0464F9E227A578AE0054FD83 /* KkamagnoonUITests */,
 				0464F9C027A578AA0054FD83 /* Products */,
+				2944082E5D2EC83FE904B05C /* Pods */,
+				DD0640112B4CEF6C1359FAFB /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -127,6 +144,29 @@
 			path = KkamagnoonUITests;
 			sourceTree = "<group>";
 		};
+		2944082E5D2EC83FE904B05C /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				C1B9332CCBFC0C9DE0C86E33 /* Pods-Kkamagnoon.debug.xcconfig */,
+				18CC5DE48442606CD4F34580 /* Pods-Kkamagnoon.release.xcconfig */,
+				BB0DF68CBDDA26E710E01D6C /* Pods-Kkamagnoon-KkamagnoonUITests.debug.xcconfig */,
+				3CAD58F2BFA2515C25236C96 /* Pods-Kkamagnoon-KkamagnoonUITests.release.xcconfig */,
+				A986D28ED4D456322F64EB2A /* Pods-KkamagnoonTests.debug.xcconfig */,
+				24838BE1B7D5491B5C97CEAF /* Pods-KkamagnoonTests.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
+		DD0640112B4CEF6C1359FAFB /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				21B18F934232A8239C156F77 /* Pods_Kkamagnoon.framework */,
+				D320D1CF105BFC278E7F0256 /* Pods_Kkamagnoon_KkamagnoonUITests.framework */,
+				BEA8A731D028EF2AE2C2F844 /* Pods_KkamagnoonTests.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -134,9 +174,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 0464F9E927A578AE0054FD83 /* Build configuration list for PBXNativeTarget "Kkamagnoon" */;
 			buildPhases = (
+				084DC6736E77E2F561BBA9EC /* [CP] Check Pods Manifest.lock */,
 				0464F9BB27A578AA0054FD83 /* Sources */,
 				0464F9BC27A578AA0054FD83 /* Frameworks */,
 				0464F9BD27A578AA0054FD83 /* Resources */,
+				04856F7427A6A8240081D1D8 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -151,6 +193,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 0464F9EC27A578AE0054FD83 /* Build configuration list for PBXNativeTarget "KkamagnoonTests" */;
 			buildPhases = (
+				EACDCC517B22494FEBCB20A8 /* [CP] Check Pods Manifest.lock */,
 				0464F9D127A578AE0054FD83 /* Sources */,
 				0464F9D227A578AE0054FD83 /* Frameworks */,
 				0464F9D327A578AE0054FD83 /* Resources */,
@@ -169,6 +212,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 0464F9EF27A578AE0054FD83 /* Build configuration list for PBXNativeTarget "KkamagnoonUITests" */;
 			buildPhases = (
+				9E666BFA9AEEB1AA0B4151EC /* [CP] Check Pods Manifest.lock */,
 				0464F9DB27A578AE0054FD83 /* Sources */,
 				0464F9DC27A578AE0054FD83 /* Frameworks */,
 				0464F9DD27A578AE0054FD83 /* Resources */,
@@ -252,6 +296,92 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		04856F7427A6A8240081D1D8 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "${PODS_ROOT}/SwiftLint/swiftlint\n";
+		};
+		084DC6736E77E2F561BBA9EC /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Kkamagnoon-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		9E666BFA9AEEB1AA0B4151EC /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Kkamagnoon-KkamagnoonUITests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		EACDCC517B22494FEBCB20A8 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-KkamagnoonTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		0464F9BB27A578AA0054FD83 /* Sources */ = {
@@ -434,6 +564,7 @@
 		};
 		0464F9EA27A578AE0054FD83 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = C1B9332CCBFC0C9DE0C86E33 /* Pods-Kkamagnoon.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -462,6 +593,7 @@
 		};
 		0464F9EB27A578AE0054FD83 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 18CC5DE48442606CD4F34580 /* Pods-Kkamagnoon.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -490,6 +622,7 @@
 		};
 		0464F9ED27A578AE0054FD83 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = A986D28ED4D456322F64EB2A /* Pods-KkamagnoonTests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -510,6 +643,7 @@
 		};
 		0464F9EE27A578AE0054FD83 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 24838BE1B7D5491B5C97CEAF /* Pods-KkamagnoonTests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -530,6 +664,7 @@
 		};
 		0464F9F027A578AE0054FD83 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = BB0DF68CBDDA26E710E01D6C /* Pods-Kkamagnoon-KkamagnoonUITests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
@@ -548,6 +683,7 @@
 		};
 		0464F9F127A578AE0054FD83 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3CAD58F2BFA2515C25236C96 /* Pods-Kkamagnoon-KkamagnoonUITests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
