@@ -1,0 +1,4 @@
+excluded:
+- Pods
+- Kkamagnoon/AppDelegate.swift
+- Kkamagnoon/SceneDelegate.swift
