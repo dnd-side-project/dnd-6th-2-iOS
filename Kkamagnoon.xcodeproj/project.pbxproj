@@ -116,6 +116,11 @@
 		0464F9C127A578AA0054FD83 /* Kkamagnoon */ = {
 			isa = PBXGroup;
 			children = (
+				04D0637527AEC251005EB16C /* Service */,
+				04D0637427AEC0F6005EB16C /* View */,
+				04D0637327AEC0E6005EB16C /* ViewController */,
+				04D0637227AEC0D9005EB16C /* ViewModel */,
+				04D0637127AEC0C0005EB16C /* Model */,
 				0464F9C227A578AA0054FD83 /* AppDelegate.swift */,
 				0464F9C427A578AA0054FD83 /* SceneDelegate.swift */,
 				0464F9C627A578AA0054FD83 /* ViewController.swift */,
@@ -142,6 +147,41 @@
 				0464F9E527A578AE0054FD83 /* KkamagnoonUITestsLaunchTests.swift */,
 			);
 			path = KkamagnoonUITests;
+			sourceTree = "<group>";
+		};
+		04D0637127AEC0C0005EB16C /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		04D0637227AEC0D9005EB16C /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		04D0637327AEC0E6005EB16C /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		04D0637427AEC0F6005EB16C /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		04D0637527AEC251005EB16C /* Service */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Service;
 			sourceTree = "<group>";
 		};
 		2944082E5D2EC83FE904B05C /* Pods */ = {
