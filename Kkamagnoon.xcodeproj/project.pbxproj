@@ -116,14 +116,12 @@
 		0464F9C127A578AA0054FD83 /* Kkamagnoon */ = {
 			isa = PBXGroup;
 			children = (
+				04D0637627AEC30A005EB16C /* Delegate */,
 				04D0637527AEC251005EB16C /* Service */,
 				04D0637427AEC0F6005EB16C /* View */,
 				04D0637327AEC0E6005EB16C /* ViewController */,
 				04D0637227AEC0D9005EB16C /* ViewModel */,
 				04D0637127AEC0C0005EB16C /* Model */,
-				0464F9C227A578AA0054FD83 /* AppDelegate.swift */,
-				0464F9C427A578AA0054FD83 /* SceneDelegate.swift */,
-				0464F9C627A578AA0054FD83 /* ViewController.swift */,
 				0464F9C827A578AA0054FD83 /* Main.storyboard */,
 				0464F9CB27A578AE0054FD83 /* Assets.xcassets */,
 				0464F9CD27A578AE0054FD83 /* LaunchScreen.storyboard */,
@@ -166,6 +164,7 @@
 		04D0637327AEC0E6005EB16C /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
+				0464F9C627A578AA0054FD83 /* ViewController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -182,6 +181,15 @@
 			children = (
 			);
 			path = Service;
+			sourceTree = "<group>";
+		};
+		04D0637627AEC30A005EB16C /* Delegate */ = {
+			isa = PBXGroup;
+			children = (
+				0464F9C227A578AA0054FD83 /* AppDelegate.swift */,
+				0464F9C427A578AA0054FD83 /* SceneDelegate.swift */,
+			);
+			path = Delegate;
 			sourceTree = "<group>";
 		};
 		2944082E5D2EC83FE904B05C /* Pods */ = {
