@@ -1,16 +1,42 @@
 PODS:
+  - Alamofire (5.5.0)
+  - RxAlamofire (5.7.1):
+    - RxAlamofire/Core (= 5.7.1)
+  - RxAlamofire/Core (5.7.1):
+    - Alamofire (~> 5.4)
+    - RxSwift (~> 5.1)
+  - RxCocoa (5.1.3):
+    - RxRelay (~> 5)
+    - RxSwift (~> 5)
+  - RxRelay (5.1.3):
+    - RxSwift (~> 5)
+  - RxSwift (5.1.3)
   - SwiftLint (0.46.2)
 
 DEPENDENCIES:
+  - Alamofire (~> 5.2)
+  - RxAlamofire (~> 5.2)
+  - RxCocoa (~> 5.1)
+  - RxSwift (~> 5.1)
   - SwiftLint
 
 SPEC REPOS:
   trunk:
+    - Alamofire
+    - RxAlamofire
+    - RxCocoa
+    - RxRelay
+    - RxSwift
     - SwiftLint
 
 SPEC CHECKSUMS:
+  Alamofire: 1c4fb5369c3fe93d2857c780d8bbe09f06f97e7c
+  RxAlamofire: 8e144c62dcc01d68dcb366bfc542eb6dd46bab78
+  RxCocoa: e2ed092d5432e4296aa818021d27de4090ac0354
+  RxRelay: 5a18c2eb2d68326ebaf0112f80d837ae41b92b97
+  RxSwift: 915abbdfb62214aa89ccd0b194d44fb478019b27
   SwiftLint: 6bc52a21f0fd44cab9aa2dc8e534fb9f5e3ec507
 
-PODFILE CHECKSUM: bff9d8982b899134e2548f67682baa1e60120361
+PODFILE CHECKSUM: d2ce7862d90aa453b3caed241b005c90dde69c23
 
 COCOAPODS: 1.11.2

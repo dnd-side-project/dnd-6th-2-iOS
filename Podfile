@@ -6,6 +6,10 @@ target 'Kkamagnoon' do
   use_frameworks!
 
   pod 'SwiftLint'
+  pod 'Alamofire', '~> 5.2'
+  pod 'RxSwift', '~> 5.1'
+  pod 'RxCocoa', '~> 5.1'
+  pod 'RxAlamofire', '~> 5.2'
 
   # Pods for Kkamagnoon
 
