@@ -10,58 +10,27 @@ import RxSwift
 import RxCocoa
 
 class FeedViewController: UIViewController {
+//
+//    let wholeFeedButton: UIButton = UIButton()
+//    let subscribeFeedButton: UIButton = UIButton()
 
-    let wholeFeedButton: UIButton = UIButton()
-    let subscribeFeedButton: UIButton = UIButton()
-
-    let searchButton: UIButton = UIButton()
-    let bellButton: UIButton = UIButton()
+    lazy var searchButton: UIButton = UIButton()
+    lazy var bellButton: UIButton = UIButton()
 
     var filterView: UICollectionView!
     
-    let sortButton: UIButton = UIButton()
-    var feedCollectionView: UICollectionView!
+    lazy var sortButton: UIButton = UIButton()
+    lazy var feedView: FeedMainView = FeedMainView()
 
     let disposeBag = DisposeBag()
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        bindFeedButton()
         bindExtraButton()
         bindFilterView()
         bindSortButton()
-        bindFeedCollectionView()
-    }
-
-    func bindFeedButton() {
-        wholeFeedButton.setTitle(StringType.wholeFeed, for: .normal)
-        wholeFeedButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 20)
-        wholeFeedButton.sizeToFit()
-        view.addSubview(wholeFeedButton)
-
-        wholeFeedButton.translatesAutoresizingMaskIntoConstraints = false
-
-        wholeFeedButton.topAnchor
-            .constraint(equalTo: view.topAnchor,
-                        constant: 63).isActive = true
-        wholeFeedButton.leftAnchor
-            .constraint(equalTo: view.leftAnchor,
-                        constant: 20).isActive = true
-
-        subscribeFeedButton.setTitle(StringType.subscribeFeed, for: .normal)
-        subscribeFeedButton.titleLabel?.font = UIFont.systemFont(ofSize: 20)
-        subscribeFeedButton.sizeToFit()
-        view.addSubview(subscribeFeedButton)
-
-        subscribeFeedButton.translatesAutoresizingMaskIntoConstraints = false
-
-        subscribeFeedButton.topAnchor
-            .constraint(equalTo: view.topAnchor,
-                        constant: 63).isActive = true
-        subscribeFeedButton.leftAnchor
-            .constraint(equalTo: view.leftAnchor,
-                        constant: 111).isActive = true
+        bindFeedView()
     }
 
     func bindExtraButton() {
@@ -109,10 +78,10 @@ class FeedViewController: UIViewController {
         filterView.translatesAutoresizingMaskIntoConstraints = false
         filterView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 20).isActive = true
         filterView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -20).isActive = true
-        filterView.topAnchor.constraint(equalTo: wholeFeedButton.bottomAnchor, constant: 19).isActive = true
+        filterView.topAnchor.constraint(equalTo: bellButton.bottomAnchor, constant: 19).isActive = true
         filterView.heightAnchor.constraint(equalToConstant: 29).isActive = true
 
-        let testData = Observable<[String]>.of(["글감", "일상", "로맨스", "짧은 글", "긴 글", "무서운 글", "발랄한 글", "한글", "세종대왕"])
+        let testData = Observable<[String]>.of(["글감", "일상", "로맨스", "짧은 글", "긴 글", "무서운 글", "발랄한 글", "한글", "세종대왕", " "])
 
         testData
             .bind(to: filterView.rx
@@ -136,33 +105,26 @@ class FeedViewController: UIViewController {
         sortButton.topAnchor.constraint(equalTo: filterView.bottomAnchor, constant: 20).isActive = true
         sortButton.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -27).isActive = true
     }
-
-    func bindFeedCollectionView() {
-        let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = .vertical
-
-        feedCollectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        feedCollectionView.register(FeedCell.self, forCellWithReuseIdentifier: "FeedCell")
-        layout.estimatedItemSize = CGSize(width: UIScreen.main.bounds.width - 20,
-                                          height: feedCollectionView.frame.height)
-        feedCollectionView.collectionViewLayout = layout
-        view.addSubview(feedCollectionView)
-
-        feedCollectionView.translatesAutoresizingMaskIntoConstraints = false
-
-        feedCollectionView.topAnchor.constraint(equalTo: sortButton.bottomAnchor, constant: 11.83).isActive = true
-        feedCollectionView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 20).isActive = true
-        feedCollectionView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -20).isActive = true
-        feedCollectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
-
+    
+    func bindFeedView() {
+        view.addSubview(feedView)
+        feedView.translatesAutoresizingMaskIntoConstraints = false
+        
+        feedView.topAnchor.constraint(equalTo: sortButton.bottomAnchor, constant: 11.83).isActive = true
+        
+        feedView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
+        feedView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
+        feedView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
+        
         let dummyData = Observable<[String]>.of(["글감", "일상", "로맨스", "짧은 글", "긴 글", "무서운 글", "발랄한 글", "한글", "세종대왕"])
 
-        dummyData.bind(to: feedCollectionView.rx.items(cellIdentifier: "FeedCell",
-                                                       cellType: FeedCell.self)) { (_, element, cell) in
+        dummyData.bind(to: feedView.feedCollectionView
+                        .rx.items(cellIdentifier: CellIdentifier.feed,
+                                             cellType: FeedCell.self)) { (_, element, cell) in
             cell.backgroundColor = .blue
-                cell.articleTitle.text = element
+            cell.articleTitle.text = element
+            cell.layer.cornerRadius = 15
             }
         .disposed(by: disposeBag)
-
     }
 }

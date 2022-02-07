@@ -9,4 +9,5 @@ import Foundation
 
 struct CellIdentifier {
     static let categoryFilter = "CategoryFilterCell"
+    static let feed = "FeedCell"
 }

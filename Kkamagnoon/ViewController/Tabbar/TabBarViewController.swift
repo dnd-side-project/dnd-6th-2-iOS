@@ -23,7 +23,7 @@ class TabBarViewController: UITabBarController {
             createNavController(for: MyWritingViewController(),
                                    title: StringType.myWriting,
                                    image: UIImage(systemName: "heart.fill")!),
-            createNavController(for: FeedViewController(),
+            createNavController(for: ChooseFeedController(),
                                    title: StringType.feed,
                                    image: UIImage(systemName: "heart.fill")!),
             createNavController(for: RelayViewController(),
