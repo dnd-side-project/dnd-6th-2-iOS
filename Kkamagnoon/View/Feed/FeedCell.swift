@@ -8,7 +8,7 @@
 import UIKit
 
 class FeedCell: UICollectionViewCell {
-    let profileView: ProfileView = ProfileView()
+    let profileView: ProfileView = ProfileView(width: 31, height: 31, fontsize: 12)
     let updateDate: UILabel = UILabel()
 
     let articleTitle: UILabel = UILabel()
@@ -85,10 +85,12 @@ class FeedCell: UICollectionViewCell {
         commentLabel.leftAnchor.constraint(equalTo: likeLabel.rightAnchor, constant: 5).isActive = true
         commentLabel.centerYAnchor.constraint(equalTo: likeLabel.centerYAnchor).isActive = true
 
-//        //더보기
-//        self.addSubview(moreButton)
-//        moreButton.translatesAutoresizingMaskIntoConstraints = false
-
+        // 더보기(신고하기)
+        moreButton.setImage(UIImage(systemName: "heart.fill"), for: .normal)
+        self.addSubview(moreButton)
+        moreButton.translatesAutoresizingMaskIntoConstraints = false
+        moreButton.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -20).isActive = true
+        moreButton.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -15).isActive = true
     }
     
     private func makeImageAttatchLabel(imageName: String, text: String) -> NSMutableAttributedString {

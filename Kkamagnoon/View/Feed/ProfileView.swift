@@ -13,11 +13,18 @@ class ProfileView: UIView {
     let nickNameLabel: UILabel = UILabel()
     let subscribeStatus: UIButton = UIButton()
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    var imageWidth: CGFloat = 0
+    var imageHeight: CGFloat = 0
+    var fontSize: CGFloat = 0
+    
+    init(width: CGFloat, height: CGFloat, fontsize: CGFloat) {
+        self.imageWidth = width
+        self.imageHeight = height
+        self.fontSize = fontsize
+        super.init(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
         setView()
     }
-    
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -40,12 +47,14 @@ class ProfileView: UIView {
         profileImageView.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
         profileImageView.leftAnchor.constraint(equalTo: self.leftAnchor).isActive = true
         
-        profileImageView.widthAnchor.constraint(equalToConstant: 31).isActive = true
-        profileImageView.heightAnchor.constraint(equalToConstant: 31).isActive = true
+        profileImageView.widthAnchor.constraint(equalToConstant: imageWidth).isActive = true
+        profileImageView.heightAnchor.constraint(equalToConstant: imageHeight).isActive = true
+        profileImageView.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
         
         // 닉네임
         nickNameLabel.text = "닉네임"
-        nickNameLabel.font = UIFont.systemFont(ofSize: 12, weight: .medium)
+        nickNameLabel.textColor = .white
+        nickNameLabel.font = UIFont.systemFont(ofSize: fontSize, weight: .medium)
         self.addSubview(nickNameLabel)
         nickNameLabel.translatesAutoresizingMaskIntoConstraints = false
         nickNameLabel.leftAnchor.constraint(equalTo: profileImageView.rightAnchor, constant: 9).isActive = true

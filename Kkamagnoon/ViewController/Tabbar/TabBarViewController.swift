@@ -9,12 +9,13 @@ import UIKit
 
 class TabBarViewController: UITabBarController {
 
+    static var tabbarHeight: CGFloat = 0
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        TabBarViewController.tabbarHeight = self.tabBar.frame.height
         createBarItems()
     }
-    
+
     func createBarItems() {
         viewControllers = [
             createNavController(for: ChallengeViewController(),
@@ -23,7 +24,7 @@ class TabBarViewController: UITabBarController {
             createNavController(for: MyWritingViewController(),
                                    title: StringType.myWriting,
                                    image: UIImage(systemName: "heart.fill")!),
-            createNavController(for: ChooseFeedController(),
+            createNavController(for: FeedViewController(),
                                    title: StringType.feed,
                                    image: UIImage(systemName: "heart.fill")!),
             createNavController(for: RelayViewController(),

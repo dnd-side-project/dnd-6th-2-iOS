@@ -28,9 +28,12 @@ class FeedMainView: UIView {
         let layout = UICollectionViewFlowLayout()
         layout.minimumInteritemSpacing = 11
         layout.scrollDirection = .vertical
+        layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: TabBarViewController.tabbarHeight, right: 0)
 
+        
         feedCollectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         feedCollectionView.register(FeedCell.self, forCellWithReuseIdentifier: CellIdentifier.feed)
+        feedCollectionView.backgroundColor = .black
         layout.estimatedItemSize = CGSize(width: UIScreen.main.bounds.width - 40,
                                           height: feedCollectionView.frame.height)
         feedCollectionView.showsVerticalScrollIndicator = false

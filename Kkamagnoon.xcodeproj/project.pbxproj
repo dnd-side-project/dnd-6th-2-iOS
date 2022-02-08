@@ -12,10 +12,10 @@
 		0439AF3127AFF97400E14E03 /* FeedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0439AF3027AFF97300E14E03 /* FeedCell.swift */; };
 		0439AF3327B0B0A000E14E03 /* FeedMainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0439AF3227B0B0A000E14E03 /* FeedMainView.swift */; };
 		0439AF3527B0B4AF00E14E03 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0439AF3427B0B4AF00E14E03 /* ProfileView.swift */; };
-		0439AF3727B0C99100E14E03 /* FeedTabViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0439AF3627B0C99100E14E03 /* FeedTabViewController.swift */; };
-		0439AF3B27B100C100E14E03 /* FeedTabBarItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0439AF3A27B100C100E14E03 /* FeedTabBarItem.swift */; };
-		0439AF3D27B1036500E14E03 /* FeedTabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0439AF3C27B1036500E14E03 /* FeedTabBar.swift */; };
-		0439AF3F27B109E200E14E03 /* ChooseFeedController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0439AF3E27B109E200E14E03 /* ChooseFeedController.swift */; };
+		0439AF4527B166B300E14E03 /* SubscribeFilterCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0439AF4427B166B300E14E03 /* SubscribeFilterCell.swift */; };
+		0439AF4727B171EB00E14E03 /* DetailContentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0439AF4627B171EB00E14E03 /* DetailContentViewController.swift */; };
+		0439AF4927B189FF00E14E03 /* WholeTabCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0439AF4827B189FF00E14E03 /* WholeTabCell.swift */; };
+		0439AF4B27B1EBBF00E14E03 /* FeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0439AF4A27B1EBBF00E14E03 /* FeedViewController.swift */; };
 		0464F9C327A578AA0054FD83 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0464F9C227A578AA0054FD83 /* AppDelegate.swift */; };
 		0464F9C527A578AA0054FD83 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0464F9C427A578AA0054FD83 /* SceneDelegate.swift */; };
 		0464F9CA27A578AA0054FD83 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0464F9C827A578AA0054FD83 /* Main.storyboard */; };
@@ -27,10 +27,15 @@
 		048D44AC27AF592D0031974D /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048D44AB27AF592D0031974D /* TabBarViewController.swift */; };
 		048D44B727AF5D0F0031974D /* MyPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048D44B627AF5D0F0031974D /* MyPageViewController.swift */; };
 		048D44B927AF5D5A0031974D /* RelayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048D44B827AF5D5A0031974D /* RelayViewController.swift */; };
-		048D44BB27AF5D670031974D /* FeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048D44BA27AF5D670031974D /* FeedViewController.swift */; };
 		048D44BD27AF5D7D0031974D /* MyWritingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048D44BC27AF5D7D0031974D /* MyWritingViewController.swift */; };
 		048D44BF27AF5D930031974D /* ChallengeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048D44BE27AF5D930031974D /* ChallengeViewController.swift */; };
 		048D44C227AF5E030031974D /* StringConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048D44C127AF5E030031974D /* StringConverter.swift */; };
+		04DAAE5127B1FDB300AECFE4 /* WholeFeedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04DAAE5027B1FDB300AECFE4 /* WholeFeedView.swift */; };
+		04DAAE5327B2121600AECFE4 /* FeedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04DAAE5227B2121600AECFE4 /* FeedView.swift */; };
+		04DAAE5527B29EB700AECFE4 /* SubscribeFeedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04DAAE5427B29EB700AECFE4 /* SubscribeFeedView.swift */; };
+		04DAAE5727B2A18200AECFE4 /* SubscribeTabCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04DAAE5627B2A18200AECFE4 /* SubscribeTabCell.swift */; };
+		04DAAE5A27B2B1F500AECFE4 /* Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04DAAE5927B2B1F500AECFE4 /* Extension.swift */; };
+		04DAAE5C27B2CE5100AECFE4 /* BottomReactionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04DAAE5B27B2CE5100AECFE4 /* BottomReactionView.swift */; };
 		4772DCC31D58F618A0C97067 /* Pods_KkamagnoonTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BEA8A731D028EF2AE2C2F844 /* Pods_KkamagnoonTests.framework */; };
 		59262A405FB52911AA2ACCF1 /* Pods_Kkamagnoon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 21B18F934232A8239C156F77 /* Pods_Kkamagnoon.framework */; };
 		DA3759104807120025675467 /* Pods_Kkamagnoon_KkamagnoonUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D320D1CF105BFC278E7F0256 /* Pods_Kkamagnoon_KkamagnoonUITests.framework */; };
@@ -59,10 +64,10 @@
 		0439AF3027AFF97300E14E03 /* FeedCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedCell.swift; sourceTree = "<group>"; };
 		0439AF3227B0B0A000E14E03 /* FeedMainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedMainView.swift; sourceTree = "<group>"; };
 		0439AF3427B0B4AF00E14E03 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
-		0439AF3627B0C99100E14E03 /* FeedTabViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedTabViewController.swift; sourceTree = "<group>"; };
-		0439AF3A27B100C100E14E03 /* FeedTabBarItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedTabBarItem.swift; sourceTree = "<group>"; };
-		0439AF3C27B1036500E14E03 /* FeedTabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedTabBar.swift; sourceTree = "<group>"; };
-		0439AF3E27B109E200E14E03 /* ChooseFeedController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChooseFeedController.swift; sourceTree = "<group>"; };
+		0439AF4427B166B300E14E03 /* SubscribeFilterCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscribeFilterCell.swift; sourceTree = "<group>"; };
+		0439AF4627B171EB00E14E03 /* DetailContentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailContentViewController.swift; sourceTree = "<group>"; };
+		0439AF4827B189FF00E14E03 /* WholeTabCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WholeTabCell.swift; sourceTree = "<group>"; };
+		0439AF4A27B1EBBF00E14E03 /* FeedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedViewController.swift; sourceTree = "<group>"; };
 		0464F9BF27A578AA0054FD83 /* Kkamagnoon.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Kkamagnoon.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0464F9C227A578AA0054FD83 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0464F9C427A578AA0054FD83 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -78,10 +83,15 @@
 		048D44AB27AF592D0031974D /* TabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewController.swift; sourceTree = "<group>"; };
 		048D44B627AF5D0F0031974D /* MyPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageViewController.swift; sourceTree = "<group>"; };
 		048D44B827AF5D5A0031974D /* RelayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RelayViewController.swift; sourceTree = "<group>"; };
-		048D44BA27AF5D670031974D /* FeedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedViewController.swift; sourceTree = "<group>"; };
 		048D44BC27AF5D7D0031974D /* MyWritingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyWritingViewController.swift; sourceTree = "<group>"; };
 		048D44BE27AF5D930031974D /* ChallengeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallengeViewController.swift; sourceTree = "<group>"; };
 		048D44C127AF5E030031974D /* StringConverter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringConverter.swift; sourceTree = "<group>"; };
+		04DAAE5027B1FDB300AECFE4 /* WholeFeedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WholeFeedView.swift; sourceTree = "<group>"; };
+		04DAAE5227B2121600AECFE4 /* FeedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedView.swift; sourceTree = "<group>"; };
+		04DAAE5427B29EB700AECFE4 /* SubscribeFeedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscribeFeedView.swift; sourceTree = "<group>"; };
+		04DAAE5627B2A18200AECFE4 /* SubscribeTabCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscribeTabCell.swift; sourceTree = "<group>"; };
+		04DAAE5927B2B1F500AECFE4 /* Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension.swift; sourceTree = "<group>"; };
+		04DAAE5B27B2CE5100AECFE4 /* BottomReactionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomReactionView.swift; sourceTree = "<group>"; };
 		18CC5DE48442606CD4F34580 /* Pods-Kkamagnoon.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Kkamagnoon.release.xcconfig"; path = "Target Support Files/Pods-Kkamagnoon/Pods-Kkamagnoon.release.xcconfig"; sourceTree = "<group>"; };
 		21B18F934232A8239C156F77 /* Pods_Kkamagnoon.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Kkamagnoon.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		24838BE1B7D5491B5C97CEAF /* Pods-KkamagnoonTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KkamagnoonTests.release.xcconfig"; path = "Target Support Files/Pods-KkamagnoonTests/Pods-KkamagnoonTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -128,8 +138,13 @@
 				0439AF3027AFF97300E14E03 /* FeedCell.swift */,
 				0439AF3227B0B0A000E14E03 /* FeedMainView.swift */,
 				0439AF3427B0B4AF00E14E03 /* ProfileView.swift */,
-				0439AF3A27B100C100E14E03 /* FeedTabBarItem.swift */,
-				0439AF3C27B1036500E14E03 /* FeedTabBar.swift */,
+				0439AF4427B166B300E14E03 /* SubscribeFilterCell.swift */,
+				0439AF4827B189FF00E14E03 /* WholeTabCell.swift */,
+				04DAAE5027B1FDB300AECFE4 /* WholeFeedView.swift */,
+				04DAAE5227B2121600AECFE4 /* FeedView.swift */,
+				04DAAE5427B29EB700AECFE4 /* SubscribeFeedView.swift */,
+				04DAAE5627B2A18200AECFE4 /* SubscribeTabCell.swift */,
+				04DAAE5B27B2CE5100AECFE4 /* BottomReactionView.swift */,
 			);
 			path = Feed;
 			sourceTree = "<group>";
@@ -159,6 +174,7 @@
 		0464F9C127A578AA0054FD83 /* Kkamagnoon */ = {
 			isa = PBXGroup;
 			children = (
+				04DAAE5827B2B1DE00AECFE4 /* Extension */,
 				048D44C027AF5DD70031974D /* Types */,
 				04D0637627AEC30A005EB16C /* Delegate */,
 				04D0637527AEC251005EB16C /* Service */,
@@ -218,9 +234,8 @@
 		048D44B327AF5CCB0031974D /* Feed */ = {
 			isa = PBXGroup;
 			children = (
-				048D44BA27AF5D670031974D /* FeedViewController.swift */,
-				0439AF3627B0C99100E14E03 /* FeedTabViewController.swift */,
-				0439AF3E27B109E200E14E03 /* ChooseFeedController.swift */,
+				0439AF4627B171EB00E14E03 /* DetailContentViewController.swift */,
+				0439AF4A27B1EBBF00E14E03 /* FeedViewController.swift */,
 			);
 			path = Feed;
 			sourceTree = "<group>";
@@ -299,6 +314,14 @@
 				0464F9C427A578AA0054FD83 /* SceneDelegate.swift */,
 			);
 			path = Delegate;
+			sourceTree = "<group>";
+		};
+		04DAAE5827B2B1DE00AECFE4 /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				04DAAE5927B2B1F500AECFE4 /* Extension.swift */,
+			);
+			path = Extension;
 			sourceTree = "<group>";
 		};
 		2944082E5D2EC83FE904B05C /* Pods */ = {
@@ -582,22 +605,27 @@
 			buildActionMask = 2147483647;
 			files = (
 				048D44B927AF5D5A0031974D /* RelayViewController.swift in Sources */,
-				0439AF3D27B1036500E14E03 /* FeedTabBar.swift in Sources */,
 				048D44BF27AF5D930031974D /* ChallengeViewController.swift in Sources */,
+				0439AF4B27B1EBBF00E14E03 /* FeedViewController.swift in Sources */,
 				048D44BD27AF5D7D0031974D /* MyWritingViewController.swift in Sources */,
 				048D44B727AF5D0F0031974D /* MyPageViewController.swift in Sources */,
 				048D44AC27AF592D0031974D /* TabBarViewController.swift in Sources */,
-				0439AF3F27B109E200E14E03 /* ChooseFeedController.swift in Sources */,
+				0439AF4727B171EB00E14E03 /* DetailContentViewController.swift in Sources */,
+				04DAAE5A27B2B1F500AECFE4 /* Extension.swift in Sources */,
 				0439AF3127AFF97400E14E03 /* FeedCell.swift in Sources */,
+				04DAAE5727B2A18200AECFE4 /* SubscribeTabCell.swift in Sources */,
+				04DAAE5327B2121600AECFE4 /* FeedView.swift in Sources */,
 				0464F9C327A578AA0054FD83 /* AppDelegate.swift in Sources */,
+				0439AF4927B189FF00E14E03 /* WholeTabCell.swift in Sources */,
 				0439AF2D27AFAF7000E14E03 /* CategoryFilterCell.swift in Sources */,
+				04DAAE5C27B2CE5100AECFE4 /* BottomReactionView.swift in Sources */,
 				0464F9C527A578AA0054FD83 /* SceneDelegate.swift in Sources */,
-				048D44BB27AF5D670031974D /* FeedViewController.swift in Sources */,
+				04DAAE5127B1FDB300AECFE4 /* WholeFeedView.swift in Sources */,
+				0439AF4527B166B300E14E03 /* SubscribeFilterCell.swift in Sources */,
+				04DAAE5527B29EB700AECFE4 /* SubscribeFeedView.swift in Sources */,
 				0439AF2F27AFB22F00E14E03 /* CellIdentifier.swift in Sources */,
 				0439AF3327B0B0A000E14E03 /* FeedMainView.swift in Sources */,
-				0439AF3727B0C99100E14E03 /* FeedTabViewController.swift in Sources */,
 				0439AF3527B0B4AF00E14E03 /* ProfileView.swift in Sources */,
-				0439AF3B27B100C100E14E03 /* FeedTabBarItem.swift in Sources */,
 				048D44C227AF5E030031974D /* StringConverter.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

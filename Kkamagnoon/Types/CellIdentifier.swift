@@ -10,4 +10,7 @@ import Foundation
 struct CellIdentifier {
     static let categoryFilter = "CategoryFilterCell"
     static let feed = "FeedCell"
+    static let subscribeFilter = "SubscribeFilterCell"
+    static let wholeTab = "WholeTabCell"
+    static let subscribeTab = "subscribeTabCell"
 }
