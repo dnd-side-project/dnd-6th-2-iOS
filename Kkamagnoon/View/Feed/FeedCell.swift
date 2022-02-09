@@ -21,6 +21,7 @@ class FeedCell: UICollectionViewCell {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
+        self.backgroundColor = UIColor(rgb: Color.feedListCard)
         setView()
     }
 
@@ -36,6 +37,7 @@ class FeedCell: UICollectionViewCell {
         
         // 작성일
         updateDate.text = "2022년 2월 1일"
+        updateDate.textColor = UIColor(rgb: 0x626262)
         updateDate.font = UIFont.systemFont(ofSize: 10, weight: .medium)
         self.addSubview(updateDate)
         updateDate.translatesAutoresizingMaskIntoConstraints = false
@@ -43,7 +45,7 @@ class FeedCell: UICollectionViewCell {
         updateDate.topAnchor.constraint(equalTo: self.topAnchor, constant: 15).isActive = true
         
         // 글 제목
-        articleTitle.text = "Dummy"
+        articleTitle.textColor = .white
         articleTitle.font = UIFont.systemFont(ofSize: 14, weight: .bold)
         self.addSubview(articleTitle)
         articleTitle.translatesAutoresizingMaskIntoConstraints = false
@@ -51,12 +53,15 @@ class FeedCell: UICollectionViewCell {
         articleTitle.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 20).isActive = true
 
         // 글 내용
+        articleContents.textColor = UIColor(rgb: Color.content)
+        articleContents.backgroundColor = UIColor(rgb: Color.feedListCard)
         articleContents.text = StringType.dummyContents
         articleContents.font = UIFont.systemFont(ofSize: 13, weight: .medium)
         articleContents.sizeToFit()
         articleContents.isScrollEnabled = false
         articleContents.isEditable = false
         articleContents.isSelectable = false
+        articleContents.isUserInteractionEnabled = false
         articleContents.textContainerInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         self.addSubview(articleContents)
         articleContents.translatesAutoresizingMaskIntoConstraints = false

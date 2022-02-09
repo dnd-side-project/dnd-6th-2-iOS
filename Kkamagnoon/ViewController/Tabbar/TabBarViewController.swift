@@ -15,6 +15,14 @@ class TabBarViewController: UITabBarController {
         TabBarViewController.tabbarHeight = self.tabBar.frame.height
         createBarItems()
     }
+    
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
+        
+    override var prefersStatusBarHidden: Bool {
+        return false
+    }
 
     func createBarItems() {
         viewControllers = [

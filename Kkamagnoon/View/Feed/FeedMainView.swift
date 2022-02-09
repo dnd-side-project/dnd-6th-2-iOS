@@ -26,9 +26,9 @@ class FeedMainView: UIView {
     
     func setView() {
         let layout = UICollectionViewFlowLayout()
-        layout.minimumInteritemSpacing = 11
+        layout.minimumInteritemSpacing = 10
         layout.scrollDirection = .vertical
-        layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: TabBarViewController.tabbarHeight, right: 0)
+        layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: TabBarViewController.tabbarHeight * 2, right: 0)
 
         
         feedCollectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)

@@ -12,5 +12,6 @@ struct CellIdentifier {
     static let feed = "FeedCell"
     static let subscribeFilter = "SubscribeFilterCell"
     static let wholeTab = "WholeTabCell"
-    static let subscribeTab = "subscribeTabCell"
+    static let subscribeTab = "SubscribeTabCell"
+    static let subscribeList = "SubscribeListCell"
 }

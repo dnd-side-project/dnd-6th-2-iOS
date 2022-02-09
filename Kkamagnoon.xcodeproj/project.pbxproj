@@ -36,6 +36,9 @@
 		04DAAE5727B2A18200AECFE4 /* SubscribeTabCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04DAAE5627B2A18200AECFE4 /* SubscribeTabCell.swift */; };
 		04DAAE5A27B2B1F500AECFE4 /* Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04DAAE5927B2B1F500AECFE4 /* Extension.swift */; };
 		04DAAE5C27B2CE5100AECFE4 /* BottomReactionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04DAAE5B27B2CE5100AECFE4 /* BottomReactionView.swift */; };
+		04DAAE5E27B3C64500AECFE4 /* CustomColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04DAAE5D27B3C64500AECFE4 /* CustomColor.swift */; };
+		04DAAE6027B3EA0500AECFE4 /* SubscribeListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04DAAE5F27B3EA0500AECFE4 /* SubscribeListViewController.swift */; };
+		04DAAE6227B3F41900AECFE4 /* SubscribeListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04DAAE6127B3F41900AECFE4 /* SubscribeListCell.swift */; };
 		4772DCC31D58F618A0C97067 /* Pods_KkamagnoonTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BEA8A731D028EF2AE2C2F844 /* Pods_KkamagnoonTests.framework */; };
 		59262A405FB52911AA2ACCF1 /* Pods_Kkamagnoon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 21B18F934232A8239C156F77 /* Pods_Kkamagnoon.framework */; };
 		DA3759104807120025675467 /* Pods_Kkamagnoon_KkamagnoonUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D320D1CF105BFC278E7F0256 /* Pods_Kkamagnoon_KkamagnoonUITests.framework */; };
@@ -92,6 +95,9 @@
 		04DAAE5627B2A18200AECFE4 /* SubscribeTabCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscribeTabCell.swift; sourceTree = "<group>"; };
 		04DAAE5927B2B1F500AECFE4 /* Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension.swift; sourceTree = "<group>"; };
 		04DAAE5B27B2CE5100AECFE4 /* BottomReactionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomReactionView.swift; sourceTree = "<group>"; };
+		04DAAE5D27B3C64500AECFE4 /* CustomColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomColor.swift; sourceTree = "<group>"; };
+		04DAAE5F27B3EA0500AECFE4 /* SubscribeListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscribeListViewController.swift; sourceTree = "<group>"; };
+		04DAAE6127B3F41900AECFE4 /* SubscribeListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscribeListCell.swift; sourceTree = "<group>"; };
 		18CC5DE48442606CD4F34580 /* Pods-Kkamagnoon.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Kkamagnoon.release.xcconfig"; path = "Target Support Files/Pods-Kkamagnoon/Pods-Kkamagnoon.release.xcconfig"; sourceTree = "<group>"; };
 		21B18F934232A8239C156F77 /* Pods_Kkamagnoon.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Kkamagnoon.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		24838BE1B7D5491B5C97CEAF /* Pods-KkamagnoonTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KkamagnoonTests.release.xcconfig"; path = "Target Support Files/Pods-KkamagnoonTests/Pods-KkamagnoonTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -145,6 +151,7 @@
 				04DAAE5427B29EB700AECFE4 /* SubscribeFeedView.swift */,
 				04DAAE5627B2A18200AECFE4 /* SubscribeTabCell.swift */,
 				04DAAE5B27B2CE5100AECFE4 /* BottomReactionView.swift */,
+				04DAAE6127B3F41900AECFE4 /* SubscribeListCell.swift */,
 			);
 			path = Feed;
 			sourceTree = "<group>";
@@ -236,6 +243,7 @@
 			children = (
 				0439AF4627B171EB00E14E03 /* DetailContentViewController.swift */,
 				0439AF4A27B1EBBF00E14E03 /* FeedViewController.swift */,
+				04DAAE5F27B3EA0500AECFE4 /* SubscribeListViewController.swift */,
 			);
 			path = Feed;
 			sourceTree = "<group>";
@@ -261,6 +269,7 @@
 			children = (
 				048D44C127AF5E030031974D /* StringConverter.swift */,
 				0439AF2E27AFB22F00E14E03 /* CellIdentifier.swift */,
+				04DAAE5D27B3C64500AECFE4 /* CustomColor.swift */,
 			);
 			path = Types;
 			sourceTree = "<group>";
@@ -604,6 +613,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				04DAAE6027B3EA0500AECFE4 /* SubscribeListViewController.swift in Sources */,
 				048D44B927AF5D5A0031974D /* RelayViewController.swift in Sources */,
 				048D44BF27AF5D930031974D /* ChallengeViewController.swift in Sources */,
 				0439AF4B27B1EBBF00E14E03 /* FeedViewController.swift in Sources */,
@@ -613,11 +623,13 @@
 				0439AF4727B171EB00E14E03 /* DetailContentViewController.swift in Sources */,
 				04DAAE5A27B2B1F500AECFE4 /* Extension.swift in Sources */,
 				0439AF3127AFF97400E14E03 /* FeedCell.swift in Sources */,
+				04DAAE6227B3F41900AECFE4 /* SubscribeListCell.swift in Sources */,
 				04DAAE5727B2A18200AECFE4 /* SubscribeTabCell.swift in Sources */,
 				04DAAE5327B2121600AECFE4 /* FeedView.swift in Sources */,
 				0464F9C327A578AA0054FD83 /* AppDelegate.swift in Sources */,
 				0439AF4927B189FF00E14E03 /* WholeTabCell.swift in Sources */,
 				0439AF2D27AFAF7000E14E03 /* CategoryFilterCell.swift in Sources */,
+				04DAAE5E27B3C64500AECFE4 /* CustomColor.swift in Sources */,
 				04DAAE5C27B2CE5100AECFE4 /* BottomReactionView.swift in Sources */,
 				0464F9C527A578AA0054FD83 /* SceneDelegate.swift in Sources */,
 				04DAAE5127B1FDB300AECFE4 /* WholeFeedView.swift in Sources */,

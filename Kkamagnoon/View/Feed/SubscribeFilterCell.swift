@@ -40,10 +40,11 @@ class SubscribeFilterCell: UICollectionViewCell {
         profileImageView.heightAnchor.constraint(equalToConstant: 56).isActive = true
         
         nickNameLabel.font = UIFont.systemFont(ofSize: 11, weight: .semibold)
+        nickNameLabel.textColor = .white
         self.addSubview(nickNameLabel)
         nickNameLabel.translatesAutoresizingMaskIntoConstraints = false
         nickNameLabel.topAnchor.constraint(equalTo: profileImageView.bottomAnchor, constant: 10).isActive = true
-        nickNameLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -7).isActive = true
+        nickNameLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -9).isActive = true
         nickNameLabel.centerXAnchor.constraint(equalTo: profileImageView.centerXAnchor).isActive = true
     }
 }

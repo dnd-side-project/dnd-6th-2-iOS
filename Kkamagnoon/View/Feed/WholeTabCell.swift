@@ -9,6 +9,7 @@ import UIKit
 
 class WholeTabCell: UICollectionViewCell {
     
+    
     lazy var feedView = WholeFeedView()
 
     override init(frame: CGRect) {
@@ -20,8 +21,8 @@ class WholeTabCell: UICollectionViewCell {
     func setWholeFeedView() {
         self.addSubview(feedView)
         feedView.translatesAutoresizingMaskIntoConstraints = false
-        feedView.topAnchor.constraint(equalTo: self.topAnchor, constant: 73).isActive = true
-        feedView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -TabBarViewController.tabbarHeight).isActive = true
+        feedView.topAnchor.constraint(equalTo: self.topAnchor, constant: 115).isActive = true
+        feedView.bottomAnchor.constraint(equalTo: self.safeAreaLayoutGuide.bottomAnchor).isActive = true
         feedView.leftAnchor.constraint(equalTo: self.leftAnchor).isActive = true
         feedView.rightAnchor.constraint(equalTo: self.rightAnchor).isActive = true
     }

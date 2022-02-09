@@ -12,6 +12,7 @@ final class CategoryFilterCell: UICollectionViewCell {
 
     override init(frame: CGRect = .zero) {
         super.init(frame: frame)
+        self.backgroundColor = UIColor(rgb: Color.tag)
         setLabel()
     }
     
@@ -20,6 +21,7 @@ final class CategoryFilterCell: UICollectionViewCell {
     }
 
     func setLabel() {
+        categoryLabel.textColor = UIColor(rgb: Color.tagText)
         categoryLabel.font = UIFont.systemFont(ofSize: 12)
         self.addSubview(categoryLabel)
 

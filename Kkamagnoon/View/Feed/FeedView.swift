@@ -21,9 +21,6 @@ class FeedView: UIView {
 
     var filterView: UICollectionView!
     
-    lazy var searchButton: UIButton = UIButton()
-    lazy var bellButton: UIButton = UIButton()
-    
     lazy var sortButton: UIButton = UIButton()
     lazy var feedMainView: FeedMainView = FeedMainView()
   
@@ -35,6 +32,7 @@ class FeedView: UIView {
         setFilterView()
         setSortButton()
         setFeedMainView()
+        setFeedMainViewTop()
         
     }
     
@@ -50,9 +48,7 @@ class FeedView: UIView {
         addSubview(feedMainView)
         feedMainView.translatesAutoresizingMaskIntoConstraints = false
         
-//        feedMainView.topAnchor.constraint(equalTo: sortButton.bottomAnchor, constant: 11.83).isActive = true
-        
-        feedMainView.topAnchor.constraint(equalTo: self.filterView.bottomAnchor, constant: 11.83).isActive = true
+        feedMainView.topAnchor.constraint(equalTo: filterView.bottomAnchor, constant: 46).isActive = true
         
         feedMainView.leftAnchor.constraint(equalTo: self.leftAnchor).isActive = true
         feedMainView.rightAnchor.constraint(equalTo: self.rightAnchor).isActive = true
@@ -63,7 +59,6 @@ class FeedView: UIView {
         dummyData.bind(to: feedMainView.feedCollectionView
                         .rx.items(cellIdentifier: CellIdentifier.feed,
                                              cellType: FeedCell.self)) { (_, element, cell) in
-            cell.backgroundColor = .blue
             cell.articleTitle.text = element
             cell.layer.cornerRadius = 15
             }
@@ -80,6 +75,10 @@ class FeedView: UIView {
 
             }
             .disposed(by: disposeBag)
+    }
+    
+    func setFeedMainViewTop() {
+        
     }
 }
 
