@@ -16,9 +16,9 @@ struct StringType {
 
     static let wholeFeed: String = "전체 피드"
     static let subscribeFeed: String = "구독 피드"
-    
+
     static let notSubscribed: String = ". 구독"
     static let alreadySubscribed: String = ". 구독중"
-    
+
     static let dummyContents = "수많은 시간을 오지 않는 버스를 기다리며. \n수많은 시간을 오지 않는 버스를 기다리며. \n수많은 시간을 오지 않는 버스를 기다리며. \n수많은 시간을 오지 않는 버스를 기다리며. \n수많은 시간을 오지 않는 버스를 기다리며. \n수많은 시간을 오지 않는 버스를 기다리며."
 }

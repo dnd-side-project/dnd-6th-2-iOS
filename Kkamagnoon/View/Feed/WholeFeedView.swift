@@ -10,7 +10,7 @@ import RxSwift
 import RxCocoa
 
 class WholeFeedView: FeedView {
-    
+
     override func setFilterView() {
         let flowLayout = UICollectionViewFlowLayout()
         flowLayout.scrollDirection = .horizontal
@@ -45,7 +45,7 @@ class WholeFeedView: FeedView {
         }
         .disposed(by: disposeBag)
     }
-    
+
     override func setSortButton() {
         sortButton.setTitle("인기순", for: .normal)
         sortButton.setImage(UIImage(systemName: "heart.fill"), for: .normal)

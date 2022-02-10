@@ -8,15 +8,15 @@
 import UIKit
 
 class ProfileView: UIView {
-    
+
     let profileImageView: UIImageView = UIImageView()
     let nickNameLabel: UILabel = UILabel()
     let subscribeStatus: UIButton = UIButton()
-    
+
     var imageWidth: CGFloat = 0
     var imageHeight: CGFloat = 0
     var fontSize: CGFloat = 0
-    
+
     init(width: CGFloat, height: CGFloat, fontsize: CGFloat) {
         self.imageWidth = width
         self.imageHeight = height
@@ -28,7 +28,7 @@ class ProfileView: UIView {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     override func layoutSubviews() {
         super.layoutSubviews()
         DispatchQueue.main.async { [unowned self] in
@@ -36,7 +36,7 @@ class ProfileView: UIView {
             profileImageView.clipsToBounds = true
         }
     }
-    
+
     func setView() {
         // 프로필 이미지
         profileImageView.backgroundColor = .white
@@ -46,11 +46,11 @@ class ProfileView: UIView {
         profileImageView.translatesAutoresizingMaskIntoConstraints = false
         profileImageView.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
         profileImageView.leftAnchor.constraint(equalTo: self.leftAnchor).isActive = true
-        
+
         profileImageView.widthAnchor.constraint(equalToConstant: imageWidth).isActive = true
         profileImageView.heightAnchor.constraint(equalToConstant: imageHeight).isActive = true
         profileImageView.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
-        
+
         // 닉네임
         nickNameLabel.text = "닉네임"
         nickNameLabel.textColor = .white
@@ -59,7 +59,7 @@ class ProfileView: UIView {
         nickNameLabel.translatesAutoresizingMaskIntoConstraints = false
         nickNameLabel.leftAnchor.constraint(equalTo: profileImageView.rightAnchor, constant: 9).isActive = true
         nickNameLabel.centerYAnchor.constraint(equalTo: profileImageView.centerYAnchor).isActive = true
-        
+
         // 구독 상태
         subscribeStatus.setTitle(StringType.notSubscribed, for: .normal)
         subscribeStatus.titleLabel?.font = UIFont.systemFont(ofSize: 11, weight: .bold)
@@ -67,6 +67,6 @@ class ProfileView: UIView {
         subscribeStatus.translatesAutoresizingMaskIntoConstraints = false
         subscribeStatus.leftAnchor.constraint(equalTo: nickNameLabel.rightAnchor, constant: 7).isActive = true
         subscribeStatus.centerYAnchor.constraint(equalTo: nickNameLabel.centerYAnchor).isActive = true
-  
+
     }
 }

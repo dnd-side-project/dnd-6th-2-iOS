@@ -13,7 +13,7 @@ class FeedCell: UICollectionViewCell {
 
     let articleTitle: UILabel = UILabel()
     let articleContents: UITextView = UITextView()
-    
+
     let likeLabel: UILabel = UILabel()
     let commentLabel: UILabel = UILabel()
 
@@ -34,7 +34,7 @@ class FeedCell: UICollectionViewCell {
         profileView.translatesAutoresizingMaskIntoConstraints = false
         profileView.topAnchor.constraint(equalTo: self.topAnchor, constant: 13).isActive = true
         profileView.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 20).isActive = true
-        
+
         // 작성일
         updateDate.text = "2022년 2월 1일"
         updateDate.textColor = UIColor(rgb: 0x626262)
@@ -43,7 +43,7 @@ class FeedCell: UICollectionViewCell {
         updateDate.translatesAutoresizingMaskIntoConstraints = false
         updateDate.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -16).isActive = true
         updateDate.topAnchor.constraint(equalTo: self.topAnchor, constant: 15).isActive = true
-        
+
         // 글 제목
         articleTitle.textColor = .white
         articleTitle.font = UIFont.systemFont(ofSize: 14, weight: .bold)
@@ -70,17 +70,17 @@ class FeedCell: UICollectionViewCell {
         articleContents.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -20).isActive = true
 
         // 공감
-        
+
         likeLabel.attributedText = makeImageAttatchLabel(imageName: "heart.fill", text: "80")
         likeLabel.font = UIFont.systemFont(ofSize: 12, weight: .medium)
 
         self.addSubview(likeLabel)
         likeLabel.translatesAutoresizingMaskIntoConstraints = false
-        
+
         likeLabel.topAnchor.constraint(equalTo: articleContents.bottomAnchor, constant: 14).isActive = true
         likeLabel.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 20).isActive = true
         likeLabel.bottomAnchor
-            .constraint(equalTo: self.bottomAnchor, constant:  -15).isActive = true
+            .constraint(equalTo: self.bottomAnchor, constant: -15).isActive = true
 
         // 댓글
         commentLabel.attributedText = makeImageAttatchLabel(imageName: "heart.fill", text: "63")
@@ -97,17 +97,17 @@ class FeedCell: UICollectionViewCell {
         moreButton.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -20).isActive = true
         moreButton.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -15).isActive = true
     }
-    
+
     private func makeImageAttatchLabel(imageName: String, text: String) -> NSMutableAttributedString {
         let contentString = NSMutableAttributedString(string: "")
         let attachment = NSTextAttachment()
-        
+
         attachment.image = UIImage(systemName: imageName)
         let attachmentImage = NSAttributedString(attachment: attachment)
         let attachmentString = NSAttributedString(string: text)
         contentString.append(attachmentImage)
         contentString.append(attachmentString)
-        
+
         return contentString
     }
 

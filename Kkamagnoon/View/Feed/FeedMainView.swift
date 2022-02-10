@@ -14,23 +14,22 @@ class FeedMainView: UIView {
     var feedCollectionView: UICollectionView!
 
     let disposeBag = DisposeBag()
-    
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         setView()
     }
-    
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     func setView() {
         let layout = UICollectionViewFlowLayout()
         layout.minimumInteritemSpacing = 10
         layout.scrollDirection = .vertical
         layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: TabBarViewController.tabbarHeight * 2, right: 0)
 
-        
         feedCollectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         feedCollectionView.register(FeedCell.self, forCellWithReuseIdentifier: CellIdentifier.feed)
         feedCollectionView.backgroundColor = .black
@@ -38,7 +37,7 @@ class FeedMainView: UIView {
                                           height: feedCollectionView.frame.height)
         feedCollectionView.showsVerticalScrollIndicator = false
         feedCollectionView.collectionViewLayout = layout
-        
+
         self.addSubview(feedCollectionView)
 
         feedCollectionView.translatesAutoresizingMaskIntoConstraints = false

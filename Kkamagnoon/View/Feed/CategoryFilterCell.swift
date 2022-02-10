@@ -15,7 +15,7 @@ final class CategoryFilterCell: UICollectionViewCell {
         self.backgroundColor = UIColor(rgb: Color.tag)
         setLabel()
     }
-    
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

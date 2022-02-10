@@ -8,8 +8,7 @@
 import UIKit
 
 class WholeTabCell: UICollectionViewCell {
-    
-    
+
     lazy var feedView = WholeFeedView()
 
     override init(frame: CGRect) {
@@ -17,7 +16,7 @@ class WholeTabCell: UICollectionViewCell {
         self.backgroundColor = .black
         setWholeFeedView()
     }
-    
+
     func setWholeFeedView() {
         self.addSubview(feedView)
         feedView.translatesAutoresizingMaskIntoConstraints = false
@@ -26,9 +25,9 @@ class WholeTabCell: UICollectionViewCell {
         feedView.leftAnchor.constraint(equalTo: self.leftAnchor).isActive = true
         feedView.rightAnchor.constraint(equalTo: self.rightAnchor).isActive = true
     }
-    
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
 }

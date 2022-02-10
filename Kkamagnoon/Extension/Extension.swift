@@ -37,7 +37,7 @@ extension UIColor {
            blue: rgb & 0xFF
        )
    }
-    
+
 }
 
 extension String {
@@ -45,48 +45,48 @@ extension String {
         guard from < count, to >= 0, to - from >= 0 else {
             return ""
         }
-        
+
         let startIndex = index(self.startIndex, offsetBy: from)
         let endIndex = index(self.startIndex, offsetBy: to + 1)
-        
+
         return String(self[startIndex ..< endIndex])
     }
 }
 
 extension UINavigationController {
-    
+
     open override var childForStatusBarHidden: UIViewController? {
         return viewControllers.last
     }
-    
+
     open override var childForStatusBarStyle: UIViewController? {
         return viewControllers.last
     }
 }
 
 extension UITabBarController {
-    
+
     open override var childForStatusBarStyle: UIViewController? {
         return self.children.first
     }
-    
+
     open override var childForStatusBarHidden: UIViewController? {
         return self.children.first
     }
 }
 
 extension UISplitViewController {
-    
+
     open override var childForStatusBarStyle: UIViewController? {
         return self.children.first
     }
-    
+
     open override var childForStatusBarHidden: UIViewController? {
         return self.children.first
     }
 }
 
-//extension CALayer {
+// extension CALayer {
 //    func addBorder(_ edgeArr: [UIRectEdge], color: UIColor, width: CGFloat) {
 //        for edge in edgeArr {
 //            let border = CALayer()
@@ -115,9 +115,9 @@ extension UISplitViewController {
 //            self.addSublayer(border)
 //        }
 //    }
-//}
+// }
 //
-//struct BorderOptions: OptionSet {
+// struct BorderOptions: OptionSet {
 //    let rawValue: Int
 //
 //    static let top = BorderOptions(rawValue: 1 << 0)
@@ -127,17 +127,16 @@ extension UISplitViewController {
 //    
 //    static let horizontal: BorderOptions = [.left, .right]
 //    static let vertical: BorderOptions = [.top, .bottom]
-//}
+// }
 
 extension UIView {
-    
-    
+
     enum ViewSide: String {
         case left = "Left", right = "Right", top = "Top", bottom = "Bottom"
     }
-    
+
     func addBorder(toSide side: ViewSide, withColor color: CGColor, andThickness thickness: CGFloat) {
-        
+
         let border = CALayer()
         border.borderColor = color
         border.name = side.rawValue
@@ -147,12 +146,12 @@ extension UIView {
         case .top: border.frame = CGRect(x: 0, y: 0, width: frame.width, height: thickness)
         case .bottom: border.frame = CGRect(x: 0, y: frame.height - thickness, width: frame.width, height: thickness)
         }
-        
+
         border.borderWidth = thickness
-        
+
         layer.addSublayer(border)
     }
-    
+
     func removeBorder(toSide side: ViewSide) {
         guard let sublayers = self.layer.sublayers else { return }
         var layerForRemove: CALayer?

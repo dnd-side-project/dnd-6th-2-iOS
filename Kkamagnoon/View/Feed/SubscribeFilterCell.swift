@@ -10,25 +10,25 @@ import UIKit
 class SubscribeFilterCell: UICollectionViewCell {
     let profileImageView: UIImageView = UIImageView()
     let nickNameLabel: UILabel = UILabel()
-    
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         setView()
     }
-    
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     override func layoutSubviews() {
         super.layoutSubviews()
-        
+
         DispatchQueue.main.async { [unowned self] in
             profileImageView.layer.cornerRadius = profileImageView.frame.size.width/2
             profileImageView.clipsToBounds = true
         }
     }
-    
+
     func setView() {
         profileImageView.backgroundColor = .white
         self.addSubview(profileImageView)
@@ -38,7 +38,7 @@ class SubscribeFilterCell: UICollectionViewCell {
         profileImageView.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -5).isActive = true
         profileImageView.widthAnchor.constraint(equalToConstant: 56).isActive = true
         profileImageView.heightAnchor.constraint(equalToConstant: 56).isActive = true
-        
+
         nickNameLabel.font = UIFont.systemFont(ofSize: 11, weight: .semibold)
         nickNameLabel.textColor = .white
         self.addSubview(nickNameLabel)
