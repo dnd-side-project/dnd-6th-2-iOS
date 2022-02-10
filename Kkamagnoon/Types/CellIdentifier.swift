@@ -14,4 +14,5 @@ struct CellIdentifier {
     static let wholeTab = "WholeTabCell"
     static let subscribeTab = "SubscribeTabCell"
     static let subscribeList = "SubscribeListCell"
+    static let comment = "CommentCell"
 }

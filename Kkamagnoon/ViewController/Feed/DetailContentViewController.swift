@@ -19,6 +19,8 @@ class DetailContentViewController: UIViewController {
     
     lazy var titleLabel: UILabel = UILabel()
     lazy var contentTextView: UITextView = UITextView()
+    
+   
     lazy var bottomView = BottomReactionView()
     
     let disposeBag = DisposeBag()
@@ -129,6 +131,14 @@ class DetailContentViewController: UIViewController {
         bottomView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
         bottomView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
         bottomView.heightAnchor.constraint(equalToConstant: 45).isActive = true
+        
+        bottomView.commentButton.rx.tap
+            .bind { _ in
+                let vc = BottomSheetViewController()
+                vc.modalPresentationStyle = .overFullScreen
+                self.present(vc, animated: false, completion: nil)
+            }
+            .disposed(by: disposeBag)
     }
     
 }

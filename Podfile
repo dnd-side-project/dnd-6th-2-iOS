@@ -10,6 +10,7 @@ target 'Kkamagnoon' do
   pod 'RxSwift', '~> 5.1'
   pod 'RxCocoa', '~> 5.1'
   pod 'RxAlamofire', '~> 5.2'
+  pod 'IQKeyboardManagerSwift'
 
   # Pods for Kkamagnoon
 

@@ -26,6 +26,7 @@ class SubscribeListCell: UITableViewCell {
     func setView() {
         self.addSubview(profileView)
         profileView.translatesAutoresizingMaskIntoConstraints = false
+        profileView.subscribeStatus.isHidden = true
         profileView.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
         profileView.leftAnchor.constraint(equalTo: self.leftAnchor).isActive = true
         profileView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -19).isActive = true

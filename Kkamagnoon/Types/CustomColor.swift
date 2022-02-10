@@ -13,4 +13,6 @@ struct Color {
     static let tagText = 0x797979
     static let feedListCard = 0x1e1e1e
     static let content = 0xeaeaea
+    
+    static let whitePurple = 0xDC8CF0
 }
