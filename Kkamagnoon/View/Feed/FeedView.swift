@@ -19,10 +19,10 @@ import RxCocoa
 
 class FeedView: UIView {
 
-    var filterView: UICollectionView!
+    var filterView: UIView!
 
     lazy var sortButton: UIButton = UIButton()
-    lazy var feedMainView: FeedMainView = FeedMainView()
+    lazy var articleListView = ArticleListView()
 
     let disposeBag = DisposeBag()
 
@@ -45,18 +45,18 @@ class FeedView: UIView {
     func setSortButton() { }
 
     func setFeedMainView() {
-        addSubview(feedMainView)
-        feedMainView.translatesAutoresizingMaskIntoConstraints = false
+        addSubview(articleListView)
+        articleListView.translatesAutoresizingMaskIntoConstraints = false
 
-        feedMainView.topAnchor.constraint(equalTo: filterView.bottomAnchor, constant: 46).isActive = true
+        articleListView.topAnchor.constraint(equalTo: filterView.bottomAnchor, constant: 46).isActive = true
 
-        feedMainView.leftAnchor.constraint(equalTo: self.leftAnchor).isActive = true
-        feedMainView.rightAnchor.constraint(equalTo: self.rightAnchor).isActive = true
-        feedMainView.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
+        articleListView.leftAnchor.constraint(equalTo: self.leftAnchor).isActive = true
+        articleListView.rightAnchor.constraint(equalTo: self.rightAnchor).isActive = true
+        articleListView.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
 
         let dummyData = Observable<[String]>.of(["글감", "일상", "로맨스", "짧은 글", "긴 글", "무서운 글", "발랄한 글", "한글", "세종대왕"])
 
-        dummyData.bind(to: feedMainView.feedCollectionView
+        dummyData.bind(to: articleListView.collectionView
                         .rx.items(cellIdentifier: CellIdentifier.feed,
                                              cellType: FeedCell.self)) { (_, element, cell) in
             cell.articleTitle.text = element
@@ -64,7 +64,7 @@ class FeedView: UIView {
             }
         .disposed(by: disposeBag)
 
-        feedMainView.feedCollectionView.rx
+        articleListView.collectionView.rx
             .itemSelected
             .bind { _ in
                 let vc = DetailContentViewController()
@@ -77,7 +77,5 @@ class FeedView: UIView {
             .disposed(by: disposeBag)
     }
 
-    func setFeedMainViewTop() {
-
-    }
+    func setFeedMainViewTop() { }
 }
