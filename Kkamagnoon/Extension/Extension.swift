@@ -53,82 +53,6 @@ extension String {
     }
 }
 
-extension UINavigationController {
-
-    open override var childForStatusBarHidden: UIViewController? {
-        return viewControllers.last
-    }
-
-    open override var childForStatusBarStyle: UIViewController? {
-        return viewControllers.last
-    }
-}
-
-extension UITabBarController {
-
-    open override var childForStatusBarStyle: UIViewController? {
-        return self.children.first
-    }
-
-    open override var childForStatusBarHidden: UIViewController? {
-        return self.children.first
-    }
-}
-
-extension UISplitViewController {
-
-    open override var childForStatusBarStyle: UIViewController? {
-        return self.children.first
-    }
-
-    open override var childForStatusBarHidden: UIViewController? {
-        return self.children.first
-    }
-}
-
-// extension CALayer {
-//    func addBorder(_ edgeArr: [UIRectEdge], color: UIColor, width: CGFloat) {
-//        for edge in edgeArr {
-//            let border = CALayer()
-//            switch edge {
-//                case UIRectEdge.top:
-//                border.frame = CGRect.init(x: 0, y: 0, width: frame.width, height: width)
-//                break
-//                
-//                case UIRectEdge.bottom:
-//                border.frame = CGRect.init(x: 0, y: frame.height - width, width: frame.width, height: width)
-//                break
-//                
-//                case UIRectEdge.left:
-//                border.frame = CGRect.init(x: 0, y: 0, width: width, height: frame.height)
-//                break
-//                
-//                case UIRectEdge.right:
-//                border.frame = CGRect.init(x: frame.width - width, y: 0, width: width, height: frame.height)
-//                break
-//                
-//                default:
-//                break
-//                
-//            }
-//            border.backgroundColor = color.cgColor;
-//            self.addSublayer(border)
-//        }
-//    }
-// }
-//
-// struct BorderOptions: OptionSet {
-//    let rawValue: Int
-//
-//    static let top = BorderOptions(rawValue: 1 << 0)
-//    static let left = BorderOptions(rawValue: 1 << 1)
-//    static let bottom = BorderOptions(rawValue: 1 << 2)
-//    static let right = BorderOptions(rawValue: 1 << 3)
-//    
-//    static let horizontal: BorderOptions = [.left, .right]
-//    static let vertical: BorderOptions = [.top, .bottom]
-// }
-
 extension UIView {
 
     enum ViewSide: String {
@@ -163,5 +87,12 @@ extension UIView {
         if let layer = layerForRemove {
             layer.removeFromSuperlayer()
         }
+    }
+}
+
+extension Decodable {
+    static func decode<T: Decodable> (dictionary: [String: Any]) throws -> T {
+        let data = try JSONSerialization.data(withJSONObject: dictionary, options: [.fragmentsAllowed])
+        return try JSONDecoder().decode(T.self, from: data)
     }
 }

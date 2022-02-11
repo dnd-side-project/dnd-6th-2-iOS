@@ -11,6 +11,7 @@ target 'Kkamagnoon' do
   pod 'RxCocoa', '~> 5.1'
   pod 'RxAlamofire', '~> 5.2'
   pod 'IQKeyboardManagerSwift'
+  pod 'SwiftyJSON'
 
   # Pods for Kkamagnoon
 
