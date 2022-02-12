@@ -7,8 +7,10 @@
 
 import Foundation
 
-struct FeedInfo {
+// 옵셔널
+struct FeedInfo: Decodable {
     var _id: String
+    var comments: [String]
     var scrapNum: Int
     var commentNum: Int
     var likeNum: Int
@@ -22,9 +24,17 @@ struct FeedInfo {
     var title: String
     var user: String
     var createdAt: String
-    var updatedAt: String
+    var updatedAt: String?
 
     var __v: Int
+}
+
+extension FeedInfo {
+    var id: String {
+        _id
+    }
+
+    // CodingKeys
 }
 
 struct Author {

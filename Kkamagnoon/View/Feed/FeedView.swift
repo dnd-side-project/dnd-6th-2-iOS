@@ -54,27 +54,6 @@ class FeedView: UIView {
         articleListView.rightAnchor.constraint(equalTo: self.rightAnchor).isActive = true
         articleListView.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
 
-        let dummyData = Observable<[String]>.of(["글감", "일상", "로맨스", "짧은 글", "긴 글", "무서운 글", "발랄한 글", "한글", "세종대왕"])
-
-        dummyData.bind(to: articleListView.collectionView
-                        .rx.items(cellIdentifier: CellIdentifier.feed,
-                                             cellType: FeedCell.self)) { (_, element, cell) in
-            cell.articleTitle.text = element
-            cell.layer.cornerRadius = 15
-            }
-        .disposed(by: disposeBag)
-
-        articleListView.collectionView.rx
-            .itemSelected
-            .bind { _ in
-                let vc = DetailContentViewController()
-                vc.modalPresentationStyle = .pageSheet
-                vc.hidesBottomBarWhenPushed = true
-
-                self.viewController?.navigationController?.pushViewController(vc, animated: true)
-
-            }
-            .disposed(by: disposeBag)
     }
 
     func setFeedMainViewTop() { }

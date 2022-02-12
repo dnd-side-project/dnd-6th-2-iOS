@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0407909927B7CB38006C5374 /* EndPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0407909827B7CB38006C5374 /* EndPoint.swift */; };
+		0407909B27B7D232006C5374 /* NetworkError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0407909A27B7D232006C5374 /* NetworkError.swift */; };
+		0407909D27B7DD9E006C5374 /* FeedEndPointCases.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0407909C27B7DD9E006C5374 /* FeedEndPointCases.swift */; };
 		0439AF2D27AFAF7000E14E03 /* CategoryFilterCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0439AF2C27AFAF7000E14E03 /* CategoryFilterCell.swift */; };
 		0439AF2F27AFB22F00E14E03 /* CellIdentifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0439AF2E27AFB22F00E14E03 /* CellIdentifier.swift */; };
 		0439AF3127AFF97400E14E03 /* FeedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0439AF3027AFF97300E14E03 /* FeedCell.swift */; };
@@ -29,7 +32,6 @@
 		048D44BD27AF5D7D0031974D /* MyWritingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048D44BC27AF5D7D0031974D /* MyWritingViewController.swift */; };
 		048D44BF27AF5D930031974D /* ChallengeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048D44BE27AF5D930031974D /* ChallengeViewController.swift */; };
 		048D44C227AF5E030031974D /* StringConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048D44C127AF5E030031974D /* StringConverter.swift */; };
-		04C95FBD27B5442B00A0F840 /* FeedServiceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C95FBC27B5442B00A0F840 /* FeedServiceType.swift */; };
 		04C95FBF27B548DA00A0F840 /* FeedService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C95FBE27B548DA00A0F840 /* FeedService.swift */; };
 		04C95FC127B5495800A0F840 /* FeedViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C95FC027B5495800A0F840 /* FeedViewModel.swift */; };
 		04C95FC627B55E9800A0F840 /* FeedModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C95FC527B55E9800A0F840 /* FeedModel.swift */; };
@@ -71,6 +73,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0407909827B7CB38006C5374 /* EndPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EndPoint.swift; sourceTree = "<group>"; };
+		0407909A27B7D232006C5374 /* NetworkError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkError.swift; sourceTree = "<group>"; };
+		0407909C27B7DD9E006C5374 /* FeedEndPointCases.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedEndPointCases.swift; sourceTree = "<group>"; };
 		0439AF2C27AFAF7000E14E03 /* CategoryFilterCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryFilterCell.swift; sourceTree = "<group>"; };
 		0439AF2E27AFB22F00E14E03 /* CellIdentifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellIdentifier.swift; sourceTree = "<group>"; };
 		0439AF3027AFF97300E14E03 /* FeedCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedCell.swift; sourceTree = "<group>"; };
@@ -97,7 +102,6 @@
 		048D44BC27AF5D7D0031974D /* MyWritingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyWritingViewController.swift; sourceTree = "<group>"; };
 		048D44BE27AF5D930031974D /* ChallengeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallengeViewController.swift; sourceTree = "<group>"; };
 		048D44C127AF5E030031974D /* StringConverter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringConverter.swift; sourceTree = "<group>"; };
-		04C95FBC27B5442B00A0F840 /* FeedServiceType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedServiceType.swift; sourceTree = "<group>"; };
 		04C95FBE27B548DA00A0F840 /* FeedService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedService.swift; sourceTree = "<group>"; };
 		04C95FC027B5495800A0F840 /* FeedViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedViewModel.swift; sourceTree = "<group>"; };
 		04C95FC527B55E9800A0F840 /* FeedModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedModel.swift; sourceTree = "<group>"; };
@@ -155,6 +159,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		040790A227B7FBEE006C5374 /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				04C95FCA27B5F1A500A0F840 /* TokenUtils.swift */,
+				0407909827B7CB38006C5374 /* EndPoint.swift */,
+				0407909A27B7D232006C5374 /* NetworkError.swift */,
+			);
+			path = Core;
+			sourceTree = "<group>";
+		};
 		0439AF2927AFAB4300E14E03 /* Feed */ = {
 			isa = PBXGroup;
 			children = (
@@ -297,7 +311,7 @@
 		04C95FBB27B5440C00A0F840 /* Feed */ = {
 			isa = PBXGroup;
 			children = (
-				04C95FBC27B5442B00A0F840 /* FeedServiceType.swift */,
+				0407909C27B7DD9E006C5374 /* FeedEndPointCases.swift */,
 				04C95FBE27B548DA00A0F840 /* FeedService.swift */,
 			);
 			path = Feed;
@@ -377,8 +391,8 @@
 		04D0637527AEC251005EB16C /* Service */ = {
 			isa = PBXGroup;
 			children = (
+				040790A227B7FBEE006C5374 /* Core */,
 				04C95FBB27B5440C00A0F840 /* Feed */,
-				04C95FCA27B5F1A500A0F840 /* TokenUtils.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -682,6 +696,7 @@
 			files = (
 				04DAAE6027B3EA0500AECFE4 /* SubscribeListViewController.swift in Sources */,
 				048D44B927AF5D5A0031974D /* RelayViewController.swift in Sources */,
+				0407909D27B7DD9E006C5374 /* FeedEndPointCases.swift in Sources */,
 				048D44BF27AF5D930031974D /* ChallengeViewController.swift in Sources */,
 				0439AF4B27B1EBBF00E14E03 /* FeedViewController.swift in Sources */,
 				048D44BD27AF5D7D0031974D /* MyWritingViewController.swift in Sources */,
@@ -692,9 +707,11 @@
 				04C95FD127B68AD400A0F840 /* TagListView.swift in Sources */,
 				04C95FD527B68E8900A0F840 /* AuthorListView.swift in Sources */,
 				04C95FBF27B548DA00A0F840 /* FeedService.swift in Sources */,
+				0407909927B7CB38006C5374 /* EndPoint.swift in Sources */,
 				04C95FC627B55E9800A0F840 /* FeedModel.swift in Sources */,
 				0439AF3127AFF97400E14E03 /* FeedCell.swift in Sources */,
 				04DAAE6227B3F41900AECFE4 /* SubscribeListCell.swift in Sources */,
+				0407909B27B7D232006C5374 /* NetworkError.swift in Sources */,
 				04DAAE5327B2121600AECFE4 /* FeedView.swift in Sources */,
 				04C95FCB27B5F1A600A0F840 /* TokenUtils.swift in Sources */,
 				04C95FC127B5495800A0F840 /* FeedViewModel.swift in Sources */,
@@ -712,7 +729,6 @@
 				0439AF2F27AFB22F00E14E03 /* CellIdentifier.swift in Sources */,
 				0439AF3327B0B0A000E14E03 /* ArticleListView.swift in Sources */,
 				0439AF3527B0B4AF00E14E03 /* ProfileView.swift in Sources */,
-				04C95FBD27B5442B00A0F840 /* FeedServiceType.swift in Sources */,
 				048D44C227AF5E030031974D /* StringConverter.swift in Sources */,
 				04DAAE6627B4C03A00AECFE4 /* CommentCell.swift in Sources */,
 			);
