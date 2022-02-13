@@ -88,7 +88,7 @@ class FeedViewController: UIViewController {
         let dummyData = Observable<[String]>.of(["글감", "일상", "로맨스", "짧은 글", "긴 글", "무서운 글", "발랄한 글", "한글", "세종대왕"])
 
         dummyData.bind(to: wholeFeedView.articleListView.collectionView
-                        .rx.items(cellIdentifier: CellIdentifier.feed,
+                        .rx.items(cellIdentifier: FeedCell.feedCellIdentifier,
                                              cellType: FeedCell.self)) { (_, element, cell) in
             cell.articleTitle.text = element
             cell.layer.cornerRadius = 15
@@ -114,7 +114,7 @@ class FeedViewController: UIViewController {
         let dummyData = Observable<[String]>.of(["글감", "일상", "로맨스", "짧은 글", "긴 글", "무서운 글", "발랄한 글", "한글", "세종대왕"])
 
         dummyData.bind(to: subscribeFeedView.articleListView.collectionView
-                        .rx.items(cellIdentifier: CellIdentifier.feed,
+                        .rx.items(cellIdentifier: FeedCell.feedCellIdentifier,
                                              cellType: FeedCell.self)) { (_, element, cell) in
             cell.articleTitle.text = element
             cell.layer.cornerRadius = 15

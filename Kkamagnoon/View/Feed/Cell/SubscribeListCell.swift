@@ -9,6 +9,8 @@ import UIKit
 
 class SubscribeListCell: UITableViewCell {
 
+    static let subscribeListCellIdentifier = "SubscribeListCellIdentifier"
+
     lazy var profileView = ProfileView(width: 42, height: 42, fontsize: 14)
     lazy var subscribeButton = UIButton()
 

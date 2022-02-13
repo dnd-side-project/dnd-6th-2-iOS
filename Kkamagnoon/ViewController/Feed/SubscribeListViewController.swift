@@ -61,7 +61,7 @@ class SubscribeListViewController: UIViewController {
         view.addSubview(listTableView)
         listTableView.translatesAutoresizingMaskIntoConstraints = false
 
-        listTableView.register(SubscribeListCell.self, forCellReuseIdentifier: CellIdentifier.subscribeList)
+        listTableView.register(SubscribeListCell.self, forCellReuseIdentifier: SubscribeListCell.subscribeListCellIdentifier)
 
         listTableView.topAnchor.constraint(equalTo: pageNameLabel.bottomAnchor, constant: 26).isActive = true
         listTableView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 25).isActive = true
@@ -69,7 +69,7 @@ class SubscribeListViewController: UIViewController {
         listTableView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -20).isActive = true
 
         Observable<[String]>.of(["오리부리", "지그재그", "abcd", "감자튀김", "닉주디", "I_need"])
-            .bind(to: listTableView.rx.items(cellIdentifier: CellIdentifier.subscribeList, cellType: SubscribeListCell.self)) { (_: Int, element: String, cell: SubscribeListCell) in
+            .bind(to: listTableView.rx.items(cellIdentifier: SubscribeListCell.subscribeListCellIdentifier, cellType: SubscribeListCell.self)) { (_: Int, element: String, cell: SubscribeListCell) in
 
                 cell.profileView.nickNameLabel.text = element
 

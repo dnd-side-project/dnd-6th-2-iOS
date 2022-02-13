@@ -31,7 +31,7 @@ class ArticleListView: UIView {
         layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: TabBarViewController.tabbarHeight, right: 0)
 
         collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        collectionView.register(FeedCell.self, forCellWithReuseIdentifier: CellIdentifier.feed)
+        collectionView.register(FeedCell.self, forCellWithReuseIdentifier: FeedCell.feedCellIdentifier)
         collectionView.showsVerticalScrollIndicator = false
         collectionView.backgroundColor = .black
 

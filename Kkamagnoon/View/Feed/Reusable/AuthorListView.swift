@@ -29,7 +29,7 @@ class AuthorListView: UIView {
         flowLayout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 50)
 
         filterView = UICollectionView(frame: .zero, collectionViewLayout: flowLayout)
-        filterView.register(SubscribeFilterCell.self, forCellWithReuseIdentifier: CellIdentifier.subscribeFilter)
+        filterView.register(SubscribeFilterCell.self, forCellWithReuseIdentifier: SubscribeFilterCell.subscribeFilterCellIdentifier)
         filterView.backgroundColor = .black
         filterView.showsHorizontalScrollIndicator = false
 
@@ -50,7 +50,7 @@ class AuthorListView: UIView {
 
         testData
             .bind(to: filterView.rx
-                        .items(cellIdentifier: CellIdentifier.subscribeFilter,
+                    .items(cellIdentifier: SubscribeFilterCell.subscribeFilterCellIdentifier,
                                cellType: SubscribeFilterCell.self)) { (_, element, cell) in
 
                 cell.layer.cornerRadius = 6
