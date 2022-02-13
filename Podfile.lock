@@ -1,50 +1,68 @@
 PODS:
   - Alamofire (5.5.0)
+  - Differentiator (5.0.0)
   - IQKeyboardManagerSwift (6.5.9)
-  - RxAlamofire (5.7.1):
-    - RxAlamofire/Core (= 5.7.1)
-  - RxAlamofire/Core (5.7.1):
+  - RxAlamofire (6.1.1):
+    - RxAlamofire/Core (= 6.1.1)
+  - RxAlamofire/Core (6.1.1):
     - Alamofire (~> 5.4)
-    - RxSwift (~> 5.1)
-  - RxCocoa (5.1.3):
-    - RxRelay (~> 5)
-    - RxSwift (~> 5)
-  - RxRelay (5.1.3):
-    - RxSwift (~> 5)
-  - RxSwift (5.1.3)
+    - RxSwift (~> 6.0)
+  - RxCocoa (6.5.0):
+    - RxRelay (= 6.5.0)
+    - RxSwift (= 6.5.0)
+  - RxDataSources (5.0.0):
+    - Differentiator (~> 5.0)
+    - RxCocoa (~> 6.0)
+    - RxSwift (~> 6.0)
+  - RxRelay (6.5.0):
+    - RxSwift (= 6.5.0)
+  - RxSwift (6.5.0)
+  - SnapKit (5.0.1)
   - SwiftLint (0.46.2)
   - SwiftyJSON (5.0.1)
+  - Then (2.7.0)
 
 DEPENDENCIES:
-  - Alamofire (~> 5.2)
+  - Alamofire
   - IQKeyboardManagerSwift
-  - RxAlamofire (~> 5.2)
-  - RxCocoa (~> 5.1)
-  - RxSwift (~> 5.1)
+  - RxAlamofire (~> 6.0)
+  - RxCocoa (~> 6.0)
+  - RxDataSources
+  - RxSwift (~> 6.0)
+  - SnapKit
   - SwiftLint
   - SwiftyJSON
+  - Then
 
 SPEC REPOS:
   trunk:
     - Alamofire
+    - Differentiator
     - IQKeyboardManagerSwift
     - RxAlamofire
     - RxCocoa
+    - RxDataSources
     - RxRelay
     - RxSwift
+    - SnapKit
     - SwiftLint
     - SwiftyJSON
+    - Then
 
 SPEC CHECKSUMS:
   Alamofire: 1c4fb5369c3fe93d2857c780d8bbe09f06f97e7c
+  Differentiator: e8497ceab83c1b10ca233716d547b9af21b9344d
   IQKeyboardManagerSwift: 6e839c575c4aa1078d58a596e41244e77abe918f
-  RxAlamofire: 8e144c62dcc01d68dcb366bfc542eb6dd46bab78
-  RxCocoa: e2ed092d5432e4296aa818021d27de4090ac0354
-  RxRelay: 5a18c2eb2d68326ebaf0112f80d837ae41b92b97
-  RxSwift: 915abbdfb62214aa89ccd0b194d44fb478019b27
+  RxAlamofire: beb75a1c452d0de225651db4903f5d29d034a620
+  RxCocoa: 94f817b71c07517321eb4f9ad299112ca8af743b
+  RxDataSources: aa47cc1ed6c500fa0dfecac5c979b723542d79cf
+  RxRelay: 1de1523e604c72b6c68feadedd1af3b1b4d0ecbd
+  RxSwift: 5710a9e6b17f3c3d6e40d6e559b9fa1e813b2ef8
+  SnapKit: 97b92857e3df3a0c71833cce143274bf6ef8e5eb
   SwiftLint: 6bc52a21f0fd44cab9aa2dc8e534fb9f5e3ec507
   SwiftyJSON: 2f33a42c6fbc52764d96f13368585094bfd8aa5e
+  Then: acfe0be7e98221c6204e12f8161459606d5d822d
 
-PODFILE CHECKSUM: 34ba997c54616463b8863e81e78a3a89c9322946
+PODFILE CHECKSUM: bb778c85adea16bab4419492b54ae3b56f3d356a
 
 COCOAPODS: 1.11.2

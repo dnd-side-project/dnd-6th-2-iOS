@@ -15,4 +15,5 @@ struct Color {
     static let content = 0xeaeaea
 
     static let whitePurple = 0xDC8CF0
+    static let tagGreen = 0x5FCEA0
 }

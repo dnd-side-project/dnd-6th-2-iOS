@@ -1,11 +1,10 @@
 //
-//  extension.swift
+//  View.swift
 //  Kkamagnoon
 //
-//  Created by 서정 on 2022/02/08.
+//  Created by 서정 on 2022/02/13.
 //
 
-import Foundation
 import UIKit
 
 extension UIView {
@@ -21,40 +20,7 @@ extension UIView {
   }
 }
 
-extension UIColor {
-   convenience init(red: Int, green: Int, blue: Int) {
-       assert(red >= 0 && red <= 255, "Invalid red component")
-       assert(green >= 0 && green <= 255, "Invalid green component")
-       assert(blue >= 0 && blue <= 255, "Invalid blue component")
-
-       self.init(red: CGFloat(red) / 255.0, green: CGFloat(green) / 255.0, blue: CGFloat(blue) / 255.0, alpha: 1.0)
-   }
-
-   convenience init(rgb: Int) {
-       self.init(
-           red: (rgb >> 16) & 0xFF,
-           green: (rgb >> 8) & 0xFF,
-           blue: rgb & 0xFF
-       )
-   }
-
-}
-
-extension String {
-    func substring(from: Int, to: Int) -> String {
-        guard from < count, to >= 0, to - from >= 0 else {
-            return ""
-        }
-
-        let startIndex = index(self.startIndex, offsetBy: from)
-        let endIndex = index(self.startIndex, offsetBy: to + 1)
-
-        return String(self[startIndex ..< endIndex])
-    }
-}
-
 extension UIView {
-
     enum ViewSide: String {
         case left = "Left", right = "Right", top = "Top", bottom = "Bottom"
     }
@@ -87,12 +53,5 @@ extension UIView {
         if let layer = layerForRemove {
             layer.removeFromSuperlayer()
         }
-    }
-}
-
-extension Decodable {
-    static func decode<T: Decodable> (dictionary: [String: Any]) throws -> T {
-        let data = try JSONSerialization.data(withJSONObject: dictionary, options: [.fragmentsAllowed])
-        return try JSONDecoder().decode(T.self, from: data)
     }
 }

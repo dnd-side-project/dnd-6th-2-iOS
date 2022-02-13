@@ -36,7 +36,7 @@ class TagListView: UIView {
         filterView.showsHorizontalScrollIndicator = false
 
         let width = filterView.frame.width
-        flowLayout.estimatedItemSize = CGSize(width: width, height: 29)
+        flowLayout.estimatedItemSize = CGSize(width: width, height: 30)
 
         filterView.collectionViewLayout = flowLayout
         self.addSubview(filterView)
@@ -45,7 +45,7 @@ class TagListView: UIView {
         filterView.leftAnchor.constraint(equalTo: self.leftAnchor).isActive = true
         filterView.rightAnchor.constraint(equalTo: self.rightAnchor).isActive = true
         filterView.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
-        filterView.heightAnchor.constraint(equalToConstant: 29).isActive = true
+        filterView.heightAnchor.constraint(equalToConstant: 30).isActive = true
 
         let testData = Observable<[String]>.of(["글감", "일상", "로맨스", "짧은 글", "긴 글", "무서운 글", "발랄한 글", "한글", "세종대왕"])
 
@@ -53,10 +53,11 @@ class TagListView: UIView {
             .bind(to: filterView.rx
                         .items(cellIdentifier: CellIdentifier.categoryFilter,
                                cellType: CategoryFilterCell.self)) { (_, element, cell) in
-                cell.layer.cornerRadius = 18
-                cell.categoryLabel.text = element
+                cell.tagView.categoryLabel.text = element
+
         }
         .disposed(by: disposeBag)
+
     }
 
 }

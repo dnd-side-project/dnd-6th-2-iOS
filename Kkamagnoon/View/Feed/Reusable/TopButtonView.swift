@@ -36,7 +36,7 @@ class TopButtonView: UIView {
         wholeFeedButton.setTitle(StringType.wholeFeed, for: .normal)
         wholeFeedButton.translatesAutoresizingMaskIntoConstraints = false
 
-        wholeFeedButton.titleLabel?.font = UIFont.systemFont(ofSize: 20, weight: .bold)
+        wholeFeedButton.titleLabel?.font = UIFont.pretendard(weight: .semibold, size: 20)
 
         wholeFeedButton.topAnchor.constraint(equalTo: self.topAnchor, constant: 63).isActive = true
         wholeFeedButton.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 20).isActive = true
@@ -46,7 +46,7 @@ class TopButtonView: UIView {
 
         subscribeButton.setTitle(StringType.subscribeFeed, for: .normal)
         subscribeButton.setTitleColor(UIColor.gray, for: .normal)
-        subscribeButton.titleLabel?.font = UIFont.systemFont(ofSize: 20, weight: .medium)
+        subscribeButton.titleLabel?.font = UIFont.pretendard(weight: .medium, size: 20)
 
         subscribeButton.topAnchor.constraint(equalTo: self.topAnchor, constant: 63).isActive = true
         subscribeButton.leftAnchor.constraint(equalTo: wholeFeedButton.rightAnchor, constant: 10).isActive = true
@@ -89,10 +89,11 @@ class TopButtonView: UIView {
                    } else {
                        self.searchButton.isHidden = false
                    }
-                   tabButtons[idx].titleLabel?.font = UIFont.systemFont(ofSize: 20, weight: .bold)
+
+                   tabButtons[idx].titleLabel?.font = UIFont.pretendard(weight: .bold, size: 20)
                    tabButtons[idx].setTitleColor(.white, for: .normal)
 
-                   tabButtons[1-idx].titleLabel?.font = UIFont.systemFont(ofSize: 20, weight: .medium)
+                   tabButtons[1-idx].titleLabel?.font = UIFont.pretendard(weight: .medium, size: 20)
                    tabButtons[1-idx].setTitleColor(.gray, for: .normal)
                }
                .disposed(by: disposeBag)

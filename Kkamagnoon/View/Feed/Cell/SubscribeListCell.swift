@@ -36,7 +36,8 @@ class SubscribeListCell: UITableViewCell {
 
         subscribeButton.setTitle("구독", for: .normal)
         subscribeButton.setTitleColor(.black, for: .normal)
-        subscribeButton.titleLabel?.font = UIFont.systemFont(ofSize: 9, weight: .regular)
+
+        subscribeButton.titleLabel?.font = UIFont.pretendard(weight: .medium, size: 9)
         subscribeButton.layer.cornerRadius = 18
         subscribeButton.backgroundColor = UIColor(rgb: 0xF0F0F0)
 

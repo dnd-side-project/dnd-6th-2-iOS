@@ -11,6 +11,7 @@ import RxCocoa
 
 class FeedViewController: UIViewController {
 
+    let viewModel = FeedViewModel()
     let disposeBag = DisposeBag()
 
     let topButtonView = TopButtonView()
@@ -25,9 +26,17 @@ class FeedViewController: UIViewController {
         navigationController?.setNavigationBarHidden(true, animated: false)
         navigationController?.interactivePopGestureRecognizer?.delegate = nil
         feedView = wholeFeedView
+
         setTopView()
         setFeedView()
+
         bindTopView()
+
+        viewModel.getWholeFeedList()
+//        viewModel.getSubscribeFeedList()
+
+        bindWholeFeedViewData()
+        bindSubscribeFeedViewData()
     }
 
     func setTopView() {
@@ -54,19 +63,73 @@ class FeedViewController: UIViewController {
     func bindTopView() {
 
         topButtonView.wholeFeedButton.rx.tap
-            .bind { _ in
-                self.feedView.removeFromSuperview()
-                self.feedView = self.wholeFeedView
-                self.setFeedView()
+            .withUnretained(self)
+            .bind { owner, _ in
+                owner.feedView.removeFromSuperview()
+                owner.feedView = owner.wholeFeedView
+                owner.setFeedView()
 
             }
             .disposed(by: disposeBag)
 
         topButtonView.subscribeButton.rx.tap
+            .withUnretained(self)
+            .bind { owner, _ in
+                owner.feedView.removeFromSuperview()
+                owner.feedView = owner.subscribeFeedView
+                owner.setFeedView()
+            }
+            .disposed(by: disposeBag)
+    }
+
+    func bindWholeFeedViewData() {
+
+        // DUMMY
+        let dummyData = Observable<[String]>.of(["글감", "일상", "로맨스", "짧은 글", "긴 글", "무서운 글", "발랄한 글", "한글", "세종대왕"])
+
+        dummyData.bind(to: wholeFeedView.articleListView.collectionView
+                        .rx.items(cellIdentifier: CellIdentifier.feed,
+                                             cellType: FeedCell.self)) { (_, element, cell) in
+            cell.articleTitle.text = element
+            cell.layer.cornerRadius = 15
+            }
+        .disposed(by: disposeBag)
+
+        wholeFeedView.articleListView.collectionView.rx
+            .itemSelected
             .bind { _ in
-                self.feedView.removeFromSuperview()
-                self.feedView = self.subscribeFeedView
-                self.setFeedView()
+                let vc = DetailContentViewController()
+                vc.modalPresentationStyle = .pageSheet
+                vc.hidesBottomBarWhenPushed = true
+
+                self.navigationController?.pushViewController(vc, animated: true)
+
+            }
+            .disposed(by: disposeBag)
+    }
+
+    func bindSubscribeFeedViewData() {
+
+        // DUMMY
+        let dummyData = Observable<[String]>.of(["글감", "일상", "로맨스", "짧은 글", "긴 글", "무서운 글", "발랄한 글", "한글", "세종대왕"])
+
+        dummyData.bind(to: subscribeFeedView.articleListView.collectionView
+                        .rx.items(cellIdentifier: CellIdentifier.feed,
+                                             cellType: FeedCell.self)) { (_, element, cell) in
+            cell.articleTitle.text = element
+            cell.layer.cornerRadius = 15
+            }
+        .disposed(by: disposeBag)
+
+        subscribeFeedView.articleListView.collectionView.rx
+            .itemSelected
+            .bind { _ in
+                let vc = DetailContentViewController()
+                vc.modalPresentationStyle = .pageSheet
+                vc.hidesBottomBarWhenPushed = true
+
+                self.navigationController?.pushViewController(vc, animated: true)
+
             }
             .disposed(by: disposeBag)
     }

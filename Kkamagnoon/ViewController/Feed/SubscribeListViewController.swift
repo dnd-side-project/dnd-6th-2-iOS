@@ -49,7 +49,8 @@ class SubscribeListViewController: UIViewController {
         pageNameLabel.translatesAutoresizingMaskIntoConstraints = false
         pageNameLabel.text = "구독 목록"
         pageNameLabel.textColor = UIColor(rgb: 0xEFEFEF)
-        pageNameLabel.font = UIFont.systemFont(ofSize: 20, weight: .semibold)
+
+        pageNameLabel.font = UIFont.pretendard(weight: .medium, size: 20)
 
         pageNameLabel.leftAnchor.constraint(equalTo: backButton.rightAnchor, constant: 16.87).isActive = true
         pageNameLabel.centerYAnchor.constraint(equalTo: backButton.centerYAnchor).isActive = true

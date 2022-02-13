@@ -32,10 +32,12 @@ class ArticleListView: UIView {
 
         collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.register(FeedCell.self, forCellWithReuseIdentifier: CellIdentifier.feed)
+        collectionView.showsVerticalScrollIndicator = false
         collectionView.backgroundColor = .black
+
         layout.estimatedItemSize = CGSize(width: UIScreen.main.bounds.width - 40,
                                           height: collectionView.frame.height)
-        collectionView.showsVerticalScrollIndicator = false
+
         collectionView.collectionViewLayout = layout
 
         self.addSubview(collectionView)

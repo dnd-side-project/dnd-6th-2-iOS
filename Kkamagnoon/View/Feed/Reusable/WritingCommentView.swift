@@ -6,9 +6,11 @@
 //
 
 import UIKit
+import SnapKit
 
 class WritingCommentView: UIView {
 
+    let grayLine: GrayBorderView = GrayBorderView()
     let profileImageView: UIImageView = UIImageView()
     let textView: UITextView = UITextView()
     let postingButton: UIButton = UIButton()
@@ -16,6 +18,7 @@ class WritingCommentView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.backgroundColor = UIColor(rgb: Color.feedListCard)
+        setGrayLine()
         setProfileImageView()
         setTextView()
         setPostingButton()
@@ -28,6 +31,15 @@ class WritingCommentView: UIView {
     override func layoutSubviews() {
         DispatchQueue.main.async {
             self.profileImageView.layer.cornerRadius = self.profileImageView.frame.size.width / 2
+        }
+    }
+
+    func setGrayLine() {
+        self.addSubview(grayLine)
+
+        grayLine.snp.makeConstraints {
+            $0.left.right.equalToSuperview()
+            $0.top.equalToSuperview().offset(-0.5)
         }
     }
 
@@ -59,7 +71,8 @@ class WritingCommentView: UIView {
         postingButton.translatesAutoresizingMaskIntoConstraints = false
 
         postingButton.setTitle("게시", for: .normal)
-        postingButton.titleLabel?.font = UIFont.systemFont(ofSize: 14, weight: .bold)
+        postingButton.titleLabel?.font = UIFont.pretendard(weight: .semibold, size: 14)
+
         postingButton.setTitleColor(UIColor(rgb: Color.whitePurple), for: .normal)
 
         postingButton.widthAnchor.constraint(equalToConstant: 25).isActive = true
