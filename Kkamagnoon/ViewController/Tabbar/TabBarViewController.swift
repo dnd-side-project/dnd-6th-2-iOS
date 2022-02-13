@@ -6,14 +6,19 @@
 //
 
 import UIKit
+import SnapKit
 
 class TabBarViewController: UITabBarController {
 
     static var tabbarHeight: CGFloat = 0
+
+    var grayLine = GrayBorderView()
     override func viewDidLoad() {
         super.viewDidLoad()
         TabBarViewController.tabbarHeight = self.tabBar.frame.height
         createBarItems()
+
+        setGrayLine()
     }
 
     override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -22,6 +27,18 @@ class TabBarViewController: UITabBarController {
 
     override var prefersStatusBarHidden: Bool {
         return false
+    }
+
+    func setGrayLine() {
+        tabBar.addSubview(grayLine)
+
+        grayLine.backgroundColor = UIColor(rgb: 0x323232)
+
+        grayLine.snp.makeConstraints {
+            $0.left.right.equalToSuperview()
+            $0.top.equalTo(tabBar.snp.top).offset(-0.5)
+        }
+
     }
 
     func createBarItems() {

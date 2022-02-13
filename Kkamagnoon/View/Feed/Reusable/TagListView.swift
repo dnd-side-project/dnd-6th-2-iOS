@@ -29,7 +29,7 @@ class TagListView: UIView {
         flowLayout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 30)
 
         filterView = UICollectionView(frame: .zero, collectionViewLayout: flowLayout)
-        filterView.register(CategoryFilterCell.self, forCellWithReuseIdentifier: CellIdentifier.categoryFilter)
+        filterView.register(CategoryFilterCell.self, forCellWithReuseIdentifier: CategoryFilterCell.categoryFilterCellIdentifier)
 
         filterView.backgroundColor = .black
 
@@ -51,7 +51,7 @@ class TagListView: UIView {
 
         testData
             .bind(to: filterView.rx
-                        .items(cellIdentifier: CellIdentifier.categoryFilter,
+                    .items(cellIdentifier: CategoryFilterCell.categoryFilterCellIdentifier,
                                cellType: CategoryFilterCell.self)) { (_, element, cell) in
                 cell.tagView.categoryLabel.text = element
 

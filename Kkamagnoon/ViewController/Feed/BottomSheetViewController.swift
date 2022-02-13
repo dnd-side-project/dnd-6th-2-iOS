@@ -106,7 +106,7 @@ class BottomSheetViewController: UIViewController {
         commentTableView.translatesAutoresizingMaskIntoConstraints = false
 
         commentTableView.backgroundColor = UIColor(rgb: Color.feedListCard)
-        commentTableView.register(CommentCell.self, forCellReuseIdentifier: CellIdentifier.comment)
+        commentTableView.register(CommentCell.self, forCellReuseIdentifier: CommentCell.commentCellIdentifier)
         // TODO
         commentTableView.topAnchor.constraint(equalTo: bottomSheetView.topAnchor, constant: 21.5).isActive = true
         commentTableView.leftAnchor.constraint(equalTo: bottomSheetView.leftAnchor).isActive = true
@@ -116,7 +116,7 @@ class BottomSheetViewController: UIViewController {
         // Dummy
         let testString = "내용이 너무 좋아요!!><"
         Observable<[String]>.of([testString, testString, testString])
-            .bind(to: commentTableView.rx.items(cellIdentifier: CellIdentifier.comment, cellType: CommentCell.self)) { (_, element, cell) in
+            .bind(to: commentTableView.rx.items(cellIdentifier: CommentCell.commentCellIdentifier, cellType: CommentCell.self)) { (_, element, cell) in
                 cell.commentContent.text = element
             }
             .disposed(by: disposeBag)

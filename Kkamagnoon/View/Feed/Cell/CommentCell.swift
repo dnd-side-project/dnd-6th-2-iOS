@@ -9,6 +9,8 @@ import UIKit
 
 class CommentCell: UITableViewCell {
 
+    static let commentCellIdentifier = "CommentCellIdentifier"
+
     let profileView = ProfileView(width: 29, height: 29, fontsize: 14)
     let createdDateLabel = UILabel()
     let moreButton = UIButton()

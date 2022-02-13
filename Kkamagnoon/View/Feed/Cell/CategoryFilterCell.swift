@@ -9,7 +9,8 @@ import UIKit
 import SnapKit
 
 final class CategoryFilterCell: UICollectionViewCell {
-//    var categoryLabel: UILabel = UILabel()
+
+    static let categoryFilterCellIdentifier = "CategoryFilterCellIdentifier"
     let tagView = TagView(top: 10.0,
                           bottom: -10.0,
                           leading: 16.0,
