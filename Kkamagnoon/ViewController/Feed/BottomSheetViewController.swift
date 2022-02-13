@@ -9,11 +9,13 @@ import UIKit
 import RxSwift
 import RxCocoa
 import IQKeyboardManagerSwift
+import SnapKit
 
 // UISheetPresentationController() 대체
 class BottomSheetViewController: UIViewController {
 
     let backView = UIView()
+
     let bottomSheetView = UIView()
 
     let dragIndicatorView = UIView()
@@ -21,6 +23,10 @@ class BottomSheetViewController: UIViewController {
     lazy var commentTableView = UITableView()
 
     let writingCommentView = WritingCommentView()
+
+    let keyboardShowObserver  = NotificationCenter.default.keyboardWillShowObservable()
+    
+    let keyboardHideObserver = NotificationCenter.default.keyboardWillHideObservable()
 
     let disposeBag = DisposeBag()
 
@@ -30,7 +36,6 @@ class BottomSheetViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
         setKeyBoard()
         setBackView()
         setBottomSheetView()
@@ -43,22 +48,13 @@ class BottomSheetViewController: UIViewController {
         setDragIndicatorView()
         setCommentTableView()
         setWritingTextView()
+        animateWritingViewGoUp()
+        animateWritingViewGoDown()
     }
 
     func setKeyBoard() {
         IQKeyboardManager.shared.enable = false
         IQKeyboardManager.shared.enableAutoToolbar = false
-        NotificationCenter.default.addObserver(
-            self, selector: #selector(keyboardWillShow),
-            name: UIResponder.keyboardWillShowNotification,
-            object: nil
-        )
-
-        NotificationCenter.default.addObserver(
-            self, selector: #selector(keyboardWillHide),
-            name: UIResponder.keyboardWillHideNotification,
-            object: nil
-        )
     }
 
     func setBackView() {
@@ -139,11 +135,11 @@ class BottomSheetViewController: UIViewController {
             .constraint(equalTo: view.bottomAnchor, constant: -44)
         writingCommebtViewBottomConstraint.isActive = true
 
-        writingCommentView.textView.rx.didBeginEditing
-            .bind { _ in
-                self.animateWritingViewGoUp()
-            }
-            .disposed(by: disposeBag)
+//        writingCommentView.textView.rx.didBeginEditing
+//            .bind { _ in
+//                self.animateWritingViewGoUp()
+//            }
+//            .disposed(by: disposeBag)
     }
 
     private func addCloseTapGesture(to target: UIView) {
@@ -192,33 +188,34 @@ class BottomSheetViewController: UIViewController {
 
     func animateWritingViewGoUp() {
 
-        writingCommebtViewBottomConstraint.constant = -keyboardHeight
+        keyboardShowObserver
+            .bind { [weak self] keyboardAnimationInfo in
+                guard let self = self else { return }
 
-        UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseIn, animations: {
-            self.view.layoutIfNeeded()
-        }, completion: nil)
+                UIView.animate(withDuration: keyboardAnimationInfo.duration,
+                               delay: .zero,
+                               options: [UIView.AnimationOptions(rawValue: keyboardAnimationInfo.curve)]) {
+                    self.writingCommebtViewBottomConstraint.constant = -keyboardAnimationInfo.height
+                }
+                self.view.layoutIfNeeded()
+            }
+            .disposed(by: disposeBag)
     }
 
     func animateWritingViewGoDown() {
+        
+        keyboardHideObserver
+            .bind { [weak self] keyboardAnimationInfo in
+                guard let self = self else { return }
 
-        writingCommebtViewBottomConstraint.constant = -44
-
-        UIView.animate(withDuration: 0.1, delay: 0, options: .curveEaseIn, animations: {
-            self.view.layoutIfNeeded()
-        }, completion: nil)
-    }
-
-    @objc func keyboardWillShow(_ notification: Notification) {
-        if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
-            let keyboardRectangle = keyboardFrame.cgRectValue
-            let keyboardHeight = keyboardRectangle.height
-
-            self.keyboardHeight = keyboardHeight
-        }
-    }
-
-    @objc func keyboardWillHide(_ notification: Notification) {
-        self.animateWritingViewGoDown()
+                UIView.animate(withDuration: keyboardAnimationInfo.duration,
+                               delay: .zero,
+                               options: [UIView.AnimationOptions(rawValue: keyboardAnimationInfo.curve)]) {
+                    self.writingCommebtViewBottomConstraint.constant = -44
+                }
+                self.view.layoutIfNeeded()
+            }
+            .disposed(by: disposeBag)
     }
 
 }

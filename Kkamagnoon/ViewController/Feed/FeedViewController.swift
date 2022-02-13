@@ -83,7 +83,7 @@ class FeedViewController: UIViewController {
     }
 
     func bindWholeFeedViewData() {
-        
+
         // DUMMY
         let dummyData = Observable<[String]>.of(["글감", "일상", "로맨스", "짧은 글", "긴 글", "무서운 글", "발랄한 글", "한글", "세종대왕"])
 
@@ -109,7 +109,7 @@ class FeedViewController: UIViewController {
     }
 
     func bindSubscribeFeedViewData() {
-        
+
         // DUMMY
         let dummyData = Observable<[String]>.of(["글감", "일상", "로맨스", "짧은 글", "긴 글", "무서운 글", "발랄한 글", "한글", "세종대왕"])
 

@@ -12,6 +12,7 @@ target 'Kkamagnoon' do
   pod 'RxAlamofire', "~> 6.0"
   pod 'IQKeyboardManagerSwift'
   pod 'SwiftyJSON'
+  pod 'SnapKit'
 
   # Pods for Kkamagnoon
 

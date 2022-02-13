@@ -17,10 +17,10 @@ class FeedService {
 
     func getWholeFeed(page: Int) {
         let endpoint = FeedEndpointCases.getWholeFeed(page: page)
-        
+
         let url = URL(string: endpoint.url)!
         var request = URLRequest(url: url)
-        
+
         request.httpMethod = endpoint.httpMethod
         endpoint.headers?.forEach({ header in
             request.setValue(header.value as? String, forHTTPHeaderField: header.key)
