@@ -20,13 +20,22 @@ class WholeFeedView: FeedView {
         filterView.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
         filterView.heightAnchor.constraint(equalToConstant: 29).isActive = true
 
+//        filterView..rx.itemSelected
+//            .bind { [weak self] indexPath in
+//
+//                guard let self = self else { return }
+//                self.filterView.selectItem(at: indexPath, animated: false, scrollPosition: [])
+//            }
+//            .disposed(by: disposeBag)
+
     }
 
     override func setSortButton() {
         sortButton.setTitle("인기순", for: .normal)
         sortButton.setImage(UIImage(systemName: "heart.fill"), for: .normal)
         sortButton.sizeToFit()
-        sortButton.titleLabel?.font = UIFont.systemFont(ofSize: 12, weight: .medium)
+        sortButton.titleLabel?.font = UIFont.pretendard(weight: .medium, size: 12)
+
         self.addSubview(sortButton)
 
         sortButton.translatesAutoresizingMaskIntoConstraints = false

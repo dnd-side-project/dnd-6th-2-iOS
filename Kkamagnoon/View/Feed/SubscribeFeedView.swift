@@ -22,7 +22,8 @@ class SubscribeFeedView: FeedView {
 
         goAllListButton.setTitle("전체", for: .normal)
         goAllListButton.setTitleColor(UIColor(rgb: 0x5FCEA0), for: .normal)
-        goAllListButton.titleLabel?.font = UIFont.systemFont(ofSize: 14, weight: .regular)
+
+        goAllListButton.titleLabel?.font = UIFont.pretendard(weight: .medium, size: 14)
         self.addSubview(goAllListButton)
         goAllListButton.translatesAutoresizingMaskIntoConstraints = false
         goAllListButton.leftAnchor.constraint(equalTo: filterView.rightAnchor).isActive = true

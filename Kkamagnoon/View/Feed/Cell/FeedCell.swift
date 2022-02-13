@@ -14,8 +14,11 @@ class FeedCell: UICollectionViewCell {
     let articleTitle: UILabel = UILabel()
     let articleContents: UITextView = UITextView()
 
-    let likeLabel: UILabel = UILabel()
-    let commentLabel: UILabel = UILabel()
+//    let likeLabel: UILabel = UILabel()
+//    let commentLabel: UILabel = UILabel()
+
+    let likeView: ImageLabelView = ImageLabelView()
+    let commentView: ImageLabelView = ImageLabelView()
 
     let moreButton: UIButton = UIButton()
 
@@ -38,7 +41,8 @@ class FeedCell: UICollectionViewCell {
         // 작성일
         updateDate.text = "2022년 2월 1일"
         updateDate.textColor = UIColor(rgb: 0x626262)
-        updateDate.font = UIFont.systemFont(ofSize: 10, weight: .medium)
+
+        updateDate.font = UIFont.pretendard(weight: .regular, size: 10)
         self.addSubview(updateDate)
         updateDate.translatesAutoresizingMaskIntoConstraints = false
         updateDate.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -16).isActive = true
@@ -46,23 +50,32 @@ class FeedCell: UICollectionViewCell {
 
         // 글 제목
         articleTitle.textColor = .white
-        articleTitle.font = UIFont.systemFont(ofSize: 14, weight: .bold)
+        articleTitle.font = UIFont.pretendard(weight: .semibold, size: 14)
         self.addSubview(articleTitle)
         articleTitle.translatesAutoresizingMaskIntoConstraints = false
         articleTitle.topAnchor.constraint(equalTo: self.topAnchor, constant: 60).isActive = true
         articleTitle.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 20).isActive = true
 
         // 글 내용
-        articleContents.textColor = UIColor(rgb: Color.content)
+
+        articleContents.setTextWithLineHeight(
+            text: StringType.dummyContents,
+            lineHeight: 20,
+            fontSize: 13,
+            fontWeight: .regular,
+            color: UIColor(rgb: Color.content)
+        )
+        articleContents.textContainer.maximumNumberOfLines = 5
+        articleContents.textContainer.lineBreakMode = .byTruncatingTail
+
         articleContents.backgroundColor = UIColor(rgb: Color.feedListCard)
-        articleContents.text = StringType.dummyContents
-        articleContents.font = UIFont.systemFont(ofSize: 13, weight: .medium)
         articleContents.sizeToFit()
         articleContents.isScrollEnabled = false
         articleContents.isEditable = false
         articleContents.isSelectable = false
         articleContents.isUserInteractionEnabled = false
         articleContents.textContainerInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+
         self.addSubview(articleContents)
         articleContents.translatesAutoresizingMaskIntoConstraints = false
         articleContents.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 20).isActive = true
@@ -71,31 +84,30 @@ class FeedCell: UICollectionViewCell {
 
         // 공감
 
-        likeLabel.attributedText = makeImageAttatchLabel(imageName: "heart.fill", text: "80")
-        likeLabel.font = UIFont.systemFont(ofSize: 12, weight: .medium)
-
-        self.addSubview(likeLabel)
-        likeLabel.translatesAutoresizingMaskIntoConstraints = false
-
-        likeLabel.topAnchor.constraint(equalTo: articleContents.bottomAnchor, constant: 14).isActive = true
-        likeLabel.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 20).isActive = true
-        likeLabel.bottomAnchor
-            .constraint(equalTo: self.bottomAnchor, constant: -15).isActive = true
+        self.addSubview(likeView)
+        likeView.snp.makeConstraints {
+            $0.top.equalTo(articleContents.snp.bottom).offset(14.0)
+            $0.left.equalToSuperview().offset(20.0)
+            $0.bottom.equalToSuperview().offset(-15.0)
+        }
 
         // 댓글
-        commentLabel.attributedText = makeImageAttatchLabel(imageName: "heart.fill", text: "63")
-        commentLabel.font = UIFont.systemFont(ofSize: 12, weight: .medium)
-        self.addSubview(commentLabel)
-        commentLabel.translatesAutoresizingMaskIntoConstraints = false
-        commentLabel.leftAnchor.constraint(equalTo: likeLabel.rightAnchor, constant: 5).isActive = true
-        commentLabel.centerYAnchor.constraint(equalTo: likeLabel.centerYAnchor).isActive = true
+
+        self.addSubview(commentView)
+        commentView.snp.makeConstraints {
+            $0.centerY.equalTo(likeView)
+            $0.left.equalTo(likeView.snp.right).offset(32.0)
+        }
 
         // 더보기(신고하기)
         moreButton.setImage(UIImage(systemName: "heart.fill"), for: .normal)
         self.addSubview(moreButton)
-        moreButton.translatesAutoresizingMaskIntoConstraints = false
-        moreButton.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -20).isActive = true
-        moreButton.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -15).isActive = true
+        moreButton.snp.makeConstraints {
+            $0.centerY.equalTo(likeView)
+            $0.size.equalTo(24.0)
+            $0.right.equalToSuperview().offset(-20.0)
+        }
+
     }
 
     private func makeImageAttatchLabel(imageName: String, text: String) -> NSMutableAttributedString {
@@ -114,7 +126,7 @@ class FeedCell: UICollectionViewCell {
     override func preferredLayoutAttributesFitting(_ layoutAttributes: UICollectionViewLayoutAttributes)
     -> UICollectionViewLayoutAttributes {
         super.preferredLayoutAttributesFitting(layoutAttributes)
-        layoutIfNeeded()
+//        layoutIfNeeded()
         let size = self.systemLayoutSizeFitting(layoutAttributes.size)
         var frame = layoutAttributes.frame
         frame.size.height = ceil(size.height)

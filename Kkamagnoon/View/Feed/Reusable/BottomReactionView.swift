@@ -8,12 +8,34 @@
 import UIKit
 import RxCocoa
 import RxSwift
+import SnapKit
+import Then
 
 class BottomReactionView: UIView {
 
+    lazy var grayLine: GrayBorderView = GrayBorderView()
+
     lazy var likeButton: UIButton = UIButton()
+        .then {
+            $0.setImage(UIImage(systemName: "heart.fill"), for: .normal)
+            $0.setTitle("80", for: .normal)
+            $0.titleLabel?.font = UIFont.pretendard(weight: .regular, size: 16)
+        }
+
     lazy var commentButton: UIButton = UIButton()
+        .then {
+            $0.setImage(UIImage(systemName: "heart.fill"), for: .normal)
+            $0.setTitle("80", for: .normal)
+            $0.titleLabel?.font = UIFont.pretendard(weight: .regular, size: 16)
+        }
+
     lazy var bookmarkButton: UIButton = UIButton()
+        .then {
+            $0.setImage(UIImage(systemName: "heart.fill"), for: .normal)
+            $0.setTitle("80", for: .normal)
+            $0.titleLabel?.font = UIFont.pretendard(weight: .regular, size: 16)
+
+        }
 
     let disposeBag = DisposeBag()
 
@@ -28,41 +50,33 @@ class BottomReactionView: UIView {
     }
 
     func setView() {
-        likeButton.setImage(UIImage(systemName: "heart.fill"), for: .normal)
-        likeButton.setTitle("80", for: .normal)
-        likeButton.titleLabel?.font = UIFont.systemFont(ofSize: 16, weight: .medium)
+        self.addSubview(grayLine)
+        grayLine.snp.makeConstraints {
+            $0.left.right.equalToSuperview()
+            $0.top.equalToSuperview().offset(-0.5)
+        }
+
         self.addSubview(likeButton)
-        likeButton.translatesAutoresizingMaskIntoConstraints = false
 
-        likeButton.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 20).isActive = true
-        likeButton.topAnchor.constraint(equalTo: self.topAnchor, constant: 16).isActive = true
-        likeButton.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
+        likeButton.snp.makeConstraints {
+            $0.left.equalToSuperview().offset(20.0)
+            $0.top.equalToSuperview().offset(16.0)
+            $0.bottom.equalToSuperview()
+        }
 
-        commentButton.setImage(UIImage(systemName: "heart.fill"), for: .normal)
-        commentButton.setTitle("80", for: .normal)
-        commentButton.titleLabel?.font = UIFont.systemFont(ofSize: 16, weight: .medium)
         self.addSubview(commentButton)
-        commentButton.translatesAutoresizingMaskIntoConstraints = false
 
-        commentButton.leftAnchor.constraint(equalTo: likeButton.rightAnchor, constant: 32).isActive = true
-        commentButton.topAnchor.constraint(equalTo: self.topAnchor, constant: 16).isActive = true
-        commentButton.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
+        commentButton.snp.makeConstraints {
+            $0.left.equalTo(likeButton.snp.right).offset(23.0)
+            $0.centerY.equalTo(likeButton)
+        }
 
-        commentButton.rx.tap
-            .bind {
-
-            }
-            .disposed(by: disposeBag)
-
-        bookmarkButton.setImage(UIImage(systemName: "heart.fill"), for: .normal)
-        bookmarkButton.setTitle("80", for: .normal)
-        bookmarkButton.titleLabel?.font = UIFont.systemFont(ofSize: 16, weight: .medium)
         self.addSubview(bookmarkButton)
-        bookmarkButton.translatesAutoresizingMaskIntoConstraints = false
 
-        bookmarkButton.leftAnchor.constraint(equalTo: commentButton.rightAnchor, constant: 32).isActive = true
-        bookmarkButton.topAnchor.constraint(equalTo: self.topAnchor, constant: 16).isActive = true
-        bookmarkButton.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
+        bookmarkButton.snp.makeConstraints {
+            $0.left.equalTo(commentButton.snp.right).offset(23.0)
+            $0.centerY.equalTo(likeButton)
+        }
 
     }
 

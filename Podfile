@@ -13,6 +13,8 @@ target 'Kkamagnoon' do
   pod 'IQKeyboardManagerSwift'
   pod 'SwiftyJSON'
   pod 'SnapKit'
+  pod 'RxDataSources'
+  pod 'Then'
 
   # Pods for Kkamagnoon
 

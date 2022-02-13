@@ -42,7 +42,7 @@ class CommentCell: UITableViewCell {
         self.addSubview(createdDateLabel)
         createdDateLabel.text = "8시간 전"
         createdDateLabel.textColor = UIColor(rgb: 0x999999)
-        createdDateLabel.font = UIFont.systemFont(ofSize: 14, weight: .medium)
+        createdDateLabel.font = UIFont.pretendard(weight: .regular, size: 14)
 
         createdDateLabel.translatesAutoresizingMaskIntoConstraints = false
         createdDateLabel.centerYAnchor.constraint(equalTo: profileView.centerYAnchor).isActive = true
@@ -63,7 +63,7 @@ class CommentCell: UITableViewCell {
 
         commentContent.translatesAutoresizingMaskIntoConstraints = false
         commentContent.isEditable = false
-        commentContent.font = UIFont.systemFont(ofSize: 14, weight: .regular)
+        createdDateLabel.font = UIFont.pretendard(weight: .medium, size: 14)
         commentContent.sizeToFit()
         commentContent.isScrollEnabled = false
         commentContent.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)

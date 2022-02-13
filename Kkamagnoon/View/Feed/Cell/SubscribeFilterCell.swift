@@ -40,6 +40,7 @@ class SubscribeFilterCell: UICollectionViewCell {
         profileImageView.heightAnchor.constraint(equalToConstant: 56).isActive = true
 
         nickNameLabel.font = UIFont.systemFont(ofSize: 11, weight: .semibold)
+        nickNameLabel.font = UIFont.pretendard(weight: .medium, size: 11)
         nickNameLabel.textColor = .white
         self.addSubview(nickNameLabel)
         nickNameLabel.translatesAutoresizingMaskIntoConstraints = false

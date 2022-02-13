@@ -54,7 +54,7 @@ class ProfileView: UIView {
         // 닉네임
         nickNameLabel.text = "닉네임"
         nickNameLabel.textColor = .white
-        nickNameLabel.font = UIFont.systemFont(ofSize: fontSize, weight: .medium)
+        nickNameLabel.font = UIFont.pretendard(weight: .regular, size: 12)
         self.addSubview(nickNameLabel)
         nickNameLabel.translatesAutoresizingMaskIntoConstraints = false
         nickNameLabel.leftAnchor.constraint(equalTo: profileImageView.rightAnchor, constant: 9).isActive = true
@@ -62,7 +62,7 @@ class ProfileView: UIView {
 
         // 구독 상태
         subscribeStatus.setTitle(StringType.notSubscribed, for: .normal)
-        subscribeStatus.titleLabel?.font = UIFont.systemFont(ofSize: 11, weight: .bold)
+        subscribeStatus.titleLabel?.font = UIFont.pretendard(weight: .bold, size: 11)
         self.addSubview(subscribeStatus)
         subscribeStatus.translatesAutoresizingMaskIntoConstraints = false
         subscribeStatus.leftAnchor.constraint(equalTo: nickNameLabel.rightAnchor, constant: 7).isActive = true

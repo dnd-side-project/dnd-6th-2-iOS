@@ -25,7 +25,7 @@ class BottomSheetViewController: UIViewController {
     let writingCommentView = WritingCommentView()
 
     let keyboardShowObserver  = NotificationCenter.default.keyboardWillShowObservable()
-    
+
     let keyboardHideObserver = NotificationCenter.default.keyboardWillHideObservable()
 
     let disposeBag = DisposeBag()
@@ -203,7 +203,7 @@ class BottomSheetViewController: UIViewController {
     }
 
     func animateWritingViewGoDown() {
-        
+
         keyboardHideObserver
             .bind { [weak self] keyboardAnimationInfo in
                 guard let self = self else { return }
