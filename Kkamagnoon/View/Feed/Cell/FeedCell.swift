@@ -8,6 +8,8 @@
 import UIKit
 
 class FeedCell: UICollectionViewCell {
+    static let feedCellIdentifier = "FeedCellIdentifier"
+
     let profileView: ProfileView = ProfileView(width: 31, height: 31, fontsize: 12)
     let updateDate: UILabel = UILabel()
 

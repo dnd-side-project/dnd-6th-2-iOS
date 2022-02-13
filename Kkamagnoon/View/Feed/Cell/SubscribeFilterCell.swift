@@ -8,6 +8,9 @@
 import UIKit
 
 class SubscribeFilterCell: UICollectionViewCell {
+
+    static let subscribeFilterCellIdentifier = "SubscribeFilterCellIdentifier"
+
     let profileImageView: UIImageView = UIImageView()
     let nickNameLabel: UILabel = UILabel()
 
