@@ -8,8 +8,11 @@
 import UIKit
 import Then
 import SnapKit
+import RxSwift
 
 class RelayViewController: UIViewController {
+
+    var disposeBag = DisposeBag()
 
     lazy var topButtonView = TopButtonView(frame: .zero, first: StringType.relayRoom, second: StringType.joinedRoom)
         .then { topView in
@@ -39,11 +42,20 @@ class RelayViewController: UIViewController {
         view.addSubview(relayRoomView)
 
         relayRoomView.snp.makeConstraints {
-            $0.left.equalToSuperview().offset(20.0)
-            $0.right.equalToSuperview().offset(-20.0)
+            $0.left.right.equalToSuperview()
             $0.top.equalTo(topButtonView.snp.bottom)
             $0.bottom.equalTo(view.safeAreaLayoutGuide)
         }
+
+        relayRoomView.relayList.collectionView.rx.itemSelected
+            .bind { _ in
+
+                let vc = RelayDetailViewController()
+                vc.modalPresentationStyle = .fullScreen
+                vc.hidesBottomBarWhenPushed = true
+                self.navigationController?.pushViewController(vc, animated: true)
+            }
+            .disposed(by: disposeBag)
 
     }
 

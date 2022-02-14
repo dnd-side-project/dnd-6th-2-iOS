@@ -51,6 +51,14 @@
 		040790E027B969A9006C5374 /* RelayRoomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040790DF27B969A9006C5374 /* RelayRoomView.swift */; };
 		040790E227B9F57C006C5374 /* RelayRoomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040790E127B9F57C006C5374 /* RelayRoomCell.swift */; };
 		040790E527B9FE93006C5374 /* TagListMultiLineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040790E427B9FE93006C5374 /* TagListMultiLineView.swift */; };
+		040790E727BA0D19006C5374 /* LeftAlignedCollectionViewFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040790E627BA0D19006C5374 /* LeftAlignedCollectionViewFlowLayout.swift */; };
+		040790E927BA1129006C5374 /* DynamicHeightCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040790E827BA1129006C5374 /* DynamicHeightCollectionView.swift */; };
+		040790EB27BA24C1006C5374 /* RelayDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040790EA27BA24C1006C5374 /* RelayDetailViewController.swift */; };
+		040790ED27BA2AFF006C5374 /* RelayDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040790EC27BA2AFF006C5374 /* RelayDetailView.swift */; };
+		040790EF27BA6483006C5374 /* RelayContentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040790EE27BA6483006C5374 /* RelayContentCell.swift */; };
+		040790F127BA65ED006C5374 /* RelayTitleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040790F027BA65ED006C5374 /* RelayTitleCell.swift */; };
+		040790F327BA75B2006C5374 /* PopUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040790F227BA75B2006C5374 /* PopUpViewController.swift */; };
+		040790F527BA76CC006C5374 /* PopUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040790F427BA76CC006C5374 /* PopUpView.swift */; };
 		0439AF2D27AFAF7000E14E03 /* CategoryFilterCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0439AF2C27AFAF7000E14E03 /* CategoryFilterCell.swift */; };
 		0439AF3127AFF97400E14E03 /* FeedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0439AF3027AFF97300E14E03 /* FeedCell.swift */; };
 		0439AF3327B0B0A000E14E03 /* ArticleListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0439AF3227B0B0A000E14E03 /* ArticleListView.swift */; };
@@ -139,6 +147,14 @@
 		040790DF27B969A9006C5374 /* RelayRoomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RelayRoomView.swift; sourceTree = "<group>"; };
 		040790E127B9F57C006C5374 /* RelayRoomCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RelayRoomCell.swift; sourceTree = "<group>"; };
 		040790E427B9FE93006C5374 /* TagListMultiLineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagListMultiLineView.swift; sourceTree = "<group>"; };
+		040790E627BA0D19006C5374 /* LeftAlignedCollectionViewFlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeftAlignedCollectionViewFlowLayout.swift; sourceTree = "<group>"; };
+		040790E827BA1129006C5374 /* DynamicHeightCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicHeightCollectionView.swift; sourceTree = "<group>"; };
+		040790EA27BA24C1006C5374 /* RelayDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RelayDetailViewController.swift; sourceTree = "<group>"; };
+		040790EC27BA2AFF006C5374 /* RelayDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RelayDetailView.swift; sourceTree = "<group>"; };
+		040790EE27BA6483006C5374 /* RelayContentCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RelayContentCell.swift; sourceTree = "<group>"; };
+		040790F027BA65ED006C5374 /* RelayTitleCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RelayTitleCell.swift; sourceTree = "<group>"; };
+		040790F227BA75B2006C5374 /* PopUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopUpViewController.swift; sourceTree = "<group>"; };
+		040790F427BA76CC006C5374 /* PopUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopUpView.swift; sourceTree = "<group>"; };
 		0439AF2C27AFAF7000E14E03 /* CategoryFilterCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryFilterCell.swift; sourceTree = "<group>"; };
 		0439AF3027AFF97300E14E03 /* FeedCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedCell.swift; sourceTree = "<group>"; };
 		0439AF3227B0B0A000E14E03 /* ArticleListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticleListView.swift; sourceTree = "<group>"; };
@@ -252,6 +268,9 @@
 			children = (
 				040790E327B9F604006C5374 /* Cell */,
 				040790DF27B969A9006C5374 /* RelayRoomView.swift */,
+				040790E627BA0D19006C5374 /* LeftAlignedCollectionViewFlowLayout.swift */,
+				040790E827BA1129006C5374 /* DynamicHeightCollectionView.swift */,
+				040790EC27BA2AFF006C5374 /* RelayDetailView.swift */,
 			);
 			path = Relay;
 			sourceTree = "<group>";
@@ -260,6 +279,8 @@
 			isa = PBXGroup;
 			children = (
 				040790E127B9F57C006C5374 /* RelayRoomCell.swift */,
+				040790EE27BA6483006C5374 /* RelayContentCell.swift */,
+				040790F027BA65ED006C5374 /* RelayTitleCell.swift */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -374,6 +395,8 @@
 			isa = PBXGroup;
 			children = (
 				048D44B827AF5D5A0031974D /* RelayViewController.swift */,
+				040790EA27BA24C1006C5374 /* RelayDetailViewController.swift */,
+				040790F227BA75B2006C5374 /* PopUpViewController.swift */,
 			);
 			path = Relay;
 			sourceTree = "<group>";
@@ -446,6 +469,7 @@
 				040790B127B8DFDD006C5374 /* ImageLabelView.swift */,
 				040790DC27B94125006C5374 /* GrayBorderView.swift */,
 				040790E427B9FE93006C5374 /* TagListMultiLineView.swift */,
+				040790F427BA76CC006C5374 /* PopUpView.swift */,
 			);
 			path = Reusable;
 			sourceTree = "<group>";
@@ -830,6 +854,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				04DAAE6027B3EA0500AECFE4 /* SubscribeListViewController.swift in Sources */,
+				040790ED27BA2AFF006C5374 /* RelayDetailView.swift in Sources */,
 				040790E527B9FE93006C5374 /* TagListMultiLineView.swift in Sources */,
 				048D44B927AF5D5A0031974D /* RelayViewController.swift in Sources */,
 				0407909D27B7DD9E006C5374 /* FeedEndPointCases.swift in Sources */,
@@ -842,30 +867,36 @@
 				0439AF4727B171EB00E14E03 /* DetailContentViewController.swift in Sources */,
 				04DAAE5A27B2B1F500AECFE4 /* FlexibleDecode.swift in Sources */,
 				04C95FD127B68AD400A0F840 /* TagListView.swift in Sources */,
+				040790F127BA65ED006C5374 /* RelayTitleCell.swift in Sources */,
 				040790DD27B94125006C5374 /* GrayBorderView.swift in Sources */,
 				040790AE27B8B3F8006C5374 /* TagView.swift in Sources */,
 				04C95FD527B68E8900A0F840 /* AuthorListView.swift in Sources */,
 				04C95FBF27B548DA00A0F840 /* FeedService.swift in Sources */,
 				040790DB27B92620006C5374 /* TextView.swift in Sources */,
 				0407909927B7CB38006C5374 /* EndPoint.swift in Sources */,
+				040790F527BA76CC006C5374 /* PopUpView.swift in Sources */,
 				04C95FC627B55E9800A0F840 /* FeedModel.swift in Sources */,
+				040790E727BA0D19006C5374 /* LeftAlignedCollectionViewFlowLayout.swift in Sources */,
 				040790E027B969A9006C5374 /* RelayRoomView.swift in Sources */,
 				040790B427B8F03D006C5374 /* DetailView.swift in Sources */,
 				0439AF3127AFF97400E14E03 /* FeedCell.swift in Sources */,
 				040790A627B8960D006C5374 /* Color.swift in Sources */,
 				040790AA27B89701006C5374 /* Decode.swift in Sources */,
 				04DAAE6227B3F41900AECFE4 /* SubscribeListCell.swift in Sources */,
+				040790E927BA1129006C5374 /* DynamicHeightCollectionView.swift in Sources */,
 				0407909B27B7D232006C5374 /* NetworkError.swift in Sources */,
 				04DAAE5327B2121600AECFE4 /* FeedView.swift in Sources */,
 				04C95FCB27B5F1A600A0F840 /* TokenUtils.swift in Sources */,
 				040790A827B8964E006C5374 /* String.swift in Sources */,
 				04C95FC127B5495800A0F840 /* FeedViewModel.swift in Sources */,
 				040790B027B8DE9C006C5374 /* Font.swift in Sources */,
+				040790EF27BA6483006C5374 /* RelayContentCell.swift in Sources */,
 				0464F9C327A578AA0054FD83 /* AppDelegate.swift in Sources */,
 				0439AF2D27AFAF7000E14E03 /* CategoryFilterCell.swift in Sources */,
 				04DAAE5E27B3C64500AECFE4 /* CustomColor.swift in Sources */,
 				04DAAE5C27B2CE5100AECFE4 /* BottomReactionView.swift in Sources */,
 				0464F9C527A578AA0054FD83 /* SceneDelegate.swift in Sources */,
+				040790EB27BA24C1006C5374 /* RelayDetailViewController.swift in Sources */,
 				04DAAE6427B4196F00AECFE4 /* BottomSheetViewController.swift in Sources */,
 				04DAAE5127B1FDB300AECFE4 /* WholeFeedView.swift in Sources */,
 				04DAAE6827B4D0D600AECFE4 /* WritingCommentView.swift in Sources */,
@@ -875,6 +906,7 @@
 				04DAAE5527B29EB700AECFE4 /* SubscribeFeedView.swift in Sources */,
 				04C95FCD27B6730200A0F840 /* TopButtonView.swift in Sources */,
 				0439AF3327B0B0A000E14E03 /* ArticleListView.swift in Sources */,
+				040790F327BA75B2006C5374 /* PopUpViewController.swift in Sources */,
 				040790AC27B89777006C5374 /* Notification.swift in Sources */,
 				0439AF3527B0B4AF00E14E03 /* ProfileView.swift in Sources */,
 				048D44C227AF5E030031974D /* StringConverter.swift in Sources */,

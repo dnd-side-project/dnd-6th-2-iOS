@@ -45,6 +45,7 @@ class FeedView: UIView {
     func setSortButton() { }
 
     func setFeedMainView() {
+        articleListView.collectionView.register(FeedCell.self, forCellWithReuseIdentifier: FeedCell.feedCellIdentifier)
         addSubview(articleListView)
         articleListView.translatesAutoresizingMaskIntoConstraints = false
 

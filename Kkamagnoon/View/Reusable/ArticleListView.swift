@@ -31,9 +31,8 @@ class ArticleListView: UIView {
         layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: TabBarViewController.tabbarHeight, right: 0)
 
         collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        collectionView.register(FeedCell.self, forCellWithReuseIdentifier: FeedCell.feedCellIdentifier)
         collectionView.showsVerticalScrollIndicator = false
-//        collectionView.backgroundColor = .black
+        collectionView.backgroundColor = .black
 
         layout.estimatedItemSize = CGSize(width: UIScreen.main.bounds.width - 40,
                                           height: collectionView.frame.height)
@@ -45,8 +44,8 @@ class ArticleListView: UIView {
         collectionView.translatesAutoresizingMaskIntoConstraints = false
 
         collectionView.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
-        collectionView.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 20).isActive = true
-        collectionView.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -20).isActive = true
+        collectionView.leftAnchor.constraint(equalTo: self.leftAnchor).isActive = true
+        collectionView.rightAnchor.constraint(equalTo: self.rightAnchor).isActive = true
         collectionView.bottomAnchor
             .constraint(equalTo: self.bottomAnchor).isActive = true
 

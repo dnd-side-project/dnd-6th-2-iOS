@@ -8,6 +8,8 @@
 import UIKit
 import Then
 import SnapKit
+import RxSwift
+import RxCocoa
 
 class RelayRoomView: UIView {
 
@@ -23,9 +25,10 @@ class RelayRoomView: UIView {
 
     var relayList = ArticleListView()
         .then {
-            $0.backgroundColor = .brown
             $0.collectionView.register(RelayRoomCell.self, forCellWithReuseIdentifier: RelayRoomCell.relayRoomCellIdentifier)
         }
+
+    var disposeBag = DisposeBag()
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -40,8 +43,8 @@ class RelayRoomView: UIView {
     func setView() {
         self.addSubview(categoryFilterView)
         categoryFilterView.snp.makeConstraints {
-            $0.left.equalToSuperview()
-            $0.right.equalToSuperview()
+            $0.left.equalToSuperview().offset(20.0)
+            $0.right.equalToSuperview().offset(-20.0)
             $0.top.equalToSuperview()
             $0.height.equalTo(29.0)
         }
@@ -49,14 +52,27 @@ class RelayRoomView: UIView {
         self.addSubview(sortButton)
         sortButton.snp.makeConstraints {
             $0.top.equalTo(categoryFilterView.snp.bottom).offset(20.0)
-            $0.right.equalToSuperview()
+            $0.right.equalToSuperview().offset(-20.0)
         }
 
         self.addSubview(relayList)
         relayList.snp.makeConstraints {
-            $0.left.right.bottom.equalToSuperview()
+            $0.left.equalToSuperview().offset(20.0)
+            $0.right.equalToSuperview().offset(-20.0)
+            $0.bottom.equalToSuperview()
             $0.top.equalTo(sortButton.snp.bottom).offset(11.83)
         }
+
+        // DUMMY
+        let dummyData = Observable<[String]>.of(["글감", "일상", "로맨스", "짧은 글", "긴 글", "무서운 글", "발랄한 글", "한글", "세종대왕"])
+
+        dummyData.bind(to: relayList.collectionView
+                        .rx.items(cellIdentifier: RelayRoomCell.relayRoomCellIdentifier,
+                                             cellType: RelayRoomCell.self)) { (_, element, cell) in
+            cell.contentLabel.text = element
+            cell.layer.cornerRadius = 15
+            }
+        .disposed(by: disposeBag)
     }
 
 }
