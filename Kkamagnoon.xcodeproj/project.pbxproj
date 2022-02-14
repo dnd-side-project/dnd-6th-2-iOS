@@ -48,6 +48,9 @@
 		040790D927B90E7D006C5374 /* Pretendard-SemiBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 040790BD27B90E44006C5374 /* Pretendard-SemiBold.otf */; };
 		040790DB27B92620006C5374 /* TextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040790DA27B92620006C5374 /* TextView.swift */; };
 		040790DD27B94125006C5374 /* GrayBorderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040790DC27B94125006C5374 /* GrayBorderView.swift */; };
+		040790E027B969A9006C5374 /* RelayRoomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040790DF27B969A9006C5374 /* RelayRoomView.swift */; };
+		040790E227B9F57C006C5374 /* RelayRoomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040790E127B9F57C006C5374 /* RelayRoomCell.swift */; };
+		040790E527B9FE93006C5374 /* TagListMultiLineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040790E427B9FE93006C5374 /* TagListMultiLineView.swift */; };
 		0439AF2D27AFAF7000E14E03 /* CategoryFilterCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0439AF2C27AFAF7000E14E03 /* CategoryFilterCell.swift */; };
 		0439AF3127AFF97400E14E03 /* FeedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0439AF3027AFF97300E14E03 /* FeedCell.swift */; };
 		0439AF3327B0B0A000E14E03 /* ArticleListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0439AF3227B0B0A000E14E03 /* ArticleListView.swift */; };
@@ -133,6 +136,9 @@
 		040790BE27B90E44006C5374 /* Pretendard-Thin.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Thin.otf"; sourceTree = "<group>"; };
 		040790DA27B92620006C5374 /* TextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextView.swift; sourceTree = "<group>"; };
 		040790DC27B94125006C5374 /* GrayBorderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GrayBorderView.swift; sourceTree = "<group>"; };
+		040790DF27B969A9006C5374 /* RelayRoomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RelayRoomView.swift; sourceTree = "<group>"; };
+		040790E127B9F57C006C5374 /* RelayRoomCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RelayRoomCell.swift; sourceTree = "<group>"; };
+		040790E427B9FE93006C5374 /* TagListMultiLineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagListMultiLineView.swift; sourceTree = "<group>"; };
 		0439AF2C27AFAF7000E14E03 /* CategoryFilterCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryFilterCell.swift; sourceTree = "<group>"; };
 		0439AF3027AFF97300E14E03 /* FeedCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedCell.swift; sourceTree = "<group>"; };
 		0439AF3227B0B0A000E14E03 /* ArticleListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticleListView.swift; sourceTree = "<group>"; };
@@ -241,10 +247,26 @@
 			path = Font;
 			sourceTree = "<group>";
 		};
+		040790DE27B9696E006C5374 /* Relay */ = {
+			isa = PBXGroup;
+			children = (
+				040790E327B9F604006C5374 /* Cell */,
+				040790DF27B969A9006C5374 /* RelayRoomView.swift */,
+			);
+			path = Relay;
+			sourceTree = "<group>";
+		};
+		040790E327B9F604006C5374 /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				040790E127B9F57C006C5374 /* RelayRoomCell.swift */,
+			);
+			path = Cell;
+			sourceTree = "<group>";
+		};
 		0439AF2927AFAB4300E14E03 /* Feed */ = {
 			isa = PBXGroup;
 			children = (
-				04C95FD327B68C4400A0F840 /* Reusable */,
 				04C95FD227B68BF900A0F840 /* Cell */,
 				04DAAE5027B1FDB300AECFE4 /* WholeFeedView.swift */,
 				04DAAE5227B2121600AECFE4 /* FeedView.swift */,
@@ -423,6 +445,7 @@
 				040790AD27B8B3F8006C5374 /* TagView.swift */,
 				040790B127B8DFDD006C5374 /* ImageLabelView.swift */,
 				040790DC27B94125006C5374 /* GrayBorderView.swift */,
+				040790E427B9FE93006C5374 /* TagListMultiLineView.swift */,
 			);
 			path = Reusable;
 			sourceTree = "<group>";
@@ -459,6 +482,8 @@
 		04D0637427AEC0F6005EB16C /* View */ = {
 			isa = PBXGroup;
 			children = (
+				04C95FD327B68C4400A0F840 /* Reusable */,
+				040790DE27B9696E006C5374 /* Relay */,
 				0439AF2927AFAB4300E14E03 /* Feed */,
 			);
 			path = View;
@@ -805,6 +830,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				04DAAE6027B3EA0500AECFE4 /* SubscribeListViewController.swift in Sources */,
+				040790E527B9FE93006C5374 /* TagListMultiLineView.swift in Sources */,
 				048D44B927AF5D5A0031974D /* RelayViewController.swift in Sources */,
 				0407909D27B7DD9E006C5374 /* FeedEndPointCases.swift in Sources */,
 				048D44BF27AF5D930031974D /* ChallengeViewController.swift in Sources */,
@@ -823,6 +849,7 @@
 				040790DB27B92620006C5374 /* TextView.swift in Sources */,
 				0407909927B7CB38006C5374 /* EndPoint.swift in Sources */,
 				04C95FC627B55E9800A0F840 /* FeedModel.swift in Sources */,
+				040790E027B969A9006C5374 /* RelayRoomView.swift in Sources */,
 				040790B427B8F03D006C5374 /* DetailView.swift in Sources */,
 				0439AF3127AFF97400E14E03 /* FeedCell.swift in Sources */,
 				040790A627B8960D006C5374 /* Color.swift in Sources */,
@@ -844,6 +871,7 @@
 				04DAAE6827B4D0D600AECFE4 /* WritingCommentView.swift in Sources */,
 				0439AF4527B166B300E14E03 /* SubscribeFilterCell.swift in Sources */,
 				040790B227B8DFDD006C5374 /* ImageLabelView.swift in Sources */,
+				040790E227B9F57C006C5374 /* RelayRoomCell.swift in Sources */,
 				04DAAE5527B29EB700AECFE4 /* SubscribeFeedView.swift in Sources */,
 				04C95FCD27B6730200A0F840 /* TopButtonView.swift in Sources */,
 				0439AF3327B0B0A000E14E03 /* ArticleListView.swift in Sources */,

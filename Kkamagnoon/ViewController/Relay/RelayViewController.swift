@@ -6,23 +6,45 @@
 //
 
 import UIKit
+import Then
+import SnapKit
 
 class RelayViewController: UIViewController {
 
+    lazy var topButtonView = TopButtonView(frame: .zero, first: StringType.relayRoom, second: StringType.joinedRoom)
+        .then { topView in
+            topView.searchButton.isHidden = true
+            topView.secondButton.snp.makeConstraints {
+                $0.left.equalTo(topView.firstButton.snp.right).offset(12.0)
+            }
+        }
+
+    lazy var relayRoomView = RelayRoomView()
+
     override func viewDidLoad() {
         super.viewDidLoad()
+        navigationController?.setNavigationBarHidden(true, animated: false)
+        navigationController?.interactivePopGestureRecognizer?.delegate = nil
+        setView()
 
-        // Do any additional setup after loading the view.
     }
 
-    /*
-    // MARK: - Navigation
+    func setView() {
+        view.addSubview(topButtonView)
+        topButtonView.snp.makeConstraints {
+            $0.top.left.right.equalToSuperview()
+            $0.height.equalTo(115.0)
+        }
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+        view.addSubview(relayRoomView)
+
+        relayRoomView.snp.makeConstraints {
+            $0.left.equalToSuperview().offset(20.0)
+            $0.right.equalToSuperview().offset(-20.0)
+            $0.top.equalTo(topButtonView.snp.bottom)
+            $0.bottom.equalTo(view.safeAreaLayoutGuide)
+        }
+
     }
-    */
 
 }
