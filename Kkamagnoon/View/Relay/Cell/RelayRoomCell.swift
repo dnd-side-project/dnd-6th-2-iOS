@@ -27,11 +27,6 @@ class RelayRoomCell: UICollectionViewCell {
             $0.lineBreakMode = .byTruncatingTail
         }
 
-    var tagListView = TagListMultiLineView()
-        .then {
-            $0.collectionView.register(CategoryFilterCell.self, forCellWithReuseIdentifier: CategoryFilterCell.categoryFilterCellIdentifier)
-        }
-
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.backgroundColor = UIColor(rgb: Color.feedListCard)
