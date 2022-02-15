@@ -61,6 +61,13 @@
 		040790F927BB4E42006C5374 /* MakingRoomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040790F827BB4E42006C5374 /* MakingRoomButton.swift */; };
 		040790FB27BB53F4006C5374 /* MakingRelayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040790FA27BB53F4006C5374 /* MakingRelayView.swift */; };
 		040790FD27BB5F93006C5374 /* ShortTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040790FC27BB5F93006C5374 /* ShortTextView.swift */; };
+		040790FF27BB96C0006C5374 /* SelectTagViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040790FE27BB96C0006C5374 /* SelectTagViewController.swift */; };
+		0407910127BBA0C6006C5374 /* SelectingTagCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0407910027BBA0C6006C5374 /* SelectingTagCell.swift */; };
+		0407910327BBAA0C006C5374 /* PairView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0407910227BBAA0C006C5374 /* PairView.swift */; };
+		0407910527BBD70E006C5374 /* BottomBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0407910427BBD70E006C5374 /* BottomBar.swift */; };
+		0407910727BBDC53006C5374 /* ParticipantViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0407910627BBDC53006C5374 /* ParticipantViewController.swift */; };
+		0407910927BBDD68006C5374 /* ParticipantListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0407910827BBDD68006C5374 /* ParticipantListView.swift */; };
+		0407910B27BBE003006C5374 /* ParticipantCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0407910A27BBE003006C5374 /* ParticipantCell.swift */; };
 		0439AF2D27AFAF7000E14E03 /* CategoryFilterCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0439AF2C27AFAF7000E14E03 /* CategoryFilterCell.swift */; };
 		0439AF3127AFF97400E14E03 /* FeedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0439AF3027AFF97300E14E03 /* FeedCell.swift */; };
 		0439AF3327B0B0A000E14E03 /* ArticleListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0439AF3227B0B0A000E14E03 /* ArticleListView.swift */; };
@@ -159,6 +166,13 @@
 		040790F827BB4E42006C5374 /* MakingRoomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MakingRoomButton.swift; sourceTree = "<group>"; };
 		040790FA27BB53F4006C5374 /* MakingRelayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MakingRelayView.swift; sourceTree = "<group>"; };
 		040790FC27BB5F93006C5374 /* ShortTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShortTextView.swift; sourceTree = "<group>"; };
+		040790FE27BB96C0006C5374 /* SelectTagViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectTagViewController.swift; sourceTree = "<group>"; };
+		0407910027BBA0C6006C5374 /* SelectingTagCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectingTagCell.swift; sourceTree = "<group>"; };
+		0407910227BBAA0C006C5374 /* PairView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PairView.swift; sourceTree = "<group>"; };
+		0407910427BBD70E006C5374 /* BottomBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomBar.swift; sourceTree = "<group>"; };
+		0407910627BBDC53006C5374 /* ParticipantViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticipantViewController.swift; sourceTree = "<group>"; };
+		0407910827BBDD68006C5374 /* ParticipantListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticipantListView.swift; sourceTree = "<group>"; };
+		0407910A27BBE003006C5374 /* ParticipantCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticipantCell.swift; sourceTree = "<group>"; };
 		0439AF2C27AFAF7000E14E03 /* CategoryFilterCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryFilterCell.swift; sourceTree = "<group>"; };
 		0439AF3027AFF97300E14E03 /* FeedCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedCell.swift; sourceTree = "<group>"; };
 		0439AF3227B0B0A000E14E03 /* ArticleListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticleListView.swift; sourceTree = "<group>"; };
@@ -276,6 +290,9 @@
 				040790EC27BA2AFF006C5374 /* RelayDetailView.swift */,
 				040790F827BB4E42006C5374 /* MakingRoomButton.swift */,
 				040790FA27BB53F4006C5374 /* MakingRelayView.swift */,
+				0407910227BBAA0C006C5374 /* PairView.swift */,
+				0407910427BBD70E006C5374 /* BottomBar.swift */,
+				0407910827BBDD68006C5374 /* ParticipantListView.swift */,
 			);
 			path = Relay;
 			sourceTree = "<group>";
@@ -286,6 +303,8 @@
 				040790E127B9F57C006C5374 /* RelayRoomCell.swift */,
 				040790EE27BA6483006C5374 /* RelayContentCell.swift */,
 				040790F027BA65ED006C5374 /* RelayTitleCell.swift */,
+				0407910027BBA0C6006C5374 /* SelectingTagCell.swift */,
+				0407910A27BBE003006C5374 /* ParticipantCell.swift */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -403,6 +422,8 @@
 				040790EA27BA24C1006C5374 /* RelayDetailViewController.swift */,
 				040790F227BA75B2006C5374 /* PopUpViewController.swift */,
 				040790F627BB4C7E006C5374 /* MakingRelayRoomViewController.swift */,
+				040790FE27BB96C0006C5374 /* SelectTagViewController.swift */,
+				0407910627BBDC53006C5374 /* ParticipantViewController.swift */,
 			);
 			path = Relay;
 			sourceTree = "<group>";
@@ -859,10 +880,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0407910927BBDD68006C5374 /* ParticipantListView.swift in Sources */,
 				04DAAE6027B3EA0500AECFE4 /* SubscribeListViewController.swift in Sources */,
 				040790ED27BA2AFF006C5374 /* RelayDetailView.swift in Sources */,
 				048D44B927AF5D5A0031974D /* RelayViewController.swift in Sources */,
 				0407909D27B7DD9E006C5374 /* FeedEndPointCases.swift in Sources */,
+				0407910727BBDC53006C5374 /* ParticipantViewController.swift in Sources */,
+				040790FF27BB96C0006C5374 /* SelectTagViewController.swift in Sources */,
 				040790F727BB4C7E006C5374 /* MakingRelayRoomViewController.swift in Sources */,
 				048D44BF27AF5D930031974D /* ChallengeViewController.swift in Sources */,
 				040790FD27BB5F93006C5374 /* ShortTextView.swift in Sources */,
@@ -888,6 +912,7 @@
 				040790E027B969A9006C5374 /* RelayRoomView.swift in Sources */,
 				040790B427B8F03D006C5374 /* DetailView.swift in Sources */,
 				0439AF3127AFF97400E14E03 /* FeedCell.swift in Sources */,
+				0407910B27BBE003006C5374 /* ParticipantCell.swift in Sources */,
 				040790F927BB4E42006C5374 /* MakingRoomButton.swift in Sources */,
 				040790A627B8960D006C5374 /* Color.swift in Sources */,
 				040790AA27B89701006C5374 /* Decode.swift in Sources */,
@@ -901,6 +926,7 @@
 				040790EF27BA6483006C5374 /* RelayContentCell.swift in Sources */,
 				0464F9C327A578AA0054FD83 /* AppDelegate.swift in Sources */,
 				0439AF2D27AFAF7000E14E03 /* CategoryFilterCell.swift in Sources */,
+				0407910127BBA0C6006C5374 /* SelectingTagCell.swift in Sources */,
 				04DAAE5E27B3C64500AECFE4 /* CustomColor.swift in Sources */,
 				04DAAE5C27B2CE5100AECFE4 /* BottomReactionView.swift in Sources */,
 				0464F9C527A578AA0054FD83 /* SceneDelegate.swift in Sources */,
@@ -909,8 +935,10 @@
 				04DAAE5127B1FDB300AECFE4 /* WholeFeedView.swift in Sources */,
 				04DAAE6827B4D0D600AECFE4 /* WritingCommentView.swift in Sources */,
 				0439AF4527B166B300E14E03 /* SubscribeFilterCell.swift in Sources */,
+				0407910527BBD70E006C5374 /* BottomBar.swift in Sources */,
 				040790B227B8DFDD006C5374 /* ImageLabelView.swift in Sources */,
 				040790E227B9F57C006C5374 /* RelayRoomCell.swift in Sources */,
+				0407910327BBAA0C006C5374 /* PairView.swift in Sources */,
 				04DAAE5527B29EB700AECFE4 /* SubscribeFeedView.swift in Sources */,
 				04C95FCD27B6730200A0F840 /* TopButtonView.swift in Sources */,
 				0439AF3327B0B0A000E14E03 /* ArticleListView.swift in Sources */,

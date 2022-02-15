@@ -73,6 +73,14 @@ class MakingRelayView: UIView {
         }
     ]
 
+    // DUMMY
+    var tempButton = UIButton()
+        .then {
+            $0.setTitle("태그 추가", for: .normal)
+            $0.setTitleColor(.white, for: .normal)
+            $0.titleLabel?.font = UIFont.pretendard(weight: .medium, size: 14)
+        }
+
     var tagListView = TagListView()
         .then {
             $0.setContentHuggingPriority(.required, for: .vertical)
@@ -136,6 +144,9 @@ class MakingRelayView: UIView {
         self.addSubview(stackView)
 
         stackView.addArrangedSubview(subTitleLabelList[0])
+
+        // DUMMY
+        stackView.addArrangedSubview(tempButton)
         stackView.addArrangedSubview(tagListView)
 
         stackView.addArrangedSubview(subTitleLabelList[1])
@@ -166,7 +177,7 @@ class MakingRelayView: UIView {
 
         // DUMMY
         stackView.setCustomSpacing(15.0, after: subTitleLabelList[4])
-        
+
     }
 
     func setComponentView() {
@@ -186,6 +197,17 @@ class MakingRelayView: UIView {
         textViewList[2].snp.makeConstraints {
             $0.height.equalTo(182.0)
         }
+
+        // DUMMY
+        tempButton.rx.tap
+            .bind {
+                let vc = SelectTagViewController()
+                vc.modalPresentationStyle = .fullScreen
+                vc.hidesBottomBarWhenPushed = true
+
+                self.viewController?.navigationController?.pushViewController(vc, animated: true)
+            }
+            .disposed(by: disposeBag)
     }
 
 }

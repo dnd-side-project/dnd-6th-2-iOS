@@ -29,7 +29,7 @@ class ShortTextView: UITextView {
         self.font = UIFont.pretendard(weight: .regular, size: 14)
         self.layer.cornerRadius = 15.0
         // 뭔가 이상함..
-//        self.contentInset = UIEdgeInsets(top: 10, left: 20, bottom: 10, right: 20)
+//        self.contentInset = UIEdgeInsets(top: 8, left: 20, bottom: 8, right: 20)
 
         self.rx.didBeginEditing
             .withUnretained(self)

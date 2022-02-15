@@ -26,6 +26,11 @@ class RelayDetailViewController: UIViewController {
             $0.layer.cornerRadius = 10
         }
 
+    var bottomBar = BottomBar()
+        .then {
+            $0.frame.size.height = 70
+        }
+
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .black
@@ -39,6 +44,7 @@ class RelayDetailViewController: UIViewController {
 
         view.addSubview(detailView)
         view.addSubview(enterButton)
+        view.addSubview(bottomBar)
     }
 
     func layoutView() {
@@ -62,6 +68,19 @@ class RelayDetailViewController: UIViewController {
                 vc.modalPresentationStyle = .overFullScreen
 
                 self.present(vc, animated: false)
+            }
+            .disposed(by: disposeBag)
+
+        bottomBar.snp.makeConstraints {
+            $0.left.bottom.right.equalTo(view.safeAreaLayoutGuide)
+        }
+
+        bottomBar.participantButton.rx.tap
+            .bind {
+                let vc = ParticipantViewController()
+                vc.modalPresentationStyle = .fullScreen
+
+                self.present(vc, animated: false, completion: nil)
             }
             .disposed(by: disposeBag)
     }
