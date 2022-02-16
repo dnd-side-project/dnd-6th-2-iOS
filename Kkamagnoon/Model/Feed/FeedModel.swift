@@ -37,6 +37,12 @@ extension FeedInfo {
     // CodingKeys
 }
 
-struct Author {
+enum FeedStyle {
+    case whole
+    case subscribed
+}
 
+enum SortStyle {
+    case byPopularity
+    case byLatest
 }
