@@ -123,30 +123,29 @@ class FeedViewController: UIViewController {
             }
             .disposed(by: disposeBag)
 
-        wholeFeedView.articleListView.collectionView.rx
-            .modelSelected(String.self)
-            .bind { _ in
-                self.goToDetailContentVC()
-            }
-            .disposed(by: disposeBag)
+        // 정상
+//        wholeFeedView.articleListView.collectionView.rx
+//            .itemSelected
+//            .bind { _ in
+//                self.goToDetailContentVC()
+//            }
+//            .disposed(by: disposeBag)
 
         // Tap 이벤트 두 번씩 발생
 
         // Input
-//        wholeFeedView.articleListView.collectionView.rx
-//            .itemSelected
-//            .bind(to: viewModel.input.feedCellTap)
-//            .disposed(by: disposeBag)
-//
-//        // Output
-//        viewModel.output.goToDetailFeed
-//            .observe(on: MainScheduler.instance)
-//            // MainScheduler니깐 weak self 필요 없는지.
-//            .bind { indexPath in
-//                print(indexPath)
-//                self.goToDetailContentVC(indexPath: indexPath)
-//            }
-//            .disposed(by: disposeBag)
+        wholeFeedView.articleListView.collectionView.rx
+            .itemSelected
+            .bind(to: viewModel.input.feedCellTap)
+            .disposed(by: disposeBag)
+
+        // Output
+        viewModel.output.goToDetailFeed
+            .observe(on: MainScheduler.instance)
+            .bind { _ in
+                self.goToDetailContentVC()
+            }
+            .disposed(by: disposeBag)
 
     }
 

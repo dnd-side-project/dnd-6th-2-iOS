@@ -27,7 +27,7 @@ class FeedViewModel: FeedViewModelType {
         let tagCellTap = PublishSubject<Void>()
         let sortButtonTap = PublishSubject<Void>()
         // Temp
-        let feedCellTap = PublishSubject<String>()
+        let feedCellTap = PublishSubject<IndexPath>()
         let moreButtonTap = PublishSubject<Void>()
 
         // add more...
@@ -39,7 +39,7 @@ class FeedViewModel: FeedViewModelType {
         let goToSearch = PublishRelay<Void>()
         let goToBell = PublishRelay<Void>()
         let currentSortStyle = BehaviorRelay<SortStyle>(value: .byLatest)
-        let goToDetailFeed = PublishRelay<String>()
+        let goToDetailFeed = PublishRelay<IndexPath>()
 
         // TEMP String -> FeedInfo
         let wholeFeedListRelay = BehaviorRelay<[String]>(value: [])
@@ -123,9 +123,9 @@ class FeedViewModel: FeedViewModelType {
         .disposed(by: disposeBag)
 
         input.feedCellTap
-            .bind { [weak self] temp in
+            .bind { [weak self] indexPath in
                 guard let self = self else {return}
-                self.output.goToDetailFeed.accept(temp)
+                self.output.goToDetailFeed.accept(indexPath)
             }
             .disposed(by: disposeBag)
     }
@@ -139,19 +139,6 @@ class FeedViewModel: FeedViewModelType {
         }
         .disposed(by: disposeBag)
     }
-
-//    func getWholeFeedList() {
-//        let endPoint = FeedEndpointCases.getWholeFeed(page: 1)
-//        service.getWholeFeed(page: 1)
-//            .bind(to: output.wholeFeedListRelay)
-//            .disposed(by: disposeBag)
-//    }
-
-//    func getSubscribeFeedList() {
-//        service.getWholeFeed()
-//            .bind(to: output.wholeFeedListRelay)
-//            .disposed(by: disposeBag)
-//    }
 
     deinit {
         disposeBag = DisposeBag()
