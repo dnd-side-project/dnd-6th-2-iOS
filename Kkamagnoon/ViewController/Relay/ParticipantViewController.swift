@@ -48,7 +48,7 @@ class ParticipantViewController: UIViewController {
             $0.top.right.bottom.equalToSuperview()
         }
 
-        //수정 필요
+        // 수정 필요
         let tapGesture = UITapGestureRecognizer()
         view.addGestureRecognizer(tapGesture)
 
