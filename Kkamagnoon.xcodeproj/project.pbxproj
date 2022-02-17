@@ -89,6 +89,8 @@
 		048D44BD27AF5D7D0031974D /* MyWritingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048D44BC27AF5D7D0031974D /* MyWritingViewController.swift */; };
 		048D44BF27AF5D930031974D /* ChallengeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048D44BE27AF5D930031974D /* ChallengeViewController.swift */; };
 		048D44C227AF5E030031974D /* StringConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048D44C127AF5E030031974D /* StringConverter.swift */; };
+		04A40D3427BE1C5C004DAB19 /* RelayViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A40D3327BE1C5C004DAB19 /* RelayViewModel.swift */; };
+		04A40D3727BE25E3004DAB19 /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A40D3627BE25E3004DAB19 /* File.swift */; };
 		04C95FBF27B548DA00A0F840 /* FeedService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C95FBE27B548DA00A0F840 /* FeedService.swift */; };
 		04C95FC127B5495800A0F840 /* FeedViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C95FC027B5495800A0F840 /* FeedViewModel.swift */; };
 		04C95FC627B55E9800A0F840 /* FeedModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C95FC527B55E9800A0F840 /* FeedModel.swift */; };
@@ -198,6 +200,8 @@
 		048D44BC27AF5D7D0031974D /* MyWritingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyWritingViewController.swift; sourceTree = "<group>"; };
 		048D44BE27AF5D930031974D /* ChallengeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallengeViewController.swift; sourceTree = "<group>"; };
 		048D44C127AF5E030031974D /* StringConverter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringConverter.swift; sourceTree = "<group>"; };
+		04A40D3327BE1C5C004DAB19 /* RelayViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RelayViewModel.swift; sourceTree = "<group>"; };
+		04A40D3627BE25E3004DAB19 /* File.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = File.swift; sourceTree = "<group>"; };
 		04C95FBE27B548DA00A0F840 /* FeedService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedService.swift; sourceTree = "<group>"; };
 		04C95FC027B5495800A0F840 /* FeedViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedViewModel.swift; sourceTree = "<group>"; };
 		04C95FC527B55E9800A0F840 /* FeedModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedModel.swift; sourceTree = "<group>"; };
@@ -445,6 +449,22 @@
 			path = Types;
 			sourceTree = "<group>";
 		};
+		04A40D3227BE1C49004DAB19 /* Relay */ = {
+			isa = PBXGroup;
+			children = (
+				04A40D3327BE1C5C004DAB19 /* RelayViewModel.swift */,
+			);
+			path = Relay;
+			sourceTree = "<group>";
+		};
+		04A40D3527BE25B1004DAB19 /* Relay */ = {
+			isa = PBXGroup;
+			children = (
+				04A40D3627BE25E3004DAB19 /* File.swift */,
+			);
+			path = Relay;
+			sourceTree = "<group>";
+		};
 		04C95FBA27B5328200A0F840 /* Feed */ = {
 			isa = PBXGroup;
 			children = (
@@ -504,6 +524,7 @@
 		04D0637127AEC0C0005EB16C /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				04A40D3527BE25B1004DAB19 /* Relay */,
 				04C95FC427B55E8600A0F840 /* Feed */,
 			);
 			path = Model;
@@ -512,6 +533,7 @@
 		04D0637227AEC0D9005EB16C /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				04A40D3227BE1C49004DAB19 /* Relay */,
 				04C95FBA27B5328200A0F840 /* Feed */,
 			);
 			path = ViewModel;
@@ -880,6 +902,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				04A40D3427BE1C5C004DAB19 /* RelayViewModel.swift in Sources */,
 				0407910927BBDD68006C5374 /* ParticipantListView.swift in Sources */,
 				04DAAE6027B3EA0500AECFE4 /* SubscribeListViewController.swift in Sources */,
 				040790ED27BA2AFF006C5374 /* RelayDetailView.swift in Sources */,
@@ -931,6 +954,7 @@
 				04DAAE5C27B2CE5100AECFE4 /* BottomReactionView.swift in Sources */,
 				0464F9C527A578AA0054FD83 /* SceneDelegate.swift in Sources */,
 				040790EB27BA24C1006C5374 /* RelayDetailViewController.swift in Sources */,
+				04A40D3727BE25E3004DAB19 /* File.swift in Sources */,
 				04DAAE6427B4196F00AECFE4 /* BottomSheetViewController.swift in Sources */,
 				04DAAE5127B1FDB300AECFE4 /* WholeFeedView.swift in Sources */,
 				04DAAE6827B4D0D600AECFE4 /* WritingCommentView.swift in Sources */,

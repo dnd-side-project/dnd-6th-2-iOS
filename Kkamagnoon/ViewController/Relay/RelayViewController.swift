@@ -13,6 +13,7 @@ import RxCocoa
 
 class RelayViewController: UIViewController {
 
+    let viewModel = RelayViewModel()
     var disposeBag = DisposeBag()
 
     lazy var topButtonView = TopButtonView(frame: .zero, first: StringType.relayRoom, second: StringType.joinedRoom)
@@ -35,7 +36,7 @@ class RelayViewController: UIViewController {
         navigationController?.setNavigationBarHidden(true, animated: false)
         navigationController?.interactivePopGestureRecognizer?.delegate = nil
         setView()
-
+        bindView()
     }
 
     override func viewDidLayoutSubviews() {
@@ -58,33 +59,102 @@ class RelayViewController: UIViewController {
             $0.bottom.equalTo(view.safeAreaLayoutGuide)
         }
 
-        relayRoomView.relayList.collectionView.rx.itemSelected
-            .bind { _ in
-
-                let vc = RelayDetailViewController()
-                vc.modalPresentationStyle = .fullScreen
-                vc.hidesBottomBarWhenPushed = true
-                self.navigationController?.pushViewController(vc, animated: true)
-            }
-            .disposed(by: disposeBag)
-
         view.addSubview(makingRoomButton)
         makingRoomButton.snp.makeConstraints {
             $0.size.equalTo(55.0)
             $0.right.equalToSuperview().offset(-20.0)
             $0.bottom.equalTo(view.safeAreaLayoutGuide).offset(-14.0)
         }
+    }
+
+    func bindView() {
+        // Input
+        topButtonView.firstButton.rx.tap
+            .bind(to: viewModel.input.relayRoomButtonTap)
+            .disposed(by: disposeBag)
+
+        topButtonView.secondButton.rx.tap
+            .bind(to: viewModel.input.participatedRoomButtonTap)
+            .disposed(by: disposeBag)
+
+        relayRoomView.sortButton.rx.tap
+            .bind(to: viewModel.input.sortButtonTap)
+            .disposed(by: disposeBag)
+
+        relayRoomView.relayList.collectionView.rx.itemSelected
+            .bind(to: viewModel.input.relayRoomCellTap)
+            .disposed(by: disposeBag)
 
         makingRoomButton.rx.tap
-            .bind {
-                let vc = MakingRelayRoomViewController()
-                vc.modalPresentationStyle = .fullScreen
-                vc.hidesBottomBarWhenPushed = true
+            .bind(to: viewModel.input.makingRoomButtonTap)
+            .disposed(by: disposeBag)
 
-                self.navigationController?.pushViewController(vc, animated: true)
+        // Output
+        viewModel.output.currentListStyle
+            .withUnretained(self)
+            .bind { owner, style in
+                owner.changeListStyle(style: style)
             }
             .disposed(by: disposeBag)
 
+        viewModel.output.goToBell
+            .withUnretained(self)
+            .bind { owner, _ in
+                owner.goToBellNoticeViewController()
+            }
+            .disposed(by: disposeBag)
+
+        viewModel.output.currentSortStyle
+            .withUnretained(self)
+            .bind { owner, style in
+                owner.changeSortStyle(style: style)
+            }
+            .disposed(by: disposeBag)
+
+        viewModel.output.goToDetailRelayRoom
+            .withUnretained(self)
+            .bind { owner, _ in
+                owner.goToRelayDetailViewController()
+            }
+            .disposed(by: disposeBag)
+
+        viewModel.output.goToMakingRelay
+            .withUnretained(self)
+            .bind { owner, _ in
+                owner.goToMakingRelayViewController()
+            }
+            .disposed(by: disposeBag)
     }
 
+    private func changeListStyle(style: RelayListStyle) {
+
+    }
+
+    private func goToBellNoticeViewController() {
+
+    }
+
+    private func changeSortStyle(style: SortStyle) {
+        if style == .byLatest {
+            relayRoomView.sortButton.setTitle("최신순", for: .normal)
+        } else {
+            relayRoomView.sortButton.setTitle("인기순", for: .normal)
+        }
+    }
+
+    private func goToRelayDetailViewController() {
+        let vc = RelayDetailViewController()
+        vc.modalPresentationStyle = .fullScreen
+        vc.hidesBottomBarWhenPushed = true
+
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
+
+    private func goToMakingRelayViewController() {
+        let vc = MakingRelayRoomViewController()
+        vc.modalPresentationStyle = .fullScreen
+        vc.hidesBottomBarWhenPushed = true
+
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
 }
