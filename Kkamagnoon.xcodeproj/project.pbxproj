@@ -71,9 +71,18 @@
 		048D44C227AF5E030031974D /* StringConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048D44C127AF5E030031974D /* StringConverter.swift */; };
 		04A40D2F27BCF182004DAB19 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A40D2E27BCF182004DAB19 /* SearchViewController.swift */; };
 		04A40D3127BCF3B0004DAB19 /* BellNoticeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A40D3027BCF3B0004DAB19 /* BellNoticeViewController.swift */; };
+		04A40D3927BE7824004DAB19 /* Enum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A40D3827BE7824004DAB19 /* Enum.swift */; };
+		04A40D3B27BE8BFC004DAB19 /* FeedSubscribeService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A40D3A27BE8BFC004DAB19 /* FeedSubscribeService.swift */; };
+		04A40D3D27BE8C23004DAB19 /* FeedSubscribeEndpointCases.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A40D3C27BE8C23004DAB19 /* FeedSubscribeEndpointCases.swift */; };
+		04A40D4027BE907F004DAB19 /* FeedSearchEndpointCases.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A40D3F27BE907F004DAB19 /* FeedSearchEndpointCases.swift */; };
+		04A40D4227BE9099004DAB19 /* FeedCommentEndpointCases.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A40D4127BE9099004DAB19 /* FeedCommentEndpointCases.swift */; };
+		04A40D4427BE90CA004DAB19 /* FeedSearchService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A40D4327BE90CA004DAB19 /* FeedSearchService.swift */; };
+		04A40D4627BE90DB004DAB19 /* FeedCommentService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A40D4527BE90DB004DAB19 /* FeedCommentService.swift */; };
+		04A40D4827BE9777004DAB19 /* FeedRequestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A40D4727BE9777004DAB19 /* FeedRequestModel.swift */; };
+		04A40D4A27BEAC35004DAB19 /* Service.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A40D4927BEAC35004DAB19 /* Service.swift */; };
 		04C95FBF27B548DA00A0F840 /* FeedService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C95FBE27B548DA00A0F840 /* FeedService.swift */; };
 		04C95FC127B5495800A0F840 /* FeedViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C95FC027B5495800A0F840 /* FeedViewModel.swift */; };
-		04C95FC627B55E9800A0F840 /* FeedModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C95FC527B55E9800A0F840 /* FeedModel.swift */; };
+		04C95FC627B55E9800A0F840 /* FeedResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C95FC527B55E9800A0F840 /* FeedResponseModel.swift */; };
 		04C95FCB27B5F1A600A0F840 /* TokenUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C95FCA27B5F1A500A0F840 /* TokenUtils.swift */; };
 		04C95FCD27B6730200A0F840 /* TopButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C95FCC27B6730200A0F840 /* TopButtonView.swift */; };
 		04C95FD127B68AD400A0F840 /* TagListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C95FD027B68AD400A0F840 /* TagListView.swift */; };
@@ -162,9 +171,18 @@
 		048D44C127AF5E030031974D /* StringConverter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringConverter.swift; sourceTree = "<group>"; };
 		04A40D2E27BCF182004DAB19 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		04A40D3027BCF3B0004DAB19 /* BellNoticeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BellNoticeViewController.swift; sourceTree = "<group>"; };
+		04A40D3827BE7824004DAB19 /* Enum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Enum.swift; sourceTree = "<group>"; };
+		04A40D3A27BE8BFC004DAB19 /* FeedSubscribeService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedSubscribeService.swift; sourceTree = "<group>"; };
+		04A40D3C27BE8C23004DAB19 /* FeedSubscribeEndpointCases.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedSubscribeEndpointCases.swift; sourceTree = "<group>"; };
+		04A40D3F27BE907F004DAB19 /* FeedSearchEndpointCases.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedSearchEndpointCases.swift; sourceTree = "<group>"; };
+		04A40D4127BE9099004DAB19 /* FeedCommentEndpointCases.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedCommentEndpointCases.swift; sourceTree = "<group>"; };
+		04A40D4327BE90CA004DAB19 /* FeedSearchService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedSearchService.swift; sourceTree = "<group>"; };
+		04A40D4527BE90DB004DAB19 /* FeedCommentService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedCommentService.swift; sourceTree = "<group>"; };
+		04A40D4727BE9777004DAB19 /* FeedRequestModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedRequestModel.swift; sourceTree = "<group>"; };
+		04A40D4927BEAC35004DAB19 /* Service.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Service.swift; sourceTree = "<group>"; };
 		04C95FBE27B548DA00A0F840 /* FeedService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedService.swift; sourceTree = "<group>"; };
 		04C95FC027B5495800A0F840 /* FeedViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedViewModel.swift; sourceTree = "<group>"; };
-		04C95FC527B55E9800A0F840 /* FeedModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedModel.swift; sourceTree = "<group>"; };
+		04C95FC527B55E9800A0F840 /* FeedResponseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedResponseModel.swift; sourceTree = "<group>"; };
 		04C95FCA27B5F1A500A0F840 /* TokenUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenUtils.swift; sourceTree = "<group>"; };
 		04C95FCC27B6730200A0F840 /* TopButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopButtonView.swift; sourceTree = "<group>"; };
 		04C95FD027B68AD400A0F840 /* TagListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagListView.swift; sourceTree = "<group>"; };
@@ -225,6 +243,7 @@
 				04C95FCA27B5F1A500A0F840 /* TokenUtils.swift */,
 				0407909827B7CB38006C5374 /* EndPoint.swift */,
 				0407909A27B7D232006C5374 /* NetworkError.swift */,
+				04A40D4927BEAC35004DAB19 /* Service.swift */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -375,8 +394,31 @@
 			children = (
 				048D44C127AF5E030031974D /* StringConverter.swift */,
 				04DAAE5D27B3C64500AECFE4 /* CustomColor.swift */,
+				04A40D3827BE7824004DAB19 /* Enum.swift */,
 			);
 			path = Types;
+			sourceTree = "<group>";
+		};
+		04A40D3E27BE8C2C004DAB19 /* EndpointCases */ = {
+			isa = PBXGroup;
+			children = (
+				04A40D3C27BE8C23004DAB19 /* FeedSubscribeEndpointCases.swift */,
+				0407909C27B7DD9E006C5374 /* FeedEndPointCases.swift */,
+				04A40D3F27BE907F004DAB19 /* FeedSearchEndpointCases.swift */,
+				04A40D4127BE9099004DAB19 /* FeedCommentEndpointCases.swift */,
+			);
+			path = EndpointCases;
+			sourceTree = "<group>";
+		};
+		04A40D4B27BEACCF004DAB19 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				04C95FBE27B548DA00A0F840 /* FeedService.swift */,
+				04A40D3A27BE8BFC004DAB19 /* FeedSubscribeService.swift */,
+				04A40D4327BE90CA004DAB19 /* FeedSearchService.swift */,
+				04A40D4527BE90DB004DAB19 /* FeedCommentService.swift */,
+			);
+			path = Services;
 			sourceTree = "<group>";
 		};
 		04C95FBA27B5328200A0F840 /* Feed */ = {
@@ -390,8 +432,8 @@
 		04C95FBB27B5440C00A0F840 /* Feed */ = {
 			isa = PBXGroup;
 			children = (
-				0407909C27B7DD9E006C5374 /* FeedEndPointCases.swift */,
-				04C95FBE27B548DA00A0F840 /* FeedService.swift */,
+				04A40D4B27BEACCF004DAB19 /* Services */,
+				04A40D3E27BE8C2C004DAB19 /* EndpointCases */,
 			);
 			path = Feed;
 			sourceTree = "<group>";
@@ -399,7 +441,8 @@
 		04C95FC427B55E8600A0F840 /* Feed */ = {
 			isa = PBXGroup;
 			children = (
-				04C95FC527B55E9800A0F840 /* FeedModel.swift */,
+				04C95FC527B55E9800A0F840 /* FeedResponseModel.swift */,
+				04A40D4727BE9777004DAB19 /* FeedRequestModel.swift */,
 			);
 			path = Feed;
 			sourceTree = "<group>";
@@ -816,9 +859,11 @@
 				048D44BF27AF5D930031974D /* ChallengeViewController.swift in Sources */,
 				0439AF4B27B1EBBF00E14E03 /* FeedViewController.swift in Sources */,
 				048D44BD27AF5D7D0031974D /* MyWritingViewController.swift in Sources */,
+				04A40D3D27BE8C23004DAB19 /* FeedSubscribeEndpointCases.swift in Sources */,
 				040790A427B895D1006C5374 /* View.swift in Sources */,
 				048D44B727AF5D0F0031974D /* MyPageViewController.swift in Sources */,
 				048D44AC27AF592D0031974D /* TabBarViewController.swift in Sources */,
+				04A40D4227BE9099004DAB19 /* FeedCommentEndpointCases.swift in Sources */,
 				0439AF4727B171EB00E14E03 /* DetailContentViewController.swift in Sources */,
 				04DAAE5A27B2B1F500AECFE4 /* FlexibleDecode.swift in Sources */,
 				04C95FD127B68AD400A0F840 /* TagListView.swift in Sources */,
@@ -827,14 +872,17 @@
 				04C95FD527B68E8900A0F840 /* AuthorListView.swift in Sources */,
 				04C95FBF27B548DA00A0F840 /* FeedService.swift in Sources */,
 				040790DB27B92620006C5374 /* TextView.swift in Sources */,
+				04A40D4627BE90DB004DAB19 /* FeedCommentService.swift in Sources */,
 				0407909927B7CB38006C5374 /* EndPoint.swift in Sources */,
-				04C95FC627B55E9800A0F840 /* FeedModel.swift in Sources */,
+				04A40D3927BE7824004DAB19 /* Enum.swift in Sources */,
+				04C95FC627B55E9800A0F840 /* FeedResponseModel.swift in Sources */,
 				040790B427B8F03D006C5374 /* DetailView.swift in Sources */,
 				0439AF3127AFF97400E14E03 /* FeedCell.swift in Sources */,
 				040790A627B8960D006C5374 /* Color.swift in Sources */,
 				040790AA27B89701006C5374 /* Decode.swift in Sources */,
 				04DAAE6227B3F41900AECFE4 /* SubscribeListCell.swift in Sources */,
 				0407909B27B7D232006C5374 /* NetworkError.swift in Sources */,
+				04A40D4027BE907F004DAB19 /* FeedSearchEndpointCases.swift in Sources */,
 				04DAAE5327B2121600AECFE4 /* FeedView.swift in Sources */,
 				04C95FCB27B5F1A600A0F840 /* TokenUtils.swift in Sources */,
 				040790A827B8964E006C5374 /* String.swift in Sources */,
@@ -846,13 +894,17 @@
 				04DAAE5C27B2CE5100AECFE4 /* BottomReactionView.swift in Sources */,
 				0464F9C527A578AA0054FD83 /* SceneDelegate.swift in Sources */,
 				04DAAE6427B4196F00AECFE4 /* BottomSheetViewController.swift in Sources */,
+				04A40D4A27BEAC35004DAB19 /* Service.swift in Sources */,
 				04DAAE5127B1FDB300AECFE4 /* WholeFeedView.swift in Sources */,
+				04A40D4827BE9777004DAB19 /* FeedRequestModel.swift in Sources */,
+				04A40D3B27BE8BFC004DAB19 /* FeedSubscribeService.swift in Sources */,
 				04DAAE6827B4D0D600AECFE4 /* WritingCommentView.swift in Sources */,
 				0439AF4527B166B300E14E03 /* SubscribeFilterCell.swift in Sources */,
 				040790B227B8DFDD006C5374 /* ImageLabelView.swift in Sources */,
 				04DAAE5527B29EB700AECFE4 /* SubscribeFeedView.swift in Sources */,
 				04A40D3127BCF3B0004DAB19 /* BellNoticeViewController.swift in Sources */,
 				04C95FCD27B6730200A0F840 /* TopButtonView.swift in Sources */,
+				04A40D4427BE90CA004DAB19 /* FeedSearchService.swift in Sources */,
 				04A40D2F27BCF182004DAB19 /* SearchViewController.swift in Sources */,
 				0439AF3327B0B0A000E14E03 /* ArticleListView.swift in Sources */,
 				040790AC27B89777006C5374 /* Notification.swift in Sources */,

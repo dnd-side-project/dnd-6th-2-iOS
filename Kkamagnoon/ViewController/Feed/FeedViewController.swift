@@ -35,6 +35,8 @@ class FeedViewController: UIViewController {
 
         bindWholeFeedView()
         bindSubscribeFeedView()
+
+        viewModel.tempRequest()
     }
 
     func setTopView() {

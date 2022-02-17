@@ -14,7 +14,7 @@ import SnapKit
 
 class DetailContentViewController: UIViewController {
 
-    var feedInfo: FeedInfo?
+    var feedInfo: Article?
 
     var stackView = UIStackView()
           .then {

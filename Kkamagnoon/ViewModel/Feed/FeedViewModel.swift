@@ -140,6 +140,10 @@ class FeedViewModel: FeedViewModelType {
         .disposed(by: disposeBag)
     }
 
+    func tempRequest() {
+        service.getWholeFeed(next_cursor: nil, orderBy: "최신순")
+    }
+
     deinit {
         disposeBag = DisposeBag()
     }
