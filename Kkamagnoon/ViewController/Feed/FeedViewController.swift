@@ -113,7 +113,7 @@ class FeedViewController: UIViewController {
     }
 
     func bindWholeFeedView() {
-        viewModel.bindWholeFeedList()
+
         viewModel.output.wholeFeedListRelay
             .bind(to: wholeFeedView.articleListView.collectionView
                     .rx.items(cellIdentifier: FeedCell.feedCellIdentifier,
@@ -122,16 +122,6 @@ class FeedViewController: UIViewController {
                 cell.layer.cornerRadius = 15
             }
             .disposed(by: disposeBag)
-
-        // 정상
-//        wholeFeedView.articleListView.collectionView.rx
-//            .itemSelected
-//            .bind { _ in
-//                self.goToDetailContentVC()
-//            }
-//            .disposed(by: disposeBag)
-
-        // Tap 이벤트 두 번씩 발생
 
         // Input
         wholeFeedView.articleListView.collectionView.rx
