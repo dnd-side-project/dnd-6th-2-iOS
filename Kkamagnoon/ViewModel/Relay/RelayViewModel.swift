@@ -9,15 +9,7 @@ import Foundation
 import RxSwift
 import RxCocoa
 
-protocol RelayViewModelType {
-    associatedtype Input
-    associatedtype Output
-
-    var input: Input { get }
-    var output: Output { get }
-}
-
-class RelayViewModel: RelayViewModelType {
+class RelayViewModel: ViewModelType {
 
     struct Input {
         let relayRoomButtonTap = PublishSubject<Void>()
@@ -62,6 +54,7 @@ class RelayViewModel: RelayViewModelType {
         bindSortButton()
         bindMakingRelayButton()
         bindRelayRoomList()
+        bindRelayListTap()
         bindParticipatedRoomList()
     }
 
@@ -123,7 +116,9 @@ class RelayViewModel: RelayViewModelType {
             self.output.relayRoomList.accept(list)
         }
         .disposed(by: disposeBag)
+    }
 
+    func bindRelayListTap() {
         input.relayRoomCellTap
             .bind { [weak self] indexPath in
                 guard let self = self else {return}

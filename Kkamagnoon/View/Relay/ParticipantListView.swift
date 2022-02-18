@@ -49,8 +49,8 @@ class ParticipantListView: UIView {
 
         self.addSubview(bottomView)
         bottomView.snp.makeConstraints {
-            $0.left.right.equalToSuperview()
-            $0.bottom.equalToSuperview().offset(-20.0)
+            $0.left.bottom.right.equalToSuperview()
+            $0.height.equalTo(70.0)
         }
 
         tableView.backgroundColor = UIColor(rgb: 0x2A2A2A)

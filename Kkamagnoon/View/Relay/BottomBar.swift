@@ -34,6 +34,7 @@ class BottomBar: UIView {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
+        self.backgroundColor = UIColor(rgb: 0x191919)
         setView()
     }
 
@@ -53,7 +54,8 @@ class BottomBar: UIView {
         verticalFormulaButton.snp.makeConstraints {
             $0.left.equalToSuperview().offset(20.0)
             $0.top.equalToSuperview().offset(14.0)
-            $0.bottom.equalToSuperview()
+            $0.size.equalTo(22.0)
+//            $0.bottom.equalToSuperview().offset(-safeAreaInsets.bottom)
         }
 
         self.addSubview(horizontalFormulaButton)

@@ -24,4 +24,7 @@ struct StringType {
 
     static let relayRoom = "릴레이방"
     static let joinedRoom = "참여한방"
+
+    static let titlePlaceeholder = "무슨 글을 쓸까요?"
+    static let noticePlaceholder = "공지사항이 있다면 적어주세요."
 }

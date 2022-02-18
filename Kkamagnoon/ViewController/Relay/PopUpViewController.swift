@@ -14,6 +14,7 @@ import Then
 class PopUpViewController: UIViewController {
 
     var disposeBag = DisposeBag()
+    let viewModel = PopUpViewModel()
 
     var backView = UIView()
         .then {
@@ -27,6 +28,7 @@ class PopUpViewController: UIViewController {
         super.viewDidLoad()
         self.navigationController?.isNavigationBarHidden = true
         setView()
+        bindView()
     }
 
     func setView() {
@@ -42,23 +44,26 @@ class PopUpViewController: UIViewController {
             $0.top.equalToSuperview().offset(276.0)
             $0.width.equalToSuperview().offset(-74.0)
         }
+    }
 
+    func bindView() {
+        // Input
         popUpView.exitButton.rx.tap
-            .withUnretained(self)
-            .bind { owner, _ in
-                owner.dismiss(animated: false, completion: nil)
-            }
+            .bind(to: viewModel.input.exitButtonTap)
             .disposed(by: disposeBag)
 
         popUpView.enterButton.rx.tap
+            .bind(to: viewModel.input.enterButtonTap)
+            .disposed(by: disposeBag)
+
+        // Output
+        viewModel.output.relayDetailViewStyle
             .withUnretained(self)
             .bind { owner, _ in
-                // 릴레이 방 입장
-
                 owner.dismiss(animated: false, completion: nil)
-
             }
             .disposed(by: disposeBag)
+
     }
 
 }

@@ -126,7 +126,7 @@ extension FeedEndpointCases {
         return [
             "Content-Type": "application/json",
             "Accept": "*/*",
-            "Authorization": "Bearer \(token))"
+            "Authorization": "Bearer \(token)"
         ]
     }
 }

@@ -154,6 +154,7 @@ class RelayViewController: UIViewController {
         let vc = MakingRelayRoomViewController()
         vc.modalPresentationStyle = .fullScreen
         vc.hidesBottomBarWhenPushed = true
+        vc.viewModel.rootView = self
 
         self.navigationController?.pushViewController(vc, animated: true)
     }

@@ -87,14 +87,14 @@ class MakingRelayView: UIView {
         }
 
     var textViewList: [ShortTextView] = [
-        ShortTextView(frame: .zero, textContainer: nil, placeholder: "무슨 글을 쓸까요?").then {
+        ShortTextView(frame: .zero, textContainer: nil, placeholder: StringType.titlePlaceeholder).then {
             $0.setContentHuggingPriority(.required, for: .vertical)
         },
-        ShortTextView(frame: .zero, textContainer: nil, placeholder: "공지사항이 있다면 적어주세요.").then {
+        ShortTextView(frame: .zero, textContainer: nil, placeholder: StringType.noticePlaceholder).then {
             $0.setContentHuggingPriority(.required, for: .vertical)
         },
         // DUMMY
-        ShortTextView(frame: .zero, textContainer: nil, placeholder: "공지사항이 있다면 적어주세요.").then {
+        ShortTextView(frame: .zero, textContainer: nil, placeholder: StringType.noticePlaceholder).then {
             $0.setContentHuggingPriority(.required, for: .vertical)
         }
     ]

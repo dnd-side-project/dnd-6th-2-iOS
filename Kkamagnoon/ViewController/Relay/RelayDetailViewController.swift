@@ -16,6 +16,7 @@ class RelayDetailViewController: UIViewController {
     var disposeBag = DisposeBag()
 
     var detailView = RelayDetailView()
+    let viewModel = RelayDetailViewModel()
 
     var enterButton = UIButton()
         .then {
@@ -27,33 +28,34 @@ class RelayDetailViewController: UIViewController {
         }
 
     var bottomBar = BottomBar()
-        .then {
-            $0.frame.size.height = 70
-        }
 
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .black
         navigationController?.isNavigationBarHidden = true
 
-        setView()
-        layoutView()
+        setDetailView()
+
+        if viewModel.isNew {
+            setBottomBar()
+        } else {
+            setEnterButton()
+        }
+        bindView()
     }
 
-    func setView() {
-
+    func setDetailView() {
         view.addSubview(detailView)
-        view.addSubview(enterButton)
-        view.addSubview(bottomBar)
-    }
-
-    func layoutView() {
 
         detailView.snp.makeConstraints {
             $0.width.equalToSuperview()
             $0.centerX.equalToSuperview()
             $0.top.bottom.equalToSuperview()
         }
+    }
+
+    func setEnterButton() {
+        view.addSubview(enterButton)
 
         enterButton.snp.makeConstraints {
             $0.width.equalToSuperview().offset(-40.0)
@@ -61,28 +63,67 @@ class RelayDetailViewController: UIViewController {
             $0.centerX.equalToSuperview()
             $0.bottom.equalToSuperview().offset(-40.0)
         }
+    }
 
-        enterButton.rx.tap
-            .bind {
-                let vc = PopUpViewController()
-                vc.modalPresentationStyle = .overFullScreen
-
-                self.present(vc, animated: false)
-            }
-            .disposed(by: disposeBag)
+    func setBottomBar() {
+        view.addSubview(bottomBar)
 
         bottomBar.snp.makeConstraints {
-            $0.left.bottom.right.equalTo(view.safeAreaLayoutGuide)
+            $0.left.bottom.right.equalToSuperview()
+            $0.height.equalTo(70.0)
         }
+    }
+
+    func bindView() {
+        // Input
+        enterButton.rx.tap
+            .bind(to: viewModel.input.enterButtonTap)
+            .disposed(by: disposeBag)
 
         bottomBar.participantButton.rx.tap
-            .bind {
-                let vc = ParticipantViewController()
-                vc.modalPresentationStyle = .fullScreen
+            .bind(to: viewModel.input.participantButtonTap)
+            .disposed(by: disposeBag)
 
-                self.present(vc, animated: false, completion: nil)
+        // Output
+        viewModel.output.goToRoom
+            .withUnretained(self)
+            .bind { owner, _ in
+                owner.goToPopUpVC()
             }
             .disposed(by: disposeBag)
+
+        viewModel.output.goToParticipantView
+            .withUnretained(self)
+            .bind { owner, _ in
+                owner.goToParticipationVC()
+            }
+            .disposed(by: disposeBag)
+    }
+
+    private func goToPopUpVC() {
+        let vc = PopUpViewController()
+        vc.viewModel.output.relayDetailViewStyle
+            .withUnretained(self)
+            .bind { owner, style in
+                if style == .nonParticipation {
+                    owner.bottomBar.removeFromSuperview()
+                    owner.setEnterButton()
+                } else {
+                    owner.enterButton.removeFromSuperview()
+                    owner.setBottomBar()
+                }
+            }
+            .disposed(by: disposeBag)
+        vc.modalPresentationStyle = .overFullScreen
+
+        self.present(vc, animated: false)
+    }
+
+    private func goToParticipationVC() {
+        let vc = ParticipantViewController()
+        vc.modalPresentationStyle = .fullScreen
+
+        self.present(vc, animated: false, completion: nil)
     }
 
 }

@@ -14,6 +14,7 @@ import RxCocoa
 class SelectTagViewController: UIViewController {
 
     var disposeBag = DisposeBag()
+    let viewModel = SelectTagViewModel()
 
     var scrollView = UIScrollView()
           .then {
@@ -95,6 +96,7 @@ class SelectTagViewController: UIViewController {
         setSubTitleLabel()
         setTagStackView()
         setCompleteButton()
+        bindView()
     }
 
     func setScrollView() {
@@ -166,12 +168,22 @@ class SelectTagViewController: UIViewController {
             $0.centerX.equalToSuperview()
             $0.bottom.equalToSuperview().offset(-40.0)
         }
+    }
 
+    func bindView() {
         completeButton.rx.tap
-            .bind {
+            .bind(to: viewModel.input.completeButtonTap)
+            .disposed(by: disposeBag)
 
+        viewModel.output.goBackToMakingView
+            .withUnretained(self)
+            .bind { owner, _ in
+                owner.popBack()
             }
             .disposed(by: disposeBag)
     }
 
+    private func popBack() {
+        self.navigationController?.popViewController(animated: true)
+    }
 }
