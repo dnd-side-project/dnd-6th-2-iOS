@@ -123,16 +123,6 @@ class SelectTagViewController: UIViewController {
             .disposed(by: disposeBag)
     }
 
-    private func setHandler(tagView: TagView, tag: String) {
-        tagView.tapHandler = { [unowned self] in
-
-            if viewModel.selectedTags.count < 6 {
-                viewModel.selectedTags.append(tag)
-
-            }
-        }
-    }
-
     private func popBack() {
         self.navigationController?.popViewController(animated: true)
     }

@@ -81,8 +81,6 @@ class RelayViewController: UIViewController {
 
         view.addSubview(relayRoomView)
 
-        relayRoomView.relayList.collectionView.allowsMultipleSelection = true
-
         relayRoomView.snp.makeConstraints {
             $0.left.right.equalToSuperview()
             $0.top.equalTo(topButtonView.snp.bottom)
@@ -105,6 +103,16 @@ class RelayViewController: UIViewController {
 
         topButtonView.secondButton.rx.tap
             .bind(to: viewModel.input.participatedRoomButtonTap)
+            .disposed(by: disposeBag)
+
+        relayRoomView.categoryFilterView.filterView.allowsMultipleSelection = true
+        relayRoomView.categoryFilterView.filterView
+            .rx.itemSelected
+            .withUnretained(self)
+            .bind { owner, _ in
+                print(">>>SELECTED!!")
+                owner.viewModel.selectedTagCount += 1
+            }
             .disposed(by: disposeBag)
 
 //        relayRoomView.relayList.collectionView

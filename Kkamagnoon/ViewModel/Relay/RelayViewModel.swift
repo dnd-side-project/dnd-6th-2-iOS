@@ -40,6 +40,7 @@ class RelayViewModel: ViewModelType {
     var input: Input
     var output: Output
 //    var service: FeedService!
+    var selectedTagCount: Int = 0
 
     var disposeBag = DisposeBag()
     var sortStyle: SortStyle = .byLatest

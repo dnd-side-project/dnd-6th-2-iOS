@@ -36,6 +36,7 @@ class SelectTagView: UIView {
         collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
 
         collectionView.showsVerticalScrollIndicator = false
+        collectionView.allowsMultipleSelection = true
         collectionView.backgroundColor = .black
 
         collectionView.register(

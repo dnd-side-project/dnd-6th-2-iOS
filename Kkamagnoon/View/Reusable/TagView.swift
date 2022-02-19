@@ -13,8 +13,6 @@ import RxCocoa
 
 class TagView: UIView {
 
-    let tapGesture = UITapGestureRecognizer()
-
     var categoryLabel: UILabel = UILabel()
         .then {
             $0.textColor = UIColor(rgb: Color.tagText)
@@ -29,11 +27,8 @@ class TagView: UIView {
         super.init(frame: .zero)
         self.backgroundColor = UIColor(rgb: Color.tag)
         self.layer.cornerRadius = 18.0
-        self.addGestureRecognizer(tapGesture)
         setView(top: top, bottom: bottom, leading: leading, trailing: trailing)
     }
-
-    var tapHandler: (() -> Void)?
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")

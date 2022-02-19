@@ -41,6 +41,7 @@ class RelayRoomView: UIView {
 
     func setView() {
         self.addSubview(categoryFilterView)
+
         categoryFilterView.snp.makeConstraints {
             $0.left.equalToSuperview().offset(20.0)
             $0.right.equalToSuperview().offset(-20.0)
@@ -49,6 +50,7 @@ class RelayRoomView: UIView {
         }
 
         self.addSubview(relayList)
+
         relayList.snp.makeConstraints {
             $0.left.equalToSuperview().offset(20.0)
             $0.right.equalToSuperview().offset(-20.0)
