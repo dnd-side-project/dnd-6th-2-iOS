@@ -38,18 +38,7 @@ final class CategoryFilterCell: UICollectionViewCell {
       }
     }
 
-    private func configureSelected() {
-      if isSelected {
-
-          self.tagView.backgroundColor = UIColor(rgb: Color.tagGreen)
-          self.tagView.categoryLabel.textColor = .white
-        return
-      }
-
-        self.tagView.backgroundColor = UIColor(rgb: Color.tag)
-        self.tagView.categoryLabel.textColor = UIColor(rgb: Color.tagText)
-    }
-
+    
     override func preferredLayoutAttributesFitting(_ layoutAttributes: UICollectionViewLayoutAttributes)
     -> UICollectionViewLayoutAttributes {
 
@@ -69,4 +58,16 @@ final class CategoryFilterCell: UICollectionViewCell {
         tagView.categoryLabel.text = nil
         configureSelected()
     }
+    
+    private func configureSelected() {
+      if isSelected {
+          self.tagView.backgroundColor = UIColor(rgb: Color.tagGreen)
+          self.tagView.categoryLabel.textColor = .white
+        return
+      }
+
+        self.tagView.backgroundColor = UIColor(rgb: Color.tag)
+        self.tagView.categoryLabel.textColor = UIColor(rgb: Color.tagText)
+    }
+
 }

@@ -45,8 +45,6 @@ class RelayViewController: UIViewController {
     configureSupplementaryView: { _, collectionView, _, indexPath in
         let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: SortHeaderCell.sortHeaderCellReuseIdentifier, for: indexPath) as! SortHeaderCell
 
-        var bag = DisposeBag()
-
         headerView.buttonTappedHandler = { [unowned self] in
             if self.viewModel.sortStyle == .byLatest {
                 headerView.sortButton.setTitle("인기순", for: .normal)
@@ -83,6 +81,8 @@ class RelayViewController: UIViewController {
 
         view.addSubview(relayRoomView)
 
+        relayRoomView.relayList.collectionView.allowsMultipleSelection = true
+
         relayRoomView.snp.makeConstraints {
             $0.left.right.equalToSuperview()
             $0.top.equalTo(topButtonView.snp.bottom)
@@ -107,11 +107,11 @@ class RelayViewController: UIViewController {
             .bind(to: viewModel.input.participatedRoomButtonTap)
             .disposed(by: disposeBag)
 
-        relayRoomView.relayList.collectionView
-            .supplementaryView(
-                forElementKind: UICollectionView.elementKindSectionHeader,
-                               at: IndexPath(item: 0, section: 0))?
-            .isUserInteractionEnabled = true
+//        relayRoomView.relayList.collectionView
+//            .supplementaryView(
+//                forElementKind: UICollectionView.elementKindSectionHeader,
+//                               at: IndexPath(item: 0, section: 0))?
+//            .isUserInteractionEnabled = true
 
         relayRoomView.relayList.collectionView.rx.itemSelected
             .bind(to: viewModel.input.relayRoomCellTap)

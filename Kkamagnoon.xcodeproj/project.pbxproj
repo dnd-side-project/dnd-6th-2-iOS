@@ -71,6 +71,8 @@
 		040D852D27C092390003C96A /* RelayWritingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040D852C27C092390003C96A /* RelayWritingViewController.swift */; };
 		040D852F27C096390003C96A /* MultiLineTagListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040D852E27C096390003C96A /* MultiLineTagListView.swift */; };
 		040D853127C0B8AD0003C96A /* SettingPersonnelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040D853027C0B8AD0003C96A /* SettingPersonnelView.swift */; };
+		040D853B27C1035F0003C96A /* SelectTagView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040D853A27C1035F0003C96A /* SelectTagView.swift */; };
+		040D853D27C10B5C0003C96A /* SelectingCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040D853C27C10B5C0003C96A /* SelectingCollectionReusableView.swift */; };
 		0439AF2D27AFAF7000E14E03 /* CategoryFilterCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0439AF2C27AFAF7000E14E03 /* CategoryFilterCell.swift */; };
 		0439AF3127AFF97400E14E03 /* FeedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0439AF3027AFF97300E14E03 /* FeedCell.swift */; };
 		0439AF3327B0B0A000E14E03 /* ArticleListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0439AF3227B0B0A000E14E03 /* ArticleListView.swift */; };
@@ -200,6 +202,8 @@
 		040D852C27C092390003C96A /* RelayWritingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RelayWritingViewController.swift; sourceTree = "<group>"; };
 		040D852E27C096390003C96A /* MultiLineTagListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiLineTagListView.swift; sourceTree = "<group>"; };
 		040D853027C0B8AD0003C96A /* SettingPersonnelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingPersonnelView.swift; sourceTree = "<group>"; };
+		040D853A27C1035F0003C96A /* SelectTagView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectTagView.swift; sourceTree = "<group>"; };
+		040D853C27C10B5C0003C96A /* SelectingCollectionReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectingCollectionReusableView.swift; sourceTree = "<group>"; };
 		0439AF2C27AFAF7000E14E03 /* CategoryFilterCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryFilterCell.swift; sourceTree = "<group>"; };
 		0439AF3027AFF97300E14E03 /* FeedCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedCell.swift; sourceTree = "<group>"; };
 		0439AF3227B0B0A000E14E03 /* ArticleListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticleListView.swift; sourceTree = "<group>"; };
@@ -357,6 +361,7 @@
 				0407910027BBA0C6006C5374 /* SelectingTagCell.swift */,
 				0407910A27BBE003006C5374 /* ParticipantCell.swift */,
 				04A40D7227BFE22C004DAB19 /* SortHeaderCell.swift */,
+				040D853C27C10B5C0003C96A /* SelectingCollectionReusableView.swift */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -596,6 +601,7 @@
 				040790FC27BB5F93006C5374 /* ShortTextView.swift */,
 				04A40D7027BFE19A004DAB19 /* ArticleListWithSortView.swift */,
 				040D852E27C096390003C96A /* MultiLineTagListView.swift */,
+				040D853A27C1035F0003C96A /* SelectTagView.swift */,
 			);
 			path = Reusable;
 			sourceTree = "<group>";
@@ -1013,6 +1019,7 @@
 				040790DD27B94125006C5374 /* GrayBorderView.swift in Sources */,
 				040790AE27B8B3F8006C5374 /* TagView.swift in Sources */,
 				04C95FD527B68E8900A0F840 /* AuthorListView.swift in Sources */,
+				040D853B27C1035F0003C96A /* SelectTagView.swift in Sources */,
 				04A40D5B27BF54AE004DAB19 /* RelayArticleService.swift in Sources */,
 				04A40D6527BF5809004DAB19 /* ParticipantViewModel.swift in Sources */,
 				04A40D6327BF57F9004DAB19 /* SelectTagViewModel.swift in Sources */,
@@ -1055,6 +1062,7 @@
 				04A40D3727BE25E3004DAB19 /* RequestModel.swift in Sources */,
 				04A40D6727BF6A17004DAB19 /* ViewModelType.swift in Sources */,
 				04DAAE6427B4196F00AECFE4 /* BottomSheetViewController.swift in Sources */,
+				040D853D27C10B5C0003C96A /* SelectingCollectionReusableView.swift in Sources */,
 				04A40D6D27BFC1C2004DAB19 /* RelayListView.swift in Sources */,
 				04DAAE5127B1FDB300AECFE4 /* WholeFeedView.swift in Sources */,
 				04DAAE6827B4D0D600AECFE4 /* WritingCommentView.swift in Sources */,
