@@ -10,6 +10,7 @@ import Then
 import SnapKit
 import RxSwift
 import RxCocoa
+import RxDataSources
 
 class RelayViewController: UIViewController {
 
@@ -31,12 +32,41 @@ class RelayViewController: UIViewController {
             $0.backgroundColor = UIColor(rgb: Color.whitePurple)
         }
 
+    lazy var dataSource = RxCollectionViewSectionedReloadDataSource<SectionModel<String, String>>(configureCell: { _, collectionView, indexPath, element in
+
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: RelayRoomCell.relayRoomCellIdentifier, for: indexPath) as! RelayRoomCell
+        cell.layer.cornerRadius = 15.0
+        cell.contentLabel.text = element
+        cell.tagListView.tagList = ["태그1", "태그2", "태그태그", "태", "태그그그그"]
+        cell.tagListView.setTags()
+
+        return cell
+    },
+    configureSupplementaryView: { _, collectionView, _, indexPath in
+        let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: SortHeaderCell.sortHeaderCellReuseIdentifier, for: indexPath) as! SortHeaderCell
+
+        var bag = DisposeBag()
+
+        headerView.buttonTappedHandler = { [unowned self] in
+            if self.viewModel.sortStyle == .byLatest {
+                headerView.sortButton.setTitle("인기순", for: .normal)
+                self.viewModel.sortStyle = .byPopularity
+            } else {
+                headerView.sortButton.setTitle("최신순", for: .normal)
+                self.viewModel.sortStyle = .byLatest
+            }
+        }
+
+        return headerView
+    })
+
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationController?.setNavigationBarHidden(true, animated: false)
         navigationController?.interactivePopGestureRecognizer?.delegate = nil
         setView()
         bindView()
+
     }
 
     override func viewDidLayoutSubviews() {
@@ -77,9 +107,11 @@ class RelayViewController: UIViewController {
             .bind(to: viewModel.input.participatedRoomButtonTap)
             .disposed(by: disposeBag)
 
-        relayRoomView.sortButton.rx.tap
-            .bind(to: viewModel.input.sortButtonTap)
-            .disposed(by: disposeBag)
+        relayRoomView.relayList.collectionView
+            .supplementaryView(
+                forElementKind: UICollectionView.elementKindSectionHeader,
+                               at: IndexPath(item: 0, section: 0))?
+            .isUserInteractionEnabled = true
 
         relayRoomView.relayList.collectionView.rx.itemSelected
             .bind(to: viewModel.input.relayRoomCellTap)
@@ -104,11 +136,8 @@ class RelayViewController: UIViewController {
             }
             .disposed(by: disposeBag)
 
-        viewModel.output.currentSortStyle
-            .withUnretained(self)
-            .bind { owner, style in
-                owner.changeSortStyle(style: style)
-            }
+        viewModel.output.relayRoomList
+            .bind(to: relayRoomView.relayList.collectionView.rx.items(dataSource: dataSource))
             .disposed(by: disposeBag)
 
         viewModel.output.goToDetailRelayRoom
@@ -132,14 +161,6 @@ class RelayViewController: UIViewController {
 
     private func goToBellNoticeViewController() {
 
-    }
-
-    private func changeSortStyle(style: SortStyle) {
-        if style == .byLatest {
-            relayRoomView.sortButton.setTitle("최신순", for: .normal)
-        } else {
-            relayRoomView.sortButton.setTitle("인기순", for: .normal)
-        }
     }
 
     private func goToRelayDetailViewController() {

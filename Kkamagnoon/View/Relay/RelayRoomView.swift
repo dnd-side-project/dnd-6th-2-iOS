@@ -10,22 +10,21 @@ import Then
 import SnapKit
 import RxSwift
 import RxCocoa
+import RxDataSources
 
 class RelayRoomView: UIView {
 
     var categoryFilterView = TagListView()
 
-    var sortButton = UIButton()
-        .then {
-            $0.setTitle("인기순", for: .normal)
-            $0.setImage(UIImage(systemName: "heart.fill"), for: .normal)
-            $0.sizeToFit()
-            $0.titleLabel?.font = UIFont.pretendard(weight: .medium, size: 12)
-        }
-
     var relayList = ArticleListView()
         .then {
             $0.collectionView.register(RelayRoomCell.self, forCellWithReuseIdentifier: RelayRoomCell.relayRoomCellIdentifier)
+            $0.collectionView.register(SortHeaderCell.self,
+                                       forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
+                                       withReuseIdentifier: SortHeaderCell.sortHeaderCellReuseIdentifier)
+
+            $0.layout.headerReferenceSize = CGSize(width: UIScreen.main.bounds.width - 40, height: 40)
+            $0.collectionView.collectionViewLayout = $0.layout
         }
 
     var disposeBag = DisposeBag()
@@ -49,30 +48,14 @@ class RelayRoomView: UIView {
             $0.height.equalTo(29.0)
         }
 
-        self.addSubview(sortButton)
-        sortButton.snp.makeConstraints {
-            $0.top.equalTo(categoryFilterView.snp.bottom).offset(20.0)
-            $0.right.equalToSuperview().offset(-20.0)
-        }
-
         self.addSubview(relayList)
         relayList.snp.makeConstraints {
             $0.left.equalToSuperview().offset(20.0)
             $0.right.equalToSuperview().offset(-20.0)
             $0.bottom.equalToSuperview()
-            $0.top.equalTo(sortButton.snp.bottom).offset(11.83)
+            $0.top.equalTo(categoryFilterView.snp.bottom).offset(11.83)
         }
 
-        // DUMMY
-        let dummyData = Observable<[String]>.of(["글감", "일상", "로맨스", "짧은 글", "긴 글", "무서운 글", "발랄한 글", "한글", "세종대왕"])
-
-        dummyData.bind(to: relayList.collectionView
-                        .rx.items(cellIdentifier: RelayRoomCell.relayRoomCellIdentifier,
-                                             cellType: RelayRoomCell.self)) { (_, element, cell) in
-            cell.contentLabel.text = element
-            cell.layer.cornerRadius = 15
-            }
-        .disposed(by: disposeBag)
     }
 
 }

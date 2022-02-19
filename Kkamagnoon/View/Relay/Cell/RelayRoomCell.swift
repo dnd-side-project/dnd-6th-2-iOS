@@ -27,6 +27,8 @@ class RelayRoomCell: UICollectionViewCell {
             $0.lineBreakMode = .byTruncatingTail
         }
 
+    var tagListView = MultiLineTagListView()
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.backgroundColor = UIColor(rgb: Color.feedListCard)
@@ -49,23 +51,23 @@ class RelayRoomCell: UICollectionViewCell {
             $0.left.equalToSuperview().offset(16.0)
             $0.right.equalToSuperview().offset(-16.0)
             $0.top.equalTo(profileView.snp.bottom).offset(17.0)
-            // DUMMY
-            $0.bottom.equalToSuperview().offset(-16.42)
         }
 
-//        self.addSubview(tagListView)
-//        tagListView.snp.makeConstraints {
-//            $0.left.equalToSuperview().offset(16.0)
-//            $0.top.equalTo(contentLabel.snp.bottom).offset(27.0)
-//            $0.right.equalToSuperview().offset(-90.0)
-//            $0.bottom.equalToSuperview().offset(-16.42)
-//        }
+        self.addSubview(tagListView)
+        tagListView.snp.makeConstraints {
+            $0.left.equalToSuperview().offset(16.0)
+            $0.top.equalTo(contentLabel.snp.bottom).offset(27.0)
+            $0.right.equalToSuperview().offset(-90.0)
+            $0.bottom.equalToSuperview().offset(-16.42)
+
+        }
+        tagListView.setTags()
 
     }
 
     override func prepareForReuse() {
         super.prepareForReuse()
-
+        tagListView.removeTags()
     }
 
     override func preferredLayoutAttributesFitting(_ layoutAttributes: UICollectionViewLayoutAttributes)

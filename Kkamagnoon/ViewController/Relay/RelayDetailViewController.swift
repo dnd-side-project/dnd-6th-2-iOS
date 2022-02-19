@@ -18,7 +18,7 @@ class RelayDetailViewController: UIViewController {
     var detailView = RelayDetailView()
     let viewModel = RelayDetailViewModel()
 
-    var enterButton = UIButton()
+    lazy var enterButton = UIButton()
         .then {
             $0.backgroundColor = UIColor(rgb: Color.whitePurple)
             $0.setTitle("방 입장하기", for: .normal)
@@ -27,7 +27,12 @@ class RelayDetailViewController: UIViewController {
             $0.layer.cornerRadius = 10
         }
 
-    var bottomBar = BottomBar()
+    lazy var addWritingButton = MakingRoomButton()
+        .then {
+            $0.backgroundColor = UIColor(rgb: Color.whitePurple)
+        }
+
+    lazy var bottomBar = BottomBar()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,12 +41,18 @@ class RelayDetailViewController: UIViewController {
 
         setDetailView()
 
-        if viewModel.isNew {
+        if viewModel.isNew || viewModel.didEntered {
             setBottomBar()
+            setAddWritingButton()
         } else {
             setEnterButton()
         }
         bindView()
+    }
+
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        addWritingButton.layer.cornerRadius = addWritingButton.frame.size.width / 2
     }
 
     func setDetailView() {
@@ -50,7 +61,8 @@ class RelayDetailViewController: UIViewController {
         detailView.snp.makeConstraints {
             $0.width.equalToSuperview()
             $0.centerX.equalToSuperview()
-            $0.top.bottom.equalToSuperview()
+            $0.bottom.equalToSuperview()
+            $0.top.equalTo(view.safeAreaLayoutGuide)
         }
     }
 
@@ -74,10 +86,23 @@ class RelayDetailViewController: UIViewController {
         }
     }
 
+    func setAddWritingButton() {
+        view.addSubview(addWritingButton)
+        addWritingButton.snp.makeConstraints {
+            $0.size.equalTo(55.0)
+            $0.right.equalToSuperview().offset(-20.0)
+            $0.bottom.equalTo(bottomBar.snp.top).offset(-14.0)
+        }
+    }
+
     func bindView() {
         // Input
         enterButton.rx.tap
             .bind(to: viewModel.input.enterButtonTap)
+            .disposed(by: disposeBag)
+
+        addWritingButton.rx.tap
+            .bind(to: viewModel.input.addWritingButtonTap)
             .disposed(by: disposeBag)
 
         bottomBar.participantButton.rx.tap
@@ -89,6 +114,13 @@ class RelayDetailViewController: UIViewController {
             .withUnretained(self)
             .bind { owner, _ in
                 owner.goToPopUpVC()
+            }
+            .disposed(by: disposeBag)
+
+        viewModel.output.goToWriting
+            .withUnretained(self)
+            .bind {owner, _ in
+                owner.goToWritingVC()
             }
             .disposed(by: disposeBag)
 
@@ -111,12 +143,20 @@ class RelayDetailViewController: UIViewController {
                 } else {
                     owner.enterButton.removeFromSuperview()
                     owner.setBottomBar()
+                    owner.setAddWritingButton()
                 }
             }
             .disposed(by: disposeBag)
         vc.modalPresentationStyle = .overFullScreen
 
         self.present(vc, animated: false)
+    }
+
+    private func goToWritingVC() {
+        let vc = RelayWritingViewController()
+        vc.modalPresentationStyle = .fullScreen
+
+        self.navigationController?.pushViewController(vc, animated: true)
     }
 
     private func goToParticipationVC() {

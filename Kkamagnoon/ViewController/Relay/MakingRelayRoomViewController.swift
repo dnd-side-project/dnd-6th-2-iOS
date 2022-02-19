@@ -45,11 +45,20 @@ class MakingRelayRoomViewController: UIViewController {
 
     func setView() {
 
+        view.addSubview(enterButton)
+        enterButton.snp.makeConstraints {
+            $0.width.equalToSuperview().offset(-40.0)
+            $0.height.equalTo(56.0)
+            $0.centerX.equalToSuperview()
+            $0.bottom.equalToSuperview().offset(-40.0)
+        }
+
         view.addSubview(scrollView)
         scrollView.snp.makeConstraints {
-            $0.top.bottom.equalTo(view.safeAreaLayoutGuide)
+            $0.top.equalTo(view.safeAreaLayoutGuide)
             $0.left.equalToSuperview().offset(20.0)
             $0.right.equalToSuperview().offset(-20.0)
+            $0.bottom.equalTo(enterButton.snp.top).offset(-10.0)
         }
 
         scrollView.addSubview(makingRelayView)
@@ -59,14 +68,6 @@ class MakingRelayRoomViewController: UIViewController {
 
             $0.centerX.equalToSuperview()
             $0.top.bottom.equalToSuperview()
-        }
-
-        view.addSubview(enterButton)
-        enterButton.snp.makeConstraints {
-            $0.width.equalToSuperview().offset(-40.0)
-            $0.height.equalTo(56.0)
-            $0.centerX.equalToSuperview()
-            $0.bottom.equalToSuperview().offset(-40.0)
         }
 
     }
@@ -87,6 +88,16 @@ class MakingRelayRoomViewController: UIViewController {
             .bind(to: viewModel.input.startButtonTap)
             .disposed(by: disposeBag)
 
+        makingRelayView.settingPersonnelView.minusButton
+            .rx.tap
+            .bind(to: viewModel.input.minusButtonTap)
+            .disposed(by: disposeBag)
+
+        makingRelayView.settingPersonnelView.plusButton
+            .rx.tap
+            .bind(to: viewModel.input.plusButtonTap)
+            .disposed(by: disposeBag)
+
         // Output
         viewModel.output.enableStartButton
             .observe(on: MainScheduler.instance)
@@ -99,6 +110,14 @@ class MakingRelayRoomViewController: UIViewController {
             .withUnretained(self)
             .bind { owner, _ in
                 owner.goToNewRelay()
+            }
+            .disposed(by: disposeBag)
+
+        viewModel.output.personnelCount
+            .withUnretained(self)
+            .bind { owner, count in
+                owner.makingRelayView.settingPersonnelView
+                    .personnelLabel.text = "\(count)명"
             }
             .disposed(by: disposeBag)
     }

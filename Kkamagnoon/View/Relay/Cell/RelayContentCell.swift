@@ -117,4 +117,16 @@ class RelayContentCell: UICollectionViewCell {
             $0.right.equalToSuperview().offset(-23.0)
         }
     }
+
+    override func preferredLayoutAttributesFitting(_ layoutAttributes: UICollectionViewLayoutAttributes)
+    -> UICollectionViewLayoutAttributes {
+        super.preferredLayoutAttributesFitting(layoutAttributes)
+
+        let size = self.systemLayoutSizeFitting(layoutAttributes.size)
+        var frame = layoutAttributes.frame
+        frame.size.height = ceil(size.height)
+        layoutAttributes.frame = frame
+
+        return layoutAttributes
+    }
 }

@@ -8,6 +8,7 @@
 import Foundation
 import RxSwift
 import RxCocoa
+import RxDataSources
 
 class RelayViewModel: ViewModelType {
 
@@ -32,7 +33,7 @@ class RelayViewModel: ViewModelType {
         let goToMakingRelay = PublishRelay<Void>()
 
         // TEMP String -> FeedInfo
-        let relayRoomList = BehaviorRelay<[String]>(value: [])
+        let relayRoomList = BehaviorRelay<[SectionModel<String, String>]>(value: [])
         let participatedRoomList = BehaviorRelay<[String]>(value: [])
     }
 
@@ -41,7 +42,7 @@ class RelayViewModel: ViewModelType {
 //    var service: FeedService!
 
     var disposeBag = DisposeBag()
-    private var sortStyle: SortStyle = .byLatest
+    var sortStyle: SortStyle = .byLatest
 
     init(input: Input = Input(),
          output: Output = Output()) {
@@ -110,12 +111,14 @@ class RelayViewModel: ViewModelType {
 
     func bindRelayRoomList() {
         // DUMMY
-        let dummyData = Observable<[String]>.of(["글감", "일상", "로맨스", "짧은 글", "긴 글", "무서운 글", "발랄한 글", "한글", "세종대왕"])
-        dummyData.bind { [weak self] list in
-            guard let self = self else {return}
-            self.output.relayRoomList.accept(list)
-        }
-        .disposed(by: disposeBag)
+
+        Observable.just([SectionModel(model: "최신순", items: ["글감", "일상", "로맨스", "짧은 글", "긴 글", "무서운 글", "발랄한 글", "한글", "세종대왕"])])
+            .bind { [weak self] list in
+                guard let self = self else {return}
+                self.output.relayRoomList.accept(list)
+            }
+            .disposed(by: disposeBag)
+
     }
 
     func bindRelayListTap() {

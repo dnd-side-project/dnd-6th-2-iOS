@@ -12,14 +12,17 @@ import RxCocoa
 class RelayDetailViewModel: ViewModelType {
     var disposeBag = DisposeBag()
     var isNew: Bool = false
+    var didEntered: Bool = false
 
     struct Input {
         let enterButtonTap = PublishSubject<Void>()
         let participantButtonTap = PublishSubject<Void>()
+        let addWritingButtonTap = PublishSubject<Void>()
     }
 
     struct Output {
         let goToRoom = PublishRelay<Void>()
+        let goToWriting = PublishRelay<Void>()
         let goToParticipantView = PublishRelay<Void>()
     }
 
@@ -32,6 +35,7 @@ class RelayDetailViewModel: ViewModelType {
         self.output = output
 
         bindEnterRoom()
+        bindAddWritingButton()
         bindParticipant()
     }
 
@@ -42,6 +46,15 @@ class RelayDetailViewModel: ViewModelType {
             .withUnretained(self)
             .bind { owner, _ in
                 owner.output.goToRoom.accept(())
+            }
+            .disposed(by: disposeBag)
+    }
+
+    func bindAddWritingButton() {
+        input.addWritingButtonTap
+            .withUnretained(self)
+            .bind { owner, _ in
+                owner.output.goToWriting.accept(())
             }
             .disposed(by: disposeBag)
     }

@@ -69,6 +69,20 @@ class RelayTitleCell: UICollectionViewCell {
             $0.left.equalTo(titleLabel)
             $0.right.equalToSuperview().offset(-29.0)
             $0.top.equalTo(totalCountLabel.snp.bottom).offset(15.0)
+            // TEMP
+            $0.bottom.equalToSuperview().offset(-30.0)
         }
+    }
+
+    override func preferredLayoutAttributesFitting(_ layoutAttributes: UICollectionViewLayoutAttributes)
+    -> UICollectionViewLayoutAttributes {
+        super.preferredLayoutAttributesFitting(layoutAttributes)
+
+        let size = self.systemLayoutSizeFitting(layoutAttributes.size)
+        var frame = layoutAttributes.frame
+        frame.size.height = ceil(size.height)
+        layoutAttributes.frame = frame
+
+        return layoutAttributes
     }
 }

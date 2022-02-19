@@ -19,14 +19,18 @@ class MakingRelayRoomModel: ViewModelType {
         let title = PublishSubject<String>()
         let notice = PublishSubject<String>()
 
+        let plusButtonTap = PublishSubject<Void>()
+        let minusButtonTap = PublishSubject<Void>()
+
         let startButtonTap = PublishSubject<Void>()
 
-        // add more...
     }
 
     struct Output {
         let enableStartButton = PublishRelay<Bool>()
         let goToNewRelay = PublishRelay<Void>()
+
+        let personnelCount = BehaviorRelay<Int>(value: 0)
     }
 
     var input: Input
@@ -59,6 +63,27 @@ class MakingRelayRoomModel: ViewModelType {
             .withUnretained(self)
             .bind { owner, _ in
                 owner.output.goToNewRelay.accept(())
+            }
+            .disposed(by: disposeBag)
+    }
+
+    func bindPersonnel() {
+        input.minusButtonTap
+            .withUnretained(self)
+            .bind { owner, _ in
+                print(">>> TAP")
+                if owner.output.personnelCount.value > 0 {
+                    owner.output.personnelCount.accept(owner.output.personnelCount.value-1)
+                }
+            }
+            .disposed(by: disposeBag)
+
+        input.plusButtonTap
+            .withUnretained(self)
+            .bind { owner, _ in
+                if owner.output.personnelCount.value < 10 {
+                    owner.output.personnelCount.accept(owner.output.personnelCount.value+1)
+                }
             }
             .disposed(by: disposeBag)
     }

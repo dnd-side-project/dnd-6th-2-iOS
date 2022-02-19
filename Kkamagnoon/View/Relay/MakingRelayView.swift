@@ -99,6 +99,8 @@ class MakingRelayView: UIView {
         }
     ]
 
+    var settingPersonnelView = SettingPersonnelView()
+
     override init(frame: CGRect) {
         super.init(frame: frame)
 
@@ -158,8 +160,7 @@ class MakingRelayView: UIView {
 
         stackView.addArrangedSubview(subTitleLabelList[4])
 
-        // DUMMY
-        stackView.addArrangedSubview(textViewList[2])
+        stackView.addArrangedSubview(settingPersonnelView)
 
         stackView.snp.makeConstraints {
             $0.top.equalTo(backButton.snp.bottom).offset(35.0)
@@ -175,7 +176,6 @@ class MakingRelayView: UIView {
         stackView.setCustomSpacing(15.0, after: subTitleLabelList[3])
         stackView.setCustomSpacing(30.0, after: textViewList[1])
 
-        // DUMMY
         stackView.setCustomSpacing(15.0, after: subTitleLabelList[4])
 
     }
@@ -194,8 +194,8 @@ class MakingRelayView: UIView {
         }
 
         // DUMMY
-        textViewList[2].snp.makeConstraints {
-            $0.height.equalTo(182.0)
+        settingPersonnelView.snp.makeConstraints {
+            $0.height.equalTo(37.0)
         }
 
         // DUMMY
