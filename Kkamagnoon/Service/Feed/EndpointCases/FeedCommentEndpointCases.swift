@@ -39,7 +39,7 @@ extension FeedCommentEndpointCases {
         switch self {
         case .postComment(let articleId, _):
             return baseURLString + "/\(articleId)/comment"
-            
+
         case .patchComment(let articleId, let commentId, _):
             return baseURLString + "/\(articleId)/comment/\(commentId)"
         case .deleteComment(let articleId, let commentId):
@@ -74,4 +74,3 @@ extension FeedCommentEndpointCases {
 
     }
 }
-

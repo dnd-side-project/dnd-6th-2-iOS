@@ -5,7 +5,6 @@
 //  Created by 서정 on 2022/02/17.
 //
 
-
 import Foundation
 
 enum FeedSearchEndpointCases: EndPoint {
@@ -40,15 +39,15 @@ extension FeedSearchEndpointCases {
         switch self {
         case .getSearchFeed(let cursor, let content, let option):
             var finalUrl = baseURLString + "?content=\(content)&option=\(option)"
-            
+
             if let cursor = cursor {
                 finalUrl.append("&cursor=\(cursor)")
             }
             return finalUrl
-            
+
         case .getSearchFeedHistory:
             return baseURLString + "/history"
-            
+
         case .deleteSearchFeedHistory(let id):
             return baseURLString + "/history/\(id)"
         }
@@ -81,4 +80,3 @@ extension FeedSearchEndpointCases {
 
     }
 }
-

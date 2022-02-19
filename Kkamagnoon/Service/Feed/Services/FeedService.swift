@@ -13,7 +13,7 @@
 
 class FeedService: Service {
 
-    //TEMP
+    // TEMP
     var bag = DisposeBag()
 
     func getWholeFeed(next_cursor: String?, orderBy: String = "최신순") {
@@ -21,7 +21,7 @@ class FeedService: Service {
 
         let request = makeRequest(endpoint: endpoint)
 
-        //DEBUG
+        // DEBUG
 //        print("TEST: \(request) \(request.httpMethod) \(request.headers)")
 
         RxAlamofire.request(request as URLRequestConvertible)
@@ -42,41 +42,40 @@ class FeedService: Service {
             }
             .disposed(by: bag)
     }
-    
-   
-    func getArticle(articleId: String){
+
+    func getArticle(articleId: String) {
         let endpoint = FeedEndpointCases.getArticle(articleId: articleId)
         let request = makeRequest(endpoint: endpoint)
     }
-    
-    func deleteArticle(articleId: String){
+
+    func deleteArticle(articleId: String) {
         let endpoint = FeedEndpointCases.deleteArticle(articleId: articleId)
         let request = makeRequest(endpoint: endpoint)
     }
-    
-    func patchArticle(articleId: String, articleInfo: CreateArticleDTO){
+
+    func patchArticle(articleId: String, articleInfo: CreateArticleDTO) {
         let endpoint = FeedEndpointCases.patchArticle(articleId: articleId, articleInfo: articleInfo)
         let request = makeRequest(endpoint: endpoint)
     }
-    
-    func postScrap(articleId: String, scrap: ScrapDTO){
+
+    func postScrap(articleId: String, scrap: ScrapDTO) {
         let endpoint = FeedEndpointCases.postScrap(articleId: articleId, scrap: scrap)
         let request = makeRequest(endpoint: endpoint)
     }
-    
-    func deleteScrap(articleId: String){
+
+    func deleteScrap(articleId: String) {
         let endpoint = FeedEndpointCases.deleteScrap(articleId: articleId)
         let request = makeRequest(endpoint: endpoint)
     }
-    
-    func postLike(articleId: String, like: ScrapDTO){
+
+    func postLike(articleId: String, like: ScrapDTO) {
         let endpoint = FeedEndpointCases.postLike(articleId: articleId, like: like)
         let request = makeRequest(endpoint: endpoint)
     }
-    
-    func deleteLike(articleId: String){
+
+    func deleteLike(articleId: String) {
         let endpoint = FeedEndpointCases.deleteLike(articleId: articleId)
         let request = makeRequest(endpoint: endpoint)
     }
-    
+
 }

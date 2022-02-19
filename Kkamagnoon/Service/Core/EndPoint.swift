@@ -20,6 +20,5 @@ extension EndPoint {
         let encodedStr = (baseURLString + path).addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
         return encodedStr
     }
-    
-}
 
+}

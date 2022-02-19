@@ -15,7 +15,9 @@ class TagListView: UIView {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
+
         setView()
+        filterView.allowsMultipleSelection = true
     }
 
     required init?(coder: NSCoder) {

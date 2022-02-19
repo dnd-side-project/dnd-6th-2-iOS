@@ -5,7 +5,6 @@
 //  Created by 서정 on 2022/02/17.
 //
 
-
 import Foundation
 
 enum FeedSubscribeEndpointCases: EndPoint {
@@ -49,24 +48,24 @@ extension FeedSubscribeEndpointCases {
             if let cursor = cursor {
                 finalUrl.append(contentsOf: "?cursor=\(cursor)")
             }
-            
+
             return finalUrl
-            
+
         case .getSubscribeAuthorList:
             return baseURLString + "authorlist"
-            
+
         case .getSubscribeFeedByAuthor(let cursor, let authorId):
             var finalUrl = baseURLString + "/\(authorId)"
-            
+
             if let cursor = cursor {
                 finalUrl.append(contentsOf: "?cursor=\(cursor)")
             }
-            
+
             return finalUrl
-            
+
         case .patchSubscribe(let authorId):
             return baseURLString + "/\(authorId)"
-            
+
         case .patchSubscribeCancel(let authorId):
             return baseURLString + "/\(authorId)/cancel"
         }
@@ -99,4 +98,3 @@ extension FeedSubscribeEndpointCases {
 
     }
 }
-

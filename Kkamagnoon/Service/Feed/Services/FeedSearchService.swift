@@ -12,15 +12,15 @@ class FeedSearchService: Service {
         let endpoint = FeedSearchEndpointCases.getSearchFeed(cursor: cursor, content: content, option: option)
         let request = makeRequest(endpoint: endpoint)
     }
-    
-    func getSearchFeedHistory(){
+
+    func getSearchFeedHistory() {
         let endpoint = FeedSearchEndpointCases.getSearchFeedHistory
         let request = makeRequest(endpoint: endpoint)
     }
-    
-    func deleteSearchFeedHistory(id: String){
+
+    func deleteSearchFeedHistory(id: String) {
         let endpoint = FeedSearchEndpointCases.deleteSearchFeedHistory(id: id)
         let request = makeRequest(endpoint: endpoint)
     }
-    
+
 }

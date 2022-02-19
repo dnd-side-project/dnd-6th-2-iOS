@@ -56,31 +56,31 @@ extension FeedEndpointCases {
             if let cursor = cursor {
                 finalUrl.append("&cursor=\(cursor)")
             }
-            
+
             if let tags = tags {
                 finalUrl.append("&tags=\(tags)")
             }
-            
+
             return finalUrl
-            
+
         case .getArticle(let articleId):
             return baseURLString + "/\(articleId)"
-            
+
         case .deleteArticle(let articleId):
             return baseURLString + "/\(articleId)"
-            
+
         case .patchArticle(let articleId, _):
             return baseURLString + "/\(articleId)"
-            
+
         case .postScrap(let articleId, _):
             return baseURLString + "/\(articleId)/scrap"
-            
+
         case .deleteScrap(let articleId):
             return baseURLString + "/\(articleId)/scrap"
-            
+
         case .postLike(let articleId, _):
             return baseURLString + "/\(articleId)/like"
-            
+
         case .deleteLike(let articleId):
             return baseURLString + "/\(articleId)/like"
         }
@@ -105,22 +105,22 @@ extension FeedEndpointCases {
     var body: [String: Any]? {
         switch self {
         case .patchArticle(_, articleInfo: let articleInfo):
-            
+
             return [
                 "title": articleInfo.title,
                 "content": articleInfo.content,
                 "tags": articleInfo.tags ?? [],
                 "public": articleInfo.public
             ]
-            
+
         case .postScrap(_, scrap: let scrap):
-            
-            //TODO: scrapDTO
+
+            // TODO: scrapDTO
             return [:]
 
         case .postLike(_, like: let like):
-            
-            //TODO: scrapDTO
+
+            // TODO: scrapDTO
             return [:]
 
         default:
