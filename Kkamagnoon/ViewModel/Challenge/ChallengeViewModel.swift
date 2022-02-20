@@ -13,11 +13,13 @@ import RxDataSources
 class ChallengeViewModel: ViewModelType {
 
     struct Input {
+        let bellButtonTap = PublishSubject<Void>()
         let addWritingButtonTap = PublishSubject<Void>()
 
     }
 
     struct Output {
+        let goToBellNotice = PublishRelay<Void>()
         let goToWriting = PublishRelay<Void>()
     }
 
@@ -30,9 +32,18 @@ class ChallengeViewModel: ViewModelType {
          output: Output = Output()) {
         self.input = input
         self.output = output
-
+        bindBellButton()
         bindAddWritingButton()
 
+    }
+
+    func bindBellButton() {
+        input.bellButtonTap
+            .withUnretained(self)
+            .bind { owner, _ in
+                owner.output.goToBellNotice.accept(())
+            }
+            .disposed(by: disposeBag)
     }
 
     func bindAddWritingButton() {
@@ -42,6 +53,7 @@ class ChallengeViewModel: ViewModelType {
                 owner.output.goToWriting.accept(())
             }
             .disposed(by: disposeBag)
+
     }
 
     deinit {
