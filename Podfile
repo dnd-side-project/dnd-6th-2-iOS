@@ -15,6 +15,7 @@ target 'Kkamagnoon' do
   pod 'SnapKit'
   pod 'RxDataSources'
   pod 'Then'
+  pod 'FSCalendar'
 
   # Pods for Kkamagnoon
 
