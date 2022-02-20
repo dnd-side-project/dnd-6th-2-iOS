@@ -10,72 +10,30 @@ import Then
 import SnapKit
 import RxSwift
 import RxCocoa
+import RxDataSources
 
 class SelectTagViewController: UIViewController {
 
     var disposeBag = DisposeBag()
     let viewModel = SelectTagViewModel()
 
-    var scrollView = UIScrollView()
-          .then {
-              $0.showsVerticalScrollIndicator = false
-          }
-
     var backButton = UIButton()
         .then {
             $0.setImage(UIImage(systemName: "heart.fill"), for: .normal)
         }
 
-    var titleLabel = UILabel()
-        .then {
-            $0.text = "글의 태그를\n선택 해주세요."
-            $0.numberOfLines = 0
-            $0.lineBreakMode = .byWordWrapping
-            $0.font = UIFont.pretendard(weight: .medium, size: 22)
-            $0.textColor = .white
-        }
+    let dataSource = RxCollectionViewSectionedReloadDataSource<SectionModel<String, String>>(configureCell: { _, collectionView, indexPath, element in
 
-    var subTitleLabel = UILabel()
-        .then {
-            $0.text = "태그는 최대 6개까지 선택할 수 있어요."
-            $0.font = UIFont.pretendard(weight: .regular, size: 14)
-            $0.textColor = UIColor(rgb: 0xB0B0B0)
-        }
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SelectingTagCell.selectingTagCellIdentifier, for: indexPath) as! SelectingTagCell
 
-    var tagStackView = UIStackView()
-        .then {
-            $0.axis = .vertical
-            $0.spacing = 21
-            $0.alignment = .fill
-            $0.distribution = .fillEqually
-        }
+        cell.tagView.categoryLabel.text = element
 
-    var tagPair: [PairView] = [
-        PairView().then {
-            $0.firstTag.categoryLabel.text = "일상"
-            $0.secondTag.categoryLabel.text = "로맨스"
-        },
-        PairView().then {
-            $0.firstTag.categoryLabel.text = "추리"
-            $0.secondTag.categoryLabel.text = "코믹"
-        },
-        PairView().then {
-            $0.firstTag.categoryLabel.text = "감성"
-            $0.secondTag.categoryLabel.text = "시"
-        },
-        PairView().then {
-            $0.firstTag.categoryLabel.text = "소설"
-            $0.secondTag.categoryLabel.text = "글귀"
-        },
-        PairView().then {
-            $0.firstTag.categoryLabel.text = "일기"
-            $0.secondTag.categoryLabel.text = "수필"
-        },
-        PairView().then {
-            $0.firstTag.categoryLabel.text = "짧은 글"
-            $0.secondTag.categoryLabel.text = "긴 글"
-        }
-    ]
+        return cell
+    }, configureSupplementaryView: { _, collectionView, _, indexPath in
+        let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: SelectingCollectionReusableView.identifier, for: indexPath) as! SelectingCollectionReusableView
+
+        return headerView
+    })
 
     var completeButton = UIButton()
         .then {
@@ -86,77 +44,43 @@ class SelectTagViewController: UIViewController {
             $0.layer.cornerRadius = 10
         }
 
+    var selectTagView = SelectTagView()
+
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .black
         self.navigationController?.isNavigationBarHidden = true
-        setScrollView()
+
         setBackButton()
-        setTitleLabel()
-        setSubTitleLabel()
-        setTagStackView()
+
         setCompleteButton()
+        setSelectTagView()
         bindView()
-    }
-
-    func setScrollView() {
-        view.addSubview(scrollView)
-
-        scrollView.snp.makeConstraints {
-            $0.edges.equalToSuperview()
-        }
     }
 
     func setBackButton() {
 
-        scrollView.addSubview(backButton)
+        view.addSubview(backButton)
 
         backButton.snp.makeConstraints {
             $0.left.equalToSuperview().offset(21.0)
-            $0.top.equalToSuperview().offset(26.24)
-        }
-
-        backButton.rx.tap
-            .bind { _ in
-                self.navigationController?.popViewController(animated: true)
-            }
-            .disposed(by: disposeBag)
-    }
-
-    func setTitleLabel() {
-        scrollView.addSubview(titleLabel)
-
-        titleLabel.snp.makeConstraints {
-            $0.top.equalTo(backButton.snp.bottom).offset(21.0)
-            $0.left.equalToSuperview().offset(23.0)
-            $0.right.equalToSuperview().offset(-23.0)
-        }
-
-    }
-
-    func setSubTitleLabel() {
-        scrollView.addSubview(subTitleLabel)
-
-        subTitleLabel.snp.makeConstraints {
-            $0.top.equalTo(titleLabel.snp.bottom).offset(17.0)
-            $0.left.equalToSuperview().offset(23.0)
-            $0.right.equalToSuperview().offset(-23.0)
+            $0.top.equalTo(view.safeAreaLayoutGuide).offset(26.24)
         }
     }
 
-    func setTagStackView() {
-        scrollView.addSubview(tagStackView)
+    func setSelectTagView() {
+        view.addSubview(selectTagView)
 
-        for tag in tagPair {
-            tagStackView.addArrangedSubview(tag)
-        }
-
-        tagStackView.snp.makeConstraints {
-            $0.top.equalTo(subTitleLabel.snp.bottom).offset(28.0)
+        selectTagView.snp.makeConstraints {
             $0.left.equalToSuperview().offset(20.0)
             $0.right.equalToSuperview().offset(-20.0)
+            $0.top.equalTo(backButton.snp.bottom)
+            $0.bottom.equalTo(completeButton.snp.top).offset(-20.0)
         }
 
+        Observable.just([SectionModel(model: "title", items: viewModel.tagList)])
+            .bind(to: selectTagView.collectionView.rx.items(dataSource: dataSource))
+            .disposed(by: disposeBag)
     }
 
     func setCompleteButton() {
@@ -171,9 +95,25 @@ class SelectTagViewController: UIViewController {
     }
 
     func bindView() {
+
+        backButton.rx.tap
+            .bind { _ in
+                self.navigationController?.popViewController(animated: true)
+            }
+            .disposed(by: disposeBag)
+
         completeButton.rx.tap
             .bind(to: viewModel.input.completeButtonTap)
             .disposed(by: disposeBag)
+
+//        selectTagView.collectionView.rx.modelSelected(String.self)
+//            .withUnretained(self)
+//            .bind { owner, model in
+//                
+////                owner.viewModel.selectedState[indexPath.row] = true
+////                owner.viewModel.selectedTags.append(owner.viewModel.tagList[indexPath.row])
+//            }
+//            .disposed(by: disposeBag)
 
         viewModel.output.goBackToMakingView
             .withUnretained(self)

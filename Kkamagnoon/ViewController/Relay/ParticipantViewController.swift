@@ -17,9 +17,7 @@ class ParticipantViewController: UIViewController {
 
     let backView = UIView()
         .then {
-            $0.backgroundColor = .white
-            $0.alpha = .zero
-            $0.isOpaque = false
+            $0.backgroundColor = .clear
         }
 
     let participantView = ParticipantListView()

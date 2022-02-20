@@ -13,17 +13,19 @@ class SelectingTagCell: UICollectionViewCell {
 
     static let selectingTagCellIdentifier = "SelectingTagCellIdentifier"
 
-    let tagView = TagView(top: 10, bottom: -10, leading: 69, trailing: -69)
+    let tagView = TagView(top: 17, bottom: -17, leading: 0, trailing: 0)
         .then {
             $0.categoryLabel.font = UIFont.pretendard(weight: .semibold, size: 16)
             $0.categoryLabel.textColor = .white
-
-            $0.backgroundColor = .red
+            $0.backgroundColor = .black
+            $0.layer.borderWidth = 1
+            $0.layer.borderColor = UIColor(rgb: 0x393939).cgColor
+            $0.layer.cornerRadius = 26.5
         }
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        setView(top: 10, bottom: -10, leading: 69, trailing: -69)
+        setView(top: 17, bottom: -17, leading: 0, trailing: 0)
     }
 
     required init?(coder: NSCoder) {
@@ -34,10 +36,29 @@ class SelectingTagCell: UICollectionViewCell {
         self.addSubview(tagView)
 
         tagView.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(top)
-            $0.leading.equalToSuperview().offset(leading)
-            $0.trailing.equalToSuperview().offset(trailing)
-            $0.bottom.equalToSuperview().offset(bottom)
+            $0.edges.equalToSuperview()
         }
+    }
+
+    override var isSelected: Bool {
+        didSet {
+            configureSelected()
+        }
+    }
+
+    private func configureSelected() {
+      if isSelected {
+          self.tagView.backgroundColor = UIColor(rgb: Color.tagGreen)
+          self.tagView.categoryLabel.textColor = .white
+          return
+      }
+
+        self.tagView.backgroundColor = .black
+        self.tagView.categoryLabel.textColor = UIColor(rgb: Color.tagText)
+    }
+
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        configureSelected()
     }
 }
