@@ -9,6 +9,7 @@ target 'Kkamagnoon' do
   pod 'Alamofire'
   pod 'RxSwift', "~> 6.0"
   pod 'RxCocoa', "~> 6.0"
+  pod 'RxDataSources'
   pod 'RxAlamofire', "~> 6.0"
   pod 'IQKeyboardManagerSwift'
   pod 'SwiftyJSON'

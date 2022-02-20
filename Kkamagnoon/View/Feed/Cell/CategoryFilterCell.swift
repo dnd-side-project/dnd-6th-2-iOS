@@ -11,6 +11,9 @@ import SnapKit
 final class CategoryFilterCell: UICollectionViewCell {
 
     static let categoryFilterCellIdentifier = "CategoryFilterCellIdentifier"
+
+    var selectCount: Int = 0
+
     let tagView = TagView(top: 10.0,
                           bottom: -10.0,
                           leading: 16.0,
@@ -33,21 +36,16 @@ final class CategoryFilterCell: UICollectionViewCell {
     }
 
     override var isSelected: Bool {
-      didSet {
-        configureSelected()
-      }
-    }
+        willSet {
+            if isSelected && selectCount >= 3 {
+                isSelected = false
+            }
+        }
 
-    private func configureSelected() {
-      if isSelected {
-
-          self.tagView.backgroundColor = UIColor(rgb: Color.tagGreen)
-          self.tagView.categoryLabel.textColor = .white
-        return
-      }
-
-        self.tagView.backgroundColor = UIColor(rgb: Color.tag)
-        self.tagView.categoryLabel.textColor = UIColor(rgb: Color.tagText)
+        didSet {
+            print(">>>\(isSelected) , \(selectCount)")
+            configureSelected()
+        }
     }
 
     override func preferredLayoutAttributesFitting(_ layoutAttributes: UICollectionViewLayoutAttributes)
@@ -69,4 +67,17 @@ final class CategoryFilterCell: UICollectionViewCell {
         tagView.categoryLabel.text = nil
         configureSelected()
     }
+
+    private func configureSelected() {
+        if isSelected {
+            self.tagView.backgroundColor = UIColor(rgb: Color.tagGreen)
+            self.tagView.categoryLabel.textColor = .white
+            
+
+        } else {
+            self.tagView.backgroundColor = UIColor(rgb: Color.tag)
+            self.tagView.categoryLabel.textColor = UIColor(rgb: Color.tagText)
+        }
+    }
+
 }

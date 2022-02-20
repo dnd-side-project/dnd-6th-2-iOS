@@ -10,17 +10,17 @@ import RxSwift
 
 class TopButtonView: UIView {
 
-    let wholeFeedButton = UIButton()
-    let subscribeButton = UIButton()
+    let firstButton = UIButton()
+    let secondButton = UIButton()
 
     let searchButton: UIButton = UIButton()
     let bellButton: UIButton = UIButton()
 
     let disposeBag = DisposeBag()
 
-    override init(frame: CGRect) {
+    init(frame: CGRect, first: String, second: String) {
         super.init(frame: frame)
-        setTabButton()
+        setTabButton(first: first, second: second)
         setBellButton()
         setSearchButton()
         setTabViewAction()
@@ -30,26 +30,26 @@ class TopButtonView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func setTabButton() {
-        self.addSubview(wholeFeedButton)
+    func setTabButton(first: String, second: String) {
+        self.addSubview(firstButton)
 
-        wholeFeedButton.setTitle(StringType.wholeFeed, for: .normal)
-        wholeFeedButton.translatesAutoresizingMaskIntoConstraints = false
+        firstButton.setTitle(first, for: .normal)
+        firstButton.translatesAutoresizingMaskIntoConstraints = false
 
-        wholeFeedButton.titleLabel?.font = UIFont.pretendard(weight: .semibold, size: 20)
+        firstButton.titleLabel?.font = UIFont.pretendard(weight: .semibold, size: 20)
 
-        wholeFeedButton.topAnchor.constraint(equalTo: self.topAnchor, constant: 63).isActive = true
-        wholeFeedButton.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 20).isActive = true
+        firstButton.topAnchor.constraint(equalTo: self.topAnchor, constant: 63).isActive = true
+        firstButton.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 20).isActive = true
 
-        self.addSubview(subscribeButton)
-        subscribeButton.translatesAutoresizingMaskIntoConstraints = false
+        self.addSubview(secondButton)
+        secondButton.translatesAutoresizingMaskIntoConstraints = false
 
-        subscribeButton.setTitle(StringType.subscribeFeed, for: .normal)
-        subscribeButton.setTitleColor(UIColor.gray, for: .normal)
-        subscribeButton.titleLabel?.font = UIFont.pretendard(weight: .medium, size: 20)
+        secondButton.setTitle(second, for: .normal)
+        secondButton.setTitleColor(UIColor.gray, for: .normal)
+        secondButton.titleLabel?.font = UIFont.pretendard(weight: .medium, size: 20)
 
-        subscribeButton.topAnchor.constraint(equalTo: self.topAnchor, constant: 63).isActive = true
-        subscribeButton.leftAnchor.constraint(equalTo: wholeFeedButton.rightAnchor, constant: 10).isActive = true
+        secondButton.topAnchor.constraint(equalTo: self.topAnchor, constant: 63).isActive = true
+        secondButton.leftAnchor.constraint(equalTo: firstButton.rightAnchor, constant: 17).isActive = true
 
     }
 
@@ -79,17 +79,11 @@ class TopButtonView: UIView {
      }
 
     private func setTabViewAction() {
-       let tabButtons = [wholeFeedButton, subscribeButton]
+       let tabButtons = [firstButton, secondButton]
 
        for idx in 0 ..< tabButtons.count {
            tabButtons[idx].rx.tap
                .bind { _ in
-                   if idx == 1 {
-                       self.searchButton.isHidden = true
-                   } else {
-                       self.searchButton.isHidden = false
-                   }
-
                    tabButtons[idx].titleLabel?.font = UIFont.pretendard(weight: .bold, size: 20)
                    tabButtons[idx].setTitleColor(.white, for: .normal)
 

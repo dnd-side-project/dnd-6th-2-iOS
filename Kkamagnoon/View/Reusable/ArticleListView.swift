@@ -8,12 +8,20 @@
 import UIKit
 import RxSwift
 import RxCocoa
+import Then
 
 class ArticleListView: UIView {
 
     var collectionView: UICollectionView!
 
     let disposeBag = DisposeBag()
+
+    let layout = UICollectionViewFlowLayout()
+        .then {
+            $0.minimumInteritemSpacing = 10
+            $0.scrollDirection = .vertical
+            $0.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: TabBarViewController.tabbarHeight, right: 0)
+        }
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -25,13 +33,8 @@ class ArticleListView: UIView {
     }
 
     func setView() {
-        let layout = UICollectionViewFlowLayout()
-        layout.minimumInteritemSpacing = 10
-        layout.scrollDirection = .vertical
-        layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: TabBarViewController.tabbarHeight, right: 0)
 
         collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        collectionView.register(FeedCell.self, forCellWithReuseIdentifier: FeedCell.feedCellIdentifier)
         collectionView.showsVerticalScrollIndicator = false
         collectionView.backgroundColor = .black
 
@@ -45,8 +48,8 @@ class ArticleListView: UIView {
         collectionView.translatesAutoresizingMaskIntoConstraints = false
 
         collectionView.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
-        collectionView.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 20).isActive = true
-        collectionView.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -20).isActive = true
+        collectionView.leftAnchor.constraint(equalTo: self.leftAnchor).isActive = true
+        collectionView.rightAnchor.constraint(equalTo: self.rightAnchor).isActive = true
         collectionView.bottomAnchor
             .constraint(equalTo: self.bottomAnchor).isActive = true
 
