@@ -112,19 +112,6 @@ class FeedCell: UICollectionViewCell {
 
     }
 
-    private func makeImageAttatchLabel(imageName: String, text: String) -> NSMutableAttributedString {
-        let contentString = NSMutableAttributedString(string: "")
-        let attachment = NSTextAttachment()
-
-        attachment.image = UIImage(systemName: imageName)
-        let attachmentImage = NSAttributedString(attachment: attachment)
-        let attachmentString = NSAttributedString(string: text)
-        contentString.append(attachmentImage)
-        contentString.append(attachmentString)
-
-        return contentString
-    }
-
     override func preferredLayoutAttributesFitting(_ layoutAttributes: UICollectionViewLayoutAttributes)
     -> UICollectionViewLayoutAttributes {
         super.preferredLayoutAttributesFitting(layoutAttributes)

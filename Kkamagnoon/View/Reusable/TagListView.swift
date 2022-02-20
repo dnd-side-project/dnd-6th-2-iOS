@@ -39,7 +39,7 @@ class TagListView: UIView {
 
         let width = filterView.frame.width
         flowLayout.estimatedItemSize = CGSize(width: width, height: 30)
-
+//        flowLayout.estimatedItemSize = UICollectionViewFlowLayout.automaticSize
         filterView.collectionViewLayout = flowLayout
         self.addSubview(filterView)
 
@@ -50,6 +50,8 @@ class TagListView: UIView {
         filterView.heightAnchor.constraint(equalToConstant: 30).isActive = true
 
         let testData = Observable<[String]>.of(["글감", "일상", "로맨스", "짧은 글", "긴 글", "무서운 글", "발랄한 글", "한글", "세종대왕"])
+        
+        
 
         testData
             .bind(to: filterView.rx

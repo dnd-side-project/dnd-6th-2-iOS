@@ -14,7 +14,7 @@ class FeedViewController: UIViewController {
     let viewModel = FeedViewModel()
     let disposeBag = DisposeBag()
 
-    let topButtonView = TopButtonView()
+    let topButtonView = TopButtonView(frame: .zero, first: StringType.wholeFeed, second: StringType.subscribeFeed)
 
     let wholeFeedView = WholeFeedView()
     let subscribeFeedView = SubscribeFeedView()
@@ -47,6 +47,7 @@ class FeedViewController: UIViewController {
         topButtonView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
         topButtonView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
         topButtonView.heightAnchor.constraint(equalToConstant: 115).isActive = true
+
     }
 
     func setFeedView() {
@@ -85,8 +86,6 @@ class FeedViewController: UIViewController {
             .drive { [weak self] feedStyle in
                 guard let self = self else {return}
                 self.changeFeedStyle(style: feedStyle)
-            }
-            .disposed(by: disposeBag)
 
         viewModel.output.goToSearch
             .observe(on: MainScheduler.instance)

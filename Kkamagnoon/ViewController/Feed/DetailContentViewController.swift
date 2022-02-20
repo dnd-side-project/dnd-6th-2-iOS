@@ -50,9 +50,6 @@ class DetailContentViewController: UIViewController {
 
         setView()
         layoutView()
-
-//        // 회색선 넣기 안됨..
-//        bottomView.addBorder(toSide: .top, withColor: UIColor(rgb: 0x545454).cgColor, andThickness: 1.0)
     }
 
     func setView() {
