@@ -31,12 +31,12 @@ class FeedViewController: UIViewController {
         setFeedView()
 
         bindTopView()
+        bindSortButton()
 
-        viewModel.getWholeFeedList()
-//        viewModel.getSubscribeFeedList()
+        bindWholeFeedView()
+        bindSubscribeFeedView()
 
-        bindWholeFeedViewData()
-        bindSubscribeFeedViewData()
+        viewModel.tempRequest()
     }
 
     func setTopView() {
@@ -62,76 +62,149 @@ class FeedViewController: UIViewController {
 
     func bindTopView() {
 
+        // Input
         topButtonView.wholeFeedButton.rx.tap
-            .withUnretained(self)
-            .bind { owner, _ in
-                owner.feedView.removeFromSuperview()
-                owner.feedView = owner.wholeFeedView
-                owner.setFeedView()
-
-            }
+            .bind(to: viewModel.input.wholeFeedButtonTap)
             .disposed(by: disposeBag)
 
         topButtonView.subscribeButton.rx.tap
-            .withUnretained(self)
-            .bind { owner, _ in
-                owner.feedView.removeFromSuperview()
-                owner.feedView = owner.subscribeFeedView
-                owner.setFeedView()
+            .bind(to: viewModel.input.subscribedFeedButtonTap)
+            .disposed(by: disposeBag)
+
+        topButtonView.searchButton.rx.tap
+            .bind(to: viewModel.input.searchButtonTap)
+            .disposed(by: disposeBag)
+
+        topButtonView.bellButton.rx.tap
+            .bind(to: viewModel.input.bellButtonTap)
+            .disposed(by: disposeBag)
+
+        // Output
+        viewModel.output.currentFeedStyle
+            .asDriver()
+            .drive { [weak self] feedStyle in
+                guard let self = self else {return}
+                self.changeFeedStyle(style: feedStyle)
+            }
+            .disposed(by: disposeBag)
+
+        viewModel.output.goToSearch
+            .observe(on: MainScheduler.instance)
+            .bind(onNext: goToSearchVC)
+            .disposed(by: disposeBag)
+
+        viewModel.output.goToBell
+            .observe(on: MainScheduler.instance)
+            .bind(onNext: goToBellVC)
+            .disposed(by: disposeBag)
+
+    }
+
+    func bindSortButton() {
+        wholeFeedView.sortButton.rx.tap
+            .bind(to: viewModel.input.sortButtonTap)
+            .disposed(by: disposeBag)
+
+        viewModel.output.currentSortStyle
+            .asDriver()
+            .drive { [weak self] sortStyle in
+                guard let self = self else {return}
+                self.changeSortStyle(style: sortStyle)
             }
             .disposed(by: disposeBag)
     }
 
-    func bindWholeFeedViewData() {
+    func bindWholeFeedView() {
 
-        // DUMMY
-        let dummyData = Observable<[String]>.of(["글감", "일상", "로맨스", "짧은 글", "긴 글", "무서운 글", "발랄한 글", "한글", "세종대왕"])
-
-        dummyData.bind(to: wholeFeedView.articleListView.collectionView
-                        .rx.items(cellIdentifier: FeedCell.feedCellIdentifier,
-                                             cellType: FeedCell.self)) { (_, element, cell) in
-            cell.articleTitle.text = element
-            cell.layer.cornerRadius = 15
+        viewModel.output.wholeFeedListRelay
+            .bind(to: wholeFeedView.articleListView.collectionView
+                    .rx.items(cellIdentifier: FeedCell.feedCellIdentifier,
+                                         cellType: FeedCell.self)) { (_, element, cell) in
+                cell.articleTitle.text = element
+                cell.layer.cornerRadius = 15
             }
-        .disposed(by: disposeBag)
+            .disposed(by: disposeBag)
 
+        // Input
         wholeFeedView.articleListView.collectionView.rx
             .itemSelected
+            .bind(to: viewModel.input.feedCellTap)
+            .disposed(by: disposeBag)
+
+        // Output
+        viewModel.output.goToDetailFeed
+            .observe(on: MainScheduler.instance)
             .bind { _ in
-                let vc = DetailContentViewController()
-                vc.modalPresentationStyle = .pageSheet
-                vc.hidesBottomBarWhenPushed = true
+                self.goToDetailContentVC()
+            }
+            .disposed(by: disposeBag)
 
-                self.navigationController?.pushViewController(vc, animated: true)
+    }
 
+    func bindSubscribeFeedView() {
+        viewModel.bindSubscribedFeedList()
+        viewModel.output.subscribeFeedListRelay
+            .bind(to: subscribeFeedView.articleListView.collectionView
+                    .rx.items(cellIdentifier: FeedCell.feedCellIdentifier,
+                                         cellType: FeedCell.self)) { (_, element, cell) in
+                cell.articleTitle.text = element
+                cell.layer.cornerRadius = 15
+                }
+            .disposed(by: disposeBag)
+
+        subscribeFeedView.articleListView.collectionView.rx
+            .modelSelected(String.self)
+            .bind { _ in
+                self.goToDetailContentVC()
             }
             .disposed(by: disposeBag)
     }
 
-    func bindSubscribeFeedViewData() {
+    private func changeFeedStyle(style: FeedStyle) {
+        feedView.removeFromSuperview()
 
-        // DUMMY
-        let dummyData = Observable<[String]>.of(["글감", "일상", "로맨스", "짧은 글", "긴 글", "무서운 글", "발랄한 글", "한글", "세종대왕"])
+        if style == .whole {
+            feedView = wholeFeedView
+        } else {
+            feedView = subscribeFeedView
+        }
+        setFeedView()
+    }
 
-        dummyData.bind(to: subscribeFeedView.articleListView.collectionView
-                        .rx.items(cellIdentifier: FeedCell.feedCellIdentifier,
-                                             cellType: FeedCell.self)) { (_, element, cell) in
-            cell.articleTitle.text = element
-            cell.layer.cornerRadius = 15
-            }
-        .disposed(by: disposeBag)
+    private func goToSearchVC() {
+        let vc = SearchViewController()
+        vc.modalPresentationStyle = .fullScreen
+        vc.hidesBottomBarWhenPushed = true
 
-        subscribeFeedView.articleListView.collectionView.rx
-            .itemSelected
-            .bind { _ in
-                let vc = DetailContentViewController()
-                vc.modalPresentationStyle = .pageSheet
-                vc.hidesBottomBarWhenPushed = true
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
 
-                self.navigationController?.pushViewController(vc, animated: true)
+    private func goToBellVC() {
+        let vc = BellNoticeViewController()
+        vc.modalPresentationStyle = .fullScreen
+        vc.hidesBottomBarWhenPushed = true
 
-            }
-            .disposed(by: disposeBag)
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
+
+    private func changeSortStyle(style: SortStyle) {
+        if style == .byLatest {
+            // TODO: 목록 변경
+            feedView.sortButton.setTitle("최신순", for: .normal)
+        } else {
+            // TODO: 목록 변경
+            feedView.sortButton.setTitle("인기순", for: .normal)
+        }
+    }
+
+    private func goToDetailContentVC() {
+
+        let vc = DetailContentViewController()
+        vc.modalPresentationStyle = .fullScreen
+        vc.hidesBottomBarWhenPushed = true
+        // TODO
+        // vc.feedInfo = indexPath.row 의 feedInfo
+        self.navigationController?.pushViewController(vc, animated: true)
     }
 
 }

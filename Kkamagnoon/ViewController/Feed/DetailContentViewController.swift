@@ -14,6 +14,8 @@ import SnapKit
 
 class DetailContentViewController: UIViewController {
 
+    var feedInfo: Article?
+
     var stackView = UIStackView()
           .then {
               $0.axis = .vertical

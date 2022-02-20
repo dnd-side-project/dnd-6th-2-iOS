@@ -17,6 +17,8 @@ protocol EndPoint {
 
 extension EndPoint {
     var url: String {
-        return baseURLString + path
+        let encodedStr = (baseURLString + path).addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
+        return encodedStr
     }
+
 }
