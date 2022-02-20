@@ -13,6 +13,7 @@ class TagView: UIView {
     var categoryLabel: UILabel = UILabel()
         .then {
             $0.textColor = UIColor(rgb: Color.tagText)
+            $0.textAlignment = .center
             $0.font = UIFont.pretendard(weight: .medium, size: 12)
         }
 

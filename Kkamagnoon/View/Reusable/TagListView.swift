@@ -37,7 +37,7 @@ class TagListView: UIView {
 
         let width = filterView.frame.width
         flowLayout.estimatedItemSize = CGSize(width: width, height: 30)
-
+//        flowLayout.estimatedItemSize = UICollectionViewFlowLayout.automaticSize
         filterView.collectionViewLayout = flowLayout
         self.addSubview(filterView)
 

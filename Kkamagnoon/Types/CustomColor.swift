@@ -16,4 +16,5 @@ struct Color {
 
     static let whitePurple = 0xDC8CF0
     static let tagGreen = 0x5FCEA0
+    static let placeholder = 0x939393
 }
