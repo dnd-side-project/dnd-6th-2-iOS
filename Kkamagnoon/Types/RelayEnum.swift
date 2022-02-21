@@ -21,3 +21,8 @@ enum RelayRoomState {
     case nonParticipation
     case participation
 }
+
+enum FeedStyle {
+    case whole
+    case subscribed
+}
