@@ -72,7 +72,6 @@ final class CategoryFilterCell: UICollectionViewCell {
         if isSelected {
             self.tagView.backgroundColor = UIColor(rgb: Color.tagGreen)
             self.tagView.categoryLabel.textColor = .white
-            
 
         } else {
             self.tagView.backgroundColor = UIColor(rgb: Color.tag)
