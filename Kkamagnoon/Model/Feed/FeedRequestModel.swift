@@ -11,6 +11,7 @@ struct CreateArticleDTO {
     var content: String
     var tags: [String]?
     var `public`: Bool
+    var category: String
 }
 
 struct ScrapDTO {

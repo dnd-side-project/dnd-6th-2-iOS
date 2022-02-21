@@ -15,7 +15,7 @@ class FeedService: Service {
     // TEMP
     var bag = DisposeBag()
 
-    func getWholeFeed(next_cursor: String?, orderBy: String = "최신순") {
+    func getWholeFeed(next_cursor: String?, orderBy: String = "최신순", tags: [String]?) {
         let endpoint = FeedEndpointCases.getWholeFeed(cursor: next_cursor, orderBy: orderBy, tags: nil)
 
         let request = makeRequest(endpoint: endpoint)

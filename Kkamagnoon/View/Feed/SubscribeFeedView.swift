@@ -8,40 +8,78 @@
 import UIKit
 import RxSwift
 import RxCocoa
+import SnapKit
+import Then
 
-class SubscribeFeedView: FeedView {
-    lazy var goAllListButton = UIButton()
+class SubscribeFeedView: UIView {
 
-    override func setFilterView() {
-        filterView = AuthorListView()
-        self.addSubview(filterView)
-        filterView.translatesAutoresizingMaskIntoConstraints = false
-        filterView.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 20).isActive = true
-        filterView.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
-        filterView.heightAnchor.constraint(equalToConstant: 106).isActive = true
+    var disposeBag = DisposeBag()
 
-        goAllListButton.setTitle("전체", for: .normal)
-        goAllListButton.setTitleColor(UIColor(rgb: 0x5FCEA0), for: .normal)
+    var filterView = AuthorListView()
 
-        goAllListButton.titleLabel?.font = UIFont.pretendard(weight: .medium, size: 14)
-        self.addSubview(goAllListButton)
-        goAllListButton.translatesAutoresizingMaskIntoConstraints = false
-        goAllListButton.leftAnchor.constraint(equalTo: filterView.rightAnchor).isActive = true
-        goAllListButton.widthAnchor.constraint(equalToConstant: 83).isActive = true
-        goAllListButton.rightAnchor.constraint(equalTo: self.rightAnchor).isActive = true
-        goAllListButton.heightAnchor.constraint(equalTo: filterView.heightAnchor).isActive = true
+    var goAllListButton = UIButton()
+        .then {
+            $0.setTitle("전체", for: .normal)
+            $0.setTitleColor(UIColor(rgb: 0x5FCEA0), for: .normal)
+            $0.titleLabel?.font = UIFont.pretendard(weight: .medium, size: 14)
+        }
 
-        goAllListButton.rx.tap
-            .bind {
-                let vc = SubscribeListViewController()
-                vc.modalPresentationStyle = .fullScreen
-                vc.hidesBottomBarWhenPushed = true
-                self.viewController?.navigationController?.pushViewController(vc, animated: true)
-            }
-            .disposed(by: disposeBag)
+    var grayLine = GrayBorderView()
+        .then {
+            $0.backgroundColor = UIColor(rgb: Color.tag)
+        }
+
+    lazy var articleListView = ArticleListView()
+        .then {
+            $0.collectionView.register(
+                FeedCell.self,
+                forCellWithReuseIdentifier: FeedCell.feedCellIdentifier
+            )
+            $0.collectionView.contentInset.top = 15.0
+        }
+
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        setView()
     }
 
-    override func setFeedMainViewTop() {
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    func setFeedMainViewTop() {
         articleListView.topAnchor.constraint(equalTo: filterView.bottomAnchor, constant: 15).isActive = true
+    }
+}
+
+extension SubscribeFeedView {
+    func setView() {
+        self.addSubview(filterView)
+        filterView.snp.makeConstraints {
+            $0.left.equalToSuperview().offset(20.0)
+            $0.top.equalToSuperview()
+            $0.height.equalTo(106.0)
+        }
+
+        self.addSubview(goAllListButton)
+        goAllListButton.snp.makeConstraints {
+            $0.right.equalToSuperview()
+            $0.height.equalTo(filterView)
+            $0.width.equalTo(83.0)
+            $0.left.equalTo(filterView.snp.right)
+        }
+
+        self.addSubview(grayLine)
+        grayLine.snp.makeConstraints {
+            $0.top.equalTo(filterView.snp.bottom).offset(19.0)
+            $0.left.right.equalToSuperview()
+        }
+
+        self.addSubview(articleListView)
+        articleListView.snp.makeConstraints {
+            $0.top.equalTo(grayLine.snp.bottom)
+            $0.left.right.bottom.equalToSuperview()
+        }
+
     }
 }

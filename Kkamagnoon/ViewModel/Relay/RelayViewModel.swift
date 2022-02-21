@@ -43,7 +43,7 @@ class RelayViewModel: ViewModelType {
     var selectedTagCount: Int = 0
 
     var disposeBag = DisposeBag()
-    var sortStyle: SortStyle = .byLatest
+    var sortStyle: SortStyle = .byPopularity
 
     init(input: Input = Input(),
          output: Output = Output()) {

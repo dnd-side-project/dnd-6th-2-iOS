@@ -9,7 +9,7 @@ import UIKit
 import RxSwift
 import RxCocoa
 
-class RelayRoomHeaderView: UIView {
+class HeaderViewWithBackBtn: UIView {
 
     var disposeBag = DisposeBag()
 

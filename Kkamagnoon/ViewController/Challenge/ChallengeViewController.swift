@@ -19,8 +19,7 @@ class ChallengeViewController: UIViewController {
     let formatter = DateFormatter()
     var eventsArray = [Date]()
     var eventsArray_Done = [Date]()
-    var calendarHeight: NSLayoutConstraint!
-    var buttonHeight: NSLayoutConstraint!
+
     var isMonth: Bool = false
 
     var scrollView = UIScrollView()
@@ -28,83 +27,14 @@ class ChallengeViewController: UIViewController {
             $0.showsVerticalScrollIndicator = false
         }
 
-    // TODO: MAKING ROOM BUTTON
+    var challengeMainView = ChallengeMainView()
+
     var addWritingButton = UIButton()
         .then {
             $0.backgroundColor = UIColor(rgb: Color.whitePurple)
         }
 
     var headerView = ChallengeHeaderView()
-
-    var subTitleLabel = [
-            UILabel().then {
-                $0.text = "이번달은 n개의 O를 찍었어요!"
-                $0.font = UIFont.pretendard(weight: .medium, size: 18)
-                $0.textColor = .white
-            },
-            UILabel().then {
-                $0.text = "내가 쓴 챌린지 글"
-                $0.font = UIFont.pretendard(weight: .medium, size: 16)
-                $0.textColor = .white
-            }
-        ]
-
-    // TODO: Add dropdown
-    var expansionButton = UIButton()
-        .then {
-            $0.setImage(UIImage(systemName: "heart.fill"), for: .normal)
-        }
-
-    var todayKeyWordView = TodayKeywordView()
-
-    var stackView = UIStackView()
-        .then {
-            $0.axis = .vertical
-            $0.spacing = 0
-            $0.alignment = .fill
-            $0.distribution = .fill
-        }
-
-    var calendarView = FSCalendar()
-        .then {
-            $0.backgroundColor = UIColor(rgb: Color.tag)
-            $0.layer.cornerRadius = 15.0
-
-            $0.locale = Locale(identifier: "ko_KR")
-            $0.setScope(.week, animated: false)
-
-            // header
-            $0.calendarHeaderView.removeFromSuperview()
-            // TEMP
-            $0.headerHeight = 20
-
-            // weekday
-            $0.appearance.weekdayTextColor = UIColor(rgb: 0x767676)
-            $0.appearance.weekdayFont = UIFont.pretendard(weight: .regular, size: 16)
-            $0.weekdayHeight = 19.0
-
-            // title
-            $0.placeholderType = .fillHeadTail
-            $0.appearance.titlePlaceholderColor = UIColor(rgb: 0x767676)
-            $0.appearance.titleDefaultColor = UIColor(rgb: 0xE5E5E5)
-            $0.appearance.titleFont = UIFont.pretendard(weight: .regular, size: 16)
-            $0.rowHeight = 30
-
-            // scroll
-//            $0.handleScopeGesture().isEnabled = true
-//            $0.scrollEnabled = false
-            $0.collectionView.register(CalendarDateCell.self, forCellWithReuseIdentifier: CalendarDateCell.identifier)
-            // selection
-            $0.today = nil
-
-            $0.appearance.borderRadius = 5
-        }
-
-    // TEMP
-    var myChallengeCard = MyChallengeCard()
-        .then {
-            $0.setContentHuggingPriority(.required, for: .vertical)
-        }
 
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
@@ -116,8 +46,8 @@ class ChallengeViewController: UIViewController {
         navigationController?.setNavigationBarHidden(true, animated: false)
         navigationController?.interactivePopGestureRecognizer?.delegate = nil
 
-        calendarView.delegate = self
-        calendarView.dataSource = self
+        challengeMainView.calendarView.delegate = self
+        challengeMainView.calendarView.dataSource = self
 
         formatter.locale = Locale(identifier: "ko_KR")
         formatter.dateFormat = "yyyy-MM-dd"
@@ -127,7 +57,6 @@ class ChallengeViewController: UIViewController {
         eventsArray = [xmas!, sampledate!]
 
         setView()
-
         bindView()
     }
 
@@ -138,65 +67,16 @@ class ChallengeViewController: UIViewController {
             $0.left.right.top.equalTo(view.safeAreaLayoutGuide)
         }
 
-        view.addSubview(subTitleLabel[0])
-        subTitleLabel[0].snp.makeConstraints {
-            $0.top.equalTo(headerView.snp.bottom).offset(7.0)
-            $0.left.equalTo(view.safeAreaLayoutGuide).offset(20.0)
-
-            // TEMP
-            $0.right.equalTo(view.safeAreaLayoutGuide).offset(-20.0)
+        view.addSubview(scrollView)
+        scrollView.snp.makeConstraints {
+            $0.top.equalTo(headerView.snp.bottom)
+            $0.left.right.bottom.equalTo(view.safeAreaLayoutGuide)
         }
 
-        view.addSubview(calendarView)
-
-        calendarView.snp.makeConstraints {
-            $0.top.equalTo(subTitleLabel[0].snp.bottom).offset(15.0)
-            $0.left.equalTo(view.safeAreaLayoutGuide).offset(20.0)
-            $0.right.equalTo(view.safeAreaLayoutGuide).offset(-20.0)
-
-        }
-        calendarHeight = calendarView.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.width)
-        calendarHeight.isActive = true
-
-        view.addSubview(expansionButton)
-
-        expansionButton.snp.makeConstraints {
-            $0.centerX.equalToSuperview()
-        }
-
-        buttonHeight = expansionButton.bottomAnchor.constraint(equalTo: calendarView.bottomAnchor)
-        buttonHeight.constant = -11.0
-        buttonHeight.isActive = true
-
-        view.addSubview(todayKeyWordView)
-        todayKeyWordView.snp.makeConstraints {
-            $0.left.equalToSuperview().offset(20.0)
-            $0.right.equalToSuperview().offset(-20.0)
-            $0.top.equalTo(calendarView.snp.bottom).offset(9.0)
-            $0.height.equalTo(177.0)
-        }
-
-        view.addSubview(subTitleLabel[1])
-        subTitleLabel[1].snp.makeConstraints {
-            $0.top.equalTo(todayKeyWordView.snp.bottom).offset(22.0)
-            $0.left.equalToSuperview().offset(19.0)
-            $0.right.equalToSuperview().offset(-19.0)
-        }
-
-        view.addSubview(stackView)
-        stackView.addArrangedSubview(myChallengeCard)
-
-        myChallengeCard.snp.makeConstraints {
+        scrollView.addSubview(challengeMainView)
+        challengeMainView.snp.makeConstraints {
             $0.width.equalToSuperview()
-            $0.height.equalTo(166.0)
-        }
-        stackView.snp.makeConstraints {
-            $0.top.equalTo(subTitleLabel[1].snp.bottom).offset(12.0)
-            $0.left.equalToSuperview().offset(20.0)
-            $0.right.equalToSuperview().offset(-20.0)
-
-            // TEMP
-            $0.bottom.equalTo(view.safeAreaLayoutGuide)
+            $0.edges.equalToSuperview()
         }
 
         view.addSubview(addWritingButton)
@@ -218,25 +98,10 @@ class ChallengeViewController: UIViewController {
             .bind(to: viewModel.input.addWritingButtonTap)
             .disposed(by: disposeBag)
 
-        expansionButton.rx.tap
+        challengeMainView.expansionButton.rx.tap
             .withUnretained(self)
             .bind { owner, _ in
-                if owner.isMonth {
-                    owner.isMonth = false
-                    owner.calendarView.setScope(.week, animated: true)
-                    UIView.animate(withDuration: 10.0, delay: 0) {
-                        owner.calendarHeight.constant = 144
-                        owner.buttonHeight.constant = -11.0
-                    }
-                } else {
-                    owner.isMonth = true
-                    owner.calendarView.setScope(.month, animated: true)
-                    UIView.animate(withDuration: 10.0, delay: 0) {
-                        owner.calendarHeight.constant = UIScreen.main.bounds.width + 20
-                        owner.buttonHeight.constant = -6.0
-                    }
-
-                }
+                owner.setCalendarState()
             }
             .disposed(by: disposeBag)
 
@@ -257,7 +122,11 @@ class ChallengeViewController: UIViewController {
     }
 
     private func goToBellNoticeVC() {
+        let vc = BellNoticeViewController()
+        vc.modalPresentationStyle = .fullScreen
+        vc.hidesBottomBarWhenPushed = true
 
+        self.navigationController?.pushViewController(vc, animated: true)
     }
 
     private func goToWritingVC() {
@@ -268,6 +137,25 @@ class ChallengeViewController: UIViewController {
         self.navigationController?.pushViewController(vc, animated: true)
     }
 
+    private func setCalendarState() {
+        if isMonth {
+            isMonth = false
+            challengeMainView.calendarView.setScope(.week, animated: true)
+            UIView.animate(withDuration: 10.0, delay: 0) {
+                self.challengeMainView.calendarHeight.constant = 144
+                self.challengeMainView.buttonHeight.constant = -11.0
+            }
+        } else {
+            isMonth = true
+            challengeMainView.calendarView.setScope(.month, animated: true)
+            UIView.animate(withDuration: 10.0, delay: 0) {
+                self.challengeMainView.calendarHeight.constant = UIScreen.main.bounds.width + 20
+                self.challengeMainView.buttonHeight.constant = -6.0
+            }
+
+        }
+    }
+
 }
 
 extension ChallengeViewController: FSCalendarDataSource {
@@ -276,7 +164,7 @@ extension ChallengeViewController: FSCalendarDataSource {
                   boundingRectWillChange bounds: CGRect,
                   animated: Bool) {
 
-        calendarHeight.constant = 144
+        challengeMainView.calendarHeight.constant = 144
 
         self.view.layoutIfNeeded()
     }

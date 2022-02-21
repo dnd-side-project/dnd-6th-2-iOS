@@ -10,12 +10,7 @@ import RxSwift
 import SnapKit
 import Then
 
-class DetailView: UIView {
-
-    lazy var backButton = UIButton()
-        .then {
-            $0.setImage(UIImage(systemName: "heart.fill"), for: .normal)
-        }
+class FeedDetailView: UIView {
 
     lazy var profileView = ProfileView(width: 42, height: 42, fontsize: 15)
 
@@ -52,12 +47,14 @@ class DetailView: UIView {
         }
 
     lazy var tagListView = TagListView()
+        .then {
+            $0.filterView.allowsSelection = false
+        }
 
     let disposeBag = DisposeBag()
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        setBackButton()
         setProfileVeiw()
         setMoreButton()
         setUpdateDateLabel()
@@ -70,28 +67,11 @@ class DetailView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func setBackButton() {
-
-        self.addSubview(backButton)
-
-        backButton.snp.makeConstraints {
-            $0.left.equalToSuperview()
-            $0.top.equalToSuperview().offset(26.24)
-        }
-
-        backButton.rx.tap
-            .bind { _ in
-                self.viewController?.navigationController?.popViewController(animated: true)
-
-            }
-            .disposed(by: disposeBag)
-    }
-
     func setProfileVeiw() {
         self.addSubview(profileView)
 
         profileView.snp.makeConstraints {
-            $0.top.equalTo(backButton.snp.bottom).offset(26.0)
+            $0.top.equalToSuperview().offset(26.0)
             $0.left.equalToSuperview()
         }
     }
@@ -137,6 +117,7 @@ class DetailView: UIView {
     }
 
     func setTagListView() {
+
         self.addSubview(tagListView)
 
         tagListView.snp.makeConstraints {

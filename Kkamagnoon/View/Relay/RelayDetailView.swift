@@ -16,7 +16,7 @@ class RelayDetailView: UIView {
 
     var disposeBag = DisposeBag()
 
-    var header = RelayRoomHeaderView()
+    var header = HeaderViewWithBackBtn()
 
     var relayWritingList = ArticleListView()
         .then {

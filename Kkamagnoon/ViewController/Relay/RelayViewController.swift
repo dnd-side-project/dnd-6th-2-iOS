@@ -17,6 +17,8 @@ class RelayViewController: UIViewController {
     let viewModel = RelayViewModel()
     var disposeBag = DisposeBag()
 
+    var roomView: UIView!
+
     lazy var topButtonView = TopButtonView(frame: .zero, first: StringType.relayRoom, second: StringType.joinedRoom)
         .then { topView in
             topView.searchButton.isHidden = true
@@ -26,6 +28,7 @@ class RelayViewController: UIViewController {
         }
 
     lazy var relayRoomView = RelayRoomView()
+    lazy var participatedRoomView = ParticipatedRoomView()
 
     lazy var makingRoomButton = MakingRoomButton()
         .then {
@@ -62,6 +65,7 @@ class RelayViewController: UIViewController {
         super.viewDidLoad()
         navigationController?.setNavigationBarHidden(true, animated: false)
         navigationController?.interactivePopGestureRecognizer?.delegate = nil
+        roomView = relayRoomView
         setView()
         bindView()
 
@@ -79,19 +83,23 @@ class RelayViewController: UIViewController {
             $0.height.equalTo(115.0)
         }
 
-        view.addSubview(relayRoomView)
-
-        relayRoomView.snp.makeConstraints {
-            $0.left.right.equalToSuperview()
-            $0.top.equalTo(topButtonView.snp.bottom)
-            $0.bottom.equalTo(view.safeAreaLayoutGuide)
-        }
+        setRoomView()
 
         view.addSubview(makingRoomButton)
         makingRoomButton.snp.makeConstraints {
             $0.size.equalTo(55.0)
             $0.right.equalToSuperview().offset(-20.0)
             $0.bottom.equalTo(view.safeAreaLayoutGuide).offset(-14.0)
+        }
+    }
+
+    func setRoomView() {
+        view.addSubview(roomView)
+
+        roomView.snp.makeConstraints {
+            $0.left.right.equalToSuperview()
+            $0.top.equalTo(topButtonView.snp.bottom)
+            $0.bottom.equalTo(view.safeAreaLayoutGuide)
         }
     }
 
@@ -105,21 +113,20 @@ class RelayViewController: UIViewController {
             .bind(to: viewModel.input.participatedRoomButtonTap)
             .disposed(by: disposeBag)
 
+        topButtonView.bellButton.rx.tap
+            .bind(to: viewModel.input.bellButtonTap)
+            .disposed(by: disposeBag)
+
         relayRoomView.categoryFilterView.filterView.allowsMultipleSelection = true
+
+        // TEMP
         relayRoomView.categoryFilterView.filterView
             .rx.itemSelected
             .withUnretained(self)
             .bind { owner, _ in
-                print(">>>SELECTED!!")
                 owner.viewModel.selectedTagCount += 1
             }
             .disposed(by: disposeBag)
-
-//        relayRoomView.relayList.collectionView
-//            .supplementaryView(
-//                forElementKind: UICollectionView.elementKindSectionHeader,
-//                               at: IndexPath(item: 0, section: 0))?
-//            .isUserInteractionEnabled = true
 
         relayRoomView.relayList.collectionView.rx.itemSelected
             .bind(to: viewModel.input.relayRoomCellTap)
@@ -133,7 +140,7 @@ class RelayViewController: UIViewController {
         viewModel.output.currentListStyle
             .withUnretained(self)
             .bind { owner, style in
-                owner.changeListStyle(style: style)
+                owner.changeRoomStyle(style: style)
             }
             .disposed(by: disposeBag)
 
@@ -163,12 +170,11 @@ class RelayViewController: UIViewController {
             .disposed(by: disposeBag)
     }
 
-    private func changeListStyle(style: RelayListStyle) {
-
-    }
-
     private func goToBellNoticeViewController() {
+        let vc = BellNoticeViewController()
+        vc.hidesBottomBarWhenPushed = true
 
+        self.navigationController?.pushViewController(vc, animated: true)
     }
 
     private func goToRelayDetailViewController() {
@@ -186,5 +192,16 @@ class RelayViewController: UIViewController {
         vc.viewModel.rootView = self
 
         self.navigationController?.pushViewController(vc, animated: true)
+    }
+
+    private func changeRoomStyle(style: RelayListStyle) {
+        roomView.removeFromSuperview()
+
+        if style == .relayRoom {
+            roomView = relayRoomView
+        } else {
+            roomView = participatedRoomView
+        }
+        setRoomView()
     }
 }

@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import RxSwift
 
 class CommentCell: UITableViewCell {
 
@@ -15,6 +16,9 @@ class CommentCell: UITableViewCell {
     let createdDateLabel = UILabel()
     let moreButton = UIButton()
     let commentContent = UITextView()
+
+    var moreButtonTapHandler: (() -> Void)?
+    var disposeBag = DisposeBag()
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -58,6 +62,14 @@ class CommentCell: UITableViewCell {
 
         moreButton.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -24).isActive = true
         moreButton.topAnchor.constraint(equalTo: profileView.topAnchor).isActive = true
+
+        moreButton.rx.tap
+            .withUnretained(self)
+            .bind { owner, _ in
+                print("<<<<TAPP")
+                owner.moreButtonTapHandler?()
+            }
+            .disposed(by: disposeBag)
     }
 
     func setCommentContent() {

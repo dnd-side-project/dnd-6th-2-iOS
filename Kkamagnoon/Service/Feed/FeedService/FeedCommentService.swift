@@ -8,5 +8,15 @@
 import Foundation
 
 class FeedCommentService: Service {
+    func postComment(articleId: String, content: String) {
 
+    }
+
+    func patchComment(articleId: String, commentId: String, content: String) {
+
+    }
+
+    func deleteComment(articleId: String, commentId: String) {
+
+    }
 }

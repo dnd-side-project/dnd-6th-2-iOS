@@ -7,29 +7,24 @@
 import Foundation
 import RxSwift
 import RxCocoa
+import RxDataSources
 
-protocol FeedViewModelType {
-    associatedtype Input
-    associatedtype Output
-
-    var input: Input { get }
-    var output: Output { get }
-}
-
-class FeedViewModel: FeedViewModelType {
+class FeedViewModel: ViewModelType {
 
     struct Input {
         let wholeFeedButtonTap = PublishSubject<Void>()
         let subscribedFeedButtonTap = PublishSubject<Void>()
         let searchButtonTap = PublishSubject<Void>()
         let bellButtonTap = PublishSubject<Void>()
+
         let tagCellTap = PublishSubject<Void>()
+        let subscribeCellTap = PublishSubject<Void>()
+
         let sortButtonTap = PublishSubject<Void>()
         // Temp
         let feedCellTap = PublishSubject<IndexPath>()
         let moreButtonTap = PublishSubject<Void>()
 
-        // add more...
     }
 
     struct Output {
@@ -39,32 +34,59 @@ class FeedViewModel: FeedViewModelType {
         let currentSortStyle = BehaviorRelay<SortStyle>(value: .byLatest)
         let goToDetailFeed = PublishRelay<IndexPath>()
 
+        let tagList = BehaviorRelay<[String]>(value: [])
+
         // TEMP String -> FeedInfo
-        let wholeFeedListRelay = BehaviorRelay<[String]>(value: [])
-        let subscribeFeedListRelay = BehaviorRelay<[String]>(value: [])
+        let wholeFeedList = BehaviorRelay<[SectionModel<String, String>]>(value: [])
+
+        let subscribeFeedList = BehaviorRelay<[String]>(value: [])
     }
 
     var input: Input
     var output: Output
-    var service: FeedService!
+    var feedService: FeedService!
+    var subscribeService: FeedSubscribeService!
 
     var disposeBag = DisposeBag()
-    private var sortStyle: SortStyle = .byLatest
+    var sortStyle: SortStyle = .byPopularity
 
     init(input: Input = Input(),
          output: Output = Output()) {
         self.input = input
         self.output = output
-        self.service = FeedService()
+        self.feedService = FeedService()
 
-        bindChangeFeed()
-        bindExtraButton()
-        bindSortButton()
+        bind()
         bindWholeFeedList()
-        bindSubscribedFeedList()
     }
 
-    func bindChangeFeed() {
+    deinit {
+        disposeBag = DisposeBag()
+    }
+}
+
+extension FeedViewModel {
+
+    func bindWholeFeedList() {
+
+        // TODO: 정렬 순서대로 요청
+//        feedService.getWholeFeed(next_cursor: , orderBy: sortStyle)
+
+        // TEMP
+        Observable.just([SectionModel(model: "최신순", items: ["글감", "일상", "로맨스", "짧은 글", "긴 글", "무서운 글", "발랄한 글", "한글", "세종대왕"])])
+            .bind { [weak self] list in
+                guard let self = self else {return}
+                self.output.wholeFeedList.accept(list)
+            }
+            .disposed(by: disposeBag)
+    }
+
+    func bindSubscribedFeedList() {
+        // TODO: 구독 피드 요청
+//        subscribeService.getSubscribeFeed(cursor: <#T##String?#>)
+    }
+
+    func bind() {
         input.wholeFeedButtonTap
             .withUnretained(self)
             .bind { owner, _ in
@@ -78,9 +100,7 @@ class FeedViewModel: FeedViewModelType {
                 owner.output.currentFeedStyle.accept(.subscribed)
             }
             .disposed(by: disposeBag)
-    }
 
-    func bindExtraButton() {
         input.searchButtonTap
             .withUnretained(self)
             .bind { owner, _ in
@@ -94,9 +114,18 @@ class FeedViewModel: FeedViewModelType {
                 owner.output.goToBell.accept(())
             }
             .disposed(by: disposeBag)
-    }
 
-    func bindSortButton() {
+        input.tagCellTap
+            .withUnretained(self)
+            .bind { owner, _ in
+                // TODO: 태그별로 검색
+                var tags: [String] = owner.output.tagList.value
+//                tags.append(contentsOf: tagString)
+
+//                feedService.getWholeFeed(next_cursor: <#T##String?#>, orderBy: <#T##String#>, tags: [])
+            }
+            .disposed(by: disposeBag)
+
         input.sortButtonTap
             .withUnretained(self)
             .bind { owner, _ in
@@ -109,16 +138,6 @@ class FeedViewModel: FeedViewModelType {
                 }
             }
             .disposed(by: disposeBag)
-    }
-
-    func bindWholeFeedList() {
-        // DUMMY
-        let dummyData = Observable<[String]>.of(["글감", "일상", "로맨스", "짧은 글", "긴 글", "무서운 글", "발랄한 글", "한글", "세종대왕"])
-        dummyData.bind { [weak self] list in
-            guard let self = self else {return}
-            self.output.wholeFeedListRelay.accept(list)
-        }
-        .disposed(by: disposeBag)
 
         input.feedCellTap
             .bind { [weak self] indexPath in
@@ -128,21 +147,4 @@ class FeedViewModel: FeedViewModelType {
             .disposed(by: disposeBag)
     }
 
-    func bindSubscribedFeedList() {
-        // DUMMY
-        let dummyData = Observable<[String]>.of(["글감", "일상", "로맨스", "긴 글", "무서운 글", "한글", "세종대왕"])
-        dummyData.bind { [weak self] list in
-            guard let self = self else {return}
-            self.output.subscribeFeedListRelay.accept(list)
-        }
-        .disposed(by: disposeBag)
-    }
-
-    func tempRequest() {
-        service.getWholeFeed(next_cursor: nil, orderBy: "최신순")
-    }
-
-    deinit {
-        disposeBag = DisposeBag()
-    }
 }

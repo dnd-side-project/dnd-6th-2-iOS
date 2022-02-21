@@ -12,9 +12,9 @@ enum RelayListStyle {
     case participatedRoom
 }
 
-enum SortStyle {
-    case byPopularity
-    case byLatest
+enum SortStyle: String {
+    case byPopularity = "인기순"
+    case byLatest = "최신순"
 }
 
 enum RelayRoomState {
@@ -25,4 +25,9 @@ enum RelayRoomState {
 enum FeedStyle {
     case whole
     case subscribed
+}
+
+enum SubscribeStyle {
+    case subscribing
+    case notSubscribing
 }

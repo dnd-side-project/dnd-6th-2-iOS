@@ -30,6 +30,7 @@ class TagListView: UIView {
 
         filterView = UICollectionView(frame: .zero, collectionViewLayout: flowLayout)
         filterView.register(CategoryFilterCell.self, forCellWithReuseIdentifier: CategoryFilterCell.categoryFilterCellIdentifier)
+        filterView.allowsMultipleSelection = true
 
         filterView.backgroundColor = .black
 
