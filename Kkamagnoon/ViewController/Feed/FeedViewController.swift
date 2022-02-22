@@ -23,11 +23,19 @@ class FeedViewController: UIViewController {
     let wholeFeedView = WholeFeedView()
     let subscribeFeedView = SubscribeFeedView()
 
-    lazy var dataSource = RxCollectionViewSectionedReloadDataSource<SectionModel<String, String>>(configureCell: { _, collectionView, indexPath, element in
+    lazy var dataSource = RxCollectionViewSectionedReloadDataSource<FeedSection>(configureCell: { _, collectionView, indexPath, element in
 
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: FeedCell.feedCellIdentifier, for: indexPath) as! FeedCell
-        cell.layer.cornerRadius = 15.0
-        cell.articleTitle.text = element
+
+        cell.profileView.nickNameLabel.text = element.user?.nickname
+        cell.articleTitle.text = element.title
+
+        cell.articleContents.setTextWithLineHeight(
+            text: element.content,
+            lineHeight: .lineheightInBox
+        )
+//        cell.likeView.labelView.text = String(element.likeNum)
+//        cell.commentView.labelView.text = String(element.commentNum)
 
         return cell
     },
@@ -57,7 +65,7 @@ class FeedViewController: UIViewController {
         bindInput()
         bindOutput()
 
-//        viewModel.tempRequest()
+        viewModel.bindWholeFeedList()
     }
 }
 
@@ -65,7 +73,7 @@ extension FeedViewController: UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let contentOffset_y = scrollView.contentOffset.y
         let collectionViewContentSize = wholeFeedView.articleListView.collectionView.contentSize.height
-        
+
         let pagination_y = collectionViewContentSize*0.2
         if contentOffset_y > collectionViewContentSize - pagination_y {
             // 네트워크 호출
@@ -170,9 +178,8 @@ extension FeedViewController {
         viewModel.output.subscribeFeedList
             .bind(to: subscribeFeedView.articleListView.collectionView
                     .rx.items(cellIdentifier: FeedCell.feedCellIdentifier,
-                                         cellType: FeedCell.self)) { (_, element, cell) in
-                cell.articleTitle.text = element
-                cell.layer.cornerRadius = 15
+                                         cellType: FeedCell.self)) { (_, _, _) in
+
                 }
             .disposed(by: disposeBag)
     }

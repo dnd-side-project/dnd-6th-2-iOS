@@ -29,7 +29,7 @@ class MyChallengeCard: UIView {
             $0.lineBreakMode = .byWordWrapping
             $0.setTextWithLineHeight(
                 text: "거울은 나를 비춰주는 물건이다. 거울을 멍하니 바라보면 내가 누구인지 조금은 알 것 같은 기분이다.",
-                lineHeight: 20)
+                lineHeight: .lineheightInBox)
         }
 
     override init(frame: CGRect) {

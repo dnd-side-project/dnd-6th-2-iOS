@@ -5,6 +5,7 @@
 //  Created by 서정 on 2022/02/10.
 //
 import Foundation
+import RxDataSources
 
 struct ArticlesResponse: Decodable {
     var articles: [Article]?
@@ -21,13 +22,21 @@ struct Article: Decodable {
     var `public`: Bool?
     var state: Bool?
     var keyWord: String?
-    var category: [String]?
+    var category: String?
     var tags: [String]?
     var content: String?
     var title: String?
     var user: User?
     var createdAt: String?
     var updatedAt: String?
+}
+
+struct Category: Decodable {
+    var _id: String?
+    var user: [User]?
+    var title: String?
+    var articleCount: Int?
+    var scrapCount: Int?
 }
 
 struct Comment: Decodable {
@@ -59,3 +68,9 @@ struct User: Decodable {
 }
 
 // TODO: CodingKeys
+//
+// extension Article: IdentifiableType, Equatable {
+//    var identity: String {
+//        return UUID().uuidString
+//    }
+// }

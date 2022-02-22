@@ -101,6 +101,11 @@
 		043316FF27C3744100FE0E34 /* ParticipatedRoomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043316FE27C3744100FE0E34 /* ParticipatedRoomView.swift */; };
 		0433170227C37BC800FE0E34 /* NoticeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0433170127C37BC800FE0E34 /* NoticeCell.swift */; };
 		0433170427C3A56100FE0E34 /* Label.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0433170327C3A56100FE0E34 /* Label.swift */; };
+		0433170927C3BF0600FE0E34 /* NoticeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0433170827C3BF0600FE0E34 /* NoticeViewModel.swift */; };
+		0433170B27C3D9D500FE0E34 /* FeedSectionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0433170A27C3D9D500FE0E34 /* FeedSectionModel.swift */; };
+		0433170D27C3E8B800FE0E34 /* Numbers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0433170C27C3E8B800FE0E34 /* Numbers.swift */; };
+		0433170F27C3EB9900FE0E34 /* RelaySectionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0433170E27C3EB9900FE0E34 /* RelaySectionModel.swift */; };
+		0433171127C3EBD600FE0E34 /* RelayResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0433171027C3EBD600FE0E34 /* RelayResponseModel.swift */; };
 		0439AF2D27AFAF7000E14E03 /* CategoryFilterCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0439AF2C27AFAF7000E14E03 /* CategoryFilterCell.swift */; };
 		0439AF3127AFF97400E14E03 /* FeedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0439AF3027AFF97300E14E03 /* FeedCell.swift */; };
 		0439AF3327B0B0A000E14E03 /* ArticleListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0439AF3227B0B0A000E14E03 /* ArticleListView.swift */; };
@@ -140,7 +145,6 @@
 		04A40D6927BF97C4004DAB19 /* Navigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A40D6827BF97C4004DAB19 /* Navigation.swift */; };
 		04A40D6B27BFC021004DAB19 /* HeaderViewWithBackBtn.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A40D6A27BFC021004DAB19 /* HeaderViewWithBackBtn.swift */; };
 		04A40D6D27BFC1C2004DAB19 /* RelayListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A40D6C27BFC1C2004DAB19 /* RelayListView.swift */; };
-		04A40D6F27BFC5C0004DAB19 /* RelayCellDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A40D6E27BFC5BF004DAB19 /* RelayCellDataModel.swift */; };
 		04A40D7127BFE19A004DAB19 /* ArticleListWithSortView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A40D7027BFE19A004DAB19 /* ArticleListWithSortView.swift */; };
 		04A40D7327BFE22C004DAB19 /* SortHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A40D7227BFE22C004DAB19 /* SortHeaderCell.swift */; };
 		04C95FC127B5495800A0F840 /* FeedViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C95FC027B5495800A0F840 /* FeedViewModel.swift */; };
@@ -258,6 +262,11 @@
 		043316FE27C3744100FE0E34 /* ParticipatedRoomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticipatedRoomView.swift; sourceTree = "<group>"; };
 		0433170127C37BC800FE0E34 /* NoticeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoticeCell.swift; sourceTree = "<group>"; };
 		0433170327C3A56100FE0E34 /* Label.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Label.swift; sourceTree = "<group>"; };
+		0433170827C3BF0600FE0E34 /* NoticeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoticeViewModel.swift; sourceTree = "<group>"; };
+		0433170A27C3D9D500FE0E34 /* FeedSectionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedSectionModel.swift; sourceTree = "<group>"; };
+		0433170C27C3E8B800FE0E34 /* Numbers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Numbers.swift; sourceTree = "<group>"; };
+		0433170E27C3EB9900FE0E34 /* RelaySectionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RelaySectionModel.swift; sourceTree = "<group>"; };
+		0433171027C3EBD600FE0E34 /* RelayResponseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RelayResponseModel.swift; sourceTree = "<group>"; };
 		0439AF2C27AFAF7000E14E03 /* CategoryFilterCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryFilterCell.swift; sourceTree = "<group>"; };
 		0439AF3027AFF97300E14E03 /* FeedCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedCell.swift; sourceTree = "<group>"; };
 		0439AF3227B0B0A000E14E03 /* ArticleListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticleListView.swift; sourceTree = "<group>"; };
@@ -301,7 +310,6 @@
 		04A40D6827BF97C4004DAB19 /* Navigation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Navigation.swift; sourceTree = "<group>"; };
 		04A40D6A27BFC021004DAB19 /* HeaderViewWithBackBtn.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderViewWithBackBtn.swift; sourceTree = "<group>"; };
 		04A40D6C27BFC1C2004DAB19 /* RelayListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RelayListView.swift; sourceTree = "<group>"; };
-		04A40D6E27BFC5BF004DAB19 /* RelayCellDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RelayCellDataModel.swift; sourceTree = "<group>"; };
 		04A40D7027BFE19A004DAB19 /* ArticleListWithSortView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticleListWithSortView.swift; sourceTree = "<group>"; };
 		04A40D7227BFE22C004DAB19 /* SortHeaderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortHeaderCell.swift; sourceTree = "<group>"; };
 		04C95FC027B5495800A0F840 /* FeedViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedViewModel.swift; sourceTree = "<group>"; };
@@ -521,6 +529,14 @@
 			path = Notice;
 			sourceTree = "<group>";
 		};
+		0433170727C3BEEC00FE0E34 /* Notice */ = {
+			isa = PBXGroup;
+			children = (
+				0433170827C3BF0600FE0E34 /* NoticeViewModel.swift */,
+			);
+			path = Notice;
+			sourceTree = "<group>";
+		};
 		0439AF2927AFAB4300E14E03 /* Feed */ = {
 			isa = PBXGroup;
 			children = (
@@ -656,6 +672,7 @@
 				048D44C127AF5E030031974D /* StringConverter.swift */,
 				04DAAE5D27B3C64500AECFE4 /* CustomColor.swift */,
 				04A40D4F27BF4511004DAB19 /* EnumType.swift */,
+				0433170C27C3E8B800FE0E34 /* Numbers.swift */,
 			);
 			path = Types;
 			sourceTree = "<group>";
@@ -677,7 +694,8 @@
 			isa = PBXGroup;
 			children = (
 				04A40D3627BE25E3004DAB19 /* RelayRequestModel.swift */,
-				04A40D6E27BFC5BF004DAB19 /* RelayCellDataModel.swift */,
+				0433170E27C3EB9900FE0E34 /* RelaySectionModel.swift */,
+				0433171027C3EBD600FE0E34 /* RelayResponseModel.swift */,
 			);
 			path = Relay;
 			sourceTree = "<group>";
@@ -727,6 +745,7 @@
 			children = (
 				04C95FC527B55E9800A0F840 /* FeedRequestModel.swift */,
 				043316DE27C33A9400FE0E34 /* FeedReponseModel.swift */,
+				0433170A27C3D9D500FE0E34 /* FeedSectionModel.swift */,
 			);
 			path = Feed;
 			sourceTree = "<group>";
@@ -779,6 +798,7 @@
 		04D0637227AEC0D9005EB16C /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				0433170727C3BEEC00FE0E34 /* Notice */,
 				043316C627C3363800FE0E34 /* Challenge */,
 				04A40D3227BE1C49004DAB19 /* Relay */,
 				04C95FBA27B5328200A0F840 /* Feed */,
@@ -1157,6 +1177,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				04A40D7327BFE22C004DAB19 /* SortHeaderCell.swift in Sources */,
+				0433170F27C3EB9900FE0E34 /* RelaySectionModel.swift in Sources */,
 				04A40D3427BE1C5C004DAB19 /* RelayViewModel.swift in Sources */,
 				0407910927BBDD68006C5374 /* ParticipantListView.swift in Sources */,
 				040D852D27C092390003C96A /* RelayWritingViewController.swift in Sources */,
@@ -1166,6 +1187,7 @@
 				048D44B927AF5D5A0031974D /* RelayViewController.swift in Sources */,
 				043316E727C3475400FE0E34 /* ChallengeEndPointCases.swift in Sources */,
 				0407910727BBDC53006C5374 /* ParticipantViewController.swift in Sources */,
+				0433170D27C3E8B800FE0E34 /* Numbers.swift in Sources */,
 				043316C827C3364E00FE0E34 /* ChallengeViewModel.swift in Sources */,
 				040790FF27BB96C0006C5374 /* SelectTagViewController.swift in Sources */,
 				040790F727BB4C7E006C5374 /* MakingRelayRoomViewController.swift in Sources */,
@@ -1202,6 +1224,7 @@
 				04C95FC627B55E9800A0F840 /* FeedRequestModel.swift in Sources */,
 				040D852F27C096390003C96A /* MultiLineTagListView.swift in Sources */,
 				043316F127C34FC200FE0E34 /* SubscribeListViewModel.swift in Sources */,
+				0433170927C3BF0600FE0E34 /* NoticeViewModel.swift in Sources */,
 				043316BB27C3306900FE0E34 /* WritingViewController.swift in Sources */,
 				04A40D7127BFE19A004DAB19 /* ArticleListWithSortView.swift in Sources */,
 				043316E327C33D0E00FE0E34 /* SearchViewController.swift in Sources */,
@@ -1228,7 +1251,6 @@
 				043316BE27C330BC00FE0E34 /* ChallengeHeaderView.swift in Sources */,
 				043316DF27C33A9400FE0E34 /* FeedReponseModel.swift in Sources */,
 				043316FB27C35A2500FE0E34 /* ChallengeMainView.swift in Sources */,
-				04A40D6F27BFC5C0004DAB19 /* RelayCellDataModel.swift in Sources */,
 				043316EF27C34FA900FE0E34 /* DetailContentViewModel.swift in Sources */,
 				04C95FC127B5495800A0F840 /* FeedViewModel.swift in Sources */,
 				040790B027B8DE9C006C5374 /* Font.swift in Sources */,
@@ -1241,6 +1263,7 @@
 				0433170427C3A56100FE0E34 /* Label.swift in Sources */,
 				04A40D4E27BF4457004DAB19 /* RelayEndPointCases.swift in Sources */,
 				04DAAE5E27B3C64500AECFE4 /* CustomColor.swift in Sources */,
+				0433170B27C3D9D500FE0E34 /* FeedSectionModel.swift in Sources */,
 				04DAAE5C27B2CE5100AECFE4 /* BottomReactionView.swift in Sources */,
 				0464F9C527A578AA0054FD83 /* SceneDelegate.swift in Sources */,
 				040790EB27BA24C1006C5374 /* RelayDetailViewController.swift in Sources */,
@@ -1248,6 +1271,7 @@
 				04A40D6727BF6A17004DAB19 /* ViewModelType.swift in Sources */,
 				04DAAE6427B4196F00AECFE4 /* BottomSheetViewController.swift in Sources */,
 				040D853D27C10B5C0003C96A /* SelectingCollectionReusableView.swift in Sources */,
+				0433171127C3EBD600FE0E34 /* RelayResponseModel.swift in Sources */,
 				04A40D6D27BFC1C2004DAB19 /* RelayListView.swift in Sources */,
 				04DAAE5127B1FDB300AECFE4 /* WholeFeedView.swift in Sources */,
 				04DAAE6827B4D0D600AECFE4 /* WritingCommentView.swift in Sources */,

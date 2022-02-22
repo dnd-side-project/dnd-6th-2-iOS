@@ -8,8 +8,13 @@
 import UIKit
 import SnapKit
 import Then
+import RxSwift
+import RxCocoa
 
 class BellNoticeViewController: UIViewController {
+
+    let viewModel = NoticeViewModel()
+    var disposeBag = DisposeBag()
 
     var headerView = HeaderViewWithBackBtn()
         .then {
@@ -20,14 +25,14 @@ class BellNoticeViewController: UIViewController {
 
     var noticeListView = ArticleListView()
         .then {
-            $0.collectionView.register(NoticeCell.self, forCellWithReuseIdentifier: NoticeCell.idenfier)
+            $0.collectionView.register(NoticeCell.self, forCellWithReuseIdentifier: NoticeCell.identifier)
         }
 
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .black
         setView()
-
+        bindView()
     }
 
 }
@@ -42,10 +47,22 @@ extension BellNoticeViewController {
         }
 
         view.addSubview(noticeListView)
-        noticeListView.backgroundColor = .brown
         noticeListView.snp.makeConstraints {
             $0.top.equalTo(headerView.snp.bottom).offset(15.0)
             $0.left.right.bottom.equalTo(view.safeAreaLayoutGuide)
         }
+    }
+
+    func bindView() {
+
+        viewModel.output.noticeList
+            .bind(to: noticeListView.collectionView
+                    .rx.items(cellIdentifier: NoticeCell.identifier,
+                                         cellType: NoticeCell.self)) { (_, element, cell) in
+                cell.textLabel.text = element
+                }
+            .disposed(by: disposeBag)
+
+        viewModel.bindNoticeList()
     }
 }

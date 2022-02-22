@@ -8,11 +8,11 @@
 import UIKit
 
 extension UILabel {
-    func setTextWithLineHeight(text: String?, lineHeight: CGFloat) {
+    func setTextWithLineHeight(text: String?, lineHeight: Numbers) {
         if let text = text {
             let style = NSMutableParagraphStyle()
-            style.maximumLineHeight = lineHeight
-            style.minimumLineHeight = lineHeight
+            style.maximumLineHeight = lineHeight.rawValue
+            style.minimumLineHeight = lineHeight.rawValue
 
             let attributes: [NSAttributedString.Key: Any] = [
                 .paragraphStyle: style

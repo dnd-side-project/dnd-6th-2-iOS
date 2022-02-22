@@ -36,9 +36,7 @@ class FeedViewModel: ViewModelType {
 
         let tagList = BehaviorRelay<[String]>(value: [])
 
-        // TEMP String -> FeedInfo
-        let wholeFeedList = BehaviorRelay<[SectionModel<String, String>]>(value: [])
-
+        let wholeFeedList = PublishRelay<[FeedSection]>()
         let subscribeFeedList = BehaviorRelay<[String]>(value: [])
     }
 
@@ -57,7 +55,6 @@ class FeedViewModel: ViewModelType {
         self.feedService = FeedService()
 
         bind()
-        bindWholeFeedList()
     }
 
     deinit {
@@ -70,13 +67,13 @@ extension FeedViewModel {
     func bindWholeFeedList() {
 
         // TODO: 정렬 순서대로 요청
-//        feedService.getWholeFeed(next_cursor: , orderBy: sortStyle)
+        feedService.getWholeFeed(next_cursor: nil, orderBy: sortStyle.rawValue, tags: nil)
+            .withUnretained(self)
+            .bind { owner, articleList in
 
-        // TEMP
-        Observable.just([SectionModel(model: "최신순", items: ["글감", "일상", "로맨스", "짧은 글", "긴 글", "무서운 글", "발랄한 글", "한글", "세종대왕"])])
-            .bind { [weak self] list in
-                guard let self = self else {return}
-                self.output.wholeFeedList.accept(list)
+                owner.output.wholeFeedList.accept(
+                    [FeedSection(header: "", items: articleList)]
+                )
             }
             .disposed(by: disposeBag)
     }

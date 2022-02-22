@@ -55,7 +55,7 @@ class TokenUtils {
     // TEMP
     func read(account: TokenType) -> String? {
 
-        return "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFiY2RAZ21haWwuY29tIiwiaWF0IjoxNjQ0NTU1ODMwLCJleHAiOjE2NDQ1NTk0MzB9.uyQHq-Q2-Kh8aRO4_s9PB_wn2XzBh-VE8NB7arLMIK4"
+        return "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImhvdHRpbmdnb3RAbmF2ZXIuY29tIiwiaWF0IjoxNjQ1NDUwNzU4LCJleHAiOjE2NDgwNDI3NTh9.yrWQhEIfeJWcwTSdf7vdF1AnpapZn5nhEMowxhLBI7s"
     }
 
     func delete(account: String) {

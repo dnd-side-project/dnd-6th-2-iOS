@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Then
 
 class FeedCell: UICollectionViewCell {
     static let feedCellIdentifier = "FeedCellIdentifier"
@@ -14,7 +15,7 @@ class FeedCell: UICollectionViewCell {
     let updateDate: UILabel = UILabel()
 
     let articleTitle: UILabel = UILabel()
-    let articleContents: UITextView = UITextView()
+    let articleContents = UILabel()
 
 //    let likeLabel: UILabel = UILabel()
 //    let commentLabel: UILabel = UILabel()
@@ -27,6 +28,7 @@ class FeedCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.backgroundColor = UIColor(rgb: Color.feedListCard)
+        self.layer.cornerRadius = 15.0
         setView()
     }
 
@@ -51,6 +53,7 @@ class FeedCell: UICollectionViewCell {
         updateDate.topAnchor.constraint(equalTo: self.topAnchor, constant: 15).isActive = true
 
         // 글 제목
+        articleTitle.text = "무제"
         articleTitle.textColor = .white
         articleTitle.font = UIFont.pretendard(weight: .semibold, size: 14)
         self.addSubview(articleTitle)
@@ -59,24 +62,12 @@ class FeedCell: UICollectionViewCell {
         articleTitle.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 20).isActive = true
 
         // 글 내용
-
-        articleContents.setTextWithLineHeight(
-            text: StringType.dummyContents,
-            lineHeight: 20,
-            fontSize: 13,
-            fontWeight: .regular,
-            color: UIColor(rgb: Color.content)
-        )
-        articleContents.textContainer.maximumNumberOfLines = 5
-        articleContents.textContainer.lineBreakMode = .byTruncatingTail
-
+        articleContents.font = UIFont.pretendard(weight: .regular, size: 13)
+        articleContents.textColor = UIColor(rgb: Color.content)
+        articleContents.numberOfLines = 5
+        articleContents.lineBreakMode = .byTruncatingTail
         articleContents.backgroundColor = UIColor(rgb: Color.feedListCard)
-        articleContents.sizeToFit()
-        articleContents.isScrollEnabled = false
-        articleContents.isEditable = false
-        articleContents.isSelectable = false
-        articleContents.isUserInteractionEnabled = false
-        articleContents.textContainerInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+        articleContents.setTextWithLineHeight(text: "", lineHeight: .lineheightInBox)
 
         self.addSubview(articleContents)
         articleContents.translatesAutoresizingMaskIntoConstraints = false
