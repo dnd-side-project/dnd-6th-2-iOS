@@ -16,6 +16,7 @@ class RelayDetailViewController: UIViewController {
     var disposeBag = DisposeBag()
 
     var detailView = RelayDetailView()
+
     let viewModel = RelayDetailViewModel()
 
     lazy var enterButton = UIButton()
@@ -56,6 +57,7 @@ class RelayDetailViewController: UIViewController {
     }
 
     func setDetailView() {
+
         view.addSubview(detailView)
 
         detailView.snp.makeConstraints {

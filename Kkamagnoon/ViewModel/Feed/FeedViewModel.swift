@@ -17,24 +17,18 @@ class FeedViewModel: ViewModelType {
         let searchButtonTap = PublishSubject<Void>()
         let bellButtonTap = PublishSubject<Void>()
 
-        let tagCellTap = PublishSubject<Void>()
+        let tagCellTap = PublishSubject<String>()
         let subscribeCellTap = PublishSubject<Void>()
 
-        let sortButtonTap = PublishSubject<Void>()
-        // Temp
-        let feedCellTap = PublishSubject<IndexPath>()
+        let feedCellTap = PublishSubject<Article>()
         let moreButtonTap = PublishSubject<Void>()
 
     }
 
     struct Output {
-        let currentFeedStyle = BehaviorRelay<FeedStyle>(value: .whole)
         let goToSearch = PublishRelay<Void>()
         let goToBell = PublishRelay<Void>()
-        let currentSortStyle = BehaviorRelay<SortStyle>(value: .byLatest)
-        let goToDetailFeed = PublishRelay<IndexPath>()
-
-        let tagList = BehaviorRelay<[String]>(value: [])
+        let goToDetailFeed = PublishRelay<Article>()
 
         let wholeFeedList = PublishRelay<[FeedSection]>()
         let subscribeFeedList = BehaviorRelay<[String]>(value: [])
@@ -48,11 +42,17 @@ class FeedViewModel: ViewModelType {
     var disposeBag = DisposeBag()
     var sortStyle: SortStyle = .byPopularity
 
+    var checkSelectedTags = [String: Bool]()
+
     init(input: Input = Input(),
          output: Output = Output()) {
         self.input = input
         self.output = output
         self.feedService = FeedService()
+
+        StringType.categories.forEach({ tag in
+            checkSelectedTags.updateValue(false, forKey: tag)
+        })
 
         bind()
     }
@@ -66,13 +66,12 @@ extension FeedViewModel {
 
     func bindWholeFeedList() {
 
-        // TODO: 정렬 순서대로 요청
-        feedService.getWholeFeed(next_cursor: nil, orderBy: sortStyle.rawValue, tags: nil)
+        feedService.getWholeFeed(next_cursor: nil, orderBy: sortStyle.rawValue, tags: checkSelectedTags)
             .withUnretained(self)
-            .bind { owner, articleList in
+            .bind { owner, articleResponse in
 
                 owner.output.wholeFeedList.accept(
-                    [FeedSection(header: "", items: articleList)]
+                    [FeedSection(header: "", items: articleResponse.articles ?? [])]
                 )
             }
             .disposed(by: disposeBag)
@@ -80,23 +79,23 @@ extension FeedViewModel {
 
     func bindSubscribedFeedList() {
         // TODO: 구독 피드 요청
-//        subscribeService.getSubscribeFeed(cursor: <#T##String?#>)
+
     }
 
     func bind() {
-        input.wholeFeedButtonTap
-            .withUnretained(self)
-            .bind { owner, _ in
-                owner.output.currentFeedStyle.accept(.whole)
-            }
-            .disposed(by: disposeBag)
-
-        input.subscribedFeedButtonTap
-            .withUnretained(self)
-            .bind { owner, _ in
-                owner.output.currentFeedStyle.accept(.subscribed)
-            }
-            .disposed(by: disposeBag)
+//        input.wholeFeedButtonTap
+//            .withUnretained(self)
+//            .bind { owner, _ in
+//                owner.output.currentFeedStyle.accept(.whole)
+//            }
+//            .disposed(by: disposeBag)
+//
+//        input.subscribedFeedButtonTap
+//            .withUnretained(self)
+//            .bind { owner, _ in
+//                owner.output.currentFeedStyle.accept(.subscribed)
+//            }
+//            .disposed(by: disposeBag)
 
         input.searchButtonTap
             .withUnretained(self)
@@ -114,32 +113,19 @@ extension FeedViewModel {
 
         input.tagCellTap
             .withUnretained(self)
-            .bind { owner, _ in
-                // TODO: 태그별로 검색
-                var tags: [String] = owner.output.tagList.value
-//                tags.append(contentsOf: tagString)
+            .bind { owner, tagString in
 
-//                feedService.getWholeFeed(next_cursor: <#T##String?#>, orderBy: <#T##String#>, tags: [])
-            }
-            .disposed(by: disposeBag)
+                let nowValue = owner.checkSelectedTags[tagString, default: false]
+                owner.checkSelectedTags.updateValue(!nowValue, forKey: tagString)
+                owner.bindWholeFeedList()
 
-        input.sortButtonTap
-            .withUnretained(self)
-            .bind { owner, _ in
-                if owner.sortStyle == .byLatest {
-                    owner.output.currentSortStyle.accept(.byPopularity)
-                    owner.sortStyle = .byPopularity
-                } else {
-                    owner.output.currentSortStyle.accept(.byLatest)
-                    owner.sortStyle = .byLatest
-                }
             }
             .disposed(by: disposeBag)
 
         input.feedCellTap
-            .bind { [weak self] indexPath in
+            .bind { [weak self] article in
                 guard let self = self else {return}
-                self.output.goToDetailFeed.accept(indexPath)
+                self.output.goToDetailFeed.accept(article)
             }
             .disposed(by: disposeBag)
     }

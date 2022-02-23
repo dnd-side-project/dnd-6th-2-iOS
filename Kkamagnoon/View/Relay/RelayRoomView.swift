@@ -14,7 +14,7 @@ import RxDataSources
 
 class RelayRoomView: UIView {
 
-    var categoryFilterView = TagListView()
+    var categoryFilterView = TagListView(frame: .zero, tags: StringType.categories)
 
     var relayList = ArticleListView()
         .then {

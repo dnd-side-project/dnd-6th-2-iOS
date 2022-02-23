@@ -17,8 +17,15 @@ class CalendarDateCell: FSCalendarCell {
             $0.image = UIImage(named: "Frame")
         }
 
+    var selectorView = UIView()
+        .then {
+            $0.backgroundColor = .clear
+            $0.layer.cornerRadius = 8
+        }
+
     override init(frame: CGRect) {
         super.init(frame: frame)
+        self.layer.cornerRadius = 8
         setView()
     }
 
@@ -26,22 +33,43 @@ class CalendarDateCell: FSCalendarCell {
         fatalError("init(coder:) has not been implemented")
     }
 
+    override var isSelected: Bool {
+        didSet {
+            configureSelected()
+        }
+    }
+
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        configureSelected()
+    }
+
     func setView() {
 
-//        self.subviews.first?.backgroundColor = .orange
-        self.subviews.first?.snp.makeConstraints {
-            $0.height.equalTo(25)
-            $0.top.equalToSuperview().offset(8)
+        self.shapeLayer.frame = self.bounds
+
+        let dateView = self.subviews.first ?? UIView()
+
+        self.insertSubview(selectorView, at: 0)
+        selectorView.snp.makeConstraints {
+            $0.top.equalToSuperview()
+            $0.left.right.equalToSuperview()
+            $0.height.equalTo(self.frame.height)
+        }
+
+        dateView.snp.makeConstraints {
+            $0.height.equalTo(19)
+            $0.top.equalToSuperview().offset(6.0)
             $0.left.right.equalToSuperview()
         }
 
         eventIndicator.subviews.first?.alpha = 0.0
 
-//        eventIndicator.backgroundColor = .brown
         eventIndicator.snp.makeConstraints {
+            $0.width.equalToSuperview()
             $0.left.right.equalToSuperview()
-            $0.top.equalTo(self.subviews.first?.snp.bottom as! ConstraintRelatableTarget)
-            $0.height.equalTo(30)
+            $0.centerX.equalToSuperview()
+            $0.top.equalTo(dateView.snp.bottom as! ConstraintRelatableTarget).offset(3)
         }
 
         eventIndicator.addSubview(indicatorImageView)
@@ -49,9 +77,18 @@ class CalendarDateCell: FSCalendarCell {
         indicatorImageView.snp.makeConstraints {
             $0.centerX.equalToSuperview()
             $0.top.equalToSuperview()
+            $0.size.equalTo(25)
+        }
 
-            $0.height.equalTo(25)
-            $0.width.equalTo(25)
+    }
+
+    private func configureSelected() {
+
+        if isSelected {
+            self.selectorView.backgroundColor = UIColor(rgb: 0x515151)
+        } else {
+            self.selectorView.backgroundColor = .clear
         }
     }
+
 }

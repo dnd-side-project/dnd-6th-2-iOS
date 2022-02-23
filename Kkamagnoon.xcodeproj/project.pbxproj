@@ -113,6 +113,9 @@
 		0439AF4527B166B300E14E03 /* SubscribeFilterCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0439AF4427B166B300E14E03 /* SubscribeFilterCell.swift */; };
 		0439AF4727B171EB00E14E03 /* DetailContentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0439AF4627B171EB00E14E03 /* DetailContentViewController.swift */; };
 		0439AF4B27B1EBBF00E14E03 /* FeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0439AF4A27B1EBBF00E14E03 /* FeedViewController.swift */; };
+		045F528327C5CE1D0082673B /* MyWritingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 045F528227C5CE1D0082673B /* MyWritingCell.swift */; };
+		045F528527C62EB20082673B /* Frame.png in Resources */ = {isa = PBXBuildFile; fileRef = 045F528427C62EB20082673B /* Frame.png */; };
+		045F528727C656DF0082673B /* ChallengeResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 045F528627C656DF0082673B /* ChallengeResponseModel.swift */; };
 		0464F9C327A578AA0054FD83 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0464F9C227A578AA0054FD83 /* AppDelegate.swift */; };
 		0464F9C527A578AA0054FD83 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0464F9C427A578AA0054FD83 /* SceneDelegate.swift */; };
 		0464F9CA27A578AA0054FD83 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0464F9C827A578AA0054FD83 /* Main.storyboard */; };
@@ -274,6 +277,9 @@
 		0439AF4427B166B300E14E03 /* SubscribeFilterCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscribeFilterCell.swift; sourceTree = "<group>"; };
 		0439AF4627B171EB00E14E03 /* DetailContentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailContentViewController.swift; sourceTree = "<group>"; };
 		0439AF4A27B1EBBF00E14E03 /* FeedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedViewController.swift; sourceTree = "<group>"; };
+		045F528227C5CE1D0082673B /* MyWritingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyWritingCell.swift; sourceTree = "<group>"; };
+		045F528427C62EB20082673B /* Frame.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Frame.png; sourceTree = "<group>"; };
+		045F528627C656DF0082673B /* ChallengeResponseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallengeResponseModel.swift; sourceTree = "<group>"; };
 		0464F9BF27A578AA0054FD83 /* Kkamagnoon.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Kkamagnoon.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0464F9C227A578AA0054FD83 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0464F9C427A578AA0054FD83 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -508,6 +514,7 @@
 		043316E827C3484300FE0E34 /* Challenge */ = {
 			isa = PBXGroup;
 			children = (
+				045F528627C656DF0082673B /* ChallengeResponseModel.swift */,
 			);
 			path = Challenge;
 			sourceTree = "<group>";
@@ -546,6 +553,22 @@
 				040790B327B8F03D006C5374 /* FeedDetailView.swift */,
 			);
 			path = Feed;
+			sourceTree = "<group>";
+		};
+		045F528027C5CD410082673B /* MyWriting */ = {
+			isa = PBXGroup;
+			children = (
+				045F528127C5CD6A0082673B /* Cell */,
+			);
+			path = MyWriting;
+			sourceTree = "<group>";
+		};
+		045F528127C5CD6A0082673B /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				045F528227C5CE1D0082673B /* MyWritingCell.swift */,
+			);
+			path = Cell;
 			sourceTree = "<group>";
 		};
 		0464F9B627A578AA0054FD83 = {
@@ -824,6 +847,8 @@
 		04D0637427AEC0F6005EB16C /* View */ = {
 			isa = PBXGroup;
 			children = (
+				045F528427C62EB20082673B /* Frame.png */,
+				045F528027C5CD410082673B /* MyWriting */,
 				043316BC27C3308A00FE0E34 /* Challenge */,
 				04C95FD327B68C4400A0F840 /* Reusable */,
 				040790DE27B9696E006C5374 /* Relay */,
@@ -1013,6 +1038,7 @@
 				040790D127B90E73006C5374 /* Pretendard-Regular.otf in Resources */,
 				0464F9CA27A578AA0054FD83 /* Main.storyboard in Resources */,
 				040790D427B90E77006C5374 /* Pretendard-Thin.otf in Resources */,
+				045F528527C62EB20082673B /* Frame.png in Resources */,
 				040790CE27B90E70006C5374 /* Pretendard-Medium.otf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1224,6 +1250,7 @@
 				04C95FC627B55E9800A0F840 /* FeedRequestModel.swift in Sources */,
 				040D852F27C096390003C96A /* MultiLineTagListView.swift in Sources */,
 				043316F127C34FC200FE0E34 /* SubscribeListViewModel.swift in Sources */,
+				045F528327C5CE1D0082673B /* MyWritingCell.swift in Sources */,
 				0433170927C3BF0600FE0E34 /* NoticeViewModel.swift in Sources */,
 				043316BB27C3306900FE0E34 /* WritingViewController.swift in Sources */,
 				04A40D7127BFE19A004DAB19 /* ArticleListWithSortView.swift in Sources */,
@@ -1289,6 +1316,7 @@
 				04A40D6B27BFC021004DAB19 /* HeaderViewWithBackBtn.swift in Sources */,
 				04DAAE5527B29EB700AECFE4 /* SubscribeFeedView.swift in Sources */,
 				04C95FCD27B6730200A0F840 /* TopButtonView.swift in Sources */,
+				045F528727C656DF0082673B /* ChallengeResponseModel.swift in Sources */,
 				0439AF3327B0B0A000E14E03 /* ArticleListView.swift in Sources */,
 				043316F327C34FD600FE0E34 /* BottomSheetViewModel.swift in Sources */,
 				040790F327BA75B2006C5374 /* PopUpViewController.swift in Sources */,

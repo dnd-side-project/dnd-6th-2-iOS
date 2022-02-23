@@ -15,5 +15,5 @@ struct CreateArticleDTO {
 }
 
 struct ScrapDTO {
-
+    var category: String
 }

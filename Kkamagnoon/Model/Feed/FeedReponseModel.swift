@@ -15,7 +15,7 @@ struct ArticlesResponse: Decodable {
 struct Article: Decodable {
     var _id: String?
     var free: Bool?
-    var comments: [Comment]?
+    var comments: [String]?
     var scrapNum: Int?
     var commentNum: Int?
     var likeNum: Int?
@@ -53,24 +53,35 @@ struct User: Decodable {
     var state: Bool?
     var stampCount: Int?
     var challenge: Int?
-    // TEMP: String -> ?
     var subscribeUser: [String]?
     var articles: [String]?
-
-    // TEMP: String -> ?
-    var temporary: [String]?
+    var comments: [Comment]
+    var categories: [String]?
+    var followers: Int?
     var bio: String?
     var genre: [String]?
     var nickname: String?
     var password: String?
     var email: String?
-    var hashedRefreshToken: String?
+    var hashedToken: String?
+    var mailAuthCode: Int?
+}
+
+struct LikeResponse: Decodable {
+    var _id: String?
+    var user: User?
+    var article: Article?
+    var createdAt: String?
+    var updatedAt: String?
+}
+
+struct ScrapResponse: Decodable {
+    var _id: String?
+    var user: User?
+    var article: Article?
+    var category: Category?
+    var createdAt: String?
+    var updatedAt: String?
 }
 
 // TODO: CodingKeys
-//
-// extension Article: IdentifiableType, Equatable {
-//    var identity: String {
-//        return UUID().uuidString
-//    }
-// }

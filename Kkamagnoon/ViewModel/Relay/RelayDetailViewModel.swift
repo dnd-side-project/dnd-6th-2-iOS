@@ -13,6 +13,7 @@ class RelayDetailViewModel: ViewModelType {
     var disposeBag = DisposeBag()
     var isNew: Bool = false
     var didEntered: Bool = false
+    var relay: Relay?
 
     struct Input {
         let enterButtonTap = PublishSubject<Void>()

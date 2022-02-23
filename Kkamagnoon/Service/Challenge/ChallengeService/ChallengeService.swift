@@ -6,3 +6,31 @@
 //
 
 import Foundation
+
+class ChallengeService: Service {
+    func getChallenge() {
+
+    }
+
+    func getChallengeArticle() {
+
+    }
+
+    func postChallengeArticle(article: CreateArticleDTO) {
+
+    }
+
+    func postChallengeArticleTemp(article: CreateArticleDTO) {
+
+    }
+
+    // 개발용
+    func getChallengeKeyword() {
+
+    }
+
+    func postChallengeKeyword(content: String) {
+
+    }
+
+}

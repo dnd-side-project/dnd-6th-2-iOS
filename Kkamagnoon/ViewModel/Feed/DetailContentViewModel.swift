@@ -82,9 +82,13 @@ class DetailContentViewModel: ViewModelType {
                 guard let article = owner.article else {
                     return
                 }
-
-                owner.feedService.postLike(articleId: article._id ?? "", like: ScrapDTO())
-                    // .bind to output
+                // TODO: 좋아요 API 날리기
+//                owner.feedService.postLike(articleId: article._id ?? "", like: ScrapDTO(category: "string"))
+//                    .withUnretained(self)
+//                    .bind { owner, like in
+//
+//
+//                    }
             }
             .disposed(by: disposeBag)
 
@@ -102,7 +106,7 @@ class DetailContentViewModel: ViewModelType {
                     return
                 }
 
-                owner.feedService.postScrap(articleId: article._id ?? "", scrap: ScrapDTO())
+//                owner.feedService.postScrap(articleId: article._id ?? "", scrap: ScrapDTO(category: "string"))
             }
         // map
             .disposed(by: disposeBag)

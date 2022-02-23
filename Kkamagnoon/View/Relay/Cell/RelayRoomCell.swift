@@ -31,6 +31,7 @@ class RelayRoomCell: UICollectionViewCell {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
+        self.layer.cornerRadius = 15
         self.backgroundColor = UIColor(rgb: Color.feedListCard)
         setView()
     }

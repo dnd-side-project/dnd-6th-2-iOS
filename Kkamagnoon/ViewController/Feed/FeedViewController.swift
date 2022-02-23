@@ -21,6 +21,7 @@ class FeedViewController: UIViewController {
     let topButtonView = TopButtonView(frame: .zero, first: StringType.wholeFeed, second: StringType.subscribeFeed)
 
     let wholeFeedView = WholeFeedView()
+
     let subscribeFeedView = SubscribeFeedView()
 
     lazy var dataSource = RxCollectionViewSectionedReloadDataSource<FeedSection>(configureCell: { _, collectionView, indexPath, element in
@@ -34,8 +35,8 @@ class FeedViewController: UIViewController {
             text: element.content,
             lineHeight: .lineheightInBox
         )
-//        cell.likeView.labelView.text = String(element.likeNum)
-//        cell.commentView.labelView.text = String(element.commentNum)
+        cell.likeView.labelView.text = "\(element.likeNum ?? 0)"
+        cell.commentView.labelView.text = "\(element.commentNum ?? 0)"
 
         return cell
     },
@@ -50,6 +51,8 @@ class FeedViewController: UIViewController {
                 headerView.sortButton.setTitle("최신순", for: .normal)
                 self.viewModel.sortStyle = .byLatest
             }
+
+            viewModel.bindWholeFeedList()
         }
 
         return headerView
@@ -122,8 +125,18 @@ extension FeedViewController {
             .disposed(by: disposeBag)
 
         // whole feed
+        wholeFeedView.filterView.filterView.rx
+            .modelSelected(String.self)
+            .bind(to: viewModel.input.tagCellTap)
+            .disposed(by: disposeBag)
+
+        wholeFeedView.filterView.filterView.rx
+            .modelDeselected(String.self)
+            .bind(to: viewModel.input.tagCellTap)
+            .disposed(by: disposeBag)
+
         wholeFeedView.articleListView.collectionView.rx
-            .itemSelected
+            .modelSelected(Article.self)
             .bind(to: viewModel.input.feedCellTap)
             .disposed(by: disposeBag)
 
@@ -131,7 +144,7 @@ extension FeedViewController {
         subscribeFeedView.articleListView.collectionView.rx
             .modelSelected(String.self)
             .bind { _ in
-                self.goToDetailContentVC()
+//                self.goToDetailContentVC()
             }
             .disposed(by: disposeBag)
 
@@ -146,13 +159,13 @@ extension FeedViewController {
 
     func bindOutput() {
 
-        viewModel.output.currentFeedStyle
-            .asDriver()
-            .drive { [weak self] feedStyle in
-                guard let self = self else {return}
-                self.changeFeedStyle(style: feedStyle)
-            }
-            .disposed(by: disposeBag)
+//        viewModel.output.currentFeedStyle
+//            .asDriver()
+//            .drive { [weak self] feedStyle in
+//                guard let self = self else {return}
+//                self.changeFeedStyle(style: feedStyle)
+//            }
+//            .disposed(by: disposeBag)
 
         viewModel.output.goToSearch
             .observe(on: MainScheduler.instance)
@@ -170,8 +183,8 @@ extension FeedViewController {
 
         viewModel.output.goToDetailFeed
             .observe(on: MainScheduler.instance)
-            .bind { _ in
-                self.goToDetailContentVC()
+            .bind { article in
+                self.goToDetailContentVC(article: article)
             }
             .disposed(by: disposeBag)
 
@@ -213,13 +226,14 @@ extension FeedViewController {
         self.navigationController?.pushViewController(vc, animated: true)
     }
 
-    private func goToDetailContentVC() {
+    private func goToDetailContentVC(article: Article) {
 
         let vc = DetailContentViewController()
         vc.modalPresentationStyle = .fullScreen
         vc.hidesBottomBarWhenPushed = true
         // TODO
         // vc.feedInfo = indexPath.row 의 feedInfo
+        vc.viewModel.article = article
         self.navigationController?.pushViewController(vc, animated: true)
     }
 

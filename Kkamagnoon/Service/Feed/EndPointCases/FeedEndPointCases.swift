@@ -8,7 +8,7 @@ import Foundation
 
 enum FeedEndpointCases: EndPoint {
 
-    case getWholeFeed(cursor: String?, orderBy: String, tags: [String]?)
+    case getWholeFeed(cursor: String?, orderBy: String, tags: [String: Bool]?)
     case getArticle(articleId: String)
     case deleteArticle(articleId: String)
     case patchArticle(articleId: String, articleInfo: CreateArticleDTO)
@@ -57,7 +57,13 @@ extension FeedEndpointCases {
             }
 
             if let tags = tags {
-                finalUrl.append("&tags=\(tags)")
+                tags.forEach({ tag in
+
+                    if tag.value {
+                        finalUrl.append("&tags=\(tag.key)")
+                    }
+
+                })
             }
 
             return finalUrl

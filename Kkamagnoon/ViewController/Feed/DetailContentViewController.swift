@@ -41,10 +41,7 @@ class DetailContentViewController: UIViewController {
             $0.setContentHuggingPriority(.required, for: .vertical)
         }
 
-    var detailView = FeedDetailView()
-        .then {
-            $0.sizeToFit()
-        }
+    var detailView: FeedDetailView!
 
     var disposeBag = DisposeBag()
 
@@ -68,7 +65,21 @@ extension DetailContentViewController {
         stackView.addArrangedSubview(scrollView)
         stackView.addArrangedSubview(bottomView)
 
+        detailView = FeedDetailView(frame: .zero, tags: viewModel.article?.tags ?? [])
+
         scrollView.addSubview(detailView)
+
+        guard let article = viewModel.article else { return }
+
+        detailView.titleLabel.text = article.title
+        detailView.profileView.nickNameLabel.text = article.user?.nickname
+        detailView.contentTextView.text = article.content
+
+        // TODO: Created Date
+
+        bottomView.likeButton.setTitle("\(article.likeNum ?? 0)", for: .normal)
+        bottomView.commentButton.setTitle("\(article.commentNum ?? 0)", for: .normal)
+        bottomView.bookmarkButton.setTitle("\(article.scrapNum ?? 0)", for: .normal)
     }
 
     func layoutView() {

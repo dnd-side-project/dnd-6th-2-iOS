@@ -9,7 +9,7 @@ import Foundation
 
 enum RelayEndPointCases: EndPoint {
 
-    case getRelayRoomList(cursor: String?, orderBy: String, tags: [String]?)
+    case getRelayRoomList(cursor: String?, orderBy: String, tags: [String: Bool]?)
     case postRelayRoom(relay: CreateRelayDTO)
     case getRelayRoomParticitated(cursor: String?)
     case patchRelayRoom(relayId: String, updateRelay: UpdateRelayDTO)
@@ -56,7 +56,12 @@ extension RelayEndPointCases {
             }
 
             if let tags = tags {
-                finalUrl.append(contentsOf: "&tags=\(tags)")
+                tags.forEach({ tag in
+                    if tag.value {
+                        finalUrl.append("&tags=\(tag.key)")
+                    }
+
+                })
             }
 
             return finalUrl

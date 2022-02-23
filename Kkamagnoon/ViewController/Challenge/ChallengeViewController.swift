@@ -149,7 +149,8 @@ class ChallengeViewController: UIViewController {
             isMonth = true
             challengeMainView.calendarView.setScope(.month, animated: true)
             UIView.animate(withDuration: 10.0, delay: 0) {
-                self.challengeMainView.calendarHeight.constant = UIScreen.main.bounds.width + 20
+                self.challengeMainView.calendarHeight.constant = 400
+
                 self.challengeMainView.buttonHeight.constant = -6.0
             }
 
@@ -183,6 +184,11 @@ extension ChallengeViewController: FSCalendarDataSource {
 
     }
 
+//    func calendar(_ calendar: FSCalendar, imageFor date: Date) -> UIImage? {
+//
+//        return UIImage(named: "Frame")
+//    }
+
 }
 
 extension ChallengeViewController: FSCalendarDelegate {
@@ -214,4 +220,9 @@ extension ChallengeViewController: FSCalendarDelegateAppearance {
 
         return cell
     }
+
+    func calendar(_ calendar: FSCalendar, appearance: FSCalendarAppearance, fillSelectionColorFor date: Date) -> UIColor? {
+        return .clear
+    }
+
 }

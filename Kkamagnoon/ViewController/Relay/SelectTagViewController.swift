@@ -78,7 +78,7 @@ class SelectTagViewController: UIViewController {
             $0.bottom.equalTo(completeButton.snp.top).offset(-20.0)
         }
 
-        Observable.just([SectionModel(model: "title", items: viewModel.tagList)])
+        Observable.just([SectionModel(model: "title", items: StringType.categories)])
             .bind(to: selectTagView.collectionView.rx.items(dataSource: dataSource))
             .disposed(by: disposeBag)
     }

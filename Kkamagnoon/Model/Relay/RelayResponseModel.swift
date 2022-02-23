@@ -7,6 +7,11 @@
 
 import Foundation
 
+struct RelayResponse: Decodable {
+    var relays: [Relay]?
+    var next_cursor: String?
+}
+
 struct Relay: Decodable {
     var _id: String?
     var createdAt: String?
@@ -14,54 +19,15 @@ struct Relay: Decodable {
     var likeCount: Int?
     var membersCount: Int?
     var headCount: Int?
-    var host: Host?
+    var host: User?
     var tags: [String]?
     var title: String?
-    var notice: Notice
-    var members: Members?
-}
-
-struct Host: Decodable {
-//    var hashedToken: ??
-    var _id: String?
-    var state: Bool?
-    var stampCount: Int?
-    var challenge: Int?
-//    var subscribeUser: []
-    var articles: [String]?
-//    var temporary: []
-    var bio: String?
-    var genre: [String]?
-    var nickname: String?
-    var password: String?
-    var email: String?
-    var followers: Int?
-    var hashedRefreshToken: String?
-    var categories: [String]?
-    var articleCount: Int?
+    var notice: Notice?
+    // -> []
+    var members: User?
 }
 
 struct Notice: Decodable {
     var _id: String?
     var notice: String?
-}
-
-struct Members: Decodable {
-//    var hashedToken: ?
-    var _id: String?
-    var state: Bool?
-    var stampCount: Int?
-    var challenge: Int?
-//    var subscribeUser:
-    var articles: [String]?
-//    var temporary: []
-    var bio: String?
-    var genre: [String]?
-    var nickname: String?
-    var password: String?
-    var email: String?
-    var followers: Int?
-    var hashedRefreshToken: String?
-    var categories: [String]?
-    var articleCount: Int?
 }

@@ -13,7 +13,7 @@ import Then
 
 class WholeFeedView: UIView {
 
-    var filterView = TagListView()
+    var filterView = TagListView(frame: .zero, tags: StringType.categories)
 
     lazy var articleListView = ArticleListView()
         .then {

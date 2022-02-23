@@ -70,8 +70,9 @@ class ChallengeMainView: UIView {
             $0.rowHeight = 30
 
             // scroll
-//            $0.handleScopeGesture().isEnabled = true
+//            $0.handleScopeGesture().isEnabled/ = true
 //            $0.scrollEnabled = false
+//            $0.adjustsBoundingRectWhenChangingMonths = true
             $0.collectionView.register(CalendarDateCell.self, forCellWithReuseIdentifier: CalendarDateCell.identifier)
             // selection
             $0.today = nil
@@ -112,7 +113,7 @@ class ChallengeMainView: UIView {
             $0.right.equalToSuperview().offset(-20.0)
 
         }
-        calendarHeight = calendarView.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.width)
+        calendarHeight = calendarView.heightAnchor.constraint(equalToConstant: 370)
         calendarHeight.isActive = true
 
         self.addSubview(expansionButton)

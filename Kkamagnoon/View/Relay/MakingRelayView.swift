@@ -81,7 +81,7 @@ class MakingRelayView: UIView {
             $0.titleLabel?.font = UIFont.pretendard(weight: .medium, size: 14)
         }
 
-    var tagListView = TagListView()
+    var tagListView = TagListView(frame: .zero, tags: StringType.categories)
         .then {
             $0.setContentHuggingPriority(.required, for: .vertical)
         }
