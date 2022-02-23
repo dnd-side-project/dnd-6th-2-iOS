@@ -29,7 +29,7 @@ class ChallengeViewController: UIViewController {
 
     var challengeMainView = ChallengeMainView()
 
-    var addWritingButton = UIButton()
+    var addWritingButton = MakingRoomButton()
         .then {
             $0.backgroundColor = UIColor(rgb: Color.whitePurple)
         }

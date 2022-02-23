@@ -39,10 +39,32 @@ class RelayTitleCell: UICollectionViewCell {
             $0.font = UIFont.pretendard(weight: .regular, size: 14)
         }
 
+    let circleViewWidth = (UIScreen.main.bounds.width - 40) * (154/350)
+
+    var circleView1 = UIView()
+        .then {
+            $0.backgroundColor = UIColor(rgb: 0x2B2B2B)
+        }
+
+    var circleView2 = UIView()
+        .then {
+            $0.backgroundColor = UIColor(rgb: 0x2B2B2B)
+        }
+
+    var circleView3 = UIView()
+        .then {
+            $0.backgroundColor = UIColor(rgb: 0x2B2B2B)
+        }
+
+    var circleView4 = UIView()
+        .then {
+            $0.backgroundColor = UIColor(rgb: 0x2B2B2B)
+        }
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.backgroundColor = UIColor(rgb: Color.feedListCard)
-
+        self.layer.masksToBounds = true
         setView()
     }
 
@@ -50,6 +72,27 @@ class RelayTitleCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 
+    override func layoutSubviews() {
+        circleView1.layer.cornerRadius = circleViewWidth/2
+        circleView2.layer.cornerRadius = circleViewWidth/2
+        circleView3.layer.cornerRadius = circleViewWidth/2
+        circleView4.layer.cornerRadius = circleViewWidth/2
+    }
+
+    override func preferredLayoutAttributesFitting(_ layoutAttributes: UICollectionViewLayoutAttributes)
+    -> UICollectionViewLayoutAttributes {
+        super.preferredLayoutAttributesFitting(layoutAttributes)
+
+        let size = self.systemLayoutSizeFitting(layoutAttributes.size)
+        var frame = layoutAttributes.frame
+        frame.size.height = ceil(size.height)
+        layoutAttributes.frame = frame
+
+        return layoutAttributes
+    }
+}
+
+extension RelayTitleCell {
     func setView() {
         self.addSubview(titleLabel)
         titleLabel.snp.makeConstraints {
@@ -69,20 +112,45 @@ class RelayTitleCell: UICollectionViewCell {
             $0.left.equalTo(titleLabel)
             $0.right.equalToSuperview().offset(-29.0)
             $0.top.equalTo(totalCountLabel.snp.bottom).offset(15.0)
-            // TEMP
-            $0.bottom.equalToSuperview().offset(-30.0)
+
         }
-    }
 
-    override func preferredLayoutAttributesFitting(_ layoutAttributes: UICollectionViewLayoutAttributes)
-    -> UICollectionViewLayoutAttributes {
-        super.preferredLayoutAttributesFitting(layoutAttributes)
+        self.addSubview(circleView1)
+        circleView1.snp.makeConstraints {
+            $0.size.equalTo(circleViewWidth)
+            $0.bottom.equalToSuperview().offset(-36.0)
+            $0.centerX.equalToSuperview().offset(-211)
 
-        let size = self.systemLayoutSizeFitting(layoutAttributes.size)
-        var frame = layoutAttributes.frame
-        frame.size.height = ceil(size.height)
-        layoutAttributes.frame = frame
+            // TEMP
+            $0.top.equalTo(contributedListLabel.snp.bottom).offset(92.0)
+        }
 
-        return layoutAttributes
+        self.addSubview(circleView2)
+        circleView2.snp.makeConstraints {
+            $0.size.equalTo(circleViewWidth)
+            $0.bottom.equalToSuperview().offset(-36.0)
+            $0.centerX.equalToSuperview().offset(-114)
+
+            $0.centerY.equalTo(circleView1)
+        }
+
+        self.addSubview(circleView3)
+        circleView3.snp.makeConstraints {
+            $0.size.equalTo(circleViewWidth)
+            $0.bottom.equalToSuperview().offset(-36.0)
+            $0.centerX.equalToSuperview().offset(-15)
+
+            $0.centerY.equalTo(circleView1)
+        }
+
+        self.addSubview(circleView4)
+        circleView4.snp.makeConstraints {
+            $0.size.equalTo(circleViewWidth)
+            $0.bottom.equalToSuperview().offset(-36.0)
+            $0.centerX.equalToSuperview().offset(165)
+
+            $0.centerY.equalTo(circleView1)
+        }
+
     }
 }

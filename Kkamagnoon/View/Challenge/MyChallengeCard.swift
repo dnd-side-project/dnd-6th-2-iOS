@@ -46,14 +46,14 @@ class MyChallengeCard: UIView {
     func setView() {
         self.addSubview(titleLabel)
         titleLabel.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(28.0)
+            $0.top.equalToSuperview().offset(24.0)
             $0.left.equalToSuperview().offset(20.0)
 
         }
 
         self.addSubview(grayLine)
         grayLine.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(50.0)
+            $0.top.equalTo(titleLabel.snp.bottom).offset(12.0)
             $0.left.equalToSuperview().offset(20.0)
             $0.right.equalToSuperview().offset(-20.0)
         }
