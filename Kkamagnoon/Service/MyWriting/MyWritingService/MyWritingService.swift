@@ -17,14 +17,14 @@ class MyWritingService: Service {
         return RxAlamofire.request(request as URLRequestConvertible)
             .responseData()
             .asObservable()
-            .map { http, resData -> ArticlesResponse  in
-                print(http)
+            .map { _, resData -> ArticlesResponse  in
+//                print(http)
 
                 let decoder = JSONDecoder()
 
                 do {
                     let result = try decoder.decode(ArticlesResponse.self, from: resData)
-                    print("RES>>>>>\(result)")
+//                    print("RES>>>>>\(result)")
                     return result
                 } catch {
                     print(error)

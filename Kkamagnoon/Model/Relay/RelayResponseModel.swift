@@ -19,15 +19,44 @@ struct Relay: Decodable {
     var likeCount: Int?
     var membersCount: Int?
     var headCount: Int?
-    var host: User?
+    var host: Host?
     var tags: [String]?
     var title: String?
     var notice: Notice?
-    // -> []
-    var members: User?
+
 }
 
 struct Notice: Decodable {
     var _id: String?
     var notice: String?
+}
+
+struct MessageResDTO: Decodable {
+    var message: String?
+}
+
+struct AddNoticeDTO: Decodable {
+    var notice: String?
+}
+
+struct RelayArticleDTO: Decodable {
+    var content: String?
+    var categoryId: String?
+}
+
+struct Host: Decodable {
+    var _id: String?
+    var hashedToken: String?
+    var followers: Int?
+    var articleCount: Int?
+    var categories: [String]?
+    var state: Bool?
+    var stampCount: Int?
+    var subscribeUser: [String]?
+    var comments: [Comment]?
+    var bio: String?
+    var genre: [String]?
+    var nickname: String?
+    var password: String?
+    var email: String?
 }

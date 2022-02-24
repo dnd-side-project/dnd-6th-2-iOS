@@ -10,14 +10,40 @@ import Then
 import SnapKit
 import RxSwift
 import RxCocoa
+import RxDataSources
 
 class RelayDetailViewController: UIViewController {
 
     var disposeBag = DisposeBag()
 
-    var detailView = RelayDetailView()
-
     let viewModel = RelayDetailViewModel()
+
+    var detailView = RelayDetailView()
+        .then {
+            $0.relayWritingList.collectionView.register(
+                RelayContentCell.self,
+                forCellWithReuseIdentifier: RelayContentCell.relayContentCellIdentifier
+            )
+            $0.relayWritingList.collectionView.register(
+                RelayTitleCell.self,
+                forCellWithReuseIdentifier: RelayTitleCell.relayTitleCellIdentifier
+            )
+        }
+
+    let dataSource = RxCollectionViewSectionedReloadDataSource<SectionModel<String, String>> { _, collectionView, indexPath, _ in
+
+        let index = indexPath.row
+
+        if index == 0 {
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: RelayTitleCell.relayTitleCellIdentifier, for: indexPath) as! RelayTitleCell
+
+            return cell
+        } else {
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: RelayContentCell.relayContentCellIdentifier, for: indexPath) as! RelayContentCell
+
+            return cell
+        }
+    }
 
     lazy var enterButton = UIButton()
         .then {

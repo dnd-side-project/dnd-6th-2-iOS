@@ -62,7 +62,7 @@ class RelayRoomCell: UICollectionViewCell {
             $0.bottom.equalToSuperview().offset(-16.42)
 
         }
-        tagListView.setTags()
+//        tagListView.setTags()
 
     }
 

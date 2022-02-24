@@ -101,6 +101,11 @@ class MakingRelayRoomViewController: UIViewController {
 
     func bindView() {
         // Input
+        makingRelayView.backButton
+            .rx.tap
+            .bind(to: viewModel.input.backButtonTap)
+            .disposed(by: disposeBag)
+
         makingRelayView.addingTagView.collectionView
             .rx.modelSelected(String.self)
             .bind(to: viewModel.input.addingTagButtonTap)
@@ -153,8 +158,8 @@ class MakingRelayRoomViewController: UIViewController {
 
         viewModel.output.goToNewRelay
             .withUnretained(self)
-            .bind { owner, _ in
-                owner.goToNewRelay()
+            .bind { owner, relay in
+                owner.goToNewRelay(relay: relay)
             }
             .disposed(by: disposeBag)
 
@@ -191,11 +196,13 @@ class MakingRelayRoomViewController: UIViewController {
         }
     }
 
-    private func goToNewRelay() {
+    private func goToNewRelay(relay: Relay) {
         let vc = RelayDetailViewController()
         vc.modalPresentationStyle = .fullScreen
         vc.hidesBottomBarWhenPushed = true
         vc.viewModel.isNew = true
+
+        vc.viewModel.output.relayInfo.accept(relay)
 
         self.navigationController?.popViewController(animated: true) {
             self.viewModel.rootView?.navigationController?.pushViewController(vc, animated: true)

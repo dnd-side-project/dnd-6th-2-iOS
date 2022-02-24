@@ -26,7 +26,7 @@ struct Article: Decodable {
     var tags: [String]?
     var content: String?
     var title: String?
-    var user: User?
+    var user: Host?
     var createdAt: String?
     var updatedAt: String?
 }
@@ -52,6 +52,7 @@ struct User: Decodable {
     var _id: String?
     var state: Bool?
     var stampCount: Int?
+//    var articleCount: Int?
     var challenge: Int?
     var subscribeUser: [String]?
     var articles: [String]?

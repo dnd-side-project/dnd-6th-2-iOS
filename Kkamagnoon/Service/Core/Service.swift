@@ -16,6 +16,11 @@ class Service {
         endpoint.headers?.forEach({ header in
             request.setValue(header.value as? String, forHTTPHeaderField: header.key)
         })
+        if let body = try endpoint.body {
+            if !body.isEmpty {
+                request.httpBody = try? JSONSerialization.data(withJSONObject: body)
+            }
+        }
 
         return request
     }

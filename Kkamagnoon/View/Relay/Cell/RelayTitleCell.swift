@@ -64,6 +64,7 @@ class RelayTitleCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.backgroundColor = UIColor(rgb: Color.feedListCard)
+        self.layer.cornerRadius = 15.0
         self.layer.masksToBounds = true
         setView()
     }

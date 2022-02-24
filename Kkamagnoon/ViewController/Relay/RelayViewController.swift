@@ -29,7 +29,7 @@ class RelayViewController: UIViewController {
 
     var relayRoomView = RelayRoomView()
 
-    lazy var participatedRoomView = ParticipatedRoomView()
+    var participatedRoomView = ParticipatedRoomView()
 
     var makingRoomButton = MakingRoomButton()
         .then {
@@ -43,7 +43,17 @@ class RelayViewController: UIViewController {
         cell.profileView.nickNameLabel.text = element.title
         cell.contentLabel.text = element.notice?.notice
         cell.tagListView.tagList = element.tags ?? []
-        cell.tagListView.setTags()
+
+        if indexPath.row == 0 {
+            cell.backgroundColor = UIColor(rgb: Color.whitePurple)
+            cell.tagListView.setTags(tagViewColor: 0xFABDFF, tagTextColor: 0x5C1A62)
+
+        } else if indexPath.row == 1 {
+            cell.backgroundColor = UIColor(rgb: Color.cardBlue)
+            cell.tagListView.setTags(tagViewColor: 0xB7CBFF, tagTextColor: 0x1E2F59)
+        } else {
+            cell.tagListView.setTags(tagViewColor: 0x4B4B4B, tagTextColor: 0xFFFFFF)
+        }
 
         return cell
     },
@@ -58,8 +68,7 @@ class RelayViewController: UIViewController {
                 headerView.sortButton.setTitle("최신순", for: .normal)
                 self.viewModel.sortStyle = .byLatest
             }
-            viewModel.bindRelayList()
-            viewModel.bindParticipatedRoomList()
+
         }
 
         return headerView
@@ -72,14 +81,8 @@ class RelayViewController: UIViewController {
         cell.profileView.nickNameLabel.text = element.title
         cell.contentLabel.text = element.notice?.notice
         cell.tagListView.tagList = element.tags ?? []
-        cell.tagListView.setTags()
 
-        if indexPath.row == 0 {
-            cell.backgroundColor = UIColor(rgb: Color.whitePurple)
-        } else if indexPath.row == 1 {
-            cell.backgroundColor = UIColor(rgb: Color.cardBlue)
-        }
-
+        cell.tagListView.setTags(tagViewColor: 0x4B4B4B, tagTextColor: 0xFFFFFF)
         return cell
     })
 
@@ -88,9 +91,11 @@ class RelayViewController: UIViewController {
         navigationController?.setNavigationBarHidden(true, animated: false)
         navigationController?.interactivePopGestureRecognizer?.delegate = nil
         roomView = relayRoomView
-        viewModel.bindRelayList()
+
         setView()
         bindView()
+        viewModel.bindRelayList()
+        viewModel.bindMyRoomList()
 
     }
 
@@ -157,6 +162,11 @@ class RelayViewController: UIViewController {
             .bind(to: viewModel.input.relayRoomCellTap)
             .disposed(by: disposeBag)
 
+        participatedRoomView.relayList.collectionView.rx
+            .modelSelected(Relay.self)
+            .bind(to: viewModel.input.relayRoomCellTap)
+            .disposed(by: disposeBag)
+
         makingRoomButton.rx.tap
             .bind(to: viewModel.input.makingRoomButtonTap)
             .disposed(by: disposeBag)
@@ -214,7 +224,7 @@ class RelayViewController: UIViewController {
         let vc = RelayDetailViewController()
         vc.modalPresentationStyle = .fullScreen
         vc.hidesBottomBarWhenPushed = true
-        vc.viewModel.relay = relay
+//        vc.viewModel.elay = relay
 
         self.navigationController?.pushViewController(vc, animated: true)
     }

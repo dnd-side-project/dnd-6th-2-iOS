@@ -92,6 +92,9 @@ class MakingRelayView: UIView {
     ]
 
     var settingPersonnelView = SettingPersonnelView()
+        .then {
+            $0.setContentHuggingPriority(.required, for: .vertical)
+        }
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -105,7 +108,9 @@ class MakingRelayView: UIView {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+}
 
+extension MakingRelayView {
     func setBackButton() {
 
         self.addSubview(backButton)
@@ -115,13 +120,6 @@ class MakingRelayView: UIView {
             $0.top.equalToSuperview().offset(26.24)
             $0.size.equalTo(26.0)
         }
-
-        backButton.rx.tap
-            .bind { _ in
-                self.viewController?.navigationController?.popViewController(animated: true)
-
-            }
-            .disposed(by: disposeBag)
     }
 
     func setTitleLabel() {
@@ -183,21 +181,9 @@ class MakingRelayView: UIView {
             $0.height.equalTo(182.0)
         }
 
-        // DUMMY
         settingPersonnelView.snp.makeConstraints {
             $0.height.equalTo(37.0)
         }
 
-        // DUMMY
-//        tempButton.rx.tap
-//            .bind {
-//                let vc = SelectTagViewController()
-//                vc.modalPresentationStyle = .fullScreen
-//                vc.hidesBottomBarWhenPushed = true
-//
-//                self.viewController?.navigationController?.pushViewController(vc, animated: true)
-//            }
-//            .disposed(by: disposeBag)
     }
-
 }

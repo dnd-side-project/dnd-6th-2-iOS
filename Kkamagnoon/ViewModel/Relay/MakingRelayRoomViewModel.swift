@@ -17,6 +17,8 @@ class MakingRelayRoomModel: ViewModelType {
 
     struct Input {
 
+        let backButtonTap = PublishSubject<Void>()
+
         let addingTagButtonTap = PublishSubject<String>()
         let originalTagList = PublishSubject<[String]>()
 
@@ -31,12 +33,13 @@ class MakingRelayRoomModel: ViewModelType {
     }
 
     struct Output {
+        let goBack = PublishRelay<Void>()
         let tagList = PublishRelay<[SectionModel<String, String>]>()
 
         let goToSelectTag = PublishRelay<Void>()
 
         let enableStartButton = PublishRelay<Bool>()
-        let goToNewRelay = PublishRelay<Void>()
+        let goToNewRelay = PublishRelay<Relay>()
 
         let personnelCount = BehaviorRelay<Int>(value: 0)
     }
@@ -44,14 +47,34 @@ class MakingRelayRoomModel: ViewModelType {
     var input: Input
     var output: Output
 
+    let relayService = RelayService()
+
+    var relayDTO = CreateRelayDTO(
+        title: "",
+        tags: [],
+        notice: "",
+        headCount: 0
+    )
+
     init(input: Input = Input(),
          output: Output = Output()) {
         self.input = input
         self.output = output
+        bindBackButton()
         bindAddingTag()
         bindOriginalTagList()
         bindStartButtonEnable()
         bindStartButtonTap()
+        bindPersonnel()
+    }
+
+    func bindBackButton() {
+        input.backButtonTap
+            .withUnretained(self)
+            .bind { owner, _ in
+                owner.output.goBack.accept(())
+            }
+            .disposed(by: disposeBag)
     }
 
     func bindTagList() {
@@ -64,6 +87,7 @@ class MakingRelayRoomModel: ViewModelType {
         input.originalTagList
             .withUnretained(self)
             .bind { owner, tagArray in
+                owner.relayDTO.tags = tagArray
                 var newArray = tagArray
                 newArray.append(StringType.addTagString)
                 owner.output.tagList.accept(
@@ -75,11 +99,13 @@ class MakingRelayRoomModel: ViewModelType {
 
     func bindStartButtonEnable() {
         Observable.combineLatest(input.title, input.notice)
-            .map { title, notice in
+            .map {[weak self] title, notice in
                 if title == StringType.titlePlaceeholder ||
                     notice == StringType.noticePlaceholder {
                     return false
                 }
+                self?.relayDTO.title = title
+                self?.relayDTO.notice = notice
                 return true
             }
             .bind(to: output.enableStartButton)
@@ -88,10 +114,15 @@ class MakingRelayRoomModel: ViewModelType {
     }
 
     func bindStartButtonTap() {
+
         input.startButtonTap
             .withUnretained(self)
             .bind { owner, _ in
-                owner.output.goToNewRelay.accept(())
+                owner.relayService.postRelayRoom(relay: owner.relayDTO)
+                    .bind { relay in
+                        owner.output.goToNewRelay.accept(relay)
+                    }
+                    .disposed(by: owner.disposeBag)
             }
             .disposed(by: disposeBag)
     }
@@ -100,9 +131,10 @@ class MakingRelayRoomModel: ViewModelType {
         input.minusButtonTap
             .withUnretained(self)
             .bind { owner, _ in
-                print(">>> TAP")
                 if owner.output.personnelCount.value > 0 {
-                    owner.output.personnelCount.accept(owner.output.personnelCount.value-1)
+                    let personnel = owner.output.personnelCount.value-1
+                    owner.output.personnelCount.accept(personnel)
+                    owner.relayDTO.headCount = personnel
                 }
             }
             .disposed(by: disposeBag)
@@ -111,7 +143,9 @@ class MakingRelayRoomModel: ViewModelType {
             .withUnretained(self)
             .bind { owner, _ in
                 if owner.output.personnelCount.value < 10 {
-                    owner.output.personnelCount.accept(owner.output.personnelCount.value+1)
+                    let personnel = owner.output.personnelCount.value+1
+                    owner.output.personnelCount.accept(personnel)
+                    owner.relayDTO.headCount = personnel
                 }
             }
             .disposed(by: disposeBag)

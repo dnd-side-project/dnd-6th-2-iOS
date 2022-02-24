@@ -17,14 +17,14 @@ class ChallengeService: Service {
         return RxAlamofire.request(request as URLRequestConvertible)
             .responseData()
             .asObservable()
-            .map { http, resData -> GetChallengeMain  in
-                print(http)
+            .map { _, resData -> GetChallengeMain  in
+//                print(http)
 
                 let decoder = JSONDecoder()
 
                 do {
                     let result = try decoder.decode(GetChallengeMain.self, from: resData)
-                    print("RES>>>>>\(result)")
+//                    print("RES>>>>>\(result)")
                     return result
                 } catch {
                     print(error)

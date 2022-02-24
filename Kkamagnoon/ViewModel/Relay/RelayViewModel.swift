@@ -51,6 +51,8 @@ class RelayViewModel: ViewModelType {
             checkSelectedTags.updateValue(false, forKey: tag)
         })
 
+//        bindRelayList()
+//        bindMyRoomList()
         bind()
     }
 
@@ -61,6 +63,7 @@ class RelayViewModel: ViewModelType {
 
 extension RelayViewModel {
     func bindRelayList() {
+
         relayService.getRelayRoomList(cursor: nil, orderBy: sortStyle.rawValue, tags: checkSelectedTags)
             .withUnretained(self)
             .bind { owner, relayResponse in
@@ -74,6 +77,18 @@ extension RelayViewModel {
 
     func bindParticipatedRoomList() {
         relayService.getRelayRoomParticitated(cursor: nil)
+            .withUnretained(self)
+            .bind { owner, relayResponse in
+
+                owner.output.participatedRoomList.accept(
+                    [RelaySection(header: "", items: relayResponse.relays ?? [])]
+                )
+            }
+            .disposed(by: disposeBag)
+    }
+
+    func bindMyRoomList() {
+        relayService.getRelayUserMade(cursor: nil)
             .withUnretained(self)
             .bind { owner, relayResponse in
 
