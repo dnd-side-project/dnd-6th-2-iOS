@@ -96,31 +96,28 @@ class SelectTagViewController: UIViewController {
 
     func bindView() {
 
+        // Input
         backButton.rx.tap
-            .bind { _ in
-                self.navigationController?.popViewController(animated: true)
-            }
+            .bind(to: viewModel.input.backButtonTap)
+            .disposed(by: disposeBag)
+
+        selectTagView.collectionView.rx
+            .modelSelected(String.self)
+            .bind(to: viewModel.input.tagTap)
             .disposed(by: disposeBag)
 
         completeButton.rx.tap
             .bind(to: viewModel.input.completeButtonTap)
             .disposed(by: disposeBag)
 
-//        selectTagView.collectionView.rx.modelSelected(String.self)
-//            .withUnretained(self)
-//            .bind { owner, model in
-//                
-////                owner.viewModel.selectedState[indexPath.row] = true
-////                owner.viewModel.selectedTags.append(owner.viewModel.tagList[indexPath.row])
-//            }
-//            .disposed(by: disposeBag)
-
+        // Output
         viewModel.output.goBackToMakingView
             .withUnretained(self)
             .bind { owner, _ in
                 owner.popBack()
             }
             .disposed(by: disposeBag)
+
     }
 
     private func popBack() {

@@ -83,6 +83,7 @@ class ChallengeMainView: UIView {
     // TEMP
     var myChallengeCard = MyChallengeCard()
         .then {
+
             $0.setContentHuggingPriority(.required, for: .vertical)
         }
 
@@ -146,7 +147,7 @@ class ChallengeMainView: UIView {
 
         myChallengeCard.snp.makeConstraints {
             $0.width.equalToSuperview()
-            $0.height.equalTo(166.0)
+//            $0.height.equalTo(166.0)
         }
         stackView.snp.makeConstraints {
             $0.top.equalTo(subTitleLabel[1].snp.bottom).offset(12.0)

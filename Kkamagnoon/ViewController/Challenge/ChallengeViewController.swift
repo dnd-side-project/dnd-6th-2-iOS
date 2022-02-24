@@ -57,7 +57,10 @@ class ChallengeViewController: UIViewController {
         eventsArray = [xmas!, sampledate!]
 
         setView()
+
         bindView()
+
+        viewModel.bindKeyword()
     }
 
     func setView() {
@@ -117,6 +120,14 @@ class ChallengeViewController: UIViewController {
             .withUnretained(self)
             .bind { owner, _ in
                 owner.goToWritingVC()
+            }
+            .disposed(by: disposeBag)
+
+        viewModel.output.keyWord
+            .withUnretained(self)
+            .bind { owner, keyword in
+                owner.challengeMainView.todayKeyWordView
+                    .keywordLabel.text = keyword.content
             }
             .disposed(by: disposeBag)
     }

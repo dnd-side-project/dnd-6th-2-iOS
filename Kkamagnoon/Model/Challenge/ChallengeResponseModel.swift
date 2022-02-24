@@ -8,7 +8,8 @@
 import Foundation
 
 struct GetChallengeMain: Decodable {
-    var randomArticles: [RandomArticles]?
+    var keyword: Keyword?
+    var articles: [Article]?
     var challengeCount: Int?
 }
 
@@ -24,7 +25,7 @@ struct Tip: Decodable {
     var content: String?
 }
 
-struct Keyword {
+struct Keyword: Decodable {
     var _id: String?
     var content: String?
     var state: Bool?

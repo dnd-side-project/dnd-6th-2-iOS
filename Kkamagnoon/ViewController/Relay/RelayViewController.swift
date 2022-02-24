@@ -73,7 +73,7 @@ class RelayViewController: UIViewController {
         cell.contentLabel.text = element.notice?.notice
         cell.tagListView.tagList = element.tags ?? []
         cell.tagListView.setTags()
-        
+
         if indexPath.row == 0 {
             cell.backgroundColor = UIColor(rgb: Color.whitePurple)
         } else if indexPath.row == 1 {

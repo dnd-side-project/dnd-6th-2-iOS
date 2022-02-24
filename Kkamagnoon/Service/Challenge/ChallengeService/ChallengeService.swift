@@ -5,11 +5,33 @@
 //  Created by 서정 on 2022/02/21.
 //
 
-import Foundation
+import RxSwift
+import RxAlamofire
+import Alamofire
 
 class ChallengeService: Service {
-    func getChallenge() {
+    func getChallenge() -> Observable<GetChallengeMain> {
+        let endpoint = ChallengeEndPointCases.getChallenge
+        let request = makeRequest(endpoint: endpoint)
 
+        return RxAlamofire.request(request as URLRequestConvertible)
+            .responseData()
+            .asObservable()
+            .map { http, resData -> GetChallengeMain  in
+                print(http)
+
+                let decoder = JSONDecoder()
+
+                do {
+                    let result = try decoder.decode(GetChallengeMain.self, from: resData)
+                    print("RES>>>>>\(result)")
+                    return result
+                } catch {
+                    print(error)
+                }
+
+                return GetChallengeMain()
+            }
     }
 
     func getChallengeArticle() {

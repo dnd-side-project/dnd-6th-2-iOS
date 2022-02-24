@@ -16,7 +16,7 @@ struct StringType {
 
     static let wholeFeed: String = "전체 피드"
     static let subscribeFeed: String = "구독 피드"
-
+    static let dot: String = "·"
     static let notSubscribed: String = "·  구독"
     static let alreadySubscribed: String = "·  구독중"
 
@@ -32,4 +32,6 @@ struct StringType {
 
     static let categories = ["일상", "로맨스", "추리", "코믹", "감성", "시", "소설", "글귀", "일기", "수필", "짧은 글", "긴 글"]
     static let myWritingTags = ["챌린지", "자유", "릴레이"]
+
+    static let addTagString = "태그 추가"
 }

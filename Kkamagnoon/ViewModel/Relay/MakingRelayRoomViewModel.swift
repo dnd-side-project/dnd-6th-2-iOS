@@ -8,13 +8,17 @@
 import Foundation
 import RxSwift
 import RxCocoa
+import RxDataSources
 
 class MakingRelayRoomModel: ViewModelType {
+
     var disposeBag = DisposeBag()
     var rootView: UIViewController?
 
     struct Input {
-        let tags = PublishSubject<[String]>()
+
+        let addingTagButtonTap = PublishSubject<String>()
+        let originalTagList = PublishSubject<[String]>()
 
         let title = PublishSubject<String>()
         let notice = PublishSubject<String>()
@@ -27,6 +31,10 @@ class MakingRelayRoomModel: ViewModelType {
     }
 
     struct Output {
+        let tagList = PublishRelay<[SectionModel<String, String>]>()
+
+        let goToSelectTag = PublishRelay<Void>()
+
         let enableStartButton = PublishRelay<Bool>()
         let goToNewRelay = PublishRelay<Void>()
 
@@ -40,8 +48,29 @@ class MakingRelayRoomModel: ViewModelType {
          output: Output = Output()) {
         self.input = input
         self.output = output
+        bindAddingTag()
+        bindOriginalTagList()
         bindStartButtonEnable()
         bindStartButtonTap()
+    }
+
+    func bindTagList() {
+        output.tagList.accept(
+            [SectionModel(model: "", items: [StringType.addTagString])]
+        )
+    }
+
+    func bindOriginalTagList() {
+        input.originalTagList
+            .withUnretained(self)
+            .bind { owner, tagArray in
+                var newArray = tagArray
+                newArray.append(StringType.addTagString)
+                owner.output.tagList.accept(
+                    [SectionModel(model: "", items: newArray)]
+                )
+            }
+            .disposed(by: disposeBag)
     }
 
     func bindStartButtonEnable() {
@@ -83,6 +112,17 @@ class MakingRelayRoomModel: ViewModelType {
             .bind { owner, _ in
                 if owner.output.personnelCount.value < 10 {
                     owner.output.personnelCount.accept(owner.output.personnelCount.value+1)
+                }
+            }
+            .disposed(by: disposeBag)
+    }
+
+    func bindAddingTag() {
+        input.addingTagButtonTap
+            .withUnretained(self)
+            .bind { owner, model in
+                if model == "태그 추가" {
+                    owner.output.goToSelectTag.accept(())
                 }
             }
             .disposed(by: disposeBag)

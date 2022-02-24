@@ -19,12 +19,15 @@ class ChallengeViewModel: ViewModelType {
     struct Output {
         let goToBellNotice = PublishRelay<Void>()
         let goToWriting = PublishRelay<Void>()
+
+        let keyWord = PublishRelay<Keyword>()
     }
 
     var input: Input
     var output: Output
 
     var disposeBag = DisposeBag()
+    var challengeService = ChallengeService()
 
     init(input: Input = Input(),
          output: Output = Output()) {
@@ -33,6 +36,15 @@ class ChallengeViewModel: ViewModelType {
         bindBellButton()
         bindAddWritingButton()
 
+    }
+
+    func bindKeyword() {
+        challengeService.getChallenge()
+            .withUnretained(self)
+            .bind { owner, challengeMain in
+                owner.output.keyWord.accept(challengeMain.keyword ?? Keyword())
+            }
+            .disposed(by: disposeBag)
     }
 
     func bindBellButton() {

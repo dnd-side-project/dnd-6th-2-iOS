@@ -8,22 +8,22 @@
 import Foundation
 import RxSwift
 import RxCocoa
+import RxDataSources
 
 class SelectTagViewModel: ViewModelType {
+
     var disposeBag = DisposeBag()
-
-    var selectedTags: [String] = []
-
-    var selectedState = [Bool](repeating: false, count: 12)
+    var checkSelectedTags = [String: Bool]()
 
     struct Input {
+        let backButtonTap = PublishSubject<Void>()
         let tagTap = PublishSubject<String>()
         let completeButtonTap = PublishSubject<Void>()
-        // add more...
+
     }
 
     struct Output {
-        let tagList = BehaviorRelay<[String]>(value: [])
+        let tagList = PublishRelay<[String]>()
         let goBackToMakingView = PublishRelay<Void>()
     }
 
@@ -34,8 +34,33 @@ class SelectTagViewModel: ViewModelType {
          output: Output = Output()) {
         self.input = input
         self.output = output
-//        bindTagTab()
+        bindTagTab()
         bindComplete()
+    }
+
+    func bindTagTab() {
+
+        StringType.categories.forEach({ tag in
+            checkSelectedTags.updateValue(false, forKey: tag)
+        })
+
+        input.tagTap
+            .withUnretained(self)
+            .bind { owner, model in
+
+                let checked = owner.checkSelectedTags[model] ?? false
+                owner.checkSelectedTags.updateValue(!checked, forKey: model)
+
+                var tagArray: [String] = []
+                owner.checkSelectedTags.forEach({ tag in
+                    if tag.value {
+                        tagArray.append(tag.key)
+                    }
+                })
+
+                owner.output.tagList.accept(tagArray)
+            }
+            .disposed(by: disposeBag)
     }
 
     func bindComplete() {

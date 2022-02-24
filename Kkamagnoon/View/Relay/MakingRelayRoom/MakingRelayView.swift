@@ -73,15 +73,7 @@ class MakingRelayView: UIView {
         }
     ]
 
-    // DUMMY
-    var tempButton = UIButton()
-        .then {
-            $0.setTitle("태그 추가", for: .normal)
-            $0.setTitleColor(.white, for: .normal)
-            $0.titleLabel?.font = UIFont.pretendard(weight: .medium, size: 14)
-        }
-
-    var tagListView = TagListView(frame: .zero, tags: StringType.categories)
+    var addingTagView = AddingTagView()
         .then {
             $0.setContentHuggingPriority(.required, for: .vertical)
         }
@@ -147,9 +139,7 @@ class MakingRelayView: UIView {
 
         stackView.addArrangedSubview(subTitleLabelList[0])
 
-        // DUMMY
-        stackView.addArrangedSubview(tempButton)
-        stackView.addArrangedSubview(tagListView)
+        stackView.addArrangedSubview(addingTagView)
 
         stackView.addArrangedSubview(subTitleLabelList[1])
         stackView.addArrangedSubview(textViewList[0])
@@ -168,7 +158,7 @@ class MakingRelayView: UIView {
         }
 
         stackView.setCustomSpacing(14.0, after: subTitleLabelList[0])
-        stackView.setCustomSpacing(24.0, after: tagListView)
+        stackView.setCustomSpacing(24.0, after: addingTagView)
         stackView.setCustomSpacing(15.0, after: subTitleLabelList[1])
 
         stackView.setCustomSpacing(30.0, after: textViewList[0])
@@ -181,7 +171,7 @@ class MakingRelayView: UIView {
     }
 
     func setComponentView() {
-        tagListView.snp.makeConstraints {
+        addingTagView.snp.makeConstraints {
             $0.height.equalTo(30.0)
         }
 
@@ -199,15 +189,15 @@ class MakingRelayView: UIView {
         }
 
         // DUMMY
-        tempButton.rx.tap
-            .bind {
-                let vc = SelectTagViewController()
-                vc.modalPresentationStyle = .fullScreen
-                vc.hidesBottomBarWhenPushed = true
-
-                self.viewController?.navigationController?.pushViewController(vc, animated: true)
-            }
-            .disposed(by: disposeBag)
+//        tempButton.rx.tap
+//            .bind {
+//                let vc = SelectTagViewController()
+//                vc.modalPresentationStyle = .fullScreen
+//                vc.hidesBottomBarWhenPushed = true
+//
+//                self.viewController?.navigationController?.pushViewController(vc, animated: true)
+//            }
+//            .disposed(by: disposeBag)
     }
 
 }
