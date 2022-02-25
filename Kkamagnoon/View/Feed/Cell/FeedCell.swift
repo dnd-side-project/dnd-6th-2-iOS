@@ -103,7 +103,6 @@ class FeedCell: UICollectionViewCell {
         }
 
         // 더보기(신고하기)
-        moreButton.setImage(UIImage(systemName: "heart.fill"), for: .normal)
         self.addSubview(moreButton)
         moreButton.snp.makeConstraints {
             $0.centerY.equalTo(likeView)

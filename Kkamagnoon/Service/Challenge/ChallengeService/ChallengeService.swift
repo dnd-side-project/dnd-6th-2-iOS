@@ -17,14 +17,14 @@ class ChallengeService: Service {
         return RxAlamofire.request(request as URLRequestConvertible)
             .responseData()
             .asObservable()
-            .map { _, resData -> GetChallengeMain  in
-//                print(http)
+            .map { http, resData -> GetChallengeMain  in
+                print(http)
 
                 let decoder = JSONDecoder()
 
                 do {
                     let result = try decoder.decode(GetChallengeMain.self, from: resData)
-//                    print("RES>>>>>\(result)")
+                    print("RES>>>>>\(result)")
                     return result
                 } catch {
                     print(error)
@@ -35,7 +35,7 @@ class ChallengeService: Service {
     }
 
     func getChallengeArticle() -> Observable<Tip> {
-        let endpoint = ChallengeEndPointCases.getChallenge
+        let endpoint = ChallengeEndPointCases.getChallengeArticle
         let request = makeRequest(endpoint: endpoint)
 
         return RxAlamofire.request(request as URLRequestConvertible)
@@ -58,12 +58,54 @@ class ChallengeService: Service {
             }
     }
 
-    func postChallengeArticle(article: CreateArticleDTO) {
+    func postChallengeArticle(article: CreateArticleDTO) -> Observable<Article> {
+        let endpoint = ChallengeEndPointCases.postChallengeArticle(article: article)
+        let request = makeRequest(endpoint: endpoint)
 
+        print("RES Challenge ARTICLE>>>>> \(article)")
+
+        return RxAlamofire.request(request as URLRequestConvertible)
+            .responseData()
+            .asObservable()
+            .map { http, resData -> Article  in
+                print("RES Challenge>>>>>\(http)")
+
+                let decoder = JSONDecoder()
+
+                do {
+                    let result = try decoder.decode(Article.self, from: resData)
+                    print("RES Challenge>>>>>\(result)")
+                    return result
+                } catch {
+                    print(error)
+                }
+
+                return Article()
+            }
     }
 
-    func postChallengeArticleTemp(article: CreateArticleDTO) {
+    func postChallengeArticleTemp(article: CreateArticleDTO) -> Observable<Article> {
+        let endpoint = ChallengeEndPointCases.postChallengeArticleTemp(article: article)
+        let request = makeRequest(endpoint: endpoint)
 
+        return RxAlamofire.request(request as URLRequestConvertible)
+            .responseData()
+            .asObservable()
+            .map { _, resData -> Article  in
+//                print(http)
+
+                let decoder = JSONDecoder()
+
+                do {
+                    let result = try decoder.decode(Article.self, from: resData)
+//                    print("RES>>>>>\(result)")
+                    return result
+                } catch {
+                    print(error)
+                }
+
+                return Article()
+            }
     }
 
     // 개발용

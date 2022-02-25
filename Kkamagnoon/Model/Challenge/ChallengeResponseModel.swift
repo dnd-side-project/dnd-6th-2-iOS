@@ -11,6 +11,7 @@ struct GetChallengeMain: Decodable {
     var keyword: Keyword?
     var articles: [Article]?
     var challengeCount: Int?
+    var challengeHistory: [String]?
 }
 
 struct RandomArticles: Decodable {

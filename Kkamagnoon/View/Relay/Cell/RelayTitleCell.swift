@@ -17,6 +17,8 @@ class RelayTitleCell: UICollectionViewCell {
         .then {
             // Dummy
             $0.text = "첫사랑"
+            $0.lineBreakMode = .byWordWrapping
+            $0.numberOfLines = 0
             $0.font = UIFont.pretendard(weight: .bold, size: 25)
             $0.textColor = .white
         }
@@ -98,6 +100,7 @@ extension RelayTitleCell {
         self.addSubview(titleLabel)
         titleLabel.snp.makeConstraints {
             $0.left.equalToSuperview().offset(29.0)
+            $0.right.equalToSuperview().offset(-29.0)
             $0.top.equalToSuperview().offset(92.0)
         }
 

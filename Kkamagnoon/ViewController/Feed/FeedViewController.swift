@@ -19,6 +19,10 @@ class FeedViewController: UIViewController {
     let disposeBag = DisposeBag()
 
     let topButtonView = TopButtonView(frame: .zero, first: StringType.wholeFeed, second: StringType.subscribeFeed)
+        .then {
+            $0.searchButton.setImage(UIImage(named: "Search"), for: .normal)
+            $0.bellButton.setImage(UIImage(named: "Bell"), for: .normal)
+        }
 
     let wholeFeedView = WholeFeedView()
 

@@ -26,7 +26,8 @@ class DetailContentViewController: UIViewController {
 
     var backButton = UIButton()
         .then {
-            $0.setImage(UIImage(systemName: "heart.fill"), for: .normal)
+            $0.setImage(UIImage(named: "Back"), for: .normal)
+            $0.imageEdgeInsets = UIEdgeInsets(top: 6, left: 0, bottom: 6, right: 18)
         }
 
     var scrollView = UIScrollView()
@@ -85,6 +86,7 @@ extension DetailContentViewController {
     func layoutView() {
         backButton.snp.makeConstraints {
             $0.left.equalToSuperview().offset(20.0)
+            $0.size.equalTo(28)
             // TEMP
             $0.top.equalTo(view.safeAreaLayoutGuide).offset(10.0)
         }

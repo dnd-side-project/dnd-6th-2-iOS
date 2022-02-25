@@ -40,7 +40,7 @@ class FeedViewModel: ViewModelType {
     var subscribeService: FeedSubscribeService!
 
     var disposeBag = DisposeBag()
-    var sortStyle: SortStyle = .byPopularity
+    var sortStyle: SortStyle = .byLatest
 
     var checkSelectedTags = [String: Bool]()
 

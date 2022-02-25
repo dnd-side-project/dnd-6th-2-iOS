@@ -27,6 +27,7 @@ struct StringType {
 
     static let titlePlaceeholder = "무슨 글을 쓸까요?"
     static let noticePlaceholder = "공지사항이 있다면 적어주세요."
+    static let contentPlaceholder = "내용을 자유롭게 써주세요"
 
     static let tempBox = "임시보관함"
 

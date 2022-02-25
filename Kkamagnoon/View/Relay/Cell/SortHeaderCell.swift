@@ -19,8 +19,10 @@ class SortHeaderCell: UICollectionReusableView {
 
     var sortButton = UIButton()
         .then {
-            $0.setTitle("인기순", for: .normal)
-            $0.setImage(UIImage(systemName: "heart.fill"), for: .normal)
+            $0.setTitle("최신순", for: .normal)
+            $0.setImage(UIImage(named: "Sort"), for: .normal)
+            $0.imageEdgeInsets = UIEdgeInsets(top: 5, left: 10, bottom: 5, right: 0)
+            $0.imageView?.contentMode = .scaleAspectFit
             $0.sizeToFit()
             $0.titleLabel?.font = UIFont.pretendard(weight: .medium, size: 12)
         }

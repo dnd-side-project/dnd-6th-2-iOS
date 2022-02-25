@@ -17,6 +17,7 @@ class TabBarViewController: UITabBarController {
         super.viewDidLoad()
         TabBarViewController.tabbarHeight = self.tabBar.frame.height
         createBarItems()
+        tabBar.tintColor = .white
 
         setGrayLine()
     }
@@ -45,19 +46,19 @@ class TabBarViewController: UITabBarController {
         viewControllers = [
             createNavController(for: ChallengeViewController(),
                                    title: StringType.challenge,
-                                   image: UIImage(systemName: "heart.fill")!),
+                                   image: UIImage(named: "Challenge1x")!),
             createNavController(for: MyWritingViewController(),
                                    title: StringType.myWriting,
-                                   image: UIImage(systemName: "heart.fill")!),
+                                   image: UIImage(named: "MyWriting1x")!),
             createNavController(for: FeedViewController(),
                                    title: StringType.feed,
-                                   image: UIImage(systemName: "heart.fill")!),
+                                   image: UIImage(named: "Feed1x")!),
             createNavController(for: RelayViewController(),
                                    title: StringType.relay,
-                                   image: UIImage(systemName: "heart.fill")!),
+                                   image: UIImage(named: "Relay1x")!),
             createNavController(for: MyPageViewController(),
                                    title: StringType.myPage,
-                                   image: UIImage(systemName: "heart.fill")!)
+                                   image: UIImage(named: "MyPage1x")!)
         ]
     }
 

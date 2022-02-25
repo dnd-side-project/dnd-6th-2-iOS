@@ -38,7 +38,7 @@ class RelayViewModel: ViewModelType {
     var relayService: RelayService!
     var disposeBag = DisposeBag()
 
-    var sortStyle: SortStyle = .byPopularity
+    var sortStyle: SortStyle = .byLatest
     var checkSelectedTags = [String: Bool]()
 
     init(input: Input = Input(),

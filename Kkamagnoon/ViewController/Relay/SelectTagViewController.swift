@@ -19,7 +19,8 @@ class SelectTagViewController: UIViewController {
 
     var backButton = UIButton()
         .then {
-            $0.setImage(UIImage(systemName: "heart.fill"), for: .normal)
+            $0.setImage(UIImage(named: "Back"), for: .normal)
+            $0.imageEdgeInsets = UIEdgeInsets(top: 6, left: 0, bottom: 6, right: 18)
         }
 
     let dataSource = RxCollectionViewSectionedReloadDataSource<SectionModel<String, String>>(configureCell: { _, collectionView, indexPath, element in
@@ -63,6 +64,7 @@ class SelectTagViewController: UIViewController {
         view.addSubview(backButton)
 
         backButton.snp.makeConstraints {
+            $0.size.equalTo(28)
             $0.left.equalToSuperview().offset(21.0)
             $0.top.equalTo(view.safeAreaLayoutGuide).offset(26.24)
         }

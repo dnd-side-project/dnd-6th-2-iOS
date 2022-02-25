@@ -64,6 +64,13 @@ class SelectTagViewModel: ViewModelType {
     }
 
     func bindComplete() {
+        input.backButtonTap
+            .withUnretained(self)
+            .bind { owner, _ in
+                owner.output.goBackToMakingView.accept(())
+            }
+            .disposed(by: disposeBag)
+
         input.completeButtonTap
             .withUnretained(self)
             .bind { owner, _ in

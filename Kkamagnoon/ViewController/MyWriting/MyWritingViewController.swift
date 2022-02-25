@@ -8,14 +8,38 @@
 import UIKit
 import Then
 import SnapKit
+import RxSwift
+import RxCocoa
+import RxDataSources
 
 class MyWritingViewController: UIViewController {
 
-    var topButtonView = TopButtonView(frame: .zero, first: StringType.myWriting, second: StringType.tempBox)
+    let viewModel = MyWritingViewModel()
+    var disposeBag = DisposeBag()
+
+    lazy var dataSource = RxCollectionViewSectionedReloadDataSource<FeedSection>(configureCell: { _, collectionView, indexPath, element in
+
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MyWritingCell.identifier, for: indexPath) as! MyWritingCell
+
+        cell.card.titleLabel.text = element.title
+        cell.card.contentLabel.text = element.content
+
+        cell.card.likeLabel.labelView.text = "\(element.likeNum ?? 0)"
+        cell.card.commentLabel.labelView.text = "\(element.commentNum ?? 0)"
+
+        return cell
+    })
+
+    var topButtonView = TopButtonView(
+        frame: .zero,
+        first: StringType.myWriting,
+        second: StringType.tempBox)
         .then { topView in
             topView.secondButton.snp.makeConstraints {
                 $0.left.equalTo(topView.firstButton.snp.right).offset(12.0)
             }
+            topView.searchButton.setImage(UIImage(named: "Search"), for: .normal)
+            topView.bellButton.setImage(UIImage(named: "More"), for: .normal)
         }
 
     var tagListView = TagListView(frame: .zero, tags: StringType.myWritingTags)
@@ -34,6 +58,8 @@ class MyWritingViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .black
         setView()
+        bindView()
+        viewModel.bindMyWritingList()
     }
 
     override func viewDidLayoutSubviews() {
@@ -73,5 +99,16 @@ extension MyWritingViewController {
             $0.right.equalToSuperview().offset(-20.0)
             $0.bottom.equalTo(view.safeAreaLayoutGuide  ).offset(-14.0)
         }
+    }
+
+    func bindView() {
+//        writingListView.collectionView.rx
+//            .modelSelected(Article.self)
+//            .bind(to: viewModel.input.feedCellTap)
+//            .disposed(by: disposeBag)
+
+        viewModel.output.articleList
+            .bind(to: writingListView.collectionView.rx.items(dataSource: dataSource))
+            .disposed(by: disposeBag)
     }
 }

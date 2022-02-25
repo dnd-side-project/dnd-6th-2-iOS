@@ -12,12 +12,13 @@ import RxCocoa
 class WritingViewController: UIViewController {
 
     var disposeBag = DisposeBag()
+    let viewModel = WritingViewModel()
 
     var header = HeaderViewWithBackBtn()
         .then {
             $0.titleLabel.isHidden = true
             $0.bellButton.isHidden = true
-
+            $0.noticeButton.isEnabled = false
         }
 
     var writingView = WritingView()
@@ -43,6 +44,9 @@ class WritingViewController: UIViewController {
         animateWritingViewGoUp()
         animateWritingViewGoDown()
         setView()
+
+        bindView()
+        viewModel.bindTips()
     }
 
 }
@@ -55,7 +59,9 @@ extension WritingViewController {
     }
 
     func setView() {
+
         view.addSubview(header)
+        setButton(state: false)
         header.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide)
             $0.left.equalToSuperview().offset(20.0)
@@ -119,5 +125,69 @@ extension WritingViewController {
                 self.view.layoutIfNeeded()
             }
             .disposed(by: disposeBag)
+    }
+}
+
+extension WritingViewController {
+    func bindView() {
+
+        // Input
+        header.noticeButton.rx.tap
+            .bind(to: viewModel.input.completeButtonTap)
+            .disposed(by: disposeBag)
+
+        writingView.titleTextField.rx.text
+            .orEmpty
+            .bind(to: viewModel.input.title)
+            .disposed(by: disposeBag)
+
+        writingView.contentTextView.rx.text
+            .orEmpty
+            .bind(to: viewModel.input.contents)
+            .disposed(by: disposeBag)
+
+        // Output
+        viewModel.output.enableCompleteButton
+            .withUnretained(self)
+            .bind { owner, value in
+                owner.header.noticeButton.isEnabled = value
+                owner.setButton(state: value)
+            }
+            .disposed(by: disposeBag)
+
+        viewModel.output.tips
+            .withUnretained(self)
+            .bind { owner, tips in
+                owner.tipBox.textLabel.text = tips
+            }
+            .disposed(by: disposeBag)
+
+        viewModel.output.goToSelection
+            .withUnretained(self)
+            .bind { owner, articleDTO in
+                owner.goToTagSelectigVC(articleDTO: articleDTO)
+            }
+            .disposed(by: disposeBag)
+    }
+}
+
+extension WritingViewController {
+    private func goToTagSelectigVC(articleDTO: CreateArticleDTO ) {
+        let vc = ChallengeSelectingTagViewController()
+        vc.modalPresentationStyle = .fullScreen
+
+        vc.viewModel.articleDTO = articleDTO
+        vc.viewModel.rootView = self.viewModel.rootView
+
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
+
+    private func setButton(state: Bool) {
+        if state {
+            header.noticeButton.backgroundColor = UIColor(rgb: Color.whitePurple)
+        } else {
+            // TEMP
+            header.noticeButton.backgroundColor = UIColor(rgb: Color.tag)
+        }
     }
 }

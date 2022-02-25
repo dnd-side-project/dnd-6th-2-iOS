@@ -29,6 +29,7 @@ class ChallengeMainView: UIView {
         ]
 
     // TODO: Add dropdown
+
     var expansionButton = UIButton()
         .then {
             $0.setImage(UIImage(named: "Expand"), for: .normal)
@@ -41,7 +42,7 @@ class ChallengeMainView: UIView {
     var stackView = UIStackView()
         .then {
             $0.axis = .vertical
-            $0.spacing = 0
+            $0.spacing = 12
             $0.alignment = .fill
             $0.distribution = .fill
         }
@@ -77,7 +78,7 @@ class ChallengeMainView: UIView {
 //            $0.adjustsBoundingRectWhenChangingMonths = true
             $0.collectionView.register(CalendarDateCell.self, forCellWithReuseIdentifier: CalendarDateCell.identifier)
             // selection
-//            $0.today = nil
+
             $0.appearance.todayColor = .clear
 
             $0.appearance.borderRadius = 5
@@ -86,7 +87,6 @@ class ChallengeMainView: UIView {
     // TEMP
     var myChallengeCard = MyChallengeCard()
         .then {
-
             $0.setContentHuggingPriority(.required, for: .vertical)
         }
 
@@ -145,17 +145,19 @@ class ChallengeMainView: UIView {
         }
 
         self.addSubview(stackView)
-        stackView.addArrangedSubview(myChallengeCard)
-
-        myChallengeCard.snp.makeConstraints {
-            $0.width.equalToSuperview()
-//            $0.height.equalTo(166.0)
-        }
         stackView.snp.makeConstraints {
             $0.top.equalTo(subTitleLabel[1].snp.bottom).offset(12.0)
             $0.left.equalToSuperview().offset(20.0)
             $0.right.equalToSuperview().offset(-20.0)
             $0.bottom.equalToSuperview().offset(-20.0)
+        }
+    }
+
+    func removeCard() {
+        // 제대로 메모리 해제되는게 맞는지...
+        while let first = stackView.arrangedSubviews.first {
+            stackView.removeArrangedSubview(first)
+            first.removeFromSuperview()
         }
     }
 

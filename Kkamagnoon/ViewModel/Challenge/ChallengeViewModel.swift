@@ -13,14 +13,15 @@ class ChallengeViewModel: ViewModelType {
     struct Input {
         let bellButtonTap = PublishSubject<Void>()
         let addWritingButtonTap = PublishSubject<Void>()
+        let cardTap = PublishSubject<UITapGestureRecognizer>()
 
     }
 
     struct Output {
         let goToBellNotice = PublishRelay<Void>()
         let goToWriting = PublishRelay<Void>()
-
-        let keyWord = PublishRelay<Keyword>()
+        let goToDetail = PublishRelay<Void>()
+        let keyWord = PublishRelay<GetChallengeMain>()
     }
 
     var input: Input
@@ -35,14 +36,14 @@ class ChallengeViewModel: ViewModelType {
         self.output = output
         bindBellButton()
         bindAddWritingButton()
-
+        bindCard()
     }
 
     func bindKeyword() {
         challengeService.getChallenge()
             .withUnretained(self)
             .bind { owner, challengeMain in
-                owner.output.keyWord.accept(challengeMain.keyword ?? Keyword())
+                owner.output.keyWord.accept(challengeMain)
             }
             .disposed(by: disposeBag)
     }
@@ -64,6 +65,16 @@ class ChallengeViewModel: ViewModelType {
             }
             .disposed(by: disposeBag)
 
+    }
+
+    func bindCard() {
+        input.cardTap
+            .withUnretained(self)
+            .bind { owner, _ in
+                print("TAPPED!!")
+                owner.output.goToDetail.accept(())
+            }
+            .disposed(by: disposeBag)
     }
 
     deinit {

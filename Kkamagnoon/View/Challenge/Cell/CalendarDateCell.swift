@@ -14,7 +14,14 @@ class CalendarDateCell: FSCalendarCell {
 
     var indicatorImageView = UIImageView()
         .then {
-            $0.image = UIImage(named: "Frame")
+            $0.image = UIImage(named: "OpenEye")
+            $0.contentMode = .scaleAspectFit
+        }
+
+    var defaultImageView = UIImageView()
+        .then {
+            $0.image = UIImage(named: "ClosedEye")
+            $0.contentMode = .scaleAspectFit
         }
 
     var selectorView = UIView()
@@ -50,11 +57,15 @@ class CalendarDateCell: FSCalendarCell {
 
         let dateView = self.subviews.first ?? UIView()
 
+        self.insertSubview(defaultImageView, at: 0)
         self.insertSubview(selectorView, at: 0)
+        self.eventIndicator.addSubview(indicatorImageView)
+
         selectorView.snp.makeConstraints {
             $0.top.equalToSuperview()
-            $0.left.right.equalToSuperview()
-            $0.height.equalTo(self.frame.height)
+            $0.left.equalToSuperview().offset(4)
+            $0.right.equalToSuperview().offset(-4)
+            $0.height.equalTo(self.frame.height+3)
         }
 
         dateView.snp.makeConstraints {
@@ -72,14 +83,26 @@ class CalendarDateCell: FSCalendarCell {
             $0.top.equalTo(dateView.snp.bottom as! ConstraintRelatableTarget).offset(3)
         }
 
-        eventIndicator.addSubview(indicatorImageView)
-
         indicatorImageView.snp.makeConstraints {
             $0.centerX.equalToSuperview()
             $0.top.equalToSuperview()
             $0.size.equalTo(25)
         }
 
+        defaultImageView.snp.makeConstraints {
+            $0.centerX.equalToSuperview()
+            $0.top.equalTo(eventIndicator)
+            $0.size.equalTo(25)
+        }
+
+    }
+
+    func removeDefaultEye() {
+        self.defaultImageView.removeFromSuperview()
+    }
+
+    func addDefaultEye() {
+        self.addSubview(defaultImageView)
     }
 
     private func configureSelected() {

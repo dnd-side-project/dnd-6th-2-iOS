@@ -22,7 +22,7 @@ class SelectingCollectionReusableView: UICollectionReusableView {
 
     var subTitleLabel = UILabel()
         .then {
-            $0.text = "태그는 최대 6개까지 선택할 수 있어요."
+            $0.text = "피드를 볼 때 필터링에 사용 돼요."
             $0.font = UIFont.pretendard(weight: .regular, size: 14)
             $0.textColor = UIColor(rgb: 0xB0B0B0)
         }

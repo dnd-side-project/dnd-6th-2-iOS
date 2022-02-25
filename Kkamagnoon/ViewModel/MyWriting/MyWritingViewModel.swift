@@ -21,14 +21,15 @@ class MyWritingViewModel: ViewModelType {
     struct Output {
         let goToBellNotice = PublishRelay<Void>()
         let goToWriting = PublishRelay<Void>()
-        let keyWord = PublishRelay<Keyword>()
+
+        let articleList = PublishRelay<[FeedSection]>()
     }
 
     var input: Input
     var output: Output
 
     var disposeBag = DisposeBag()
-//    var myWritingService = MyWritingService()
+    var myWritingService = MyWritingService()
 
     init(input: Input = Input(),
          output: Output = Output()) {
@@ -40,6 +41,18 @@ class MyWritingViewModel: ViewModelType {
 }
 
 extension MyWritingViewModel {
+
+    func bindMyWritingList() {
+        myWritingService.getMyArticle(cursor: nil, type: nil)
+            .withUnretained(self)
+            .bind { owner, articleResponse in
+                owner.output.articleList.accept(
+                    [FeedSection(header: Relay(), items: articleResponse.articles ?? [])]
+                )
+            }
+            .disposed(by: disposeBag)
+    }
+
     func bind() {
 
     }

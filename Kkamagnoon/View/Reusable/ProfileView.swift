@@ -58,6 +58,7 @@ class ProfileView: UIView {
         self.addSubview(nickNameLabel)
         nickNameLabel.translatesAutoresizingMaskIntoConstraints = false
         nickNameLabel.leftAnchor.constraint(equalTo: profileImageView.rightAnchor, constant: 9).isActive = true
+        nickNameLabel.rightAnchor.constraint(equalTo: self.rightAnchor).isActive = true
         nickNameLabel.centerYAnchor.constraint(equalTo: profileImageView.centerYAnchor).isActive = true
 
         // 구독 상태

@@ -77,6 +77,7 @@ class FeedDetailView: UIView {
         self.addSubview(moreButton)
 
         moreButton.snp.makeConstraints {
+            $0.size.equalTo(28)
             $0.right.equalToSuperview().offset(-4.0)
             $0.centerY.equalTo(profileView)
         }

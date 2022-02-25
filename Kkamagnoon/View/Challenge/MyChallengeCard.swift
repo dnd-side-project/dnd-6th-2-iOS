@@ -13,6 +13,7 @@ import RxCocoa
 class MyChallengeCard: UIView {
 
     var tapHandler: (() -> Void)?
+    let tapGesture = UITapGestureRecognizer()
 
     var titleLabel = UILabel()
         .then {
@@ -25,7 +26,7 @@ class MyChallengeCard: UIView {
     var statusLabel = UILabel()
         .then {
             $0.font = UIFont.pretendard(weight: .regular, size: 10)
-            $0.text = "공개"
+            $0.text = "비공개"
             $0.textColor = UIColor(rgb: 0x9C9C9C)
         }
 
@@ -64,13 +65,22 @@ class MyChallengeCard: UIView {
         .then {
             $0.imageView.image = UIImage(named: "Comment")
         }
+    // TEMP
+    var disposeBag = DisposeBag()
 
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.backgroundColor = UIColor(rgb: 0x1E1E1E)
         self.layer.cornerRadius = 15
         setView()
-        setTapEvent()
+        self.addGestureRecognizer(tapGesture)
+
+        tapGesture.rx.event
+            .withUnretained(self)
+            .bind { owner, _ in
+                owner.tapHandler?()
+            }
+            .disposed(by: disposeBag)
     }
 
     required init?(coder: NSCoder) {
@@ -116,9 +126,9 @@ extension MyChallengeCard {
         self.addSubview(contentLabel)
         contentLabel.snp.makeConstraints {
             $0.left.equalTo(titleLabel)
+            $0.width.equalTo(UIScreen.main.bounds.width - 80)
             $0.right.equalToSuperview().offset(-20.0)
             $0.top.equalTo(grayLine.snp.bottom).offset(11.0)
-
         }
 
         self.addSubview(likeLabel)
@@ -136,8 +146,4 @@ extension MyChallengeCard {
 
     }
 
-    func setTapEvent() {
-        let tapGesture = UITapGestureRecognizer()
-        self.addGestureRecognizer(tapGesture)
-    }
 }
