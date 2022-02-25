@@ -11,11 +11,7 @@ import SnapKit
 
 class ImageLabelView: UIView {
 
-    let imageView = UIImageView().then {
-
-        // DUMMY
-        $0.image = UIImage(systemName: "heart.fill")
-    }
+    let imageView = UIImageView()
     let labelView = UILabel().then {
         $0.font = UIFont.pretendard(weight: .regular, size: 13)
         $0.textColor = .white

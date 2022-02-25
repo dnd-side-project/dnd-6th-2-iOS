@@ -51,8 +51,6 @@ class RelayViewModel: ViewModelType {
             checkSelectedTags.updateValue(false, forKey: tag)
         })
 
-//        bindRelayList()
-//        bindMyRoomList()
         bind()
     }
 

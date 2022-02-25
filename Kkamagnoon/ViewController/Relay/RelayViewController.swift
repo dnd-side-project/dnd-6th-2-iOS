@@ -33,7 +33,8 @@ class RelayViewController: UIViewController {
 
     var makingRoomButton = MakingRoomButton()
         .then {
-            $0.backgroundColor = UIColor(rgb: Color.whitePurple)
+            $0.setImage(UIImage(named: "Pencil"), for: .normal)
+
         }
 
     lazy var relayRoomDataSource = RxCollectionViewSectionedReloadDataSource<RelaySection>(configureCell: { _, collectionView, indexPath, element in
@@ -224,7 +225,10 @@ class RelayViewController: UIViewController {
         let vc = RelayDetailViewController()
         vc.modalPresentationStyle = .fullScreen
         vc.hidesBottomBarWhenPushed = true
-//        vc.viewModel.elay = relay
+
+        Observable<Relay>.just(relay)
+            .bind(to: vc.viewModel.input.relayInfo)
+            .disposed(by: disposeBag)
 
         self.navigationController?.pushViewController(vc, animated: true)
     }

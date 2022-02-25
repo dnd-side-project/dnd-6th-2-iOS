@@ -119,6 +119,24 @@
 		045F529127C733890082673B /* MyWritingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 045F529027C733890082673B /* MyWritingService.swift */; };
 		045F529727C740140082673B /* AddingTagCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 045F529627C740140082673B /* AddingTagCell.swift */; };
 		045F529927C742ED0082673B /* AddingTagView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 045F529827C742ED0082673B /* AddingTagView.swift */; };
+		045F529C27C8848D0082673B /* RelayRoomAlertCharacter.png in Resources */ = {isa = PBXBuildFile; fileRef = 045F529B27C8848D0082673B /* RelayRoomAlertCharacter.png */; };
+		045F529F27C888460082673B /* Note.png in Resources */ = {isa = PBXBuildFile; fileRef = 045F529E27C888460082673B /* Note.png */; };
+		045F52A327C88DBA0082673B /* Expand.png in Resources */ = {isa = PBXBuildFile; fileRef = 045F52A127C88DBA0082673B /* Expand.png */; };
+		045F52A427C88DBA0082673B /* GoRight.png in Resources */ = {isa = PBXBuildFile; fileRef = 045F52A227C88DBA0082673B /* GoRight.png */; };
+		045F52A927C88DD80082673B /* Challenge.png in Resources */ = {isa = PBXBuildFile; fileRef = 045F52A627C88DD80082673B /* Challenge.png */; };
+		045F52AA27C88DD80082673B /* MyWriting.png in Resources */ = {isa = PBXBuildFile; fileRef = 045F52A727C88DD80082673B /* MyWriting.png */; };
+		045F52AB27C88DD80082673B /* Bell.png in Resources */ = {isa = PBXBuildFile; fileRef = 045F52A827C88DD80082673B /* Bell.png */; };
+		045F52AE27C88E1A0082673B /* ButtonImageName.swift in Sources */ = {isa = PBXBuildFile; fileRef = 045F52AD27C88E1A0082673B /* ButtonImageName.swift */; };
+		045F52B027C88EF40082673B /* ImageExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 045F52AF27C88EF40082673B /* ImageExt.swift */; };
+		045F52B227C892A50082673B /* WritingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 045F52B127C892A50082673B /* WritingView.swift */; };
+		045F52B427C8940C0082673B /* TextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 045F52B327C8940C0082673B /* TextField.swift */; };
+		045F52B627C89A700082673B /* NextButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 045F52B527C89A700082673B /* NextButton.swift */; };
+		045F52B827C89E3F0082673B /* WritingSubView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 045F52B727C89E3F0082673B /* WritingSubView.swift */; };
+		045F52BA27C8A5F50082673B /* TipBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 045F52B927C8A5F50082673B /* TipBox.swift */; };
+		045F52BC27C8B2CB0082673B /* Pencil.png in Resources */ = {isa = PBXBuildFile; fileRef = 045F52BB27C8B2CB0082673B /* Pencil.png */; };
+		045F52BF27C8B4A20082673B /* Heart.png in Resources */ = {isa = PBXBuildFile; fileRef = 045F52BD27C8B4A20082673B /* Heart.png */; };
+		045F52C027C8B4A20082673B /* Comment.png in Resources */ = {isa = PBXBuildFile; fileRef = 045F52BE27C8B4A20082673B /* Comment.png */; };
+		045F52C327C8B7E70082673B /* More.png in Resources */ = {isa = PBXBuildFile; fileRef = 045F52C227C8B7E70082673B /* More.png */; };
 		0464F9C327A578AA0054FD83 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0464F9C227A578AA0054FD83 /* AppDelegate.swift */; };
 		0464F9C527A578AA0054FD83 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0464F9C427A578AA0054FD83 /* SceneDelegate.swift */; };
 		0464F9CA27A578AA0054FD83 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0464F9C827A578AA0054FD83 /* Main.storyboard */; };
@@ -286,6 +304,24 @@
 		045F529027C733890082673B /* MyWritingService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyWritingService.swift; sourceTree = "<group>"; };
 		045F529627C740140082673B /* AddingTagCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddingTagCell.swift; sourceTree = "<group>"; };
 		045F529827C742ED0082673B /* AddingTagView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddingTagView.swift; sourceTree = "<group>"; };
+		045F529B27C8848D0082673B /* RelayRoomAlertCharacter.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = RelayRoomAlertCharacter.png; sourceTree = "<group>"; };
+		045F529E27C888460082673B /* Note.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Note.png; sourceTree = "<group>"; };
+		045F52A127C88DBA0082673B /* Expand.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Expand.png; sourceTree = "<group>"; };
+		045F52A227C88DBA0082673B /* GoRight.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = GoRight.png; sourceTree = "<group>"; };
+		045F52A627C88DD80082673B /* Challenge.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Challenge.png; sourceTree = "<group>"; };
+		045F52A727C88DD80082673B /* MyWriting.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = MyWriting.png; sourceTree = "<group>"; };
+		045F52A827C88DD80082673B /* Bell.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Bell.png; sourceTree = "<group>"; };
+		045F52AD27C88E1A0082673B /* ButtonImageName.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonImageName.swift; sourceTree = "<group>"; };
+		045F52AF27C88EF40082673B /* ImageExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageExt.swift; sourceTree = "<group>"; };
+		045F52B127C892A50082673B /* WritingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WritingView.swift; sourceTree = "<group>"; };
+		045F52B327C8940C0082673B /* TextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextField.swift; sourceTree = "<group>"; };
+		045F52B527C89A700082673B /* NextButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NextButton.swift; sourceTree = "<group>"; };
+		045F52B727C89E3F0082673B /* WritingSubView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WritingSubView.swift; sourceTree = "<group>"; };
+		045F52B927C8A5F50082673B /* TipBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TipBox.swift; sourceTree = "<group>"; };
+		045F52BB27C8B2CB0082673B /* Pencil.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Pencil.png; sourceTree = "<group>"; };
+		045F52BD27C8B4A20082673B /* Heart.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Heart.png; sourceTree = "<group>"; };
+		045F52BE27C8B4A20082673B /* Comment.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Comment.png; sourceTree = "<group>"; };
+		045F52C227C8B7E70082673B /* More.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = More.png; sourceTree = "<group>"; };
 		0464F9BF27A578AA0054FD83 /* Kkamagnoon.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Kkamagnoon.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0464F9C227A578AA0054FD83 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0464F9C427A578AA0054FD83 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -560,6 +596,10 @@
 			isa = PBXGroup;
 			children = (
 				045F528127C5CD6A0082673B /* Cell */,
+				045F52B127C892A50082673B /* WritingView.swift */,
+				045F52B527C89A700082673B /* NextButton.swift */,
+				045F52B727C89E3F0082673B /* WritingSubView.swift */,
+				045F52B927C8A5F50082673B /* TipBox.swift */,
 			);
 			path = MyWriting;
 			sourceTree = "<group>";
@@ -608,6 +648,11 @@
 		045F529227C739480082673B /* Icons */ = {
 			isa = PBXGroup;
 			children = (
+				045F52C127C8B6770082673B /* WritingIcon */,
+				045F52AC27C88DE90082673B /* MenuButton */,
+				045F52A527C88DC90082673B /* Button */,
+				045F52A027C88D990082673B /* ArrowButton */,
+				045F529A27C884800082673B /* Illust */,
 				045F528427C62EB20082673B /* Frame.png */,
 			);
 			path = Icons;
@@ -622,6 +667,52 @@
 				045F529827C742ED0082673B /* AddingTagView.swift */,
 			);
 			path = MakingRelayRoom;
+			sourceTree = "<group>";
+		};
+		045F529A27C884800082673B /* Illust */ = {
+			isa = PBXGroup;
+			children = (
+				045F529E27C888460082673B /* Note.png */,
+				045F529B27C8848D0082673B /* RelayRoomAlertCharacter.png */,
+			);
+			path = Illust;
+			sourceTree = "<group>";
+		};
+		045F52A027C88D990082673B /* ArrowButton */ = {
+			isa = PBXGroup;
+			children = (
+				045F52A127C88DBA0082673B /* Expand.png */,
+				045F52A227C88DBA0082673B /* GoRight.png */,
+			);
+			path = ArrowButton;
+			sourceTree = "<group>";
+		};
+		045F52A527C88DC90082673B /* Button */ = {
+			isa = PBXGroup;
+			children = (
+				045F52C227C8B7E70082673B /* More.png */,
+				045F52BE27C8B4A20082673B /* Comment.png */,
+				045F52BD27C8B4A20082673B /* Heart.png */,
+				045F52BB27C8B2CB0082673B /* Pencil.png */,
+				045F52A827C88DD80082673B /* Bell.png */,
+			);
+			path = Button;
+			sourceTree = "<group>";
+		};
+		045F52AC27C88DE90082673B /* MenuButton */ = {
+			isa = PBXGroup;
+			children = (
+				045F52A627C88DD80082673B /* Challenge.png */,
+				045F52A727C88DD80082673B /* MyWriting.png */,
+			);
+			path = MenuButton;
+			sourceTree = "<group>";
+		};
+		045F52C127C8B6770082673B /* WritingIcon */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = WritingIcon;
 			sourceTree = "<group>";
 		};
 		0464F9B627A578AA0054FD83 = {
@@ -750,6 +841,7 @@
 				04DAAE5D27B3C64500AECFE4 /* CustomColor.swift */,
 				04A40D4F27BF4511004DAB19 /* EnumType.swift */,
 				0433170C27C3E8B800FE0E34 /* Numbers.swift */,
+				045F52AD27C88E1A0082673B /* ButtonImageName.swift */,
 			);
 			path = Types;
 			sourceTree = "<group>";
@@ -947,6 +1039,8 @@
 				040790DA27B92620006C5374 /* TextView.swift */,
 				04A40D6827BF97C4004DAB19 /* Navigation.swift */,
 				0433170327C3A56100FE0E34 /* Label.swift */,
+				045F52AF27C88EF40082673B /* ImageExt.swift */,
+				045F52B327C8940C0082673B /* TextField.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -1085,16 +1179,27 @@
 			buildActionMask = 2147483647;
 			files = (
 				040790C827B90E68006C5374 /* Pretendard-ExtraLight.otf in Resources */,
+				045F529C27C8848D0082673B /* RelayRoomAlertCharacter.png in Resources */,
+				045F52AB27C88DD80082673B /* Bell.png in Resources */,
+				045F52BC27C8B2CB0082673B /* Pencil.png in Resources */,
 				040790CB27B90E6C006C5374 /* Pretendard-Light.otf in Resources */,
 				0464F9CF27A578AE0054FD83 /* LaunchScreen.storyboard in Resources */,
+				045F52C327C8B7E70082673B /* More.png in Resources */,
 				040790D727B90E7B006C5374 /* Pretendard-SemiBold.otf in Resources */,
 				040790C227B90E61006C5374 /* Pretendard-Bold.otf in Resources */,
+				045F52BF27C8B4A20082673B /* Heart.png in Resources */,
 				040790C527B90E64006C5374 /* Pretendard-ExtraBold.otf in Resources */,
+				045F52A427C88DBA0082673B /* GoRight.png in Resources */,
+				045F52C027C8B4A20082673B /* Comment.png in Resources */,
 				0464F9CC27A578AE0054FD83 /* Assets.xcassets in Resources */,
 				040790BF27B90E5C006C5374 /* Pretendard-Black.otf in Resources */,
 				040790D127B90E73006C5374 /* Pretendard-Regular.otf in Resources */,
 				0464F9CA27A578AA0054FD83 /* Main.storyboard in Resources */,
 				040790D427B90E77006C5374 /* Pretendard-Thin.otf in Resources */,
+				045F52A927C88DD80082673B /* Challenge.png in Resources */,
+				045F529F27C888460082673B /* Note.png in Resources */,
+				045F52AA27C88DD80082673B /* MyWriting.png in Resources */,
+				045F52A327C88DBA0082673B /* Expand.png in Resources */,
 				045F528527C62EB20082673B /* Frame.png in Resources */,
 				040790CE27B90E70006C5374 /* Pretendard-Medium.otf in Resources */,
 			);
@@ -1281,10 +1386,12 @@
 				04A40D5727BF543B004DAB19 /* RelayService.swift in Sources */,
 				040790FB27BB53F4006C5374 /* MakingRelayView.swift in Sources */,
 				04A40D5027BF4511004DAB19 /* EnumType.swift in Sources */,
+				045F52B827C89E3F0082673B /* WritingSubView.swift in Sources */,
 				0439AF4B27B1EBBF00E14E03 /* FeedViewController.swift in Sources */,
 				048D44BD27AF5D7D0031974D /* MyWritingViewController.swift in Sources */,
 				040790A427B895D1006C5374 /* View.swift in Sources */,
 				048D44B727AF5D0F0031974D /* MyPageViewController.swift in Sources */,
+				045F52B627C89A700082673B /* NextButton.swift in Sources */,
 				048D44AC27AF592D0031974D /* TabBarViewController.swift in Sources */,
 				0439AF4727B171EB00E14E03 /* DetailContentViewController.swift in Sources */,
 				04DAAE5A27B2B1F500AECFE4 /* FlexibleDecode.swift in Sources */,
@@ -1312,6 +1419,7 @@
 				043316BB27C3306900FE0E34 /* WritingViewController.swift in Sources */,
 				04A40D7127BFE19A004DAB19 /* ArticleListWithSortView.swift in Sources */,
 				043316E327C33D0E00FE0E34 /* SearchViewController.swift in Sources */,
+				045F52BA27C8A5F50082673B /* TipBox.swift in Sources */,
 				043316D627C338D300FE0E34 /* FeedSubscribeService.swift in Sources */,
 				045F529727C740140082673B /* AddingTagCell.swift in Sources */,
 				040790E027B969A9006C5374 /* RelayRoomView.swift in Sources */,
@@ -1327,6 +1435,7 @@
 				043316DA27C3391A00FE0E34 /* FeedCommentService.swift in Sources */,
 				040790AA27B89701006C5374 /* Decode.swift in Sources */,
 				04DAAE6227B3F41900AECFE4 /* SubscribeListCell.swift in Sources */,
+				045F52B227C892A50082673B /* WritingView.swift in Sources */,
 				0407909B27B7D232006C5374 /* NetworkError.swift in Sources */,
 				043316D127C3383000FE0E34 /* FeedCommentEndPointCases.swift in Sources */,
 				04A40D5D27BF57BE004DAB19 /* RelayDetailViewModel.swift in Sources */,
@@ -1338,7 +1447,9 @@
 				043316FB27C35A2500FE0E34 /* ChallengeMainView.swift in Sources */,
 				043316EF27C34FA900FE0E34 /* DetailContentViewModel.swift in Sources */,
 				04C95FC127B5495800A0F840 /* FeedViewModel.swift in Sources */,
+				045F52AE27C88E1A0082673B /* ButtonImageName.swift in Sources */,
 				040790B027B8DE9C006C5374 /* Font.swift in Sources */,
+				045F52B027C88EF40082673B /* ImageExt.swift in Sources */,
 				043316CF27C3380200FE0E34 /* FeedSearchEndPointCases.swift in Sources */,
 				040790EF27BA6483006C5374 /* RelayContentCell.swift in Sources */,
 				0464F9C327A578AA0054FD83 /* AppDelegate.swift in Sources */,
@@ -1367,6 +1478,7 @@
 				04A40D5927BF5498004DAB19 /* RelayNoticeService.swift in Sources */,
 				040790B227B8DFDD006C5374 /* ImageLabelView.swift in Sources */,
 				040790E227B9F57C006C5374 /* RelayRoomCell.swift in Sources */,
+				045F52B427C8940C0082673B /* TextField.swift in Sources */,
 				045F529927C742ED0082673B /* AddingTagView.swift in Sources */,
 				045F529127C733890082673B /* MyWritingService.swift in Sources */,
 				043316C027C330EB00FE0E34 /* MyChallengeCard.swift in Sources */,

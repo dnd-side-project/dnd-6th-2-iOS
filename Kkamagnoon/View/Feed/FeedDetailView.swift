@@ -16,7 +16,7 @@ class FeedDetailView: UIView {
 
     lazy var moreButton = UIButton()
         .then {
-            $0.setImage(UIImage(systemName: "heart.fill"), for: .normal)
+            $0.setImage(UIImage(named: "More"), for: .normal)
         }
 
     lazy var updateDateLabel = UILabel()

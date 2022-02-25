@@ -12,6 +12,11 @@ struct RelayResponse: Decodable {
     var next_cursor: String?
 }
 
+struct GetRelayArticleResDTO: Decodable {
+    var relayArticles: [Article]?
+    var next_cursor: String?
+}
+
 struct Relay: Decodable {
     var _id: String?
     var createdAt: String?

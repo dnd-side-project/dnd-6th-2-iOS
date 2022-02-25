@@ -30,7 +30,7 @@ class HeaderViewWithBackBtn: UIView {
             $0.setImage(UIImage(systemName: "heart.fill"), for: .normal)
         }
 
-    let noticeButton = UIButton()
+    var noticeButton = UIButton()
         .then {
             $0.setImage(UIImage(systemName: "heart.fill"), for: .normal)
         }

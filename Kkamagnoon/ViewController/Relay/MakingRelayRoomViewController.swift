@@ -202,7 +202,9 @@ class MakingRelayRoomViewController: UIViewController {
         vc.hidesBottomBarWhenPushed = true
         vc.viewModel.isNew = true
 
-        vc.viewModel.output.relayInfo.accept(relay)
+        Observable<Relay>.just(relay)
+            .bind(to: vc.viewModel.input.relayInfo)
+            .disposed(by: disposeBag)
 
         self.navigationController?.popViewController(animated: true) {
             self.viewModel.rootView?.navigationController?.pushViewController(vc, animated: true)

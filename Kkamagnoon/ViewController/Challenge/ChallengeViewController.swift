@@ -31,7 +31,7 @@ class ChallengeViewController: UIViewController {
 
     var addWritingButton = MakingRoomButton()
         .then {
-            $0.backgroundColor = UIColor(rgb: Color.whitePurple)
+            $0.setImage(UIImage(named: "Pencil"), for: .normal)
         }
 
     var headerView = ChallengeHeaderView()
@@ -154,7 +154,6 @@ class ChallengeViewController: UIViewController {
             challengeMainView.calendarView.setScope(.week, animated: true)
             UIView.animate(withDuration: 10.0, delay: 0) {
                 self.challengeMainView.calendarHeight.constant = 144
-                self.challengeMainView.buttonHeight.constant = -11.0
             }
         } else {
             isMonth = true
@@ -162,7 +161,6 @@ class ChallengeViewController: UIViewController {
             UIView.animate(withDuration: 10.0, delay: 0) {
                 self.challengeMainView.calendarHeight.constant = 400
 
-                self.challengeMainView.buttonHeight.constant = -6.0
             }
 
         }
@@ -194,11 +192,6 @@ extension ChallengeViewController: FSCalendarDataSource {
         return 0
 
     }
-
-//    func calendar(_ calendar: FSCalendar, imageFor date: Date) -> UIImage? {
-//
-//        return UIImage(named: "Frame")
-//    }
 
 }
 

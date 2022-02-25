@@ -21,9 +21,19 @@ class FeedCell: UICollectionViewCell {
 //    let commentLabel: UILabel = UILabel()
 
     let likeView: ImageLabelView = ImageLabelView()
+        .then {
+            $0.imageView.image = UIImage(named: "Heart")
+        }
+
     let commentView: ImageLabelView = ImageLabelView()
+        .then {
+            $0.imageView.image = UIImage(named: "Comment")
+        }
 
     let moreButton: UIButton = UIButton()
+        .then {
+            $0.setImage(UIImage(named: "More"), for: .normal)
+        }
 
     override init(frame: CGRect) {
         super.init(frame: frame)

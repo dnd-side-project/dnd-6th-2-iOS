@@ -27,7 +27,7 @@ class MyWritingViewController: UIViewController {
 
     var addWritingButton = MakingRoomButton()
         .then {
-            $0.backgroundColor = UIColor(rgb: Color.whitePurple)
+            $0.setImage(UIImage(named: "Pencil"), for: .normal)
         }
 
     override func viewDidLoad() {

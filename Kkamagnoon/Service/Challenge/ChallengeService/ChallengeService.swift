@@ -34,8 +34,28 @@ class ChallengeService: Service {
             }
     }
 
-    func getChallengeArticle() {
+    func getChallengeArticle() -> Observable<Tip> {
+        let endpoint = ChallengeEndPointCases.getChallenge
+        let request = makeRequest(endpoint: endpoint)
 
+        return RxAlamofire.request(request as URLRequestConvertible)
+            .responseData()
+            .asObservable()
+            .map { _, resData -> Tip  in
+//                print(http)
+
+                let decoder = JSONDecoder()
+
+                do {
+                    let result = try decoder.decode(Tip.self, from: resData)
+//                    print("RES>>>>>\(result)")
+                    return result
+                } catch {
+                    print(error)
+                }
+
+                return Tip()
+            }
     }
 
     func postChallengeArticle(article: CreateArticleDTO) {

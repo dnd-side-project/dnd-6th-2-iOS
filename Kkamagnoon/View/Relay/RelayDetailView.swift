@@ -40,8 +40,7 @@ class RelayDetailView: UIView {
         self.addSubview(header)
         header.snp.makeConstraints {
             $0.top.equalToSuperview()
-            $0.left.equalToSuperview().offset(20.0)
-            $0.right.equalToSuperview().offset(-20.0)
+            $0.left.right.equalToSuperview()
         }
     }
 
@@ -50,14 +49,10 @@ class RelayDetailView: UIView {
 
         relayWritingList.snp.makeConstraints {
             $0.top.equalTo(header.snp.bottom).offset(15.0)
-            $0.width.equalToSuperview()
+//            $0.width.equalToSuperview()
             $0.left.right.bottom.equalToSuperview()
 
         }
-
-//        Observable.just([SectionModel(model: "title", items: ["글감", "일상", "로맨스", "짧은 글", "긴 글", "무서운 글", "발랄한 글", "한글", "세종대왕"])])
-//            .bind(to: relayWritingList.collectionView.rx.items(dataSource: dataSource))
-//            .disposed(by: disposeBag)
 
     }
 

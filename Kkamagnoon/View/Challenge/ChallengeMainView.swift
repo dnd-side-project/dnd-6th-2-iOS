@@ -31,7 +31,9 @@ class ChallengeMainView: UIView {
     // TODO: Add dropdown
     var expansionButton = UIButton()
         .then {
-            $0.setImage(UIImage(systemName: "heart.fill"), for: .normal)
+            $0.setImage(UIImage(named: "Expand"), for: .normal)
+            $0.contentEdgeInsets = UIEdgeInsets(top: 10, left: 5, bottom: 10, right: 5)
+
         }
 
     var todayKeyWordView = TodayKeywordView()
@@ -75,7 +77,8 @@ class ChallengeMainView: UIView {
 //            $0.adjustsBoundingRectWhenChangingMonths = true
             $0.collectionView.register(CalendarDateCell.self, forCellWithReuseIdentifier: CalendarDateCell.identifier)
             // selection
-            $0.today = nil
+//            $0.today = nil
+            $0.appearance.todayColor = .clear
 
             $0.appearance.borderRadius = 5
         }
@@ -121,11 +124,10 @@ class ChallengeMainView: UIView {
 
         expansionButton.snp.makeConstraints {
             $0.centerX.equalToSuperview()
+            $0.width.equalTo(32)
+            $0.height.equalTo(27)
+            $0.bottom.equalTo(calendarView.snp.bottom).offset(-16)
         }
-
-        buttonHeight = expansionButton.bottomAnchor.constraint(equalTo: calendarView.bottomAnchor)
-        buttonHeight.constant = -11.0
-        buttonHeight.isActive = true
 
         self.addSubview(todayKeyWordView)
         todayKeyWordView.snp.makeConstraints {

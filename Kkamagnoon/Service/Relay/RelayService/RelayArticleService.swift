@@ -10,7 +10,7 @@ import RxAlamofire
 import Alamofire
 
 class RelayArticleService: Service {
-    func getRelayArticle(relayId: String, cursor: String?) -> Observable<RelayResponse> {
+    func getRelayArticle(relayId: String, cursor: String?) -> Observable<GetRelayArticleResDTO> {
         let endpoint = RelayArticleEndPointCases.getRelayArticle(relayId: relayId, cursor: cursor)
 
         let request = makeRequest(endpoint: endpoint)
@@ -18,20 +18,20 @@ class RelayArticleService: Service {
         return RxAlamofire.request(request as URLRequestConvertible)
             .responseData()
             .asObservable()
-            .map { http, resData -> RelayResponse  in
-                print("RELAY >>> \(http)")
+            .map { _, resData -> GetRelayArticleResDTO  in
+                print("RELAYArticle >>> \(request)")
                 let decoder = JSONDecoder()
 
                 do {
-                    let result = try decoder.decode(RelayResponse.self, from: resData)
+                    let result = try decoder.decode(GetRelayArticleResDTO.self, from: resData)
 
-                    print("RELAY >>> \(result)")
+                    print("RELAYArticle >>> \(result)")
                     return result
                 } catch {
                     print(error)
                 }
 
-                return RelayResponse()
+                return GetRelayArticleResDTO()
             }
     }
 

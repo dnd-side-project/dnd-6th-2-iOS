@@ -56,7 +56,14 @@ class MyChallengeCard: UIView {
         }
 
     var likeLabel = ImageLabelView()
+        .then {
+            $0.imageView.image = UIImage(named: "Heart")
+        }
+
     var commentLabel = ImageLabelView()
+        .then {
+            $0.imageView.image = UIImage(named: "Comment")
+        }
 
     override init(frame: CGRect) {
         super.init(frame: frame)

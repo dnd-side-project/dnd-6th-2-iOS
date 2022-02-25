@@ -71,7 +71,7 @@ extension FeedViewModel {
             .bind { owner, articleResponse in
 
                 owner.output.wholeFeedList.accept(
-                    [FeedSection(header: "", items: articleResponse.articles ?? [])]
+                    [FeedSection(header: Relay(), items: articleResponse.articles ?? [])]
                 )
             }
             .disposed(by: disposeBag)

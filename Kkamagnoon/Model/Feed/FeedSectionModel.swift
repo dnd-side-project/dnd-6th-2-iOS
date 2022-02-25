@@ -9,7 +9,7 @@ import Foundation
 import RxDataSources
 
 struct FeedSection {
-    var header: String
+    var header: Relay
     var items: [Item]
 }
 

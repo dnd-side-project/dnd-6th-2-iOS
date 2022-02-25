@@ -24,26 +24,36 @@ class RelayDetailViewController: UIViewController {
                 RelayContentCell.self,
                 forCellWithReuseIdentifier: RelayContentCell.relayContentCellIdentifier
             )
+
             $0.relayWritingList.collectionView.register(
                 RelayTitleCell.self,
-                forCellWithReuseIdentifier: RelayTitleCell.relayTitleCellIdentifier
+                forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
+                withReuseIdentifier: RelayTitleCell.relayTitleCellIdentifier
             )
+
+            $0.relayWritingList.layout.headerReferenceSize = CGSize(width: UIScreen.main.bounds.width - 40, height: 541)
+
         }
 
-    let dataSource = RxCollectionViewSectionedReloadDataSource<SectionModel<String, String>> { _, collectionView, indexPath, _ in
+    let dataSource = RxCollectionViewSectionedReloadDataSource<FeedSection>(configureCell: { _, collectionView, indexPath, element in
 
-        let index = indexPath.row
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: RelayContentCell.relayContentCellIdentifier, for: indexPath) as! RelayContentCell
 
-        if index == 0 {
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: RelayTitleCell.relayTitleCellIdentifier, for: indexPath) as! RelayTitleCell
+        cell.subTitleLabel.text = element.title
+        cell.contentTextLabel.setTextWithLineHeight(text: element.content, lineHeight: Numbers(rawValue: 24.0) ?? .lineheightInBox)
 
-            return cell
-        } else {
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: RelayContentCell.relayContentCellIdentifier, for: indexPath) as! RelayContentCell
+        return cell
 
-            return cell
-        }
-    }
+    }, configureSupplementaryView: { dataSource, collectionView, _, indexPath in
+        let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: RelayTitleCell.relayTitleCellIdentifier, for: indexPath) as! RelayTitleCell
+
+        let sectionModel = dataSource.sectionModels[indexPath.section].header
+
+        headerView.titleLabel.text = sectionModel.title
+        headerView.totalCountLabel.text = "총 \(sectionModel.articleCount ?? 0)편"
+
+        return headerView
+    })
 
     lazy var enterButton = UIButton()
         .then {
@@ -56,7 +66,7 @@ class RelayDetailViewController: UIViewController {
 
     lazy var addWritingButton = MakingRoomButton()
         .then {
-            $0.backgroundColor = UIColor(rgb: Color.whitePurple)
+            $0.setImage(UIImage(named: "Pencil"), for: .normal)
         }
 
     lazy var bottomBar = BottomBar()
@@ -87,7 +97,7 @@ class RelayDetailViewController: UIViewController {
         view.addSubview(detailView)
 
         detailView.snp.makeConstraints {
-            $0.width.equalToSuperview()
+            $0.width.equalToSuperview().offset(-40)
             $0.centerX.equalToSuperview()
             $0.bottom.equalToSuperview()
             $0.top.equalTo(view.safeAreaLayoutGuide)
@@ -157,6 +167,10 @@ class RelayDetailViewController: UIViewController {
             .bind { owner, _ in
                 owner.goToParticipationVC()
             }
+            .disposed(by: disposeBag)
+
+        viewModel.output.articleList
+            .bind(to: detailView.relayWritingList.collectionView.rx.items(dataSource: dataSource))
             .disposed(by: disposeBag)
     }
 

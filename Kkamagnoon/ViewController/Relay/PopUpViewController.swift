@@ -23,6 +23,11 @@ class PopUpViewController: UIViewController {
         }
 
     var popUpView = PopUpView()
+    var imageView = UIImageView()
+        .then {
+            $0.image = UIImage(named: "RelayRoomAlertCharacter")
+            $0.contentMode = .scaleAspectFit
+        }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -43,6 +48,14 @@ class PopUpViewController: UIViewController {
             $0.centerX.equalToSuperview()
             $0.top.equalToSuperview().offset(276.0)
             $0.width.equalToSuperview().offset(-74.0)
+        }
+
+        view.addSubview(imageView)
+        imageView.snp.makeConstraints {
+            $0.centerX.equalToSuperview()
+            $0.width.equalTo(125.72)
+            $0.height.equalTo(110.41)
+            $0.bottom.equalTo(popUpView.alertTitleLabel.snp.top).offset(-7.13)
         }
     }
 

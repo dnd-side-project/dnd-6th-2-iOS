@@ -7,6 +7,7 @@
 
 import UIKit
 import RxSwift
+import Then
 
 class CommentCell: UITableViewCell {
 
@@ -15,6 +16,9 @@ class CommentCell: UITableViewCell {
     let profileView = ProfileView(width: 29, height: 29, fontsize: 14)
     let createdDateLabel = UILabel()
     let moreButton = UIButton()
+        .then {
+            $0.setImage(UIImage(named: "More"), for: .normal)
+        }
     let commentContent = UITextView()
 
     var moreButtonTapHandler: (() -> Void)?
