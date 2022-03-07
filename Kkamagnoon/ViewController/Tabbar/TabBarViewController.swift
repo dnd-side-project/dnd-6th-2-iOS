@@ -17,7 +17,9 @@ class TabBarViewController: UITabBarController {
         super.viewDidLoad()
         TabBarViewController.tabbarHeight = self.tabBar.frame.height
         createBarItems()
+        tabBar.backgroundColor = UIColor(rgb: Color.basicBackground)
         tabBar.tintColor = .white
+        tabBar.unselectedItemTintColor = UIColor(rgb: Color.tag)
 
         setGrayLine()
     }

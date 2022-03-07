@@ -45,7 +45,8 @@ class TodayKeywordView: UIView {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.backgroundColor = UIColor(rgb: 0x1A1A1A)
+//        self.backgroundColor = UIColor(rgb: 0x1A1A1A)
+        self.backgroundColor = UIColor(rgb: Color.feedListCard)
         self.layer.cornerRadius = 14
 
         setView()

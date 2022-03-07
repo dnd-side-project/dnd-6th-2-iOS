@@ -69,7 +69,7 @@ class ChallengeSelectingTagViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        view.backgroundColor = .black
+        view.backgroundColor = UIColor(rgb: Color.basicBackground)
 
         setView()
         bindView()
@@ -82,6 +82,7 @@ extension ChallengeSelectingTagViewController {
         view.addSubview(backButton)
         backButton.snp.makeConstraints {
             $0.left.equalToSuperview().offset(21.0)
+            $0.size.equalTo(28.0)
             $0.top.equalTo(view.safeAreaLayoutGuide).offset(26.24)
         }
 

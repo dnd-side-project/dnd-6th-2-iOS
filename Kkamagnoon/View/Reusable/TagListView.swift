@@ -32,7 +32,7 @@ class TagListView: UIView {
         filterView.register(CategoryFilterCell.self, forCellWithReuseIdentifier: CategoryFilterCell.categoryFilterCellIdentifier)
         filterView.allowsMultipleSelection = true
 
-        filterView.backgroundColor = .black
+        filterView.backgroundColor = UIColor(rgb: Color.basicBackground)
 
         filterView.showsHorizontalScrollIndicator = false
 

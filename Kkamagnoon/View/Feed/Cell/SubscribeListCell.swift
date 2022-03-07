@@ -16,7 +16,7 @@ class SubscribeListCell: UITableViewCell {
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        self.backgroundColor = .black
+        self.backgroundColor = UIColor(rgb: Color.basicBackground)
         self.selectionStyle = .none
         setView()
     }

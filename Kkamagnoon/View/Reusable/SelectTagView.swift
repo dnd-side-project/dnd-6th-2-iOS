@@ -37,7 +37,7 @@ class SelectTagView: UIView {
 
         collectionView.showsVerticalScrollIndicator = false
         collectionView.allowsMultipleSelection = true
-        collectionView.backgroundColor = .black
+        collectionView.backgroundColor = UIColor(rgb: Color.basicBackground)
 
         collectionView.register(
             SelectingTagCell.self,

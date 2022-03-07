@@ -17,7 +17,7 @@ class SelectingTagCell: UICollectionViewCell {
         .then {
             $0.categoryLabel.font = UIFont.pretendard(weight: .semibold, size: 16)
             $0.categoryLabel.textColor = .white
-            $0.backgroundColor = .black
+            $0.backgroundColor = UIColor(rgb: Color.basicBackground)
             $0.layer.borderWidth = 1
             $0.layer.borderColor = UIColor(rgb: 0x393939).cgColor
             $0.layer.cornerRadius = 26.5
@@ -53,7 +53,7 @@ class SelectingTagCell: UICollectionViewCell {
           return
       }
 
-        self.tagView.backgroundColor = .black
+        self.tagView.backgroundColor = UIColor(rgb: Color.basicBackground)
         self.tagView.categoryLabel.textColor = UIColor(rgb: Color.tagText)
     }
 

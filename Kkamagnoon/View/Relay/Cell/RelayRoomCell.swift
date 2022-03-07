@@ -39,7 +39,7 @@ class RelayRoomCell: UICollectionViewCell {
 
     var personnelLabel = ImageLabelView()
         .then {
-            $0.labelView.text = "1/6"
+            $0.labelView.text = "0/6"
             $0.labelView.font = UIFont.pretendard(weight: .bold, size: 11.61)
             $0.labelView.textColor = .white
             $0.imageView.image = UIImage(named: "LeftCharacter")

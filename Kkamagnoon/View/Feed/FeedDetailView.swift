@@ -39,7 +39,7 @@ class FeedDetailView: UIView {
             $0.setTextWithLineHeight(text: StringType.dummyContents, lineHeight: 27, fontSize: 18.0, fontWeight: .regular, color: .white)
             $0.isEditable = false
             $0.isUserInteractionEnabled = false
-            $0.backgroundColor = .black
+            $0.backgroundColor = UIColor(rgb: Color.basicBackground)
             $0.textContainerInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
             $0.isScrollEnabled = false
             $0.sizeToFit()

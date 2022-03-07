@@ -59,7 +59,7 @@ class ChallengeViewController: UIViewController {
         super.viewDidLoad()
         navigationController?.setNavigationBarHidden(true, animated: false)
         navigationController?.interactivePopGestureRecognizer?.delegate = nil
-
+        view.backgroundColor = UIColor(rgb: Color.basicBackground)
         challengeMainView.calendarView.delegate = self
         challengeMainView.calendarView.dataSource = self
 
@@ -146,12 +146,20 @@ class ChallengeViewController: UIViewController {
             .bind { owner, challenge in
                 owner.challengeMainView.todayKeyWordView
                     .keywordLabel.text = challenge.keyword?.content
-                owner.challengeMainView.subTitleLabel[0].text = "이번달은 \(challenge.challengeCount ?? 0)개의 스탬프를 찍었어요!"
+
+                var stamp = 1
+
+                // TODO: stamp 갯수 채우기
+                owner.challengeMainView.subTitleLabel[0].text = "이번달은 \(stamp)개의 스탬프를 찍었어요!"
 
                 let history = challenge.challengeHistory ?? []
 
                 history.forEach({ date in
-                    self.eventsArray.append( self.formatter.date(from: date)!)
+                    print(date)
+                    if let date = self.formatter.date(from: date) {
+                        self.eventsArray.append(date)
+                    }
+
                 })
 
                 let articles = challenge.articles ?? []

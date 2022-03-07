@@ -91,6 +91,7 @@ class RelayViewController: UIViewController {
         super.viewDidLoad()
         navigationController?.setNavigationBarHidden(true, animated: false)
         navigationController?.interactivePopGestureRecognizer?.delegate = nil
+        view.backgroundColor = UIColor(rgb: Color.basicBackground)
         roomView = relayRoomView
 
         setView()

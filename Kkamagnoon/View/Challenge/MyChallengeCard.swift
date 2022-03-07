@@ -70,7 +70,7 @@ class MyChallengeCard: UIView {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.backgroundColor = UIColor(rgb: 0x1E1E1E)
+        self.backgroundColor = UIColor(rgb: 0x292929)
         self.layer.cornerRadius = 15
         setView()
         self.addGestureRecognizer(tapGesture)

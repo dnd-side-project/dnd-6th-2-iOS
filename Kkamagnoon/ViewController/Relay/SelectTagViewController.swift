@@ -49,7 +49,7 @@ class SelectTagViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .black
+        view.backgroundColor = UIColor(rgb: Color.basicBackground)
         self.navigationController?.isNavigationBarHidden = true
 
         setBackButton()

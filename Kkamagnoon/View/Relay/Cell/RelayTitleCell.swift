@@ -34,7 +34,7 @@ class RelayTitleCell: UICollectionViewCell {
     var contributedListLabel = UILabel()
         .then {
 
-            $0.text = "무시무시한,무시무시한,무시무시한,무시무시한,무시무시한,무시무시한 지음"
+//            $0.text = "무시무시한,무시무시한,무시무시한,무시무시한,무시무시한,무시무시한 지음"
             $0.numberOfLines = 0
             $0.lineBreakMode = .byWordWrapping
             $0.textColor = .white

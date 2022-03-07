@@ -24,7 +24,7 @@ class SubscribeListViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .black
+        view.backgroundColor = UIColor(rgb: Color.basicBackground)
         navigationController?.isNavigationBarHidden = true
         setBackButton()
         setPageNameLabel()
@@ -61,7 +61,7 @@ class SubscribeListViewController: UIViewController {
     }
 
     func setListTableView() {
-        listTableView.backgroundColor = .black
+        listTableView.backgroundColor = UIColor(rgb: Color.basicBackground)
         view.addSubview(listTableView)
         listTableView.translatesAutoresizingMaskIntoConstraints = false
 

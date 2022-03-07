@@ -19,6 +19,12 @@ class WritingViewController: UIViewController {
             $0.titleLabel.isHidden = true
             $0.bellButton.isHidden = true
             $0.noticeButton.isEnabled = false
+            $0.noticeButton.setTitleColor(.white, for: .normal)
+            $0.noticeButton.titleLabel?.font = UIFont.pretendard(weight: .semibold, size: 14)
+            $0.noticeButton.setTitle("다음", for: .normal)
+            $0.noticeButton.setImage(nil, for: .normal)
+            $0.noticeButton.layer.cornerRadius = 18
+//            $0.layer.cornerCurve = .continuous
         }
 
     var writingView = WritingView()
@@ -39,7 +45,7 @@ class WritingViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationController?.isNavigationBarHidden = true
-        view.backgroundColor = .black
+        view.backgroundColor = UIColor(rgb: Color.basicBackground)
         setKeyBoard()
         animateWritingViewGoUp()
         animateWritingViewGoDown()
@@ -66,6 +72,11 @@ extension WritingViewController {
             $0.top.equalTo(view.safeAreaLayoutGuide)
             $0.left.equalToSuperview().offset(20.0)
             $0.right.equalToSuperview().offset(-20.0)
+        }
+
+        header.noticeButton.snp.makeConstraints {
+            $0.width.equalTo(57)
+            $0.height.equalTo(25)
         }
 
         view.addSubview(writingSubView)

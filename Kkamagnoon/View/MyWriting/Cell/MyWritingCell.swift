@@ -13,6 +13,9 @@ class MyWritingCell: UICollectionViewCell {
     static let identifier = "MyWritingCellIdentifier"
 
     var card = MyChallengeCard()
+        .then {
+            $0.grayLine.isHidden = true
+        }
 
     override init(frame: CGRect) {
         super.init(frame: frame)

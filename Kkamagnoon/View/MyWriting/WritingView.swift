@@ -18,7 +18,7 @@ class WritingView: UIView {
     var titleTextField = UITextField()
         .then {
             $0.placeholder = "제목을 써주세요"
-            $0.textColor = UIColor(rgb: 0x929292)
+            $0.textColor = .white
             $0.setPlaceholderColor(UIColor(rgb: 0x929292))
 
             $0.font = UIFont.pretendard(weight: .semibold, size: 20)
@@ -26,8 +26,6 @@ class WritingView: UIView {
         }
 
     var grayLine = GrayBorderView()
-
-//    let placeholder = "내용을 자유롭게 써주세요"
 
     var contentTextView = UITextView()
         .then {

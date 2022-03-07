@@ -27,14 +27,8 @@ class HeaderViewWithBackBtn: UIView {
         }
 
     let bellButton = UIButton()
-        .then {
-            $0.setImage(UIImage(systemName: "heart.fill"), for: .normal)
-        }
 
     var noticeButton = UIButton()
-        .then {
-            $0.setImage(UIImage(systemName: "heart.fill"), for: .normal)
-        }
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -81,7 +75,7 @@ class HeaderViewWithBackBtn: UIView {
         self.addSubview(noticeButton)
 
         noticeButton.snp.makeConstraints {
-            $0.size.equalTo(28.0)
+//            $0.size.equalTo(28.0)
             $0.right.equalToSuperview()
             $0.centerY.equalTo(backButton)
         }

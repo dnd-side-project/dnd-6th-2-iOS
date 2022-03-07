@@ -34,7 +34,7 @@ class BottomBar: UIView {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.backgroundColor = UIColor(rgb: 0x191919)
+        self.backgroundColor = UIColor(rgb: Color.basicBackground)
         setView()
     }
 
