@@ -16,51 +16,88 @@ class RelayViewModel: ViewModelType {
         let relayRoomButtonTap = PublishSubject<Void>()
         let participatedRoomButtonTap = PublishSubject<Void>()
         let bellButtonTap = PublishSubject<Void>()
-        let tagCellTap = PublishSubject<Void>()
+        let tagCellTap = PublishSubject<String>()
         let sortButtonTap = PublishSubject<Void>()
-        // Temp
-        let relayRoomCellTap = PublishSubject<IndexPath>()
+        let relayRoomCellTap = PublishSubject<Relay>()
         let makingRoomButtonTap = PublishSubject<Void>()
-        // add more...
     }
 
     struct Output {
         let currentListStyle = BehaviorRelay<RelayListStyle>(value: .relayRoom)
-
         let goToBell = PublishRelay<Void>()
         let currentSortStyle = BehaviorRelay<SortStyle>(value: .byLatest)
-        let goToDetailRelayRoom = PublishRelay<IndexPath>()
+        let goToDetailRelayRoom = PublishRelay<Relay>()
         let goToMakingRelay = PublishRelay<Void>()
-
-        // TEMP String -> FeedInfo
-        let relayRoomList = BehaviorRelay<[SectionModel<String, String>]>(value: [])
-        let participatedRoomList = BehaviorRelay<[String]>(value: [])
+        let relayRoomList = PublishRelay<[RelaySection]>()
+        let participatedRoomList = PublishRelay<[RelaySection]>()
     }
 
     var input: Input
     var output: Output
-//    var service: FeedService!
-    var selectedTagCount: Int = 0
 
+    var relayService: RelayService!
     var disposeBag = DisposeBag()
+
     var sortStyle: SortStyle = .byLatest
+    var checkSelectedTags = [String: Bool]()
 
     init(input: Input = Input(),
          output: Output = Output()) {
         self.input = input
         self.output = output
-//        self.service = FeedService()
+        self.relayService = RelayService()
 
-        bindChangeRelayList()
-        bindExtraButton()
-        bindSortButton()
-        bindMakingRelayButton()
-        bindRelayRoomList()
-        bindRelayListTap()
-        bindParticipatedRoomList()
+        StringType.categories.forEach({ tag in
+            checkSelectedTags.updateValue(false, forKey: tag)
+        })
+
+        bind()
     }
 
-    func bindChangeRelayList() {
+    deinit {
+        disposeBag = DisposeBag()
+    }
+}
+
+extension RelayViewModel {
+    func bindRelayList() {
+
+        relayService.getRelayRoomList(cursor: nil, orderBy: sortStyle.rawValue, tags: checkSelectedTags)
+            .withUnretained(self)
+            .bind { owner, relayResponse in
+
+                owner.output.relayRoomList.accept(
+                    [RelaySection(header: "", items: relayResponse.relays ?? [])]
+                )
+            }
+            .disposed(by: disposeBag)
+    }
+
+    func bindParticipatedRoomList() {
+        relayService.getRelayRoomParticitated(cursor: nil)
+            .withUnretained(self)
+            .bind { owner, relayResponse in
+
+                owner.output.participatedRoomList.accept(
+                    [RelaySection(header: "", items: relayResponse.relays ?? [])]
+                )
+            }
+            .disposed(by: disposeBag)
+    }
+
+    func bindMyRoomList() {
+        relayService.getRelayUserMade(cursor: nil)
+            .withUnretained(self)
+            .bind { owner, relayResponse in
+
+                owner.output.participatedRoomList.accept(
+                    [RelaySection(header: "", items: relayResponse.relays ?? [])]
+                )
+            }
+            .disposed(by: disposeBag)
+    }
+
+    func bind() {
         input.relayRoomButtonTap
             .withUnretained(self)
             .bind { owner, _ in
@@ -74,9 +111,6 @@ class RelayViewModel: ViewModelType {
                 owner.output.currentListStyle.accept(.participatedRoom)
             }
             .disposed(by: disposeBag)
-    }
-
-    func bindExtraButton() {
 
         input.bellButtonTap
             .withUnretained(self)
@@ -84,64 +118,28 @@ class RelayViewModel: ViewModelType {
                 owner.output.goToBell.accept(())
             }
             .disposed(by: disposeBag)
-    }
 
-    func bindSortButton() {
-        input.sortButtonTap
+        input.tagCellTap
             .withUnretained(self)
-            .bind { owner, _ in
-                if owner.sortStyle == .byLatest {
-                    owner.output.currentSortStyle.accept(.byPopularity)
-                    owner.sortStyle = .byPopularity
-                } else {
-                    owner.output.currentSortStyle.accept(.byLatest)
-                    owner.sortStyle = .byLatest
-                }
+            .bind { owner, tagString in
+                let nowValue = owner.checkSelectedTags[tagString, default: false]
+                owner.checkSelectedTags.updateValue(!nowValue, forKey: tagString)
+                owner.bindRelayList()
             }
             .disposed(by: disposeBag)
-    }
 
-    func bindMakingRelayButton() {
         input.makingRoomButtonTap
             .withUnretained(self)
             .bind { owner, _ in
                 owner.output.goToMakingRelay.accept(())
             }
             .disposed(by: disposeBag)
-    }
 
-    func bindRelayRoomList() {
-        // DUMMY
-
-        Observable.just([SectionModel(model: "최신순", items: ["글감", "일상", "로맨스", "짧은 글", "긴 글", "무서운 글", "발랄한 글", "한글", "세종대왕"])])
-            .bind { [weak self] list in
-                guard let self = self else {return}
-                self.output.relayRoomList.accept(list)
-            }
-            .disposed(by: disposeBag)
-
-    }
-
-    func bindRelayListTap() {
         input.relayRoomCellTap
-            .bind { [weak self] indexPath in
+            .bind { [weak self] relay in
                 guard let self = self else {return}
-                self.output.goToDetailRelayRoom.accept(indexPath)
+                self.output.goToDetailRelayRoom.accept(relay)
             }
             .disposed(by: disposeBag)
-    }
-
-    func bindParticipatedRoomList() {
-        // DUMMY
-        let dummyData = Observable<[String]>.of(["글감", "일상", "로맨스", "긴 글", "무서운 글", "한글", "세종대왕"])
-        dummyData.bind { [weak self] list in
-            guard let self = self else {return}
-            self.output.participatedRoomList.accept(list)
-        }
-        .disposed(by: disposeBag)
-    }
-
-    deinit {
-        disposeBag = DisposeBag()
     }
 }

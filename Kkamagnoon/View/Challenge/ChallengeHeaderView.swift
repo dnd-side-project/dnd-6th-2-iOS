@@ -19,7 +19,7 @@ class ChallengeHeaderView: UIView {
 
     var bellButton = UIButton()
         .then {
-            $0.setImage(UIImage(systemName: "heart.fill"), for: .normal)
+            $0.setImage(UIImage(named: ButtonImageName.bell.rawValue), for: .normal)
         }
 
     override init(frame: CGRect) {
@@ -43,6 +43,7 @@ class ChallengeHeaderView: UIView {
         bellButton.snp.makeConstraints {
             $0.right.equalToSuperview().offset(-17.0)
             $0.centerY.equalTo(titleLabel)
+            $0.size.equalTo(28.0)
         }
     }
 }

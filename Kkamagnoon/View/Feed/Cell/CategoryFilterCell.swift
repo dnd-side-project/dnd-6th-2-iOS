@@ -43,7 +43,6 @@ final class CategoryFilterCell: UICollectionViewCell {
         }
 
         didSet {
-            print(">>>\(isSelected) , \(selectCount)")
             configureSelected()
         }
     }

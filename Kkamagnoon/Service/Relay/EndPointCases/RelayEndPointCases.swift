@@ -9,11 +9,13 @@ import Foundation
 
 enum RelayEndPointCases: EndPoint {
 
-    case getRelayRoomList(cursor: String?, orderBy: String, tags: [String]?)
+    case getRelayRoomList(cursor: String?, orderBy: String, tags: [String: Bool]?)
     case postRelayRoom(relay: CreateRelayDTO)
     case getRelayRoomParticitated(cursor: String?)
+    case getRelayUserMade(cursor: String?)
     case patchRelayRoom(relayId: String, updateRelay: UpdateRelayDTO)
     case deleteRelayRoom(relayId: String)
+    case getRelayRoomById(relayId: String)
     case postRelayJoin(relayId: String)
     case deleteRelayJoin(relayId: String)
 
@@ -28,10 +30,14 @@ extension RelayEndPointCases {
             return "POST"
         case .getRelayRoomParticitated:
             return "GET"
+        case .getRelayUserMade:
+            return "GET"
         case .patchRelayRoom:
             return "PATCH"
         case .deleteRelayRoom:
             return "DELETE"
+        case .getRelayRoomById:
+            return "GET"
         case .postRelayJoin:
             return "POST"
         case .deleteRelayJoin:
@@ -56,7 +62,12 @@ extension RelayEndPointCases {
             }
 
             if let tags = tags {
-                finalUrl.append(contentsOf: "&tags=\(tags)")
+                tags.forEach({ tag in
+                    if tag.value {
+                        finalUrl.append("&tags=\(tag.key)")
+                    }
+
+                })
             }
 
             return finalUrl
@@ -65,6 +76,15 @@ extension RelayEndPointCases {
             return baseURLString
 
         case .getRelayRoomParticitated(let cursor):
+            var finalUrl = baseURLString + "/members"
+
+            if let cursor = cursor {
+                finalUrl.append(contentsOf: "?cursor=\(cursor)")
+            }
+
+            return finalUrl
+
+        case .getRelayUserMade(let cursor):
             var finalUrl = baseURLString + "/user"
 
             if let cursor = cursor {
@@ -79,8 +99,12 @@ extension RelayEndPointCases {
         case .deleteRelayRoom(let relayId):
             return baseURLString + "/\(relayId)"
 
+        case .getRelayRoomById(let relayId):
+            return baseURLString + "/\(relayId)"
+
         case .postRelayJoin(let relayId):
             return baseURLString + "/\(relayId)/join"
+
         case .deleteRelayJoin(let relayId):
             return baseURLString + "/\(relayId)/join"
         }
@@ -105,6 +129,7 @@ extension RelayEndPointCases {
     var body: [String: Any]? {
         switch self {
         case .postRelayRoom(relay: let relay):
+            print(">>>@@\(relay)")
             return [
                 "title": relay.title,
                 "tags": relay.tags,

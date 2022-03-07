@@ -39,7 +39,7 @@ class MultiLineTagListView: UIView {
 
     }
 
-    func setTags() {
+    func setTags(tagViewColor: Int, tagTextColor: Int) {
 
         let margin = 5.3
         let maxWidth = UIScreen.main.bounds.width - 137
@@ -61,6 +61,8 @@ class MultiLineTagListView: UIView {
             let tagView = TagView(top: 7, bottom: -7, leading: 14, trailing: -14)
             tagView.setContentHuggingPriority(.required, for: .horizontal)
             tagView.categoryLabel.text = keyword
+            tagView.backgroundColor = UIColor(rgb: tagViewColor)
+            tagView.categoryLabel.textColor = UIColor(rgb: tagTextColor)
 
             let width = keyword.width(forHeight: 20, font: UIFont.pretendard(weight: .medium, size: 12))
 

@@ -18,7 +18,7 @@ class SelectTagView: UIView {
             $0.minimumInteritemSpacing = 8
             $0.minimumLineSpacing = 20.68
             $0.scrollDirection = .vertical
-            $0.headerReferenceSize = CGSize(width: UIScreen.main.bounds.width - 40, height: 148)
+            $0.headerReferenceSize = CGSize(width: UIScreen.main.bounds.width - 40, height: 124)
         }
 
     var collectionView: UICollectionView!
@@ -37,7 +37,7 @@ class SelectTagView: UIView {
 
         collectionView.showsVerticalScrollIndicator = false
         collectionView.allowsMultipleSelection = true
-        collectionView.backgroundColor = .black
+        collectionView.backgroundColor = UIColor(rgb: Color.basicBackground)
 
         collectionView.register(
             SelectingTagCell.self,

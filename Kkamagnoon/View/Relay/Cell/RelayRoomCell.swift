@@ -14,6 +14,7 @@ class RelayRoomCell: UICollectionViewCell {
 
     var profileView = ProfileView(width: 28, height: 28, fontsize: 14)
         .then {
+            $0.nickNameLabel.lineBreakMode = .byTruncatingTail
             $0.nickNameLabel.font = UIFont.pretendard(weight: .semibold, size: 14)
             $0.nickNameLabel.text = "첫사랑"
             $0.subscribeStatus.isHidden = true
@@ -31,9 +32,23 @@ class RelayRoomCell: UICollectionViewCell {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
+        self.layer.cornerRadius = 15
         self.backgroundColor = UIColor(rgb: Color.feedListCard)
         setView()
     }
+
+    var personnelLabel = ImageLabelView()
+        .then {
+            $0.labelView.text = "0/6"
+            $0.labelView.font = UIFont.pretendard(weight: .bold, size: 11.61)
+            $0.labelView.textColor = .white
+            $0.imageView.image = UIImage(named: "LeftCharacter")
+            $0.imageView.contentMode = .scaleAspectFit
+            $0.imageView.snp.makeConstraints { make in
+                make.width.equalTo(33)
+                make.height.equalTo(22)
+            }
+        }
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -44,6 +59,7 @@ class RelayRoomCell: UICollectionViewCell {
         profileView.snp.makeConstraints {
             $0.top.equalToSuperview().offset(14.0)
             $0.left.equalToSuperview().offset(16.0)
+            $0.right.equalToSuperview().offset(-16.0)
         }
 
         self.addSubview(contentLabel)
@@ -61,13 +77,23 @@ class RelayRoomCell: UICollectionViewCell {
             $0.bottom.equalToSuperview().offset(-16.42)
 
         }
-        tagListView.setTags()
+
+        self.addSubview(personnelLabel)
+        personnelLabel.snp.makeConstraints {
+            $0.right.equalToSuperview().offset(-20.0)
+            $0.bottom.equalToSuperview().offset(-20.0)
+        }
+
+        personnelLabel.labelView.snp.makeConstraints {
+            $0.left.equalTo(personnelLabel.imageView.snp.right).offset(8.0)
+        }
 
     }
 
     override func prepareForReuse() {
         super.prepareForReuse()
         tagListView.removeTags()
+        self.backgroundColor = UIColor(rgb: Color.feedListCard)
     }
 
     override func preferredLayoutAttributesFitting(_ layoutAttributes: UICollectionViewLayoutAttributes)

@@ -8,24 +8,22 @@
 import Foundation
 import RxSwift
 import RxCocoa
+import RxDataSources
 
 class SelectTagViewModel: ViewModelType {
+
     var disposeBag = DisposeBag()
-
-    // count: 12
-    let tagList = ["일상", "로맨스", "추리", "코믹", "감성", "시", "소설", "글귀", "일기", "수필", "짧은 글", "긴 글"]
-    var selectedTags: [String] = []
-
-    var selectedState = [Bool](repeating: false, count: 12)
+    var checkSelectedTags = [String: Bool]()
 
     struct Input {
+        let backButtonTap = PublishSubject<Void>()
         let tagTap = PublishSubject<String>()
         let completeButtonTap = PublishSubject<Void>()
-        // add more...
+
     }
 
     struct Output {
-        let tagList = BehaviorRelay<[String]>(value: [])
+        let tagList = PublishRelay<[String]>()
         let goBackToMakingView = PublishRelay<Void>()
     }
 
@@ -36,22 +34,43 @@ class SelectTagViewModel: ViewModelType {
          output: Output = Output()) {
         self.input = input
         self.output = output
-//        bindTagTab()
+        bindTagTab()
         bindComplete()
     }
 
-//    func bindTagTab() {
-//        input.tagTap
-//            .withUnretained(self)
-//            .bind { owner, _ in
-//                if owner.selectedTags.count < 6 {
-//                    owner.selectedTags.append(<#T##newElement: String##String#>)
-//                }
-//            }
-//            .disposed(by: disposeBag)
-//    }
+    func bindTagTab() {
+
+        StringType.categories.forEach({ tag in
+            checkSelectedTags.updateValue(false, forKey: tag)
+        })
+
+        input.tagTap
+            .withUnretained(self)
+            .bind { owner, model in
+
+                let checked = owner.checkSelectedTags[model] ?? false
+                owner.checkSelectedTags.updateValue(!checked, forKey: model)
+
+                var tagArray: [String] = []
+                owner.checkSelectedTags.forEach({ tag in
+                    if tag.value {
+                        tagArray.append(tag.key)
+                    }
+                })
+
+                owner.output.tagList.accept(tagArray)
+            }
+            .disposed(by: disposeBag)
+    }
 
     func bindComplete() {
+        input.backButtonTap
+            .withUnretained(self)
+            .bind { owner, _ in
+                owner.output.goBackToMakingView.accept(())
+            }
+            .disposed(by: disposeBag)
+
         input.completeButtonTap
             .withUnretained(self)
             .bind { owner, _ in

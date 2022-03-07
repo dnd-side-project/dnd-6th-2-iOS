@@ -14,7 +14,7 @@ import RxDataSources
 
 class RelayRoomView: UIView {
 
-    var categoryFilterView = TagListView()
+    var categoryFilterView = TagListView(frame: .zero, tags: StringType.categories)
 
     var relayList = ArticleListView()
         .then {
@@ -39,6 +39,9 @@ class RelayRoomView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
 
+}
+
+extension RelayRoomView {
     func setView() {
         self.addSubview(categoryFilterView)
 
@@ -59,5 +62,4 @@ class RelayRoomView: UIView {
         }
 
     }
-
 }

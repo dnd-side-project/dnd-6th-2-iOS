@@ -10,11 +10,12 @@ import SnapKit
 import Then
 import RxSwift
 import RxCocoa
+import RxDataSources
 
 class MakingRelayRoomViewController: UIViewController {
 
     var disposeBag = DisposeBag()
-    let viewModel = MakingRelayRoomModel()
+    var viewModel = MakingRelayRoomModel()
 
     var scrollView = UIScrollView()
           .then {
@@ -23,6 +24,31 @@ class MakingRelayRoomViewController: UIViewController {
           }
 
     var makingRelayView = MakingRelayView()
+        .then {
+            $0.addingTagView.collectionView.register(
+                AddingTagCell.self,
+                forCellWithReuseIdentifier: AddingTagCell.identifier
+            )
+        }
+
+    var tagDataSource = RxCollectionViewSectionedReloadDataSource<SectionModel<String, String>> { _, collectionView, indexPath, element in
+
+        let cell = collectionView.dequeueReusableCell(
+            withReuseIdentifier: AddingTagCell.identifier,
+            for: indexPath) as! AddingTagCell
+
+        cell.tagView.categoryLabel.text = element
+
+        if element == StringType.addTagString {
+            cell.tagView.backgroundColor = UIColor(rgb: Color.tag)
+
+            if indexPath.row != 0 {
+                cell.tagView.categoryLabel.text = "+"
+            }
+        }
+
+        return cell
+    }
 
     var enterButton = UIButton()
         .then {
@@ -36,11 +62,12 @@ class MakingRelayRoomViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .black
+        view.backgroundColor = UIColor(rgb: Color.basicBackground)
         navigationController?.setNavigationBarHidden(true, animated: false)
 
         setView()
         bindView()
+        viewModel.bindTagList()
     }
 
     func setView() {
@@ -74,6 +101,16 @@ class MakingRelayRoomViewController: UIViewController {
 
     func bindView() {
         // Input
+        makingRelayView.backButton
+            .rx.tap
+            .bind(to: viewModel.input.backButtonTap)
+            .disposed(by: disposeBag)
+
+        makingRelayView.addingTagView.collectionView
+            .rx.modelSelected(String.self)
+            .bind(to: viewModel.input.addingTagButtonTap)
+            .disposed(by: disposeBag)
+
         makingRelayView.textViewList[0].rx.text
             .orEmpty
             .bind(to: viewModel.input.title)
@@ -99,6 +136,19 @@ class MakingRelayRoomViewController: UIViewController {
             .disposed(by: disposeBag)
 
         // Output
+
+        viewModel.output.tagList
+            .bind(to: makingRelayView.addingTagView.collectionView
+                    .rx.items(dataSource: tagDataSource))
+            .disposed(by: disposeBag)
+
+        viewModel.output.goToSelectTag
+            .withUnretained(self)
+            .bind { owner, _ in
+                owner.goToSelectTagVC()
+            }
+            .disposed(by: disposeBag)
+
         viewModel.output.enableStartButton
             .observe(on: MainScheduler.instance)
             .bind { [weak self] isEnable in
@@ -108,8 +158,8 @@ class MakingRelayRoomViewController: UIViewController {
 
         viewModel.output.goToNewRelay
             .withUnretained(self)
-            .bind { owner, _ in
-                owner.goToNewRelay()
+            .bind { owner, relay in
+                owner.goToNewRelay(relay: relay)
             }
             .disposed(by: disposeBag)
 
@@ -120,6 +170,18 @@ class MakingRelayRoomViewController: UIViewController {
                     .personnelLabel.text = "\(count)명"
             }
             .disposed(by: disposeBag)
+    }
+
+    private func goToSelectTagVC() {
+
+        let vc = SelectTagViewController()
+        vc.modalPresentationStyle = .fullScreen
+        vc.hidesBottomBarWhenPushed = true
+        vc.viewModel.output.tagList
+            .bind(to: viewModel.input.originalTagList)
+            .disposed(by: disposeBag)
+
+        self.navigationController?.pushViewController(vc, animated: true)
     }
 
     private func enableEnterButton(isEnable: Bool) {
@@ -134,11 +196,15 @@ class MakingRelayRoomViewController: UIViewController {
         }
     }
 
-    private func goToNewRelay() {
+    private func goToNewRelay(relay: Relay) {
         let vc = RelayDetailViewController()
         vc.modalPresentationStyle = .fullScreen
         vc.hidesBottomBarWhenPushed = true
         vc.viewModel.isNew = true
+
+        Observable<Relay>.just(relay)
+            .bind(to: vc.viewModel.input.relayInfo)
+            .disposed(by: disposeBag)
 
         self.navigationController?.popViewController(animated: true) {
             self.viewModel.rootView?.navigationController?.pushViewController(vc, animated: true)

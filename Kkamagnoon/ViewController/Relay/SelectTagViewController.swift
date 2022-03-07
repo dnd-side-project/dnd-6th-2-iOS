@@ -19,7 +19,8 @@ class SelectTagViewController: UIViewController {
 
     var backButton = UIButton()
         .then {
-            $0.setImage(UIImage(systemName: "heart.fill"), for: .normal)
+            $0.setImage(UIImage(named: "Back"), for: .normal)
+            $0.imageEdgeInsets = UIEdgeInsets(top: 6, left: 0, bottom: 6, right: 18)
         }
 
     let dataSource = RxCollectionViewSectionedReloadDataSource<SectionModel<String, String>>(configureCell: { _, collectionView, indexPath, element in
@@ -48,7 +49,7 @@ class SelectTagViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .black
+        view.backgroundColor = UIColor(rgb: Color.basicBackground)
         self.navigationController?.isNavigationBarHidden = true
 
         setBackButton()
@@ -63,6 +64,7 @@ class SelectTagViewController: UIViewController {
         view.addSubview(backButton)
 
         backButton.snp.makeConstraints {
+            $0.size.equalTo(28)
             $0.left.equalToSuperview().offset(21.0)
             $0.top.equalTo(view.safeAreaLayoutGuide).offset(26.24)
         }
@@ -78,7 +80,7 @@ class SelectTagViewController: UIViewController {
             $0.bottom.equalTo(completeButton.snp.top).offset(-20.0)
         }
 
-        Observable.just([SectionModel(model: "title", items: viewModel.tagList)])
+        Observable.just([SectionModel(model: "title", items: StringType.categories)])
             .bind(to: selectTagView.collectionView.rx.items(dataSource: dataSource))
             .disposed(by: disposeBag)
     }
@@ -96,31 +98,28 @@ class SelectTagViewController: UIViewController {
 
     func bindView() {
 
+        // Input
         backButton.rx.tap
-            .bind { _ in
-                self.navigationController?.popViewController(animated: true)
-            }
+            .bind(to: viewModel.input.backButtonTap)
+            .disposed(by: disposeBag)
+
+        selectTagView.collectionView.rx
+            .modelSelected(String.self)
+            .bind(to: viewModel.input.tagTap)
             .disposed(by: disposeBag)
 
         completeButton.rx.tap
             .bind(to: viewModel.input.completeButtonTap)
             .disposed(by: disposeBag)
 
-//        selectTagView.collectionView.rx.modelSelected(String.self)
-//            .withUnretained(self)
-//            .bind { owner, model in
-//                
-////                owner.viewModel.selectedState[indexPath.row] = true
-////                owner.viewModel.selectedTags.append(owner.viewModel.tagList[indexPath.row])
-//            }
-//            .disposed(by: disposeBag)
-
+        // Output
         viewModel.output.goBackToMakingView
             .withUnretained(self)
             .bind { owner, _ in
                 owner.popBack()
             }
             .disposed(by: disposeBag)
+
     }
 
     private func popBack() {

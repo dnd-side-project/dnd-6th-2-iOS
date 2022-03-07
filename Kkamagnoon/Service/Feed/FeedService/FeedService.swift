@@ -15,30 +15,30 @@ class FeedService: Service {
     // TEMP
     var bag = DisposeBag()
 
-    func getWholeFeed(next_cursor: String?, orderBy: String = "최신순") {
-        let endpoint = FeedEndpointCases.getWholeFeed(cursor: next_cursor, orderBy: orderBy, tags: nil)
+    func getWholeFeed(next_cursor: String?, orderBy: String = "최신순", tags: [String: Bool]?) -> Observable<ArticlesResponse> {
+        let endpoint = FeedEndpointCases.getWholeFeed(cursor: next_cursor, orderBy: orderBy, tags: tags)
 
         let request = makeRequest(endpoint: endpoint)
 
         // DEBUG
-//        print("TEST: \(request) \(request.httpMethod) \(request.headers)")
-        RxAlamofire.request(request as URLRequestConvertible)
+
+        return RxAlamofire.request(request as URLRequestConvertible)
             .responseData()
             .asObservable()
-        // TEMP : (bind -> map)
-            .bind { http, resData  in
-                print("TESTHTTP: \(http)")
+            .map { _, resData -> ArticlesResponse  in
+
                 let decoder = JSONDecoder()
 
                 do {
                     let result = try decoder.decode(ArticlesResponse.self, from: resData)
-                    print("TESTRES: \(result)")
+
+                    return result
                 } catch {
                     print(error)
                 }
 
+                return ArticlesResponse()
             }
-            .disposed(by: bag)
     }
 
     func getArticle(articleId: String) {
@@ -56,9 +56,27 @@ class FeedService: Service {
         let request = makeRequest(endpoint: endpoint)
     }
 
-    func postScrap(articleId: String, scrap: ScrapDTO) {
+    func postScrap(articleId: String, scrap: ScrapDTO) -> Observable<ScrapResponse> {
         let endpoint = FeedEndpointCases.postScrap(articleId: articleId, scrap: scrap)
         let request = makeRequest(endpoint: endpoint)
+
+        return RxAlamofire.request(request as URLRequestConvertible)
+            .responseData()
+            .asObservable()
+            .map { _, resData -> ScrapResponse  in
+
+                let decoder = JSONDecoder()
+
+                do {
+                    let result = try decoder.decode(ScrapResponse.self, from: resData)
+                    return result
+                } catch {
+                    print(error)
+                }
+
+                return ScrapResponse()
+            }
+
     }
 
     func deleteScrap(articleId: String) {
@@ -66,9 +84,25 @@ class FeedService: Service {
         let request = makeRequest(endpoint: endpoint)
     }
 
-    func postLike(articleId: String, like: ScrapDTO) {
+    func postLike(articleId: String, like: ScrapDTO) -> Observable<LikeResponse> {
         let endpoint = FeedEndpointCases.postLike(articleId: articleId, like: like)
         let request = makeRequest(endpoint: endpoint)
+
+        return RxAlamofire.request(request as URLRequestConvertible)
+            .responseData()
+            .asObservable()
+            .map { _, resData -> LikeResponse  in
+
+                let decoder = JSONDecoder()
+
+                do {
+                    let result = try decoder.decode(LikeResponse.self, from: resData)
+                    return result
+                } catch {
+                    print(error)
+                }
+                return LikeResponse()
+            }
     }
 
     func deleteLike(articleId: String) {

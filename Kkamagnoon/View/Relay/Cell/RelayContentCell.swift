@@ -23,26 +23,37 @@ class RelayContentCell: UICollectionViewCell {
 
     var moreButton = UIButton()
         .then {
-            $0.setImage(UIImage(systemName: "heart.fill"), for: .normal)
+            $0.setImage(UIImage(named: "More"), for: .normal)
         }
 
-    var contentTextView = UITextView()
+//    var contentTextView = UITextView()
+//        .then {
+//            $0.setTextWithLineHeight(
+//                // Dummy
+//                text: StringType.dummyContents,
+//                lineHeight: 24,
+//                fontSize: 15.7032,
+//                fontWeight: .regular,
+//                color: .white
+//            )
+//
+//            $0.backgroundColor = UIColor(rgb: Color.feedListCard)
+//            $0.isScrollEnabled = false
+//            $0.isEditable = false
+//            $0.isSelectable = false
+//            $0.isUserInteractionEnabled = false
+//            $0.textContainerInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+//        }
+
+    var contentTextLabel = UILabel()
         .then {
-            $0.setTextWithLineHeight(
-                // Dummy
-                text: StringType.dummyContents,
-                lineHeight: 24,
-                fontSize: 15.7032,
-                fontWeight: .regular,
-                color: .white
-            )
+            $0.text = "더미더미"
+
+            $0.numberOfLines = 0
+            $0.lineBreakMode = .byWordWrapping
+            $0.setTextWithLineHeight(text: $0.text, lineHeight: Numbers(rawValue: 24) ?? .lineheightInBox)
 
             $0.backgroundColor = UIColor(rgb: Color.feedListCard)
-            $0.isScrollEnabled = false
-            $0.isEditable = false
-            $0.isSelectable = false
-            $0.isUserInteractionEnabled = false
-            $0.textContainerInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         }
 
     var writerLabel = UILabel()
@@ -72,6 +83,7 @@ class RelayContentCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.backgroundColor = UIColor(rgb: Color.feedListCard)
+        self.layer.cornerRadius = 15.0
         setView()
     }
 
@@ -92,8 +104,8 @@ class RelayContentCell: UICollectionViewCell {
             $0.top.equalTo(subTitleLabel)
         }
 
-        self.addSubview(contentTextView)
-        contentTextView.snp.makeConstraints {
+        self.addSubview(contentTextLabel)
+        contentTextLabel.snp.makeConstraints {
             $0.top.equalTo(subTitleLabel.snp.bottom).offset(17.89)
             $0.left.equalTo(subTitleLabel)
         }
@@ -101,7 +113,7 @@ class RelayContentCell: UICollectionViewCell {
         self.addSubview(writerLabel)
         writerLabel.snp.makeConstraints {
             $0.left.equalTo(subTitleLabel)
-            $0.top.equalTo(contentTextView.snp.bottom).offset(90.43)
+            $0.top.equalTo(contentTextLabel.snp.bottom).offset(90.43)
         }
 
         self.addSubview(updateDate)

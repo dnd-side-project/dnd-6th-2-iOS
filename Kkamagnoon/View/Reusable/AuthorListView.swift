@@ -30,7 +30,7 @@ class AuthorListView: UIView {
 
         filterView = UICollectionView(frame: .zero, collectionViewLayout: flowLayout)
         filterView.register(SubscribeFilterCell.self, forCellWithReuseIdentifier: SubscribeFilterCell.subscribeFilterCellIdentifier)
-        filterView.backgroundColor = .black
+        filterView.backgroundColor = UIColor(rgb: Color.basicBackground)
         filterView.showsHorizontalScrollIndicator = false
 
         let width = filterView.frame.width

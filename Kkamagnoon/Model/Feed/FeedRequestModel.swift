@@ -7,12 +7,13 @@
 import Foundation
 
 struct CreateArticleDTO {
-    var title: String
-    var content: String
+    var title: String?
+    var content: String?
     var tags: [String]?
-    var `public`: Bool
+    var `public`: Bool?
+    var category: String?
 }
 
 struct ScrapDTO {
-
+    var category: String
 }

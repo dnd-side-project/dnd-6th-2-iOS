@@ -57,8 +57,6 @@ class TopButtonView: UIView {
         self.addSubview(bellButton)
         bellButton.translatesAutoresizingMaskIntoConstraints = false
 
-        bellButton.setImage(UIImage(systemName: "heart.fill"), for: .normal)
-
         bellButton.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -20).isActive = true
         bellButton.widthAnchor.constraint(equalToConstant: 28).isActive = true
         bellButton.heightAnchor.constraint(equalToConstant: 28).isActive = true
@@ -69,8 +67,6 @@ class TopButtonView: UIView {
 
         self.addSubview(searchButton)
         searchButton.translatesAutoresizingMaskIntoConstraints = false
-
-        searchButton.setImage(UIImage(systemName: "heart.fill"), for: .normal)
 
         searchButton.topAnchor.constraint(equalTo: self.topAnchor, constant: 65).isActive = true
         searchButton.rightAnchor.constraint(equalTo: bellButton.leftAnchor, constant: -8).isActive = true

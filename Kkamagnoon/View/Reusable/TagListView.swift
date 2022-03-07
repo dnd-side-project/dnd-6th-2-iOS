@@ -13,25 +13,26 @@ class TagListView: UIView {
     var filterView: UICollectionView!
     let disposeBag = DisposeBag()
 
-    override init(frame: CGRect) {
+    init(frame: CGRect, tags: [String]) {
         super.init(frame: frame)
-        setView()
+        setView(tags: tags)
     }
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func setView() {
+    func setView(tags: [String]) {
         let flowLayout = UICollectionViewFlowLayout()
         flowLayout.scrollDirection = .horizontal
         flowLayout.minimumInteritemSpacing = 6
-        flowLayout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 30)
+        flowLayout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 50)
 
         filterView = UICollectionView(frame: .zero, collectionViewLayout: flowLayout)
         filterView.register(CategoryFilterCell.self, forCellWithReuseIdentifier: CategoryFilterCell.categoryFilterCellIdentifier)
+        filterView.allowsMultipleSelection = true
 
-        filterView.backgroundColor = .black
+        filterView.backgroundColor = UIColor(rgb: Color.basicBackground)
 
         filterView.showsHorizontalScrollIndicator = false
 
@@ -47,16 +48,14 @@ class TagListView: UIView {
         filterView.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
         filterView.heightAnchor.constraint(equalToConstant: 30).isActive = true
 
-        let testData = Observable<[String]>.of(["글감", "일상", "로맨스", "짧은 글", "긴 글", "무서운 글", "발랄한 글", "한글", "세종대왕"])
-
-        testData
+        Observable<[String]>.of(tags)
             .bind(to: filterView.rx
                     .items(cellIdentifier: CategoryFilterCell.categoryFilterCellIdentifier,
                                cellType: CategoryFilterCell.self)) { (_, element, cell) in
                 cell.tagView.categoryLabel.text = element
 
-        }
-        .disposed(by: disposeBag)
+            }
+            .disposed(by: disposeBag)
 
     }
 

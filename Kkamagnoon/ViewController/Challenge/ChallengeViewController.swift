@@ -16,94 +16,38 @@ class ChallengeViewController: UIViewController {
     let viewModel = ChallengeViewModel()
     var disposeBag = DisposeBag()
 
+    var isMonth: Bool = false
+
     let formatter = DateFormatter()
     var eventsArray = [Date]()
     var eventsArray_Done = [Date]()
-    var calendarHeight: NSLayoutConstraint!
-    var buttonHeight: NSLayoutConstraint!
-    var isMonth: Bool = false
 
     var scrollView = UIScrollView()
         .then {
             $0.showsVerticalScrollIndicator = false
         }
 
-    // TODO: MAKING ROOM BUTTON
-    var addWritingButton = UIButton()
+    var challengeMainView = ChallengeMainView()
+
+    var addWritingButton = MakingRoomButton()
         .then {
-            $0.backgroundColor = UIColor(rgb: Color.whitePurple)
+            $0.setImage(UIImage(named: "Pencil"), for: .normal)
         }
 
     var headerView = ChallengeHeaderView()
 
-    var subTitleLabel = [
-            UILabel().then {
-                $0.text = "이번달은 n개의 O를 찍었어요!"
-                $0.font = UIFont.pretendard(weight: .medium, size: 18)
-                $0.textColor = .white
-            },
-            UILabel().then {
-                $0.text = "내가 쓴 챌린지 글"
-                $0.font = UIFont.pretendard(weight: .medium, size: 16)
-                $0.textColor = .white
-            }
-        ]
-
-    // TODO: Add dropdown
-    var expansionButton = UIButton()
+    var nothingImageView = UIImageView()
         .then {
-            $0.setImage(UIImage(systemName: "heart.fill"), for: .normal)
+            $0.image = UIImage(named: "NothingCharacter")
         }
 
-    var todayKeyWordView = TodayKeywordView()
-
-    var stackView = UIStackView()
+    var nothingLabel = UILabel()
         .then {
-            $0.axis = .vertical
-            $0.spacing = 0
-            $0.alignment = .fill
-            $0.distribution = .fill
-        }
-
-    var calendarView = FSCalendar()
-        .then {
-            $0.backgroundColor = UIColor(rgb: Color.tag)
-            $0.layer.cornerRadius = 15.0
-
-            $0.locale = Locale(identifier: "ko_KR")
-            $0.setScope(.week, animated: false)
-
-            // header
-            $0.calendarHeaderView.removeFromSuperview()
-            // TEMP
-            $0.headerHeight = 20
-
-            // weekday
-            $0.appearance.weekdayTextColor = UIColor(rgb: 0x767676)
-            $0.appearance.weekdayFont = UIFont.pretendard(weight: .regular, size: 16)
-            $0.weekdayHeight = 19.0
-
-            // title
-            $0.placeholderType = .fillHeadTail
-            $0.appearance.titlePlaceholderColor = UIColor(rgb: 0x767676)
-            $0.appearance.titleDefaultColor = UIColor(rgb: 0xE5E5E5)
-            $0.appearance.titleFont = UIFont.pretendard(weight: .regular, size: 16)
-            $0.rowHeight = 30
-
-            // scroll
-//            $0.handleScopeGesture().isEnabled = true
-//            $0.scrollEnabled = false
-            $0.collectionView.register(CalendarDateCell.self, forCellWithReuseIdentifier: CalendarDateCell.identifier)
-            // selection
-            $0.today = nil
-
-            $0.appearance.borderRadius = 5
-        }
-
-    // TEMP
-    var myChallengeCard = MyChallengeCard()
-        .then {
-            $0.setContentHuggingPriority(.required, for: .vertical)
+            $0.text = "오늘은 아직 글을\n쓰지 않았어요!"
+            $0.numberOfLines = 0
+            $0.textAlignment = .center
+            $0.font = UIFont.pretendard(weight: .regular, size: 18)
+            $0.textColor = UIColor(rgb: 0xF5F5F5)
         }
 
     override func viewDidLayoutSubviews() {
@@ -115,20 +59,19 @@ class ChallengeViewController: UIViewController {
         super.viewDidLoad()
         navigationController?.setNavigationBarHidden(true, animated: false)
         navigationController?.interactivePopGestureRecognizer?.delegate = nil
+        view.backgroundColor = UIColor(rgb: Color.basicBackground)
+        challengeMainView.calendarView.delegate = self
+        challengeMainView.calendarView.dataSource = self
 
-        calendarView.delegate = self
-        calendarView.dataSource = self
-
-        formatter.locale = Locale(identifier: "ko_KR")
-        formatter.dateFormat = "yyyy-MM-dd"
-
-        let xmas = formatter.date(from: "2022-2-21")
-        let sampledate = formatter.date(from: "2022-3-30")
-        eventsArray = [xmas!, sampledate!]
-
+        formatter.dateFormat = "EEE MMM dd yyyy"
         setView()
-
         bindView()
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        viewModel.bindKeyword()
+        bindCardView()
     }
 
     func setView() {
@@ -138,65 +81,16 @@ class ChallengeViewController: UIViewController {
             $0.left.right.top.equalTo(view.safeAreaLayoutGuide)
         }
 
-        view.addSubview(subTitleLabel[0])
-        subTitleLabel[0].snp.makeConstraints {
-            $0.top.equalTo(headerView.snp.bottom).offset(7.0)
-            $0.left.equalTo(view.safeAreaLayoutGuide).offset(20.0)
-
-            // TEMP
-            $0.right.equalTo(view.safeAreaLayoutGuide).offset(-20.0)
+        view.addSubview(scrollView)
+        scrollView.snp.makeConstraints {
+            $0.top.equalTo(headerView.snp.bottom)
+            $0.left.right.bottom.equalTo(view.safeAreaLayoutGuide)
         }
 
-        view.addSubview(calendarView)
-
-        calendarView.snp.makeConstraints {
-            $0.top.equalTo(subTitleLabel[0].snp.bottom).offset(15.0)
-            $0.left.equalTo(view.safeAreaLayoutGuide).offset(20.0)
-            $0.right.equalTo(view.safeAreaLayoutGuide).offset(-20.0)
-
-        }
-        calendarHeight = calendarView.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.width)
-        calendarHeight.isActive = true
-
-        view.addSubview(expansionButton)
-
-        expansionButton.snp.makeConstraints {
-            $0.centerX.equalToSuperview()
-        }
-
-        buttonHeight = expansionButton.bottomAnchor.constraint(equalTo: calendarView.bottomAnchor)
-        buttonHeight.constant = -11.0
-        buttonHeight.isActive = true
-
-        view.addSubview(todayKeyWordView)
-        todayKeyWordView.snp.makeConstraints {
-            $0.left.equalToSuperview().offset(20.0)
-            $0.right.equalToSuperview().offset(-20.0)
-            $0.top.equalTo(calendarView.snp.bottom).offset(9.0)
-            $0.height.equalTo(177.0)
-        }
-
-        view.addSubview(subTitleLabel[1])
-        subTitleLabel[1].snp.makeConstraints {
-            $0.top.equalTo(todayKeyWordView.snp.bottom).offset(22.0)
-            $0.left.equalToSuperview().offset(19.0)
-            $0.right.equalToSuperview().offset(-19.0)
-        }
-
-        view.addSubview(stackView)
-        stackView.addArrangedSubview(myChallengeCard)
-
-        myChallengeCard.snp.makeConstraints {
+        scrollView.addSubview(challengeMainView)
+        challengeMainView.snp.makeConstraints {
             $0.width.equalToSuperview()
-            $0.height.equalTo(166.0)
-        }
-        stackView.snp.makeConstraints {
-            $0.top.equalTo(subTitleLabel[1].snp.bottom).offset(12.0)
-            $0.left.equalToSuperview().offset(20.0)
-            $0.right.equalToSuperview().offset(-20.0)
-
-            // TEMP
-            $0.bottom.equalTo(view.safeAreaLayoutGuide)
+            $0.edges.equalToSuperview()
         }
 
         view.addSubview(addWritingButton)
@@ -218,25 +112,10 @@ class ChallengeViewController: UIViewController {
             .bind(to: viewModel.input.addWritingButtonTap)
             .disposed(by: disposeBag)
 
-        expansionButton.rx.tap
+        challengeMainView.expansionButton.rx.tap
             .withUnretained(self)
             .bind { owner, _ in
-                if owner.isMonth {
-                    owner.isMonth = false
-                    owner.calendarView.setScope(.week, animated: true)
-                    UIView.animate(withDuration: 10.0, delay: 0) {
-                        owner.calendarHeight.constant = 144
-                        owner.buttonHeight.constant = -11.0
-                    }
-                } else {
-                    owner.isMonth = true
-                    owner.calendarView.setScope(.month, animated: true)
-                    UIView.animate(withDuration: 10.0, delay: 0) {
-                        owner.calendarHeight.constant = UIScreen.main.bounds.width + 20
-                        owner.buttonHeight.constant = -6.0
-                    }
-
-                }
+                owner.setCalendarState()
             }
             .disposed(by: disposeBag)
 
@@ -254,16 +133,122 @@ class ChallengeViewController: UIViewController {
                 owner.goToWritingVC()
             }
             .disposed(by: disposeBag)
+
+        viewModel.output.goToDetail
+            .withUnretained(self)
+            .bind { owner, _ in
+                owner.goToDetail()
+            }
+            .disposed(by: disposeBag)
+
+        viewModel.output.keyWord
+            .withUnretained(self)
+            .bind { owner, challenge in
+                owner.challengeMainView.todayKeyWordView
+                    .keywordLabel.text = challenge.keyword?.content
+
+                var stamp = 1
+
+                // TODO: stamp 갯수 채우기
+                owner.challengeMainView.subTitleLabel[0].text = "이번달은 \(stamp)개의 스탬프를 찍었어요!"
+
+                let history = challenge.challengeHistory ?? []
+
+                history.forEach({ date in
+                    print(date)
+                    if let date = self.formatter.date(from: date) {
+                        self.eventsArray.append(date)
+                    }
+
+                })
+
+                let articles = challenge.articles ?? []
+
+                if articles.count == 0 {
+                    owner.setImageCaseNothing()
+                } else {
+                    owner.challengeMainView.removeCard()
+
+                    articles.forEach({ article in
+                        let card = MyChallengeCard()
+                        card.titleLabel.text = article.title
+                        card.contentLabel.text = article.content
+                        card.likeLabel.labelView.text = "\(article.likeNum ?? 0)"
+                        card.commentLabel.labelView.text = "\(article.commentNum ?? 0)"
+
+                        self.challengeMainView.stackView.addArrangedSubview(card)
+                    })
+                }
+            }
+            .disposed(by: disposeBag)
+    }
+
+    func bindCardView() {
+        challengeMainView.stackView.subviews.forEach({ article in
+            let card = article as! MyChallengeCard
+            print(">>>>>>>Card: \(card.titleLabel.text)")
+
+            card.tapHandler = {
+                print("TAPPED!!")
+            }
+        })
     }
 
     private func goToBellNoticeVC() {
+        let vc = BellNoticeViewController()
+        vc.modalPresentationStyle = .fullScreen
+        vc.hidesBottomBarWhenPushed = true
 
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
+
+    private func setImageCaseNothing() {
+        challengeMainView.subTitleLabel[1].isHidden = true
+        view.addSubview(nothingImageView)
+        nothingImageView.snp.makeConstraints {
+            $0.centerX.equalToSuperview()
+            $0.top.equalTo(challengeMainView.todayKeyWordView.snp.bottom).offset(30.51)
+            $0.width.equalTo(122)
+            $0.height.equalTo(110)
+        }
+
+        view.addSubview(nothingLabel)
+        nothingLabel.snp.makeConstraints {
+            $0.centerX.equalToSuperview()
+            $0.top.equalTo(nothingImageView.snp.bottom).offset(9)
+        }
     }
 
     private func goToWritingVC() {
         let vc = WritingViewController()
         vc.modalPresentationStyle = .fullScreen
         vc.hidesBottomBarWhenPushed = true
+        vc.viewModel.rootView = self
+
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
+
+    private func setCalendarState() {
+        if isMonth {
+            isMonth = false
+            challengeMainView.calendarView.setScope(.week, animated: true)
+            UIView.animate(withDuration: 10.0, delay: 0) {
+                self.challengeMainView.calendarHeight.constant = 144
+            }
+        } else {
+            isMonth = true
+            challengeMainView.calendarView.setScope(.month, animated: true)
+            UIView.animate(withDuration: 10.0, delay: 0) {
+                self.challengeMainView.calendarHeight.constant = 400
+
+            }
+
+        }
+    }
+
+    private func goToDetail() {
+        let vc = DetailContentViewController()
+        vc.modalPresentationStyle = .fullScreen
 
         self.navigationController?.pushViewController(vc, animated: true)
     }
@@ -276,7 +261,7 @@ extension ChallengeViewController: FSCalendarDataSource {
                   boundingRectWillChange bounds: CGRect,
                   animated: Bool) {
 
-        calendarHeight.constant = 144
+        challengeMainView.calendarHeight.constant = 144
 
         self.view.layoutIfNeeded()
     }
@@ -297,26 +282,25 @@ extension ChallengeViewController: FSCalendarDataSource {
 
 }
 
-extension ChallengeViewController: FSCalendarDelegate {
-
-    // 날짜 선택 시 콜백 메소드
-    func calendar(_ calendar: FSCalendar,
-                  didSelect date: Date,
-                  at monthPosition: FSCalendarMonthPosition) {
-
-        formatter.dateFormat = "yyyy-MM-dd"
-        print(formatter.string(from: date) + " 선택됨")
-    }
-    // 날짜 선택 해제 시 콜백 메소드
-    public func calendar(_ calendar: FSCalendar,
-                         didDeselect date: Date,
-                         at monthPosition: FSCalendarMonthPosition) {
-        eventsArray = []
-        print(formatter.string(from: date) + " 해제됨")
-
-    }
-
-}
+// extension ChallengeViewController: FSCalendarDelegate {
+//
+//    // 날짜 선택 시 콜백 메소드
+//    func calendar(_ calendar: FSCalendar,
+//                  didSelect date: Date,
+//                  at monthPosition: FSCalendarMonthPosition) {
+//
+//        print(formatter.string(from: date) + " 선택됨")
+//    }
+//    // 날짜 선택 해제 시 콜백 메소드
+//    public func calendar(_ calendar: FSCalendar,
+//                         didDeselect date: Date,
+//                         at monthPosition: FSCalendarMonthPosition) {
+//        eventsArray = []
+//        print(formatter.string(from: date) + " 해제됨")
+//
+//    }
+//
+// }
 
 extension ChallengeViewController: FSCalendarDelegateAppearance {
 
@@ -326,4 +310,9 @@ extension ChallengeViewController: FSCalendarDelegateAppearance {
 
         return cell
     }
+
+    func calendar(_ calendar: FSCalendar, appearance: FSCalendarAppearance, fillSelectionColorFor date: Date) -> UIColor? {
+        return .clear
+    }
+
 }

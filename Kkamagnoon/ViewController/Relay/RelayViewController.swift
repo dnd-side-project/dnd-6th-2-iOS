@@ -17,6 +17,8 @@ class RelayViewController: UIViewController {
     let viewModel = RelayViewModel()
     var disposeBag = DisposeBag()
 
+    var roomView: UIView!
+
     lazy var topButtonView = TopButtonView(frame: .zero, first: StringType.relayRoom, second: StringType.joinedRoom)
         .then { topView in
             topView.searchButton.isHidden = true
@@ -25,20 +27,34 @@ class RelayViewController: UIViewController {
             }
         }
 
-    lazy var relayRoomView = RelayRoomView()
+    var relayRoomView = RelayRoomView()
 
-    lazy var makingRoomButton = MakingRoomButton()
+    var participatedRoomView = ParticipatedRoomView()
+
+    var makingRoomButton = MakingRoomButton()
         .then {
-            $0.backgroundColor = UIColor(rgb: Color.whitePurple)
+            $0.setImage(UIImage(named: "Pencil"), for: .normal)
+
         }
 
-    lazy var dataSource = RxCollectionViewSectionedReloadDataSource<SectionModel<String, String>>(configureCell: { _, collectionView, indexPath, element in
+    lazy var relayRoomDataSource = RxCollectionViewSectionedReloadDataSource<RelaySection>(configureCell: { _, collectionView, indexPath, element in
 
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: RelayRoomCell.relayRoomCellIdentifier, for: indexPath) as! RelayRoomCell
-        cell.layer.cornerRadius = 15.0
-        cell.contentLabel.text = element
-        cell.tagListView.tagList = ["태그1", "태그2", "태그태그", "태", "태그그그그"]
-        cell.tagListView.setTags()
+
+        cell.profileView.nickNameLabel.text = element.title
+        cell.contentLabel.text = element.notice?.notice
+        cell.tagListView.tagList = element.tags ?? []
+
+        if indexPath.row == 0 {
+            cell.backgroundColor = UIColor(rgb: Color.whitePurple)
+            cell.tagListView.setTags(tagViewColor: 0xFABDFF, tagTextColor: 0x5C1A62)
+
+        } else if indexPath.row == 1 {
+            cell.backgroundColor = UIColor(rgb: Color.cardBlue)
+            cell.tagListView.setTags(tagViewColor: 0xB7CBFF, tagTextColor: 0x1E2F59)
+        } else {
+            cell.tagListView.setTags(tagViewColor: 0x4B4B4B, tagTextColor: 0xFFFFFF)
+        }
 
         return cell
     },
@@ -53,17 +69,35 @@ class RelayViewController: UIViewController {
                 headerView.sortButton.setTitle("최신순", for: .normal)
                 self.viewModel.sortStyle = .byLatest
             }
+
         }
 
         return headerView
+    })
+
+    lazy var participatedRoomDataSource = RxCollectionViewSectionedReloadDataSource<RelaySection>(configureCell: { _, collectionView, indexPath, element in
+
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: RelayRoomCell.relayRoomCellIdentifier, for: indexPath) as! RelayRoomCell
+
+        cell.profileView.nickNameLabel.text = element.title
+        cell.contentLabel.text = element.notice?.notice
+        cell.tagListView.tagList = element.tags ?? []
+
+        cell.tagListView.setTags(tagViewColor: 0x4B4B4B, tagTextColor: 0xFFFFFF)
+        return cell
     })
 
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationController?.setNavigationBarHidden(true, animated: false)
         navigationController?.interactivePopGestureRecognizer?.delegate = nil
+        view.backgroundColor = UIColor(rgb: Color.basicBackground)
+        roomView = relayRoomView
+
         setView()
         bindView()
+        viewModel.bindRelayList()
+        viewModel.bindMyRoomList()
 
     }
 
@@ -79,20 +113,26 @@ class RelayViewController: UIViewController {
             $0.height.equalTo(115.0)
         }
 
-        view.addSubview(relayRoomView)
-
-        relayRoomView.snp.makeConstraints {
-            $0.left.right.equalToSuperview()
-            $0.top.equalTo(topButtonView.snp.bottom)
-            $0.bottom.equalTo(view.safeAreaLayoutGuide)
-        }
-
         view.addSubview(makingRoomButton)
         makingRoomButton.snp.makeConstraints {
             $0.size.equalTo(55.0)
             $0.right.equalToSuperview().offset(-20.0)
             $0.bottom.equalTo(view.safeAreaLayoutGuide).offset(-14.0)
         }
+
+        setRoomView()
+    }
+
+    func setRoomView() {
+        view.addSubview(roomView)
+
+        roomView.snp.makeConstraints {
+            $0.left.right.equalToSuperview()
+            $0.top.equalTo(topButtonView.snp.bottom)
+            $0.bottom.equalTo(view.safeAreaLayoutGuide)
+        }
+
+        view.bringSubviewToFront(makingRoomButton)
     }
 
     func bindView() {
@@ -105,23 +145,27 @@ class RelayViewController: UIViewController {
             .bind(to: viewModel.input.participatedRoomButtonTap)
             .disposed(by: disposeBag)
 
-        relayRoomView.categoryFilterView.filterView.allowsMultipleSelection = true
-        relayRoomView.categoryFilterView.filterView
-            .rx.itemSelected
-            .withUnretained(self)
-            .bind { owner, _ in
-                print(">>>SELECTED!!")
-                owner.viewModel.selectedTagCount += 1
-            }
+        topButtonView.bellButton.rx.tap
+            .bind(to: viewModel.input.bellButtonTap)
             .disposed(by: disposeBag)
 
-//        relayRoomView.relayList.collectionView
-//            .supplementaryView(
-//                forElementKind: UICollectionView.elementKindSectionHeader,
-//                               at: IndexPath(item: 0, section: 0))?
-//            .isUserInteractionEnabled = true
+        relayRoomView.categoryFilterView.filterView
+            .rx.modelSelected(String.self)
+            .bind(to: viewModel.input.tagCellTap)
+            .disposed(by: disposeBag)
 
-        relayRoomView.relayList.collectionView.rx.itemSelected
+        relayRoomView.categoryFilterView.filterView
+            .rx.modelDeselected(String.self)
+            .bind(to: viewModel.input.tagCellTap)
+            .disposed(by: disposeBag)
+
+        relayRoomView.relayList.collectionView.rx
+            .modelSelected(Relay.self)
+            .bind(to: viewModel.input.relayRoomCellTap)
+            .disposed(by: disposeBag)
+
+        participatedRoomView.relayList.collectionView.rx
+            .modelSelected(Relay.self)
             .bind(to: viewModel.input.relayRoomCellTap)
             .disposed(by: disposeBag)
 
@@ -133,7 +177,7 @@ class RelayViewController: UIViewController {
         viewModel.output.currentListStyle
             .withUnretained(self)
             .bind { owner, style in
-                owner.changeListStyle(style: style)
+                owner.changeRoomStyle(style: style)
             }
             .disposed(by: disposeBag)
 
@@ -144,15 +188,23 @@ class RelayViewController: UIViewController {
             }
             .disposed(by: disposeBag)
 
+        // relay room
         viewModel.output.relayRoomList
-            .bind(to: relayRoomView.relayList.collectionView.rx.items(dataSource: dataSource))
+            .bind(to: relayRoomView.relayList.collectionView
+                    .rx.items(dataSource: relayRoomDataSource))
             .disposed(by: disposeBag)
 
         viewModel.output.goToDetailRelayRoom
             .withUnretained(self)
-            .bind { owner, _ in
-                owner.goToRelayDetailViewController()
+            .bind { owner, relay in
+                owner.goToRelayDetailViewController(relay: relay)
             }
+            .disposed(by: disposeBag)
+
+        // participated room
+        viewModel.output.participatedRoomList
+            .bind(to: participatedRoomView.relayList.collectionView
+                    .rx.items(dataSource: participatedRoomDataSource))
             .disposed(by: disposeBag)
 
         viewModel.output.goToMakingRelay
@@ -163,18 +215,21 @@ class RelayViewController: UIViewController {
             .disposed(by: disposeBag)
     }
 
-    private func changeListStyle(style: RelayListStyle) {
-
-    }
-
     private func goToBellNoticeViewController() {
+        let vc = BellNoticeViewController()
+        vc.hidesBottomBarWhenPushed = true
 
+        self.navigationController?.pushViewController(vc, animated: true)
     }
 
-    private func goToRelayDetailViewController() {
+    private func goToRelayDetailViewController(relay: Relay) {
         let vc = RelayDetailViewController()
         vc.modalPresentationStyle = .fullScreen
         vc.hidesBottomBarWhenPushed = true
+
+        Observable<Relay>.just(relay)
+            .bind(to: vc.viewModel.input.relayInfo)
+            .disposed(by: disposeBag)
 
         self.navigationController?.pushViewController(vc, animated: true)
     }
@@ -186,5 +241,16 @@ class RelayViewController: UIViewController {
         vc.viewModel.rootView = self
 
         self.navigationController?.pushViewController(vc, animated: true)
+    }
+
+    private func changeRoomStyle(style: RelayListStyle) {
+        roomView.removeFromSuperview()
+
+        if style == .relayRoom {
+            roomView = relayRoomView
+        } else {
+            roomView = participatedRoomView
+        }
+        setRoomView()
     }
 }

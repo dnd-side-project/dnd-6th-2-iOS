@@ -36,7 +36,7 @@ class ArticleListView: UIView {
 
         collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.showsVerticalScrollIndicator = false
-        collectionView.backgroundColor = .black
+        collectionView.backgroundColor = UIColor(rgb: Color.basicBackground)
 
         layout.estimatedItemSize = CGSize(width: UIScreen.main.bounds.width - 40,
                                           height: collectionView.frame.height)

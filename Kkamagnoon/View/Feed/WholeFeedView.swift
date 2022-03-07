@@ -8,38 +8,55 @@
 import UIKit
 import RxSwift
 import RxCocoa
+import SnapKit
+import Then
 
-class WholeFeedView: FeedView {
+class WholeFeedView: UIView {
 
-    override func setFilterView() {
-        filterView = TagListView()
-        self.addSubview(filterView)
-        filterView.translatesAutoresizingMaskIntoConstraints = false
-        filterView.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 20).isActive = true
-        filterView.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -20).isActive = true
-        filterView.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
-        filterView.heightAnchor.constraint(equalToConstant: 29).isActive = true
+    var filterView = TagListView(frame: .zero, tags: StringType.categories)
 
-//        filterView..rx.itemSelected
-//            .bind { [weak self] indexPath in
-//
-//                guard let self = self else { return }
-//                self.filterView.selectItem(at: indexPath, animated: false, scrollPosition: [])
-//            }
-//            .disposed(by: disposeBag)
+    lazy var articleListView = ArticleListView()
+        .then {
+            $0.collectionView.register(
+                FeedCell.self,
+                forCellWithReuseIdentifier: FeedCell.feedCellIdentifier
+            )
+            $0.collectionView.register(
+                SortHeaderCell.self,
+                forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
+                withReuseIdentifier: SortHeaderCell.sortHeaderCellReuseIdentifier)
+            $0.layout.headerReferenceSize = CGSize(width: UIScreen.main.bounds.width - 40, height: 40)
+            $0.collectionView.collectionViewLayout = $0.layout
+        }
 
+    let disposeBag = DisposeBag()
+
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        setView()
     }
 
-    override func setSortButton() {
-        sortButton.setTitle("인기순", for: .normal)
-        sortButton.setImage(UIImage(systemName: "heart.fill"), for: .normal)
-        sortButton.sizeToFit()
-        sortButton.titleLabel?.font = UIFont.pretendard(weight: .medium, size: 12)
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+}
 
-        self.addSubview(sortButton)
+extension WholeFeedView {
+    func setView () {
+        self.addSubview(filterView)
+        filterView.snp.makeConstraints {
+            $0.left.equalToSuperview().offset(20.0)
+            $0.right.equalToSuperview().offset(-20.0)
+            $0.top.equalToSuperview()
+            $0.height.equalTo(29.0)
+        }
 
-        sortButton.translatesAutoresizingMaskIntoConstraints = false
-        sortButton.topAnchor.constraint(equalTo: filterView.bottomAnchor, constant: 22).isActive = true
-        sortButton.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -27).isActive = true
+        self.addSubview(articleListView)
+        articleListView.snp.makeConstraints {
+            $0.top.equalTo(filterView.snp.bottom).offset(11.0)
+            $0.bottom.equalToSuperview()
+            $0.left.equalToSuperview().offset(20.0)
+            $0.right.equalToSuperview().offset(-20.0)
+        }
     }
 }

@@ -7,62 +7,111 @@
 import UIKit
 import RxSwift
 import RxCocoa
+import RxDataSources
+import Then
+import SnapKit
 
 class FeedViewController: UIViewController {
+
+    var feedView: UIView!
 
     let viewModel = FeedViewModel()
     let disposeBag = DisposeBag()
 
     let topButtonView = TopButtonView(frame: .zero, first: StringType.wholeFeed, second: StringType.subscribeFeed)
+        .then {
+            $0.searchButton.setImage(UIImage(named: "Search"), for: .normal)
+            $0.bellButton.setImage(UIImage(named: "Bell"), for: .normal)
+        }
 
     let wholeFeedView = WholeFeedView()
+
     let subscribeFeedView = SubscribeFeedView()
 
-    var feedView: FeedView!
+    lazy var dataSource = RxCollectionViewSectionedReloadDataSource<FeedSection>(configureCell: { _, collectionView, indexPath, element in
+
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: FeedCell.feedCellIdentifier, for: indexPath) as! FeedCell
+
+        cell.profileView.nickNameLabel.text = element.user?.nickname
+        cell.articleTitle.text = element.title
+
+        cell.articleContents.setTextWithLineHeight(
+            text: element.content,
+            lineHeight: .lineheightInBox
+        )
+        cell.likeView.labelView.text = "\(element.likeNum ?? 0)"
+        cell.commentView.labelView.text = "\(element.commentNum ?? 0)"
+
+        return cell
+    },
+    configureSupplementaryView: { _, collectionView, _, indexPath in
+        let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: SortHeaderCell.sortHeaderCellReuseIdentifier, for: indexPath) as! SortHeaderCell
+
+        headerView.buttonTappedHandler = { [unowned self] in
+            if self.viewModel.sortStyle == .byLatest {
+                headerView.sortButton.setTitle("인기순", for: .normal)
+                self.viewModel.sortStyle = .byPopularity
+            } else {
+                headerView.sortButton.setTitle("최신순", for: .normal)
+                self.viewModel.sortStyle = .byLatest
+            }
+
+            viewModel.bindWholeFeedList()
+        }
+
+        return headerView
+    })
 
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationController?.setNavigationBarHidden(true, animated: false)
         navigationController?.interactivePopGestureRecognizer?.delegate = nil
+        view.backgroundColor = UIColor(rgb: Color.basicBackground)
         feedView = wholeFeedView
+        setView()
+        bindInput()
+        bindOutput()
 
-        setTopView()
-        setFeedView()
-
-        bindTopView()
-        bindSortButton()
-
-        bindWholeFeedView()
-        bindSubscribeFeedView()
-
-        viewModel.tempRequest()
+        viewModel.bindWholeFeedList()
     }
+}
 
-    func setTopView() {
+extension FeedViewController: UIScrollViewDelegate {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let contentOffset_y = scrollView.contentOffset.y
+        let collectionViewContentSize = wholeFeedView.articleListView.collectionView.contentSize.height
+
+        let pagination_y = collectionViewContentSize*0.2
+        if contentOffset_y > collectionViewContentSize - pagination_y {
+            // 네트워크 호출
+        }
+    }
+}
+
+extension FeedViewController {
+
+    func setView() {
         view.addSubview(topButtonView)
-        topButtonView.translatesAutoresizingMaskIntoConstraints = false
+        topButtonView.snp.makeConstraints {
+            $0.top.left.right.equalToSuperview()
+            $0.height.equalTo(115)
+        }
 
-        topButtonView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
-        topButtonView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
-        topButtonView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
-        topButtonView.heightAnchor.constraint(equalToConstant: 115).isActive = true
-
+        setFeedView()
     }
 
     func setFeedView() {
         view.addSubview(feedView)
-        feedView.translatesAutoresizingMaskIntoConstraints = false
-
-        feedView.topAnchor.constraint(equalTo: topButtonView.bottomAnchor).isActive = true
-        feedView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
-        feedView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
-        feedView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
-
+        feedView.snp.makeConstraints {
+            $0.bottom.left.right.equalTo(view.safeAreaLayoutGuide)
+            $0.top.equalTo(topButtonView.snp.bottom)
+        }
     }
+}
 
-    func bindTopView() {
-
-        // Input
+extension FeedViewController {
+    func bindInput() {
+        // header
         topButtonView.firstButton.rx.tap
             .bind(to: viewModel.input.wholeFeedButtonTap)
             .disposed(by: disposeBag)
@@ -79,14 +128,48 @@ class FeedViewController: UIViewController {
             .bind(to: viewModel.input.bellButtonTap)
             .disposed(by: disposeBag)
 
-        // Output
-        viewModel.output.currentFeedStyle
-            .asDriver()
-            .drive { [weak self] feedStyle in
-                guard let self = self else {return}
-                self.changeFeedStyle(style: feedStyle)
+        // whole feed
+        wholeFeedView.filterView.filterView.rx
+            .modelSelected(String.self)
+            .bind(to: viewModel.input.tagCellTap)
+            .disposed(by: disposeBag)
+
+        wholeFeedView.filterView.filterView.rx
+            .modelDeselected(String.self)
+            .bind(to: viewModel.input.tagCellTap)
+            .disposed(by: disposeBag)
+
+        wholeFeedView.articleListView.collectionView.rx
+            .modelSelected(Article.self)
+            .bind(to: viewModel.input.feedCellTap)
+            .disposed(by: disposeBag)
+
+        // subscribe feed
+        subscribeFeedView.articleListView.collectionView.rx
+            .modelSelected(String.self)
+            .bind { _ in
+//                self.goToDetailContentVC()
             }
             .disposed(by: disposeBag)
+
+        subscribeFeedView.goAllListButton.rx.tap
+            .withUnretained(self)
+            .bind { owner, _ in
+                owner.goToAllSubscribe()
+            }
+            .disposed(by: disposeBag)
+
+    }
+
+    func bindOutput() {
+
+//        viewModel.output.currentFeedStyle
+//            .asDriver()
+//            .drive { [weak self] feedStyle in
+//                guard let self = self else {return}
+//                self.changeFeedStyle(style: feedStyle)
+//            }
+//            .disposed(by: disposeBag)
 
         viewModel.output.goToSearch
             .observe(on: MainScheduler.instance)
@@ -98,68 +181,28 @@ class FeedViewController: UIViewController {
             .bind(onNext: goToBellVC)
             .disposed(by: disposeBag)
 
-    }
-
-    func bindSortButton() {
-        wholeFeedView.sortButton.rx.tap
-            .bind(to: viewModel.input.sortButtonTap)
+        viewModel.output.wholeFeedList
+            .bind(to: wholeFeedView.articleListView.collectionView.rx.items(dataSource: dataSource))
             .disposed(by: disposeBag)
 
-        viewModel.output.currentSortStyle
-            .asDriver()
-            .drive { [weak self] sortStyle in
-                guard let self = self else {return}
-                self.changeSortStyle(style: sortStyle)
-            }
-            .disposed(by: disposeBag)
-    }
-
-    func bindWholeFeedView() {
-
-        viewModel.output.wholeFeedListRelay
-            .bind(to: wholeFeedView.articleListView.collectionView
-                    .rx.items(cellIdentifier: FeedCell.feedCellIdentifier,
-                                         cellType: FeedCell.self)) { (_, element, cell) in
-                cell.articleTitle.text = element
-                cell.layer.cornerRadius = 15
-            }
-            .disposed(by: disposeBag)
-
-        // Input
-        wholeFeedView.articleListView.collectionView.rx
-            .itemSelected
-            .bind(to: viewModel.input.feedCellTap)
-            .disposed(by: disposeBag)
-
-        // Output
         viewModel.output.goToDetailFeed
             .observe(on: MainScheduler.instance)
-            .bind { _ in
-                self.goToDetailContentVC()
+            .bind { article in
+                self.goToDetailContentVC(article: article)
             }
             .disposed(by: disposeBag)
 
-    }
-
-    func bindSubscribeFeedView() {
-        viewModel.bindSubscribedFeedList()
-        viewModel.output.subscribeFeedListRelay
+        viewModel.output.subscribeFeedList
             .bind(to: subscribeFeedView.articleListView.collectionView
                     .rx.items(cellIdentifier: FeedCell.feedCellIdentifier,
-                                         cellType: FeedCell.self)) { (_, element, cell) in
-                cell.articleTitle.text = element
-                cell.layer.cornerRadius = 15
+                                         cellType: FeedCell.self)) { (_, _, _) in
+
                 }
             .disposed(by: disposeBag)
-
-        subscribeFeedView.articleListView.collectionView.rx
-            .modelSelected(String.self)
-            .bind { _ in
-                self.goToDetailContentVC()
-            }
-            .disposed(by: disposeBag)
     }
+}
 
+extension FeedViewController {
     private func changeFeedStyle(style: FeedStyle) {
         feedView.removeFromSuperview()
 
@@ -187,24 +230,22 @@ class FeedViewController: UIViewController {
         self.navigationController?.pushViewController(vc, animated: true)
     }
 
-    private func changeSortStyle(style: SortStyle) {
-        if style == .byLatest {
-            // TODO: 목록 변경
-            feedView.sortButton.setTitle("최신순", for: .normal)
-        } else {
-            // TODO: 목록 변경
-            feedView.sortButton.setTitle("인기순", for: .normal)
-        }
-    }
-
-    private func goToDetailContentVC() {
+    private func goToDetailContentVC(article: Article) {
 
         let vc = DetailContentViewController()
         vc.modalPresentationStyle = .fullScreen
         vc.hidesBottomBarWhenPushed = true
         // TODO
         // vc.feedInfo = indexPath.row 의 feedInfo
+        vc.viewModel.article = article
         self.navigationController?.pushViewController(vc, animated: true)
     }
 
+    private func goToAllSubscribe() {
+        let vc = SubscribeListViewController()
+        vc.modalPresentationStyle = .fullScreen
+        vc.hidesBottomBarWhenPushed = true
+
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
 }

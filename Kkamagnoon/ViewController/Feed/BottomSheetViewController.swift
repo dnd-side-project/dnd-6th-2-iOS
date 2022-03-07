@@ -14,6 +14,8 @@ import SnapKit
 // UISheetPresentationController() 대체
 class BottomSheetViewController: UIViewController {
 
+    let viewModel = BottomSheetViewModel()
+
     let backView = UIView()
 
     let bottomSheetView = UIView()
@@ -28,6 +30,8 @@ class BottomSheetViewController: UIViewController {
 
     let keyboardHideObserver = NotificationCenter.default.keyboardWillHideObservable()
 
+    var actionsheetController: UIAlertController!
+
     let disposeBag = DisposeBag()
 
     private var bottomSheetViewTopConstraint: NSLayoutConstraint!
@@ -39,6 +43,7 @@ class BottomSheetViewController: UIViewController {
         setKeyBoard()
         setBackView()
         setBottomSheetView()
+        bind()
 
     }
 
@@ -118,6 +123,10 @@ class BottomSheetViewController: UIViewController {
         Observable<[String]>.of([testString, testString, testString])
             .bind(to: commentTableView.rx.items(cellIdentifier: CommentCell.commentCellIdentifier, cellType: CommentCell.self)) { (_, element, cell) in
                 cell.commentContent.text = element
+                cell.moreButtonTapHandler = {
+                    print(">>>TAPP")
+                    self.showActionView()
+                }
             }
             .disposed(by: disposeBag)
     }
@@ -135,11 +144,6 @@ class BottomSheetViewController: UIViewController {
             .constraint(equalTo: view.bottomAnchor, constant: -44)
         writingCommebtViewBottomConstraint.isActive = true
 
-//        writingCommentView.textView.rx.didBeginEditing
-//            .bind { _ in
-//                self.animateWritingViewGoUp()
-//            }
-//            .disposed(by: disposeBag)
     }
 
     private func addCloseTapGesture(to target: UIView) {
@@ -218,4 +222,25 @@ class BottomSheetViewController: UIViewController {
             .disposed(by: disposeBag)
     }
 
+    func showActionView() {
+        actionsheetController = UIAlertController()
+
+        let actionDefault = UIAlertAction(title: "수정", style: .default, handler: nil)
+        let actionDestructive = UIAlertAction(title: "삭제", style: .destructive, handler: { _ in
+            print("destructive action called")
+        })
+
+        let actionCancel = UIAlertAction(title: "취소", style: .cancel, handler: nil)
+
+        actionsheetController.addAction(actionDefault)
+        actionsheetController.addAction(actionDestructive)
+        actionsheetController.addAction(actionCancel)
+    }
+
+}
+
+extension BottomSheetViewController {
+    func bind() {
+
+    }
 }
