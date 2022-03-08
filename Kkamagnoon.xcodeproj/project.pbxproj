@@ -210,6 +210,10 @@
 		04DAAE6427B4196F00AECFE4 /* BottomSheetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04DAAE6327B4196F00AECFE4 /* BottomSheetViewController.swift */; };
 		04DAAE6627B4C03A00AECFE4 /* CommentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04DAAE6527B4C03A00AECFE4 /* CommentCell.swift */; };
 		04DAAE6827B4D0D600AECFE4 /* WritingCommentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04DAAE6727B4D0D600AECFE4 /* WritingCommentView.swift */; };
+		04FD045F27D7116500EC87DC /* ChallengeVC+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04FD045E27D7116500EC87DC /* ChallengeVC+Ext.swift */; };
+		04FD046127D7127C00EC87DC /* ChallengeWritingVC+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04FD046027D7127C00EC87DC /* ChallengeWritingVC+Ext.swift */; };
+		04FD046327D7137700EC87DC /* ChallengeSelectingTagVC+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04FD046227D7137700EC87DC /* ChallengeSelectingTagVC+Ext.swift */; };
+		04FD046527D7143D00EC87DC /* SuccessPopUpVC+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04FD046427D7143D00EC87DC /* SuccessPopUpVC+Ext.swift */; };
 		4772DCC31D58F618A0C97067 /* Pods_KkamagnoonTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BEA8A731D028EF2AE2C2F844 /* Pods_KkamagnoonTests.framework */; };
 		59262A405FB52911AA2ACCF1 /* Pods_Kkamagnoon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 21B18F934232A8239C156F77 /* Pods_Kkamagnoon.framework */; };
 		DA3759104807120025675467 /* Pods_Kkamagnoon_KkamagnoonUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D320D1CF105BFC278E7F0256 /* Pods_Kkamagnoon_KkamagnoonUITests.framework */; };
@@ -422,6 +426,10 @@
 		04DAAE6327B4196F00AECFE4 /* BottomSheetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomSheetViewController.swift; sourceTree = "<group>"; };
 		04DAAE6527B4C03A00AECFE4 /* CommentCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentCell.swift; sourceTree = "<group>"; };
 		04DAAE6727B4D0D600AECFE4 /* WritingCommentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WritingCommentView.swift; sourceTree = "<group>"; };
+		04FD045E27D7116500EC87DC /* ChallengeVC+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChallengeVC+Ext.swift"; sourceTree = "<group>"; };
+		04FD046027D7127C00EC87DC /* ChallengeWritingVC+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChallengeWritingVC+Ext.swift"; sourceTree = "<group>"; };
+		04FD046227D7137700EC87DC /* ChallengeSelectingTagVC+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChallengeSelectingTagVC+Ext.swift"; sourceTree = "<group>"; };
+		04FD046427D7143D00EC87DC /* SuccessPopUpVC+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SuccessPopUpVC+Ext.swift"; sourceTree = "<group>"; };
 		18CC5DE48442606CD4F34580 /* Pods-Kkamagnoon.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Kkamagnoon.release.xcconfig"; path = "Target Support Files/Pods-Kkamagnoon/Pods-Kkamagnoon.release.xcconfig"; sourceTree = "<group>"; };
 		21B18F934232A8239C156F77 /* Pods_Kkamagnoon.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Kkamagnoon.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		24838BE1B7D5491B5C97CEAF /* Pods-KkamagnoonTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KkamagnoonTests.release.xcconfig"; path = "Target Support Files/Pods-KkamagnoonTests/Pods-KkamagnoonTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -1118,6 +1126,10 @@
 				0433170327C3A56100FE0E34 /* Label.swift */,
 				045F52AF27C88EF40082673B /* ImageExt.swift */,
 				045F52B327C8940C0082673B /* TextField.swift */,
+				04FD045E27D7116500EC87DC /* ChallengeVC+Ext.swift */,
+				04FD046027D7127C00EC87DC /* ChallengeWritingVC+Ext.swift */,
+				04FD046227D7137700EC87DC /* ChallengeSelectingTagVC+Ext.swift */,
+				04FD046427D7143D00EC87DC /* SuccessPopUpVC+Ext.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -1492,6 +1504,7 @@
 				0439AF4727B171EB00E14E03 /* DetailContentViewController.swift in Sources */,
 				04DAAE5A27B2B1F500AECFE4 /* FlexibleDecode.swift in Sources */,
 				04C95FD127B68AD400A0F840 /* TagListView.swift in Sources */,
+				04FD045F27D7116500EC87DC /* ChallengeVC+Ext.swift in Sources */,
 				040790F127BA65ED006C5374 /* RelayTitleCell.swift in Sources */,
 				040790DD27B94125006C5374 /* GrayBorderView.swift in Sources */,
 				040790AE27B8B3F8006C5374 /* TagView.swift in Sources */,
@@ -1517,6 +1530,7 @@
 				043316E327C33D0E00FE0E34 /* SearchViewController.swift in Sources */,
 				045F52BA27C8A5F50082673B /* TipBox.swift in Sources */,
 				045F52C527C8C4450082673B /* ChallengeSelectingTagViewController.swift in Sources */,
+				04FD046527D7143D00EC87DC /* SuccessPopUpVC+Ext.swift in Sources */,
 				043316D627C338D300FE0E34 /* FeedSubscribeService.swift in Sources */,
 				045F529727C740140082673B /* AddingTagCell.swift in Sources */,
 				040790E027B969A9006C5374 /* RelayRoomView.swift in Sources */,
@@ -1531,6 +1545,7 @@
 				04A40D5427BF51C2004DAB19 /* RelayArticleEndPointCases.swift in Sources */,
 				040790A627B8960D006C5374 /* Color.swift in Sources */,
 				043316DA27C3391A00FE0E34 /* FeedCommentService.swift in Sources */,
+				04FD046327D7137700EC87DC /* ChallengeSelectingTagVC+Ext.swift in Sources */,
 				040790AA27B89701006C5374 /* Decode.swift in Sources */,
 				04DAAE6227B3F41900AECFE4 /* SubscribeListCell.swift in Sources */,
 				045F52B227C892A50082673B /* WritingView.swift in Sources */,
@@ -1594,6 +1609,7 @@
 				040790F327BA75B2006C5374 /* PopUpViewController.swift in Sources */,
 				043316E127C33CB900FE0E34 /* BellNoticeViewController.swift in Sources */,
 				043316D427C338A900FE0E34 /* FeedService.swift in Sources */,
+				04FD046127D7127C00EC87DC /* ChallengeWritingVC+Ext.swift in Sources */,
 				040790AC27B89777006C5374 /* Notification.swift in Sources */,
 				0439AF3527B0B4AF00E14E03 /* ProfileView.swift in Sources */,
 				04A40D6127BF57E7004DAB19 /* MakingRelayRoomViewModel.swift in Sources */,

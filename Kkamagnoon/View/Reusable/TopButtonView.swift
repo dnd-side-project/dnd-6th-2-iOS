@@ -78,6 +78,7 @@ class TopButtonView: UIView {
         searchButton.heightAnchor.constraint(equalToConstant: 28).isActive = true
      }
 
+    // TODO: ViewModel로 옮기기
     private func setTabViewAction() {
        let tabButtons = [firstButton, secondButton]
 

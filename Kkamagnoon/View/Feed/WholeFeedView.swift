@@ -29,8 +29,6 @@ class WholeFeedView: UIView {
             $0.collectionView.collectionViewLayout = $0.layout
         }
 
-    let disposeBag = DisposeBag()
-
     override init(frame: CGRect) {
         super.init(frame: frame)
         setView()
