@@ -27,7 +27,11 @@ class ParticipantCell: UITableViewCell {
     }
 
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        super.init(coder: coder)
+        self.backgroundColor = UIColor(rgb: 0x2A2A2A)
+        self.selectionStyle = .none
+        setView()
+
     }
 
     func setView() {

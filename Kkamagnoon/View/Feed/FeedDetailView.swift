@@ -61,7 +61,13 @@ class FeedDetailView: UIView {
     }
 
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        super.init(coder: coder)
+        setProfileVeiw()
+        setMoreButton()
+        setUpdateDateLabel()
+        setTitleLabel()
+        setContentTextView()
+//        setTagListView(tags: tags)
     }
 
     func setProfileVeiw() {

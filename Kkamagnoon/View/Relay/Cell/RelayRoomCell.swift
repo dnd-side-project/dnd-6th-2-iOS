@@ -51,7 +51,10 @@ class RelayRoomCell: UICollectionViewCell {
         }
 
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        super.init(coder: coder)
+        self.layer.cornerRadius = 15
+        self.backgroundColor = UIColor(rgb: Color.feedListCard)
+        setView()
     }
 
     func setView() {

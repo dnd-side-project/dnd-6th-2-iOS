@@ -29,7 +29,8 @@ class SelectingTagCell: UICollectionViewCell {
     }
 
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        super.init(coder: coder)
+        setView(top: 17, bottom: -17, leading: 0, trailing: 0)
     }
 
     func setView(top: CGFloat, bottom: CGFloat, leading: CGFloat, trailing: CGFloat) {

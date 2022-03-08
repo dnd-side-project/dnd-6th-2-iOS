@@ -75,6 +75,7 @@ class MyChallengeCard: UIView {
         setView()
         self.addGestureRecognizer(tapGesture)
 
+        // TODO: ViewModel로 이동
         tapGesture.rx.event
             .withUnretained(self)
             .bind { owner, _ in
@@ -84,7 +85,11 @@ class MyChallengeCard: UIView {
     }
 
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        super.init(coder: coder)
+        self.backgroundColor = UIColor(rgb: 0x292929)
+        self.layer.cornerRadius = 15
+        setView()
+        self.addGestureRecognizer(tapGesture)
     }
 }
 

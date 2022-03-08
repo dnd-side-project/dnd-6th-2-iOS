@@ -17,7 +17,9 @@ class RelayListView: ArticleListView {
     }
 
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        super.init(coder: coder)
+
+        layout.headerReferenceSize = CGSize(width: self.frame.width, height: 40)
     }
 
 }

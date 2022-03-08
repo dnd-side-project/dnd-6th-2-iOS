@@ -30,7 +30,10 @@ class NoticeCell: UICollectionViewCell {
     }
 
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        super.init(coder: coder)
+        self.backgroundColor = UIColor(rgb: 0x1E1E1E)
+        self.layer.cornerRadius = 15
+        setView()
     }
 
     func setView() {
