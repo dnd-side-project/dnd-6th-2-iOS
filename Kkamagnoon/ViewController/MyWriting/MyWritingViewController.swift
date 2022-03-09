@@ -42,12 +42,10 @@ class MyWritingViewController: UIViewController {
             topView.bellButton.setImage(UIImage(named: "More"), for: .normal)
         }
 
-    var tagListView = TagListView(frame: .zero, tags: StringType.myWritingTags)
+    var listView: UIView!
 
-    var writingListView = ArticleListView()
-        .then {
-            $0.collectionView.register(MyWritingCell.self, forCellWithReuseIdentifier: MyWritingCell.identifier)
-        }
+    var myWritingListView = MyWritingListView()
+    var tempListView = TempListView()
 
     var addWritingButton = MakingRoomButton()
         .then {
@@ -57,6 +55,9 @@ class MyWritingViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor(rgb: Color.basicBackground)
+        navigationController?.setNavigationBarHidden(true, animated: false)
+        navigationController?.interactivePopGestureRecognizer?.delegate = nil
+        listView = myWritingListView
         setView()
         bindView()
         viewModel.bindMyWritingList()
@@ -77,19 +78,10 @@ extension MyWritingViewController {
             $0.height.equalTo(115.0)
         }
 
-        view.addSubview(tagListView)
-        tagListView.snp.makeConstraints {
+        view.addSubview(myWritingListView)
+        myWritingListView.snp.makeConstraints {
+            $0.left.right.equalToSuperview()
             $0.top.equalTo(topButtonView.snp.bottom)
-            $0.left.equalToSuperview().offset(22.0)
-            $0.right.equalToSuperview().offset(-22.0)
-            $0.height.equalTo(30.0)
-        }
-
-        view.addSubview(writingListView)
-        writingListView.snp.makeConstraints {
-            $0.top.equalTo(tagListView.snp.bottom).offset(16.0)
-            $0.left.equalToSuperview().offset(20.0)
-            $0.right.equalToSuperview().offset(-20.0)
             $0.bottom.equalTo(view.safeAreaLayoutGuide)
         }
 
@@ -102,13 +94,51 @@ extension MyWritingViewController {
     }
 
     func bindView() {
-//        writingListView.collectionView.rx
-//            .modelSelected(Article.self)
-//            .bind(to: viewModel.input.feedCellTap)
-//            .disposed(by: disposeBag)
+
+        // TODO: 외않되?
+        myWritingListView.writingListView.collectionView.rx
+            .modelSelected(Article.self)
+            .bind(to: viewModel.input.myWritingCellTap)
+            .disposed(by: disposeBag)
+
+        addWritingButton.rx.tap
+            .bind(to: viewModel.input.addWritingButtonTap)
+            .disposed(by: disposeBag)
 
         viewModel.output.articleList
-            .bind(to: writingListView.collectionView.rx.items(dataSource: dataSource))
+            .bind(to: myWritingListView.writingListView.collectionView.rx.items(dataSource: dataSource))
             .disposed(by: disposeBag)
+
+        viewModel.output.goToDetail
+            .withUnretained(self)
+            .bind { owner, article in
+                owner.goToDetailVC(article: article)
+            }
+            .disposed(by: disposeBag)
+
+        viewModel.output.goToWriting
+            .withUnretained(self)
+            .bind { owner, _ in
+                owner.goToWritingVC()
+            }
+            .disposed(by: disposeBag)
+
+    }
+}
+
+extension MyWritingViewController {
+    private func goToDetailVC(article: Article) {
+        let vc = DetailContentViewController()
+        vc.viewModel.article = article
+        vc.hidesBottomBarWhenPushed = true
+
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
+
+    private func goToWritingVC() {
+        let vc = WritingViewController()
+        vc.hidesBottomBarWhenPushed = true
+
+        self.navigationController?.pushViewController(vc, animated: true)
     }
 }

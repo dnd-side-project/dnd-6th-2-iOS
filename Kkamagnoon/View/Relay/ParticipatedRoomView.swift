@@ -13,12 +13,6 @@ class ParticipatedRoomView: UIView {
     var relayList = ArticleListView()
         .then {
             $0.collectionView.register(RelayRoomCell.self, forCellWithReuseIdentifier: RelayRoomCell.relayRoomCellIdentifier)
-            $0.collectionView.register(SortHeaderCell.self,
-                                       forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
-                                       withReuseIdentifier: SortHeaderCell.sortHeaderCellReuseIdentifier)
-
-            $0.layout.headerReferenceSize = CGSize(width: UIScreen.main.bounds.width - 40, height: 40)
-            $0.collectionView.collectionViewLayout = $0.layout
         }
 
     override init(frame: CGRect) {

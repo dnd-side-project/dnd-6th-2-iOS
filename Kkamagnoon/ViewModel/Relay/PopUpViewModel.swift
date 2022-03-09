@@ -12,6 +12,7 @@ import RxCocoa
 class PopUpViewModel: ViewModelType {
 
     var disposeBag = DisposeBag()
+    var relay: Relay?
 
     struct Input {
         let exitButtonTap = PublishSubject<Void>()
@@ -23,6 +24,8 @@ class PopUpViewModel: ViewModelType {
         let relayDetailViewStyle = BehaviorRelay<RelayRoomState>(value: .nonParticipation)
 
     }
+
+    var relayService = RelayService()
 
     var input: Input
     var output: Output
@@ -45,7 +48,12 @@ class PopUpViewModel: ViewModelType {
         input.enterButtonTap
             .withUnretained(self)
             .bind {owner, _ in
-                owner.output.relayDetailViewStyle.accept(.participation)
+                owner.relayService.postRelayJoin(relayId: owner.relay?._id ?? "")
+                // TODO: 성공일 경우인지 판단
+                    .bind { _ in
+                        owner.output.relayDetailViewStyle.accept(.participation)
+                    }
+                    .disposed(by: owner.disposeBag)
             }
             .disposed(by: disposeBag)
     }

@@ -14,7 +14,8 @@ class RelayDetailViewModel: ViewModelType {
     var disposeBag = DisposeBag()
     var isNew: Bool = false
     var didEntered: Bool = false
-//    var relayInfo: Relay?
+    var relayInfo: Relay?
+    var articleList: [Article]?
 
     struct Input {
         let enterButtonTap = PublishSubject<Void>()
@@ -25,7 +26,7 @@ class RelayDetailViewModel: ViewModelType {
 
     struct Output {
         let goToRoom = PublishRelay<Void>()
-        let goToWriting = PublishRelay<Void>()
+        let goToWriting = PublishRelay<[Article]>()
         let goToParticipantView = PublishRelay<Void>()
         let articleList = PublishRelay<[FeedSection]>()
     }
@@ -61,7 +62,7 @@ class RelayDetailViewModel: ViewModelType {
         input.addWritingButtonTap
             .withUnretained(self)
             .bind { owner, _ in
-                owner.output.goToWriting.accept(())
+                owner.output.goToWriting.accept(owner.articleList ?? [])
             }
             .disposed(by: disposeBag)
     }
@@ -87,6 +88,7 @@ class RelayDetailViewModel: ViewModelType {
 
                         owner.output.articleList
                             .accept([FeedSection(header: relay, items: list)])
+                        owner.articleList = list
                     }
                     .disposed(by: owner.disposeBag)
             }

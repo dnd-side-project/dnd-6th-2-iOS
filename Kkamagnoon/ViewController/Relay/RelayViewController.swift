@@ -97,7 +97,7 @@ class RelayViewController: UIViewController {
         setView()
         bindView()
         viewModel.bindRelayList()
-        viewModel.bindMyRoomList()
+        viewModel.bindParticipatedRoomList()
 
     }
 
@@ -224,6 +224,14 @@ class RelayViewController: UIViewController {
 
     private func goToRelayDetailViewController(relay: Relay) {
         let vc = RelayDetailViewController()
+        vc.viewModel.relayInfo = relay
+
+        if viewModel.participatedStyle == .relayRoom {
+            vc.viewModel.didEntered = false
+        } else {
+            vc.viewModel.didEntered = true
+        }
+
         vc.modalPresentationStyle = .fullScreen
         vc.hidesBottomBarWhenPushed = true
 
@@ -247,8 +255,10 @@ class RelayViewController: UIViewController {
         roomView.removeFromSuperview()
 
         if style == .relayRoom {
+            viewModel.participatedStyle = .relayRoom
             roomView = relayRoomView
         } else {
+            viewModel.participatedStyle = .participatedRoom
             roomView = participatedRoomView
         }
         setRoomView()

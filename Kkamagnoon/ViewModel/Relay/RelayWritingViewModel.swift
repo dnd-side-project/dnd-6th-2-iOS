@@ -1,23 +1,22 @@
 //
-//  WritingViewModel.swift
+//  RelayWritingViewModel.swift
 //  Kkamagnoon
 //
-//  Created by 서정 on 2022/02/21.
+//  Created by 서정 on 2022/03/09.
 //
 
-import Foundation
+import UIKit
 import RxSwift
 import RxCocoa
-import RxDataSources
 
-class WritingViewModel: ViewModelType {
+class RelayWritingViewModel: ViewModelType {
 
-    var articleDTO = CreateArticleDTO()
+    var relayArticleDTO = RelayArticleDTO()
+    var relayInfo: Relay?
     var articleList: [Article]?
     var rootView: UIViewController?
 
     struct Input {
-        let title = PublishSubject<String>()
         let contents = PublishSubject<String>()
 
         let copyButtonTap = PublishSubject<Void>()
@@ -28,9 +27,9 @@ class WritingViewModel: ViewModelType {
     struct Output {
 //        let article = PublishRelay<CreateArticleDTO>()
         let enableCompleteButton = PublishRelay<Bool>()
+        let registerWriting = PublishRelay<Article>()
         let tips = PublishRelay<String>()
 
-        let goToSelection = PublishRelay<CreateArticleDTO>()
     }
 
     var input: Input
@@ -38,19 +37,17 @@ class WritingViewModel: ViewModelType {
 
     var disposeBag = DisposeBag()
     var challengeService = ChallengeService()
+    var relayArticleService = RelayArticleService()
 
     init(input: Input = Input(),
          output: Output = Output()) {
         self.input = input
         self.output = output
         bind()
-
-        // TEMP
-        articleDTO.public = false
     }
 }
 
-extension WritingViewModel {
+extension RelayWritingViewModel {
     func bindTips() {
         challengeService.getChallengeArticle()
             .withUnretained(self)
@@ -62,25 +59,31 @@ extension WritingViewModel {
     }
 
     func bind() {
-        Observable.combineLatest(input.title, input.contents)
-            .map {[weak self] title, contents in
-                if !(title.isEmpty) &&
-                    contents != StringType.contentPlaceholder {
-                    self?.articleDTO.title = title
-                    self?.articleDTO.content = contents
-
-                    return true
+        input.contents
+            .withUnretained(self)
+            .bind { owner, content in
+                if !content.isEmpty {
+                    owner.relayArticleDTO.categoryId = "string"
+                    owner.relayArticleDTO.content = content
+                    owner.output.enableCompleteButton.accept(true)
+                } else {
+                    owner.output.enableCompleteButton.accept(false)
                 }
-                return false
             }
-            .bind(to: output.enableCompleteButton)
             .disposed(by: disposeBag)
 
         input.completeButtonTap
             .withUnretained(self)
             .bind { owner, _ in
-                owner.output.goToSelection.accept(owner.articleDTO)
+                owner.relayArticleService.postRelayArticle(
+                    relayId: owner.relayInfo?._id ?? "",
+                    relayArticle: owner.relayArticleDTO)
+                    .bind { article in
+                        owner.output.registerWriting.accept(article)
+                    }
+                    .disposed(by: owner.disposeBag)
             }
             .disposed(by: disposeBag)
+
     }
 }

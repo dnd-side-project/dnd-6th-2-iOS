@@ -157,8 +157,8 @@ class RelayDetailViewController: UIViewController {
 
         viewModel.output.goToWriting
             .withUnretained(self)
-            .bind {owner, _ in
-                owner.goToWritingVC()
+            .bind {owner, articleList in
+                owner.goToWritingVC(articleList: articleList)
             }
             .disposed(by: disposeBag)
 
@@ -176,6 +176,7 @@ class RelayDetailViewController: UIViewController {
 
     private func goToPopUpVC() {
         let vc = PopUpViewController()
+        vc.viewModel.relay = viewModel.relayInfo
         vc.viewModel.output.relayDetailViewStyle
             .withUnretained(self)
             .bind { owner, style in
@@ -194,8 +195,10 @@ class RelayDetailViewController: UIViewController {
         self.present(vc, animated: false)
     }
 
-    private func goToWritingVC() {
+    private func goToWritingVC(articleList: [Article]) {
         let vc = RelayWritingViewController()
+        vc.viewModel.articleList = articleList
+        vc.viewModel.relayInfo = viewModel.relayInfo
         vc.modalPresentationStyle = .fullScreen
 
         self.navigationController?.pushViewController(vc, animated: true)

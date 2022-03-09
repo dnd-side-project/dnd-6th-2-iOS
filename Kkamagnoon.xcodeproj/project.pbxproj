@@ -214,6 +214,11 @@
 		04FD046127D7127C00EC87DC /* ChallengeWritingVC+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04FD046027D7127C00EC87DC /* ChallengeWritingVC+Ext.swift */; };
 		04FD046327D7137700EC87DC /* ChallengeSelectingTagVC+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04FD046227D7137700EC87DC /* ChallengeSelectingTagVC+Ext.swift */; };
 		04FD046527D7143D00EC87DC /* SuccessPopUpVC+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04FD046427D7143D00EC87DC /* SuccessPopUpVC+Ext.swift */; };
+		04FD046727D791EA00EC87DC /* MyWritingListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04FD046627D791EA00EC87DC /* MyWritingListView.swift */; };
+		04FD046927D791FA00EC87DC /* TempListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04FD046827D791FA00EC87DC /* TempListView.swift */; };
+		04FD046B27D83D3100EC87DC /* RelayWritingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04FD046A27D83D3100EC87DC /* RelayWritingView.swift */; };
+		04FD046D27D83EE600EC87DC /* RelayWritingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04FD046C27D83EE600EC87DC /* RelayWritingCell.swift */; };
+		04FD046F27D85EC800EC87DC /* RelayWritingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04FD046E27D85EC800EC87DC /* RelayWritingViewModel.swift */; };
 		4772DCC31D58F618A0C97067 /* Pods_KkamagnoonTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BEA8A731D028EF2AE2C2F844 /* Pods_KkamagnoonTests.framework */; };
 		59262A405FB52911AA2ACCF1 /* Pods_Kkamagnoon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 21B18F934232A8239C156F77 /* Pods_Kkamagnoon.framework */; };
 		DA3759104807120025675467 /* Pods_Kkamagnoon_KkamagnoonUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D320D1CF105BFC278E7F0256 /* Pods_Kkamagnoon_KkamagnoonUITests.framework */; };
@@ -430,6 +435,11 @@
 		04FD046027D7127C00EC87DC /* ChallengeWritingVC+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChallengeWritingVC+Ext.swift"; sourceTree = "<group>"; };
 		04FD046227D7137700EC87DC /* ChallengeSelectingTagVC+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChallengeSelectingTagVC+Ext.swift"; sourceTree = "<group>"; };
 		04FD046427D7143D00EC87DC /* SuccessPopUpVC+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SuccessPopUpVC+Ext.swift"; sourceTree = "<group>"; };
+		04FD046627D791EA00EC87DC /* MyWritingListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyWritingListView.swift; sourceTree = "<group>"; };
+		04FD046827D791FA00EC87DC /* TempListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TempListView.swift; sourceTree = "<group>"; };
+		04FD046A27D83D3100EC87DC /* RelayWritingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RelayWritingView.swift; sourceTree = "<group>"; };
+		04FD046C27D83EE600EC87DC /* RelayWritingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RelayWritingCell.swift; sourceTree = "<group>"; };
+		04FD046E27D85EC800EC87DC /* RelayWritingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RelayWritingViewModel.swift; sourceTree = "<group>"; };
 		18CC5DE48442606CD4F34580 /* Pods-Kkamagnoon.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Kkamagnoon.release.xcconfig"; path = "Target Support Files/Pods-Kkamagnoon/Pods-Kkamagnoon.release.xcconfig"; sourceTree = "<group>"; };
 		21B18F934232A8239C156F77 /* Pods_Kkamagnoon.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Kkamagnoon.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		24838BE1B7D5491B5C97CEAF /* Pods-KkamagnoonTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KkamagnoonTests.release.xcconfig"; path = "Target Support Files/Pods-KkamagnoonTests/Pods-KkamagnoonTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -506,6 +516,7 @@
 				040790EC27BA2AFF006C5374 /* RelayDetailView.swift */,
 				0407910827BBDD68006C5374 /* ParticipantListView.swift */,
 				04A40D6C27BFC1C2004DAB19 /* RelayListView.swift */,
+				04FD046A27D83D3100EC87DC /* RelayWritingView.swift */,
 			);
 			path = Relay;
 			sourceTree = "<group>";
@@ -520,6 +531,7 @@
 				0407910A27BBE003006C5374 /* ParticipantCell.swift */,
 				04A40D7227BFE22C004DAB19 /* SortHeaderCell.swift */,
 				040D853C27C10B5C0003C96A /* SelectingCollectionReusableView.swift */,
+				04FD046C27D83EE600EC87DC /* RelayWritingCell.swift */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -668,6 +680,8 @@
 				045F52B527C89A700082673B /* NextButton.swift */,
 				045F52B727C89E3F0082673B /* WritingSubView.swift */,
 				045F52B927C8A5F50082673B /* TipBox.swift */,
+				04FD046627D791EA00EC87DC /* MyWritingListView.swift */,
+				04FD046827D791FA00EC87DC /* TempListView.swift */,
 			);
 			path = MyWriting;
 			sourceTree = "<group>";
@@ -940,6 +954,7 @@
 				04A40D6027BF57E7004DAB19 /* MakingRelayRoomViewModel.swift */,
 				04A40D6227BF57F9004DAB19 /* SelectTagViewModel.swift */,
 				04A40D6427BF5809004DAB19 /* ParticipantViewModel.swift */,
+				04FD046E27D85EC800EC87DC /* RelayWritingViewModel.swift */,
 			);
 			path = Relay;
 			sourceTree = "<group>";
@@ -1487,6 +1502,7 @@
 				043316C827C3364E00FE0E34 /* ChallengeViewModel.swift in Sources */,
 				040790FF27BB96C0006C5374 /* SelectTagViewController.swift in Sources */,
 				040790F727BB4C7E006C5374 /* MakingRelayRoomViewController.swift in Sources */,
+				04FD046B27D83D3100EC87DC /* RelayWritingView.swift in Sources */,
 				048D44BF27AF5D930031974D /* ChallengeViewController.swift in Sources */,
 				043316C227C3311300FE0E34 /* TodayKeywordView.swift in Sources */,
 				043316DC27C3394700FE0E34 /* Service.swift in Sources */,
@@ -1539,6 +1555,7 @@
 				043316FF27C3744100FE0E34 /* ParticipatedRoomView.swift in Sources */,
 				040D853127C0B8AD0003C96A /* SettingPersonnelView.swift in Sources */,
 				0439AF3127AFF97400E14E03 /* FeedCell.swift in Sources */,
+				04FD046727D791EA00EC87DC /* MyWritingListView.swift in Sources */,
 				0407910B27BBE003006C5374 /* ParticipantCell.swift in Sources */,
 				0439771027C908AC00935E0E /* SuccessPopUpViewController.swift in Sources */,
 				040790F927BB4E42006C5374 /* MakingRoomButton.swift in Sources */,
@@ -1557,6 +1574,7 @@
 				040790A827B8964E006C5374 /* String.swift in Sources */,
 				043316BE27C330BC00FE0E34 /* ChallengeHeaderView.swift in Sources */,
 				043316DF27C33A9400FE0E34 /* FeedReponseModel.swift in Sources */,
+				04FD046927D791FA00EC87DC /* TempListView.swift in Sources */,
 				045F528E27C72CE00082673B /* MyWritingEndPointCases.swift in Sources */,
 				043316FB27C35A2500FE0E34 /* ChallengeMainView.swift in Sources */,
 				043316EF27C34FA900FE0E34 /* DetailContentViewModel.swift in Sources */,
@@ -1584,6 +1602,7 @@
 				040D853D27C10B5C0003C96A /* SelectingCollectionReusableView.swift in Sources */,
 				0433171127C3EBD600FE0E34 /* RelayResponseModel.swift in Sources */,
 				04A40D6D27BFC1C2004DAB19 /* RelayListView.swift in Sources */,
+				04FD046F27D85EC800EC87DC /* RelayWritingViewModel.swift in Sources */,
 				04DAAE5127B1FDB300AECFE4 /* WholeFeedView.swift in Sources */,
 				04DAAE6827B4D0D600AECFE4 /* WritingCommentView.swift in Sources */,
 				0439AF4527B166B300E14E03 /* SubscribeFilterCell.swift in Sources */,
@@ -1606,6 +1625,7 @@
 				045F528727C656DF0082673B /* ChallengeResponseModel.swift in Sources */,
 				0439AF3327B0B0A000E14E03 /* ArticleListView.swift in Sources */,
 				043316F327C34FD600FE0E34 /* BottomSheetViewModel.swift in Sources */,
+				04FD046D27D83EE600EC87DC /* RelayWritingCell.swift in Sources */,
 				040790F327BA75B2006C5374 /* PopUpViewController.swift in Sources */,
 				043316E127C33CB900FE0E34 /* BellNoticeViewController.swift in Sources */,
 				043316D427C338A900FE0E34 /* FeedService.swift in Sources */,
