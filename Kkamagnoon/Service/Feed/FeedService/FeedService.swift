@@ -5,8 +5,6 @@
 //  Created by 서정 on 2022/02/10.
 //
  import RxSwift
- import SwiftyJSON
-
  import Alamofire
  import RxAlamofire
 

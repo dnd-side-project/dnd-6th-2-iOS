@@ -8,7 +8,7 @@ import Foundation
 
 enum FeedSearchEndpointCases: EndPoint {
 
-    case getSearchFeed(cursor: String?, content: String, option: String)
+    case getSearchFeed(cursor: String?, content: String, option: String, type: String?, orderBy: String)
     case getSearchFeedHistory
     case deleteSearchFeedHistory(id: String)
 
@@ -36,11 +36,15 @@ extension FeedSearchEndpointCases {
 extension FeedSearchEndpointCases {
     var path: String {
         switch self {
-        case .getSearchFeed(let cursor, let content, let option):
-            var finalUrl = baseURLString + "?content=\(content)&option=\(option)"
+        case .getSearchFeed(let cursor, let content, let option, let type, let orderBy):
+            var finalUrl = baseURLString + "?content=\(content)&option=\(option)&orderBy=\(orderBy)"
 
             if let cursor = cursor {
                 finalUrl.append("&cursor=\(cursor)")
+            }
+            
+            if let type = type {
+                finalUrl.append("&type=\(type)")
             }
             return finalUrl
 

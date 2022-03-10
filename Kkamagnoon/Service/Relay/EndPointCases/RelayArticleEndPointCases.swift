@@ -76,8 +76,8 @@ extension RelayArticleEndPointCases {
         switch self {
         case .postRelayArticle(_, relayArticle: let relayArticle):
             return [
-                "content": relayArticle.content as Any,
-                "categoryId": relayArticle.categoryId as Any
+                "content": relayArticle.content ?? "",
+                "categoryId": ""
             ]
 
         case .patchRelatArticle(_, _, content: let content):

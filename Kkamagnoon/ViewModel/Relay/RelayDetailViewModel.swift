@@ -85,6 +85,7 @@ class RelayDetailViewModel: ViewModelType {
                     .bind { articleList in
 
                         let list = articleList.relayArticles ?? []
+                        print("LIST>>>>>> \(relay._id) \(list)")
 
                         owner.output.articleList
                             .accept([FeedSection(header: relay, items: list)])

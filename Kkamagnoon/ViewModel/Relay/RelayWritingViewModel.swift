@@ -63,7 +63,6 @@ extension RelayWritingViewModel {
             .withUnretained(self)
             .bind { owner, content in
                 if !content.isEmpty {
-                    owner.relayArticleDTO.categoryId = "string"
                     owner.relayArticleDTO.content = content
                     owner.output.enableCompleteButton.accept(true)
                 } else {

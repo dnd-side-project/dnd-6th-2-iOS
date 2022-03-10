@@ -219,6 +219,9 @@
 		04FD046B27D83D3100EC87DC /* RelayWritingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04FD046A27D83D3100EC87DC /* RelayWritingView.swift */; };
 		04FD046D27D83EE600EC87DC /* RelayWritingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04FD046C27D83EE600EC87DC /* RelayWritingCell.swift */; };
 		04FD046F27D85EC800EC87DC /* RelayWritingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04FD046E27D85EC800EC87DC /* RelayWritingViewModel.swift */; };
+		04FD047127D9CA0A00EC87DC /* SearchBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04FD047027D9CA0A00EC87DC /* SearchBarView.swift */; };
+		04FD047427D9D2EC00EC87DC /* SearchRecentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04FD047327D9D2EC00EC87DC /* SearchRecentTableViewCell.swift */; };
+		04FD047627D9D5F600EC87DC /* CancelX.png in Resources */ = {isa = PBXBuildFile; fileRef = 04FD047527D9D5F600EC87DC /* CancelX.png */; };
 		4772DCC31D58F618A0C97067 /* Pods_KkamagnoonTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BEA8A731D028EF2AE2C2F844 /* Pods_KkamagnoonTests.framework */; };
 		59262A405FB52911AA2ACCF1 /* Pods_Kkamagnoon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 21B18F934232A8239C156F77 /* Pods_Kkamagnoon.framework */; };
 		DA3759104807120025675467 /* Pods_Kkamagnoon_KkamagnoonUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D320D1CF105BFC278E7F0256 /* Pods_Kkamagnoon_KkamagnoonUITests.framework */; };
@@ -440,6 +443,9 @@
 		04FD046A27D83D3100EC87DC /* RelayWritingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RelayWritingView.swift; sourceTree = "<group>"; };
 		04FD046C27D83EE600EC87DC /* RelayWritingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RelayWritingCell.swift; sourceTree = "<group>"; };
 		04FD046E27D85EC800EC87DC /* RelayWritingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RelayWritingViewModel.swift; sourceTree = "<group>"; };
+		04FD047027D9CA0A00EC87DC /* SearchBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBarView.swift; sourceTree = "<group>"; };
+		04FD047327D9D2EC00EC87DC /* SearchRecentTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchRecentTableViewCell.swift; sourceTree = "<group>"; };
+		04FD047527D9D5F600EC87DC /* CancelX.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = CancelX.png; sourceTree = "<group>"; };
 		18CC5DE48442606CD4F34580 /* Pods-Kkamagnoon.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Kkamagnoon.release.xcconfig"; path = "Target Support Files/Pods-Kkamagnoon/Pods-Kkamagnoon.release.xcconfig"; sourceTree = "<group>"; };
 		21B18F934232A8239C156F77 /* Pods_Kkamagnoon.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Kkamagnoon.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		24838BE1B7D5491B5C97CEAF /* Pods-KkamagnoonTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KkamagnoonTests.release.xcconfig"; path = "Target Support Files/Pods-KkamagnoonTests/Pods-KkamagnoonTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -778,6 +784,7 @@
 		045F52A527C88DC90082673B /* Button */ = {
 			isa = PBXGroup;
 			children = (
+				04FD047527D9D5F600EC87DC /* CancelX.png */,
 				0439771927C9157D00935E0E /* Sort.png */,
 				0439771727C911B100935E0E /* More.png */,
 				0439771527C910C700935E0E /* Search.png */,
@@ -1034,6 +1041,7 @@
 		04C95FD327B68C4400A0F840 /* Reusable */ = {
 			isa = PBXGroup;
 			children = (
+				04FD047227D9D2C500EC87DC /* Cell */,
 				0407910427BBD70E006C5374 /* BottomBar.swift */,
 				040790F827BB4E42006C5374 /* MakingRoomButton.swift */,
 				04A40D6A27BFC021004DAB19 /* HeaderViewWithBackBtn.swift */,
@@ -1052,6 +1060,7 @@
 				04A40D7027BFE19A004DAB19 /* ArticleListWithSortView.swift */,
 				040D852E27C096390003C96A /* MultiLineTagListView.swift */,
 				040D853A27C1035F0003C96A /* SelectTagView.swift */,
+				04FD047027D9CA0A00EC87DC /* SearchBarView.swift */,
 			);
 			path = Reusable;
 			sourceTree = "<group>";
@@ -1147,6 +1156,14 @@
 				04FD046427D7143D00EC87DC /* SuccessPopUpVC+Ext.swift */,
 			);
 			path = Extension;
+			sourceTree = "<group>";
+		};
+		04FD047227D9D2C500EC87DC /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				04FD047327D9D2EC00EC87DC /* SearchRecentTableViewCell.swift */,
+			);
+			path = Cell;
 			sourceTree = "<group>";
 		};
 		2944082E5D2EC83FE904B05C /* Pods */ = {
@@ -1310,6 +1327,7 @@
 				045F52A427C88DBA0082673B /* GoRight.png in Resources */,
 				045F52C027C8B4A20082673B /* Comment.png in Resources */,
 				0464F9CC27A578AE0054FD83 /* Assets.xcassets in Resources */,
+				04FD047627D9D5F600EC87DC /* CancelX.png in Resources */,
 				040790BF27B90E5C006C5374 /* Pretendard-Black.otf in Resources */,
 				040790D127B90E73006C5374 /* Pretendard-Regular.otf in Resources */,
 				0464F9CA27A578AA0054FD83 /* Main.storyboard in Resources */,
@@ -1533,6 +1551,7 @@
 				043316C527C3314F00FE0E34 /* CalendarDateCell.swift in Sources */,
 				04A40D6327BF57F9004DAB19 /* SelectTagViewModel.swift in Sources */,
 				040790DB27B92620006C5374 /* TextView.swift in Sources */,
+				04FD047427D9D2EC00EC87DC /* SearchRecentTableViewCell.swift in Sources */,
 				0407909927B7CB38006C5374 /* EndPoint.swift in Sources */,
 				043316F927C3500F00FE0E34 /* WritingViewModel.swift in Sources */,
 				040790F527BA76CC006C5374 /* PopUpView.swift in Sources */,
@@ -1551,6 +1570,7 @@
 				045F529727C740140082673B /* AddingTagCell.swift in Sources */,
 				040790E027B969A9006C5374 /* RelayRoomView.swift in Sources */,
 				04A40D5227BF4D30004DAB19 /* RelayNoticeEndPointCases.swift in Sources */,
+				04FD047127D9CA0A00EC87DC /* SearchBarView.swift in Sources */,
 				040790B427B8F03D006C5374 /* FeedDetailView.swift in Sources */,
 				043316FF27C3744100FE0E34 /* ParticipatedRoomView.swift in Sources */,
 				040D853127C0B8AD0003C96A /* SettingPersonnelView.swift in Sources */,

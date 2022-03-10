@@ -85,4 +85,15 @@ struct ScrapResponse: Decodable {
     var updatedAt: String?
 }
 
+struct GetSubFeedResDTO: Decodable {
+    var articles: [Article]?
+    var subscribeUserList: [Host]?
+    var next_cursor: String?
+}
+
+struct GetMainFeedResDTO: Decodable {
+    var articles: [Article]?
+    var next_cursor: String?
+}
+
 // TODO: CodingKeys

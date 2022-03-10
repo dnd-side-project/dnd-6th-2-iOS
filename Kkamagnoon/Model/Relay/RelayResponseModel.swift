@@ -44,7 +44,7 @@ struct AddNoticeDTO: Decodable {
     var notice: String?
 }
 
-struct RelayArticleDTO: Decodable {
+struct RelayArticleDTO: Codable {
     var content: String?
     var categoryId: String?
 }
