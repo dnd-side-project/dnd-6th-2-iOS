@@ -96,4 +96,12 @@ struct GetMainFeedResDTO: Decodable {
     var next_cursor: String?
 }
 
+struct History: Decodable {
+    var _id: String?
+    var user: String?
+    var content: String?
+    var createdAt: String?
+    var updatedAt: String?
+}
+
 // TODO: CodingKeys

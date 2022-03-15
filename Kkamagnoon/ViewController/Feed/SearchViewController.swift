@@ -14,6 +14,9 @@ import RxDataSources
 
 class SearchViewController: UIViewController {
 
+    let viewModel = SearchViewModel()
+    var disposeBag = DisposeBag()
+
     var searchBar = SearchBarView()
     var titleLabel = UILabel()
         .then {
@@ -24,16 +27,25 @@ class SearchViewController: UIViewController {
 
     var tableView = UITableView()
         .then {
+            $0.backgroundColor = .clear
             $0.register(SearchRecentTableViewCell.self, forCellReuseIdentifier: SearchRecentTableViewCell.identifier)
         }
 
-//    var dataSource = RxCollectionViewSectionedReloadDataSource<
+    lazy var dataSource = RxTableViewSectionedReloadDataSource<SectionModel<String, History>>(configureCell: { _, collectionView, indexPath, element in
+
+        let cell = collectionView.dequeueReusableCell(withIdentifier: SearchRecentTableViewCell.identifier, for: indexPath) as! SearchRecentTableViewCell
+
+        cell.searchTextLabel.text = element.content ?? ""
+        return cell
+    })
 
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor(rgb: Color.basicBackground)
         setView()
         bindView()
+
+        viewModel.getRecentSearchList()
     }
 
 }
@@ -64,6 +76,21 @@ extension SearchViewController {
     }
 
     func bindView() {
+        viewModel.output.recentSearchList
+            .bind(to: tableView.rx.items(dataSource: dataSource))
+            .disposed(by: disposeBag)
 
+        searchBar.searchField.rx.text
+            .orEmpty
+            .bind(to: viewModel.input.searchWord)
+            .disposed(by: disposeBag)
+
+        searchBar.searchButton.rx.tap
+            .bind(to: viewModel.input.searchButtonTap)
+            .disposed(by: disposeBag)
+
+        searchBar.backButton.rx.tap
+            .bind(to: viewModel.input.backButtonTap)
+            .disposed(by: disposeBag)
     }
 }

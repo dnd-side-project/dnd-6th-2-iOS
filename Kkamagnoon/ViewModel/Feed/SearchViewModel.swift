@@ -8,21 +8,21 @@
 import Foundation
 import RxSwift
 import RxCocoa
+import RxDataSources
 
 class SearchViewModel: ViewModelType {
 
     var commentList: [Comment]?
 
     struct Input {
-//        let backViewTap = PublishSubject<Void>()
-//        let moreButtonTap = PublishSubject<Void>()
-//        let sendButtonTap = PublishSubject<Void>()
-
+        let backButtonTap = PublishSubject<Void>()
+        let searchWord = BehaviorRelay<String>(value: "")
+        let searchButtonTap = PublishSubject<Void>()
     }
 
     struct Output {
         let dismissView = PublishRelay<Void>()
-        let recentSearchList = BehaviorRelay<[String]>(value: [])
+        let recentSearchList = BehaviorRelay<[SectionModel<String, History>]>(value: [])
     }
 
     var input: Input
@@ -47,10 +47,31 @@ class SearchViewModel: ViewModelType {
 extension SearchViewModel {
 
     func getRecentSearchList() {
-//        feedSearchService.getSearchFeedHistory()
+        feedSearchService.getSearchFeedHistory()
+            .withUnretained(self)
+            .bind { owner, list in
+                print(">><< \(list)")
+                owner.output.recentSearchList.accept([SectionModel(model: "", items: list)])
+            }
+            .disposed(by: disposeBag)
     }
 
     func bind() {
+        input.backButtonTap.bind(to: output.dismissView)
+            .disposed(by: disposeBag)
+
+        input.searchButtonTap
+            .withUnretained(self)
+            .bind { owner, _ in
+                let searchWord = owner.input.searchWord.value
+                owner.feedSearchService.getSearchFeed(cursor: nil, content: searchWord, type: nil, orderBy: "최신순")
+                    .bind { _ in
+
+                    }
+                    .disposed(by: owner.disposeBag)
+            }
+            .disposed(by: disposeBag)
+
     }
 
 }
