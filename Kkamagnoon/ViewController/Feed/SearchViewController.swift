@@ -26,9 +26,8 @@ class SearchViewController: UIViewController {
         .then {
             $0.register(SearchRecentTableViewCell.self, forCellReuseIdentifier: SearchRecentTableViewCell.identifier)
         }
-    
+
 //    var dataSource = RxCollectionViewSectionedReloadDataSource<
-        
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -63,8 +62,8 @@ extension SearchViewController {
             $0.bottom.equalTo(view.safeAreaLayoutGuide).offset(-20.0)
         }
     }
-    
+
     func bindView() {
-        
+
     }
 }

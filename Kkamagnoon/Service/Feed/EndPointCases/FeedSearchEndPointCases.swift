@@ -42,7 +42,7 @@ extension FeedSearchEndpointCases {
             if let cursor = cursor {
                 finalUrl.append("&cursor=\(cursor)")
             }
-            
+
             if let type = type {
                 finalUrl.append("&type=\(type)")
             }

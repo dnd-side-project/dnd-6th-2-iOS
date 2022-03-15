@@ -39,9 +39,23 @@ class RelayDetailViewController: UIViewController {
 
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: RelayContentCell.relayContentCellIdentifier, for: indexPath) as! RelayContentCell
 
-        cell.subTitleLabel.text = element.title
         cell.contentTextLabel.setTextWithLineHeight(text: element.content, lineHeight: Numbers(rawValue: 24.0) ?? .lineheightInBox)
+        cell.writerLabel.text = "\(element.user?.nickname ?? "") 지음"
 
+        let stringToDateFormatter = DateFormatter()
+            .then {
+                $0.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
+            }
+
+        let dateToStringFormatter = DateFormatter()
+            .then {
+                $0.dateFormat = "yyyy년 MM월 dd일"
+            }
+
+        let date = stringToDateFormatter.date(from: element.updatedAt ?? "")!
+
+        cell.updateDate.text = "\(dateToStringFormatter.string(from: date))"
+        cell.pageLabel.text = "\(indexPath.row+1)"
         return cell
 
     }, configureSupplementaryView: { dataSource, collectionView, _, indexPath in

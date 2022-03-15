@@ -10,9 +10,9 @@ import Then
 import SnapKit
 
 class SearchRecentTableViewCell: UITableViewCell {
-    
+
     static let identifier = "SearchRecentTableViewCellIdentifier"
-    
+
     var searchTextLabel = UILabel()
         .then {
             $0.numberOfLines = 1
@@ -20,7 +20,7 @@ class SearchRecentTableViewCell: UITableViewCell {
             $0.textColor = UIColor(rgb: 0xE2E2E2)
             $0.font = UIFont.pretendard(weight: .regular, size: 18.0)
         }
-    
+
     var xButton = UIButton()
         .then {
             $0.setImage(UIImage(named: "CancelX"), for: .normal)
@@ -41,7 +41,7 @@ extension SearchRecentTableViewCell {
     func setView() {
         self.backgroundColor = .clear
         self.selectionStyle = .none
-        
+
         self.addSubview(searchTextLabel)
         searchTextLabel.snp.makeConstraints {
             $0.left.equalToSuperview()
@@ -49,7 +49,7 @@ extension SearchRecentTableViewCell {
             $0.bottom.equalToSuperview().offset(-12.0)
             $0.right.equalToSuperview().offset(-30.0)
         }
-        
+
         self.addSubview(xButton)
         xButton.snp.makeConstraints {
             $0.size.equalTo(20.0)

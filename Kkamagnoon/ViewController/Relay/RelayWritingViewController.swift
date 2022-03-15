@@ -104,17 +104,15 @@ extension RelayWritingViewController {
             $0.bottom.equalToSuperview().offset(-85.0)
         }
 
-        viewModel.articleList?.forEach({ article in
+        for (index, article) in (viewModel.articleList ?? []).enumerated() {
             let articleCard = RelayWritingCard()
                 .then {
-                    // TODO: 쪽 넣기
+                    $0.pageLabel.text = "\(index + 1)"
                     $0.contentLabel.text = article.content
                     $0.setContentHuggingPriority(.required, for: .vertical)
                 }
-
             relayWritingView.relayListStackView.addArrangedSubview(articleCard)
-
-        })
+        }
 
         view.addSubview(tipBox)
         tipBox.snp.makeConstraints {

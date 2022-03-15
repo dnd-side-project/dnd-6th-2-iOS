@@ -12,7 +12,7 @@ class FeedSubscribeService: Service {
     func getSubscribeFeed(cursor: String?) -> Observable<GetSubFeedResDTO> {
         let endpoint = FeedSubscribeEndpointCases.getSubscribeFeed(cursor: cursor)
         let request = makeRequest(endpoint: endpoint)
-        
+
         return RxAlamofire.request(request as URLRequestConvertible)
             .responseData()
             .asObservable()
@@ -35,7 +35,7 @@ class FeedSubscribeService: Service {
     func getSubscribeAuthorList() -> Observable<[Host]> {
         let endpoint = FeedSubscribeEndpointCases.getSubscribeAuthorList
         let request = makeRequest(endpoint: endpoint)
-        
+
         return RxAlamofire.request(request as URLRequestConvertible)
             .responseData()
             .asObservable()
@@ -58,7 +58,7 @@ class FeedSubscribeService: Service {
     func getSubscribeFeedByAuthor(cursor: String?, authorId: String) -> Observable<GetSubFeedResDTO> {
         let endpoint = FeedSubscribeEndpointCases.getSubscribeFeedByAuthor(cursor: cursor, authorId: authorId)
         let request = makeRequest(endpoint: endpoint)
-        
+
         return RxAlamofire.request(request as URLRequestConvertible)
             .responseData()
             .asObservable()
@@ -81,7 +81,7 @@ class FeedSubscribeService: Service {
     func patchSubscribe(authorId: String) -> Observable<MessageResDTO> {
         let endpoint = FeedSubscribeEndpointCases.patchSubscribe(authorId: authorId)
         let request = makeRequest(endpoint: endpoint)
-        
+
         return RxAlamofire.request(request as URLRequestConvertible)
             .responseData()
             .asObservable()
@@ -104,7 +104,7 @@ class FeedSubscribeService: Service {
     func patchSubscribeCancel(authorId: String) -> Observable<MessageResDTO> {
         let endpoint = FeedSubscribeEndpointCases.patchSubscribeCancel(authorId: authorId)
         let request = makeRequest(endpoint: endpoint)
-        
+
         return RxAlamofire.request(request as URLRequestConvertible)
             .responseData()
             .asObservable()

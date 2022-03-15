@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		04040A5727E0453600BCA705 /* Heart2.png in Resources */ = {isa = PBXBuildFile; fileRef = 04040A5627E0453600BCA705 /* Heart2.png */; };
+		04040A5927E0473C00BCA705 /* More2.png in Resources */ = {isa = PBXBuildFile; fileRef = 04040A5827E0473C00BCA705 /* More2.png */; };
 		0407909927B7CB38006C5374 /* EndPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0407909827B7CB38006C5374 /* EndPoint.swift */; };
 		0407909B27B7D232006C5374 /* NetworkError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0407909A27B7D232006C5374 /* NetworkError.swift */; };
 		040790A427B895D1006C5374 /* View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040790A327B895D1006C5374 /* View.swift */; };
@@ -245,6 +247,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		04040A5627E0453600BCA705 /* Heart2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Heart2.png; sourceTree = "<group>"; };
+		04040A5827E0473C00BCA705 /* More2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = More2.png; sourceTree = "<group>"; };
 		0407909827B7CB38006C5374 /* EndPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EndPoint.swift; sourceTree = "<group>"; };
 		0407909A27B7D232006C5374 /* NetworkError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkError.swift; sourceTree = "<group>"; };
 		040790A327B895D1006C5374 /* View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = View.swift; sourceTree = "<group>"; };
@@ -784,8 +788,10 @@
 		045F52A527C88DC90082673B /* Button */ = {
 			isa = PBXGroup;
 			children = (
+				04040A5827E0473C00BCA705 /* More2.png */,
 				04FD047527D9D5F600EC87DC /* CancelX.png */,
 				0439771927C9157D00935E0E /* Sort.png */,
+				04040A5627E0453600BCA705 /* Heart2.png */,
 				0439771727C911B100935E0E /* More.png */,
 				0439771527C910C700935E0E /* Search.png */,
 				045F52BE27C8B4A20082673B /* Comment.png */,
@@ -1314,7 +1320,9 @@
 				045F52CD27C900430082673B /* NothingCharacter.png in Resources */,
 				0464F9CF27A578AE0054FD83 /* LaunchScreen.storyboard in Resources */,
 				0439773327C9237A00935E0E /* Copy.png in Resources */,
+				04040A5927E0473C00BCA705 /* More2.png in Resources */,
 				0439773927C92D0800935E0E /* Relay1x.png in Resources */,
+				04040A5727E0453600BCA705 /* Heart2.png in Resources */,
 				0439771427C90F0800935E0E /* Back.png in Resources */,
 				0439772C27C91FD200935E0E /* Feed1x.png in Resources */,
 				0439770E27C906C000935E0E /* CompletedCharacter.png in Resources */,

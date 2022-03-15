@@ -12,7 +12,7 @@ class FeedSearchService: Service {
     func getSearchFeed(cursor: String?, content: String, option: String, type: String?, orderBy: String) -> Observable<GetMainFeedResDTO> {
         let endpoint = FeedSearchEndpointCases.getSearchFeed(cursor: cursor, content: content, option: option, type: type, orderBy: orderBy)
         let request = makeRequest(endpoint: endpoint)
-        
+
         return RxAlamofire.request(request as URLRequestConvertible)
             .responseData()
             .asObservable()

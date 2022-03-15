@@ -19,6 +19,14 @@ class RelayWritingCard: UIView {
             $0.textColor = UIColor(rgb: 0xE2E2E2)
         }
 
+    var pageLabel = UILabel()
+        .then {
+            // DUMMY
+            $0.text = "1"
+            $0.font = UIFont.pretendard(weight: .regular, size: 12)
+            $0.textColor = UIColor(rgb: 0xADADAD)
+        }
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         setView()
@@ -39,7 +47,13 @@ extension RelayWritingCard {
             $0.top.equalToSuperview().offset(16.0)
             $0.bottom.equalToSuperview().offset(-16.0)
             $0.left.equalToSuperview().offset(27.0)
+            $0.right.equalToSuperview().offset(-42.0)
+        }
+
+        self.addSubview(pageLabel)
+        pageLabel.snp.makeConstraints {
             $0.right.equalToSuperview().offset(-27.0)
+            $0.bottom.equalToSuperview().offset(-19.0)
         }
     }
 }

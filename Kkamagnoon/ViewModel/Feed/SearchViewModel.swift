@@ -45,11 +45,11 @@ class SearchViewModel: ViewModelType {
 }
 
 extension SearchViewModel {
-    
+
     func getRecentSearchList() {
 //        feedSearchService.getSearchFeedHistory()
     }
-    
+
     func bind() {
     }
 
