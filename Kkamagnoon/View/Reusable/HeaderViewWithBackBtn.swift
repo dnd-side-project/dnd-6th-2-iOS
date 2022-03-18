@@ -40,7 +40,12 @@ class HeaderViewWithBackBtn: UIView {
     }
 
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        super.init(coder: coder)
+
+        setBackButton()
+        setTitleLabel()
+        setNoticeButton()
+        setBellButton()
     }
 
     func setBackButton() {

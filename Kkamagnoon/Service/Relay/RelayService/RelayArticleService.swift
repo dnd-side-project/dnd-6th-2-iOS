@@ -35,20 +35,22 @@ class RelayArticleService: Service {
             }
     }
 
-    func postRelayArticle(relayId: String, content: String) -> Observable<Article> {
-        let endpoint = RelayArticleEndPointCases.postRelayArticle(relayId: relayId, content: content)
+    func postRelayArticle(relayId: String, relayArticle: RelayArticleDTO) -> Observable<Article> {
+        let endpoint = RelayArticleEndPointCases.postRelayArticle(relayId: relayId, relayArticle: relayArticle)
 
         let request = makeRequest(endpoint: endpoint)
 
         return RxAlamofire.request(request as URLRequestConvertible)
             .responseData()
             .asObservable()
-            .map { _, resData -> Article  in
+            .map { http, resData -> Article  in
 
+                print("!!>>> \(http)")
                 let decoder = JSONDecoder()
 
                 do {
                     let result = try decoder.decode(Article.self, from: resData)
+                    print("!!>>> \(result)")
                     return result
                 } catch {
                     print(error)

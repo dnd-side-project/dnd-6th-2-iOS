@@ -35,7 +35,13 @@ class CommentCell: UITableViewCell {
     }
 
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        super.init(coder: coder)
+        self.backgroundColor = UIColor(rgb: Color.feedListCard)
+        self.selectionStyle = .none
+        setProfileView()
+        setCreatedDateLabel()
+        setMoreButton()
+        setCommentContent()
     }
 
     func setProfileView() {

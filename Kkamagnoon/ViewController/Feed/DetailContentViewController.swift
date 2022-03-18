@@ -55,32 +55,35 @@ class DetailContentViewController: UIViewController {
         layoutView()
         bindInput()
         bindOutput()
+        viewModel.bindArticle()
+
     }
 
 }
 
 extension DetailContentViewController {
     func setView() {
+
+        let article = viewModel.output.article.value
+
         view.addSubview(backButton)
         view.addSubview(stackView)
         stackView.addArrangedSubview(scrollView)
         stackView.addArrangedSubview(bottomView)
 
-        detailView = FeedDetailView(frame: .zero, tags: viewModel.article?.tags ?? [])
+        detailView = FeedDetailView(frame: .zero, tags: article.tags ?? [])
 
         scrollView.addSubview(detailView)
 
-        guard let article = viewModel.article else { return }
-
-        detailView.titleLabel.text = article.title
-        detailView.profileView.nickNameLabel.text = article.user?.nickname
-        detailView.contentTextView.text = article.content
-
-        // TODO: Created Date
-
-        bottomView.likeButton.setTitle("\(article.likeNum ?? 0)", for: .normal)
-        bottomView.commentButton.setTitle("\(article.commentNum ?? 0)", for: .normal)
-        bottomView.bookmarkButton.setTitle("\(article.scrapNum ?? 0)", for: .normal)
+//        detailView.titleLabel.text = article.title
+//        detailView.profileView.nickNameLabel.text = article.user?.nickname
+//        detailView.contentTextView.text = article.content
+//
+//        // TODO: Created Date
+//
+//        bottomView.likeButton.setTitle("\(article.likeNum ?? 0)", for: .normal)
+//        bottomView.commentButton.setTitle("\(article.commentNum ?? 0)", for: .normal)
+//        bottomView.bookmarkButton.setTitle("\(article.scrapNum ?? 0)", for: .normal)
     }
 
     func layoutView() {
@@ -148,6 +151,21 @@ extension DetailContentViewController {
     func bindOutput() {
         // TODO: 구독하기 반영
 
+        viewModel.output.article
+            .withUnretained(self)
+            .bind { owner, article in
+                owner.detailView.titleLabel.text = article.title
+                owner.detailView.profileView.nickNameLabel.text = article.user?.nickname
+                owner.detailView.contentTextView.text = article.content
+
+                // TODO: Created Date
+
+                owner.bottomView.likeButton.setTitle("\(article.likeNum ?? 0)", for: .normal)
+                owner.bottomView.commentButton.setTitle("\(article.commentNum ?? 0)", for: .normal)
+                owner.bottomView.bookmarkButton.setTitle("\(article.scrapNum ?? 0)", for: .normal)
+            }
+            .disposed(by: disposeBag)
+
         viewModel.output.popBack
             .withUnretained(self)
             .bind { owner, _ in
@@ -191,6 +209,7 @@ extension DetailContentViewController {
 extension DetailContentViewController {
     func goToCommentVC() {
         let vc = BottomSheetViewController()
+        vc.viewModel.input.articleId.accept(viewModel.articleId ?? "")
         vc.modalPresentationStyle = .overFullScreen
         self.present(vc, animated: false, completion: nil)
     }

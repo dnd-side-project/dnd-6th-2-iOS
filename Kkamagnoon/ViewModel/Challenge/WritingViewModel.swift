@@ -13,6 +13,7 @@ import RxDataSources
 class WritingViewModel: ViewModelType {
 
     var articleDTO = CreateArticleDTO()
+    var articleList: [Article]?
     var rootView: UIViewController?
 
     struct Input {

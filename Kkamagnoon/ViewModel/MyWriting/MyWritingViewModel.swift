@@ -21,6 +21,7 @@ class MyWritingViewModel: ViewModelType {
     struct Output {
         let goToBellNotice = PublishRelay<Void>()
         let goToWriting = PublishRelay<Void>()
+        let goToDetail = PublishRelay<Article>()
 
         let articleList = PublishRelay<[FeedSection]>()
     }
@@ -54,6 +55,19 @@ extension MyWritingViewModel {
     }
 
     func bind() {
+        input.myWritingCellTap
+            .withUnretained(self)
+            .bind { owner, article in
+                print("TPAPP!!")
+                owner.output.goToDetail.accept(article)
+            }
+            .disposed(by: disposeBag)
 
+        input.addWritingButtonTap
+            .withUnretained(self)
+            .bind { owner, _ in
+                owner.output.goToWriting.accept(())
+            }
+            .disposed(by: disposeBag)
     }
 }

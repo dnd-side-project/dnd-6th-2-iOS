@@ -69,7 +69,10 @@ class PopUpView: UIView {
     }
 
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        super.init(coder: coder)
+        self.layer.cornerRadius = 14.41
+        self.backgroundColor = UIColor(rgb: 0x3F3F3F)
+        setView()
     }
 
     func setView() {

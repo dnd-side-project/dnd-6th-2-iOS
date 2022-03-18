@@ -31,7 +31,10 @@ class TagView: UIView {
     }
 
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        super.init(coder: coder)
+        self.backgroundColor = UIColor(rgb: Color.tag)
+        self.layer.cornerRadius = 18.0
+
     }
 
     func setView(top: CGFloat, bottom: CGFloat, leading: CGFloat, trailing: CGFloat) {

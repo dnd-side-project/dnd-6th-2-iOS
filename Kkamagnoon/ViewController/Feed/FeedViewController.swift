@@ -237,7 +237,7 @@ extension FeedViewController {
         vc.hidesBottomBarWhenPushed = true
         // TODO
         // vc.feedInfo = indexPath.row 의 feedInfo
-        vc.viewModel.article = article
+        vc.viewModel.articleId = article._id
         self.navigationController?.pushViewController(vc, animated: true)
     }
 

@@ -27,7 +27,11 @@ class TopButtonView: UIView {
     }
 
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        super.init(coder: coder)
+//        setTabButton(first: first, second: second)
+        setBellButton()
+        setSearchButton()
+        setTabViewAction()
     }
 
     func setTabButton(first: String, second: String) {
@@ -74,6 +78,7 @@ class TopButtonView: UIView {
         searchButton.heightAnchor.constraint(equalToConstant: 28).isActive = true
      }
 
+    // TODO: ViewModel로 옮기기
     private func setTabViewAction() {
        let tabButtons = [firstButton, secondButton]
 

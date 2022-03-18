@@ -15,7 +15,7 @@ struct ArticlesResponse: Decodable {
 struct Article: Decodable {
     var _id: String?
     var free: Bool?
-    var comments: [String]?
+    var comments: [Comment]?
     var scrapNum: Int?
     var commentNum: Int?
     var likeNum: Int?
@@ -81,6 +81,25 @@ struct ScrapResponse: Decodable {
     var user: User?
     var article: Article?
     var category: Category?
+    var createdAt: String?
+    var updatedAt: String?
+}
+
+struct GetSubFeedResDTO: Decodable {
+    var articles: [Article]?
+    var subscribeUserList: [Host]?
+    var next_cursor: String?
+}
+
+struct GetMainFeedResDTO: Decodable {
+    var articles: [Article]?
+    var next_cursor: String?
+}
+
+struct History: Decodable {
+    var _id: String?
+    var user: String?
+    var content: String?
     var createdAt: String?
     var updatedAt: String?
 }

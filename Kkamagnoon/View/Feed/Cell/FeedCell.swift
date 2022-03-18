@@ -7,6 +7,7 @@
 
 import UIKit
 import Then
+import RxSwift
 
 class FeedCell: UICollectionViewCell {
     static let feedCellIdentifier = "FeedCellIdentifier"
@@ -35,6 +36,14 @@ class FeedCell: UICollectionViewCell {
             $0.setImage(UIImage(named: "More"), for: .normal)
         }
 
+    // FIXME: 뷰 컨트롤러 - 컬렉션뷰 - 셀 - 버튼 Binding은 셀 내부의 disposeBag을 이용해야 문제가 안 생깁니다. 추후 참고하시면 좋을 것 같아요.
+    var disposeBag = DisposeBag()
+    override func prepareForReuse() {
+      super.prepareForReuse()
+      disposeBag = DisposeBag()
+      // TODO: 셀 내용 초기화...
+    }
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.backgroundColor = UIColor(rgb: Color.feedListCard)
@@ -43,7 +52,10 @@ class FeedCell: UICollectionViewCell {
     }
 
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        super.init(coder: coder)
+        self.backgroundColor = UIColor(rgb: Color.feedListCard)
+        self.layer.cornerRadius = 15.0
+        setView()
     }
 
     func setView() {

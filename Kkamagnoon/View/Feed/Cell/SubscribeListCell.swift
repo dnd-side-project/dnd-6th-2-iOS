@@ -22,7 +22,10 @@ class SubscribeListCell: UITableViewCell {
     }
 
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        super.init(coder: coder)
+        self.backgroundColor = UIColor(rgb: Color.basicBackground)
+        self.selectionStyle = .none
+        setView()
     }
 
     func setView() {
