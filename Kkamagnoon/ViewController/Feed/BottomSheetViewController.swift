@@ -10,6 +10,8 @@ import RxSwift
 import RxCocoa
 import IQKeyboardManagerSwift
 import SnapKit
+import RxDataSources
+import Then
 
 // UISheetPresentationController() 대체
 class BottomSheetViewController: UIViewController {
@@ -25,6 +27,10 @@ class BottomSheetViewController: UIViewController {
     lazy var commentTableView = UITableView()
 
     let writingCommentView = WritingCommentView()
+        .then {
+            $0.postingButton.isEnabled = false
+            $0.postingButton.setTitleColor(UIColor(rgb: Color.tag), for: .normal)
+        }
 
     let keyboardShowObserver  = NotificationCenter.default.keyboardWillShowObservable()
 
@@ -33,6 +39,18 @@ class BottomSheetViewController: UIViewController {
     var actionsheetController: UIAlertController!
 
     let disposeBag = DisposeBag()
+
+    lazy var dataSource = RxTableViewSectionedReloadDataSource<SectionModel<String, Comment>>(configureCell: { _, collectionView, indexPath, element in
+
+        let cell = collectionView.dequeueReusableCell(withIdentifier: CommentCell.commentCellIdentifier, for: indexPath) as! CommentCell
+
+        cell.commentContent.text = element.content ?? ""
+        cell.moreButtonTapHandler = {
+            print(">>>TAPP")
+            self.showActionView()
+        }
+        return cell
+    })
 
     private var bottomSheetViewTopConstraint: NSLayoutConstraint!
     private var writingCommebtViewBottomConstraint: NSLayoutConstraint!
@@ -44,6 +62,7 @@ class BottomSheetViewController: UIViewController {
         setBackView()
         setBottomSheetView()
         bind()
+        viewModel.bindComment()
 
     }
 
@@ -119,16 +138,16 @@ class BottomSheetViewController: UIViewController {
         commentTableView.heightAnchor.constraint(equalToConstant: view.frame.height - 114 - 110.5).isActive = true
 
         // Dummy
-        let testString = "내용이 너무 좋아요!!><"
-        Observable<[String]>.of([testString, testString, testString])
-            .bind(to: commentTableView.rx.items(cellIdentifier: CommentCell.commentCellIdentifier, cellType: CommentCell.self)) { (_, element, cell) in
-                cell.commentContent.text = element
-                cell.moreButtonTapHandler = {
-                    print(">>>TAPP")
-                    self.showActionView()
-                }
-            }
-            .disposed(by: disposeBag)
+//        let testString = "내용이 너무 좋아요!!><"
+//        Observable<[String]>.of([testString, testString, testString])
+//            .bind(to: commentTableView.rx.items(cellIdentifier: CommentCell.commentCellIdentifier, cellType: CommentCell.self)) { (_, element, cell) in
+//                cell.commentContent.text = element
+//                cell.moreButtonTapHandler = {
+//                    print(">>>TAPP")
+//                    self.showActionView()
+//                }
+//            }
+//            .disposed(by: disposeBag)
     }
 
     func setWritingTextView() {
@@ -241,6 +260,27 @@ class BottomSheetViewController: UIViewController {
 
 extension BottomSheetViewController {
     func bind() {
+
+        writingCommentView.textView.rx.text
+            .orEmpty
+            .bind(to: viewModel.input.content)
+            .disposed(by: disposeBag)
+
+        writingCommentView.postingButton.rx.tap
+            .bind(to: viewModel.input.sendButtonTap)
+            .disposed(by: disposeBag)
+
+        viewModel.output.commentList
+            .bind(to: commentTableView.rx.items(dataSource: dataSource))
+            .disposed(by: disposeBag)
+
+        viewModel.output.enableSendButton
+            .withUnretained(self)
+            .bind { owenr, _ in
+                owenr.writingCommentView.postingButton.isEnabled = true
+                owenr.writingCommentView.postingButton.setTitleColor(UIColor(rgb: Color.whitePurple), for: .normal)
+            }
+            .disposed(by: disposeBag)
 
     }
 }

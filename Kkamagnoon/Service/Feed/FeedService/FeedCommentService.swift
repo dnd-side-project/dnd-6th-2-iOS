@@ -17,13 +17,15 @@ class FeedCommentService: Service {
         return RxAlamofire.request(request as URLRequestConvertible)
             .responseData()
             .asObservable()
-            .map { _, resData -> Comment  in
+            .map { http, resData -> Comment  in
 
+                print(http)
                 let decoder = JSONDecoder()
 
                 do {
                     let result = try decoder.decode(Comment.self, from: resData)
 
+                    print(result)
                     return result
                 } catch {
                     print(error)

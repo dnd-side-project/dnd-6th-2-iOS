@@ -11,7 +11,8 @@ import RxCocoa
 
 class DetailContentViewModel: ViewModelType {
 
-    var article: Article?
+//    var article: Article?
+    var articleId: String?
 
     struct Input {
         let backButtonTap = PublishSubject<Void>()
@@ -31,6 +32,7 @@ class DetailContentViewModel: ViewModelType {
         let like = BehaviorRelay<Int>(value: 0)
         let goToCommentPage = PublishRelay<Void>()
         let scrap = BehaviorRelay<Int>(value: 0)
+        let article = BehaviorRelay<Article>(value: Article())
     }
 
     var input: Input
@@ -52,6 +54,15 @@ class DetailContentViewModel: ViewModelType {
         bind()
     }
 
+    func bindArticle() {
+        feedService.getArticle(articleId: articleId ?? "")
+            .withUnretained(self)
+            .bind { owner, article in
+                owner.output.article.accept(article)
+            }
+            .disposed(by: disposeBag)
+    }
+
     func bind() {
         input.backButtonTap
             .withUnretained(self)
@@ -63,9 +74,12 @@ class DetailContentViewModel: ViewModelType {
         input.subscribeButtonTap
             .withUnretained(self)
             .bind { owner, _ in
-                guard let article = owner.article, let user = article.user, let id = user._id
-                else { return }
-                owner.subscribeService.patchSubscribe(authorId: id)
+                let id = owner.output.article.value.user?._id
+                owner.subscribeService.patchSubscribe(authorId: id ?? "")
+                    .bind { message in
+                        print(message.message ?? "")
+                    }
+                    .disposed(by: owner.disposeBag)
             }
             .disposed(by: disposeBag)
 
@@ -78,10 +92,8 @@ class DetailContentViewModel: ViewModelType {
 
         input.likeButtonTap
             .withUnretained(self)
-            .bind { owner, _ in
-                guard let article = owner.article else {
-                    return
-                }
+            .bind { _, _ in
+
                 // TODO: 좋아요 API 날리기
 //                owner.feedService.postLike(articleId: article._id ?? "", like: ScrapDTO(category: "string"))
 //                    .withUnretained(self)
@@ -101,10 +113,7 @@ class DetailContentViewModel: ViewModelType {
 
         input.scrapButtonTap
             .withUnretained(self)
-            .bind {owner, _ in
-                guard let article = owner.article else {
-                    return
-                }
+            .bind {_, _ in
 
 //                owner.feedService.postScrap(articleId: article._id ?? "", scrap: ScrapDTO(category: "string"))
             }

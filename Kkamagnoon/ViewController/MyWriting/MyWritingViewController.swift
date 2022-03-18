@@ -129,7 +129,7 @@ extension MyWritingViewController {
 extension MyWritingViewController {
     private func goToDetailVC(article: Article) {
         let vc = DetailContentViewController()
-        vc.viewModel.article = article
+        vc.viewModel.articleId = article._id
         vc.hidesBottomBarWhenPushed = true
 
         self.navigationController?.pushViewController(vc, animated: true)

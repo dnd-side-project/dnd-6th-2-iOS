@@ -39,19 +39,70 @@ class FeedService: Service {
             }
     }
 
-    func getArticle(articleId: String) {
+    func getArticle(articleId: String) -> Observable<Article> {
         let endpoint = FeedEndpointCases.getArticle(articleId: articleId)
         let request = makeRequest(endpoint: endpoint)
+
+        return RxAlamofire.request(request as URLRequestConvertible)
+            .responseData()
+            .asObservable()
+            .map { _, resData -> Article  in
+
+                let decoder = JSONDecoder()
+
+                do {
+                    let result = try decoder.decode(Article.self, from: resData)
+                    return result
+                } catch {
+                    print(error)
+                }
+
+                return Article()
+            }
     }
 
-    func deleteArticle(articleId: String) {
+    func deleteArticle(articleId: String) -> Observable<MessageResDTO> {
         let endpoint = FeedEndpointCases.deleteArticle(articleId: articleId)
         let request = makeRequest(endpoint: endpoint)
+
+        return RxAlamofire.request(request as URLRequestConvertible)
+            .responseData()
+            .asObservable()
+            .map { _, resData -> MessageResDTO  in
+
+                let decoder = JSONDecoder()
+
+                do {
+                    let result = try decoder.decode(MessageResDTO.self, from: resData)
+                    return result
+                } catch {
+                    print(error)
+                }
+
+                return MessageResDTO()
+            }
     }
 
-    func patchArticle(articleId: String, articleInfo: CreateArticleDTO) {
+    func patchArticle(articleId: String, articleInfo: CreateArticleDTO) -> Observable<Article> {
         let endpoint = FeedEndpointCases.patchArticle(articleId: articleId, articleInfo: articleInfo)
         let request = makeRequest(endpoint: endpoint)
+
+        return RxAlamofire.request(request as URLRequestConvertible)
+            .responseData()
+            .asObservable()
+            .map { _, resData -> Article  in
+
+                let decoder = JSONDecoder()
+
+                do {
+                    let result = try decoder.decode(Article.self, from: resData)
+                    return result
+                } catch {
+                    print(error)
+                }
+
+                return Article()
+            }
     }
 
     func postScrap(articleId: String, scrap: ScrapDTO) -> Observable<ScrapResponse> {
@@ -77,9 +128,26 @@ class FeedService: Service {
 
     }
 
-    func deleteScrap(articleId: String) {
+    func deleteScrap(articleId: String) -> Observable<MessageResDTO> {
         let endpoint = FeedEndpointCases.deleteScrap(articleId: articleId)
         let request = makeRequest(endpoint: endpoint)
+
+        return RxAlamofire.request(request as URLRequestConvertible)
+            .responseData()
+            .asObservable()
+            .map { _, resData -> MessageResDTO  in
+
+                let decoder = JSONDecoder()
+
+                do {
+                    let result = try decoder.decode(MessageResDTO.self, from: resData)
+                    return result
+                } catch {
+                    print(error)
+                }
+
+                return MessageResDTO()
+            }
     }
 
     func postLike(articleId: String, like: ScrapDTO) -> Observable<LikeResponse> {
@@ -103,9 +171,26 @@ class FeedService: Service {
             }
     }
 
-    func deleteLike(articleId: String) {
+    func deleteLike(articleId: String) -> Observable<MessageResDTO> {
         let endpoint = FeedEndpointCases.deleteLike(articleId: articleId)
         let request = makeRequest(endpoint: endpoint)
+
+        return RxAlamofire.request(request as URLRequestConvertible)
+            .responseData()
+            .asObservable()
+            .map { _, resData -> MessageResDTO  in
+
+                let decoder = JSONDecoder()
+
+                do {
+                    let result = try decoder.decode(MessageResDTO.self, from: resData)
+                    return result
+                } catch {
+                    print(error)
+                }
+
+                return MessageResDTO()
+            }
     }
 
 }

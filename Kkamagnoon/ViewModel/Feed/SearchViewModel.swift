@@ -50,7 +50,6 @@ extension SearchViewModel {
         feedSearchService.getSearchFeedHistory()
             .withUnretained(self)
             .bind { owner, list in
-                print(">><< \(list)")
                 owner.output.recentSearchList.accept([SectionModel(model: "", items: list)])
             }
             .disposed(by: disposeBag)
