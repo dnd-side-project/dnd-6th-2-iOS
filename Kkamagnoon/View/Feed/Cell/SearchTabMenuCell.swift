@@ -14,8 +14,9 @@ class SearchTabMenuCell: UICollectionViewCell {
 
     var textLabel = UILabel()
         .then {
-            $0.textColor = .white
-            $0.font = UIFont.pretendard(weight: .semibold, size: 16.0)
+            $0.textColor = UIColor(rgb: 0x767676)
+            $0.font = UIFont.pretendard(weight: .regular, size: 16.0)
+            $0.textAlignment = .center
         }
 
     override init(frame: CGRect) {
@@ -27,14 +28,37 @@ class SearchTabMenuCell: UICollectionViewCell {
         super.init(coder: coder)
         setView()
     }
+
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        textLabel.text = nil
+        configureSelected()
+    }
+
+    override var isSelected: Bool {
+        didSet {
+            configureSelected()
+        }
+    }
+
 }
 
 extension SearchTabMenuCell {
     func setView() {
         self.addSubview(textLabel)
         textLabel.snp.makeConstraints {
-            $0.centerY.equalToSuperview()
-            $0.centerX.equalToSuperview()
+            $0.centerY.centerX.equalToSuperview()
         }
+    }
+
+    private func configureSelected() {
+        if isSelected {
+            textLabel.textColor = .white
+            textLabel.font = UIFont.pretendard(weight: .semibold, size: 16.0)
+            return
+        }
+
+        textLabel.textColor = UIColor(rgb: 0x767676)
+        textLabel.font = UIFont.pretendard(weight: .regular, size: 16.0)
     }
 }

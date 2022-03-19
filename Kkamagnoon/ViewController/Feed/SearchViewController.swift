@@ -23,22 +23,31 @@ class SearchViewController: UIViewController {
 
     var searchHistoryView = SearchHistoryView()
     var searchResultView = SearchResultView()
+        .then {
+            $0.menuTabView.menuCollectionView.register(SearchTabMenuCell.self, forCellWithReuseIdentifier: SearchTabMenuCell.identifier)
+            $0.searchResultListView.collectionView.register(MyWritingCell.self, forCellWithReuseIdentifier: MyWritingCell.identifier)
 
-    lazy var historyDataSource = RxTableViewSectionedReloadDataSource<SectionModel<String, History>>(configureCell: { _, collectionView, indexPath, element in
+        }
 
-        let cell = collectionView.dequeueReusableCell(withIdentifier: SearchRecentTableViewCell.identifier, for: indexPath) as! SearchRecentTableViewCell
+    lazy var historyDataSource = RxTableViewSectionedReloadDataSource<SectionModel<String, History>>(configureCell: { _, tableView, indexPath, element in
+
+        let cell = tableView.dequeueReusableCell(withIdentifier: SearchRecentTableViewCell.identifier, for: indexPath) as! SearchRecentTableViewCell
 
         cell.searchTextLabel.text = element.content ?? ""
         return cell
     })
-    
-//    lazy var searchResultDataSource = RxCollectionViewSectionedReloadDataSource<SectionModel<String, >>(configureCell: { _, collectionView, indexPath, element in
-//
-//        let cell = collectionView.dequeueReusableCell(withIdentifier: SearchRecentTableViewCell.identifier, for: indexPath) as! SearchRecentTableViewCell
-//
-//        cell.searchTextLabel.text = element.content ?? ""
-//        return cell
-//    })
+
+    lazy var searchResultDataSource = RxCollectionViewSectionedReloadDataSource<SectionModel<String, Article>>(configureCell: { _, collectionView, indexPath, element in
+
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MyWritingCell.identifier, for: indexPath) as! MyWritingCell
+
+        cell.card.titleLabel.text = element.title ?? ""
+        cell.card.contentLabel.text = element.content ?? ""
+        cell.card.likeLabel.labelView.text = String(element.likeNum ?? 0)
+        cell.card.commentLabel.labelView.text = String(element.commentNum ?? 0)
+
+        return cell
+    })
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -66,7 +75,6 @@ extension SearchViewController {
     }
 
     func setSearchContentView() {
-
         view.addSubview(searchContentView)
         searchContentView.snp.makeConstraints {
             $0.top.equalTo(searchBar.snp.bottom)
@@ -88,8 +96,22 @@ extension SearchViewController {
     }
 
     func bindView() {
-        viewModel.output.recentSearchList
-            .bind(to: searchHistoryView.tableView.rx.items(dataSource: historyDataSource))
+
+        // input
+        Observable.of(["챌린지", "자유글", "릴레이"])
+            .bind(to: searchResultView.menuTabView.menuCollectionView.rx.items(cellIdentifier: SearchTabMenuCell.identifier,
+                                         cellType: SearchTabMenuCell.self)) { (_, element, cell) in
+                cell.textLabel.text = element
+                }
+            .disposed(by: disposeBag)
+
+        searchResultView.menuTabView.menuCollectionView
+            .rx.itemSelected
+            .withUnretained(self)
+            .bind { owner, indexPath in
+                let index = indexPath.row
+                owner.searchResultView.menuTabView.indicatorViewLeftContraint.constant = CGFloat(index)*((UIScreen.main.bounds.width - 40)/3)
+            }
             .disposed(by: disposeBag)
 
         searchBar.searchField.rx.text
@@ -104,5 +126,32 @@ extension SearchViewController {
         searchBar.backButton.rx.tap
             .bind(to: viewModel.input.backButtonTap)
             .disposed(by: disposeBag)
+
+        // output
+        viewModel.output.recentSearchList
+            .bind(to: searchHistoryView.tableView.rx.items(dataSource: historyDataSource))
+            .disposed(by: disposeBag)
+
+        viewModel.output.searchResultList
+            .bind(to: searchResultView.searchResultListView.collectionView.rx.items(dataSource: searchResultDataSource))
+            .disposed(by: disposeBag)
+
+        viewModel.output.searchContentStyle
+            .withUnretained(self)
+            .bind { owner, style in
+                owner.changeSearchContentStyle(style: style)
+            }
+            .disposed(by: disposeBag)
+
+        viewModel.output.dismissView
+            .withUnretained(self)
+            .bind { owner, _ in
+                owner.dismissView()
+            }
+            .disposed(by: disposeBag)
+    }
+
+    private func dismissView() {
+        self.navigationController?.popViewController(animated: true)
     }
 }

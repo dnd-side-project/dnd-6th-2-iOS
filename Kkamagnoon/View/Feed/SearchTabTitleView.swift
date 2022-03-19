@@ -15,7 +15,9 @@ class SearchTabTitleView: UIView {
     var menuCollectionViewFlowLayout = UICollectionViewFlowLayout()
         .then {
             $0.scrollDirection = .horizontal
-            $0.estimatedItemSize = UICollectionViewFlowLayout.automaticSize
+            $0.itemSize.width = (UIScreen.main.bounds.width - 40) / 3
+            $0.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+            $0.minimumLineSpacing = 0
         }
 
     var indicatorView = UIView()
@@ -41,14 +43,16 @@ class SearchTabTitleView: UIView {
 
 extension SearchTabTitleView {
     func setView() {
+        self.backgroundColor = .clear
+
         menuCollectionView = UICollectionView(frame: .zero, collectionViewLayout: menuCollectionViewFlowLayout)
 
         menuCollectionView.showsHorizontalScrollIndicator = false
-        menuCollectionView.register(SearchTabMenuCell.self, forCellWithReuseIdentifier: SearchTabMenuCell.identifier)
+        menuCollectionView.backgroundColor = .clear
 
         self.addSubview(indicatorView)
         indicatorView.snp.makeConstraints {
-            $0.width.equalTo(self.bounds.width / 3)
+            $0.width.equalTo((UIScreen.main.bounds.width - 40) / 3)
             $0.height.equalTo(3.0)
             $0.bottom.equalToSuperview()
         }
@@ -57,6 +61,7 @@ extension SearchTabTitleView {
         indicatorViewLeftContraint.isActive = true
 
         self.addSubview(menuCollectionView)
+
         menuCollectionView.snp.makeConstraints {
             $0.top.left.right.equalToSuperview()
             $0.bottom.equalTo(indicatorView.snp.top)
