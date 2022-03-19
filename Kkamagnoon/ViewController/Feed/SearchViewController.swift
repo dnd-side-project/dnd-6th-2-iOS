@@ -18,31 +18,44 @@ class SearchViewController: UIViewController {
     var disposeBag = DisposeBag()
 
     var searchBar = SearchBarView()
-    var titleLabel = UILabel()
+
+    var searchContentView: UIView!
+
+    var searchHistoryView = SearchHistoryView()
+    var searchResultView = SearchResultView()
         .then {
-            $0.text = "최근검색어"
-            $0.font = UIFont.pretendard(weight: .regular, size: 14)
-            $0.textColor = UIColor(rgb: 0x767676)
+            $0.menuTabView.menuCollectionView.register(SearchTabMenuCell.self, forCellWithReuseIdentifier: SearchTabMenuCell.identifier)
+            $0.searchResultListView.collectionView.register(MyWritingCell.self, forCellWithReuseIdentifier: MyWritingCell.identifier)
+
         }
 
-    var tableView = UITableView()
-        .then {
-            $0.backgroundColor = .clear
-            $0.register(SearchRecentTableViewCell.self, forCellReuseIdentifier: SearchRecentTableViewCell.identifier)
-        }
+    lazy var historyDataSource = RxTableViewSectionedReloadDataSource<SectionModel<String, History>>(configureCell: { _, tableView, indexPath, element in
 
-    lazy var dataSource = RxTableViewSectionedReloadDataSource<SectionModel<String, History>>(configureCell: { _, collectionView, indexPath, element in
-
-        let cell = collectionView.dequeueReusableCell(withIdentifier: SearchRecentTableViewCell.identifier, for: indexPath) as! SearchRecentTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: SearchRecentTableViewCell.identifier, for: indexPath) as! SearchRecentTableViewCell
 
         cell.searchTextLabel.text = element.content ?? ""
         return cell
     })
 
+    lazy var searchResultDataSource = RxCollectionViewSectionedReloadDataSource<SectionModel<String, Article>>(configureCell: { _, collectionView, indexPath, element in
+
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MyWritingCell.identifier, for: indexPath) as! MyWritingCell
+
+        cell.card.titleLabel.text = element.title ?? ""
+        cell.card.contentLabel.text = element.content ?? ""
+        cell.card.likeLabel.labelView.text = String(element.likeNum ?? 0)
+        cell.card.commentLabel.labelView.text = String(element.commentNum ?? 0)
+
+        return cell
+    })
+
     override func viewDidLoad() {
         super.viewDidLoad()
+        searchContentView = searchHistoryView
         view.backgroundColor = UIColor(rgb: Color.basicBackground)
-        setView()
+
+        setSearchBar()
+        setSearchContentView()
         bindView()
 
         viewModel.getRecentSearchList()
@@ -51,7 +64,7 @@ class SearchViewController: UIViewController {
 }
 
 extension SearchViewController {
-    func setView() {
+    func setSearchBar() {
         view.addSubview(searchBar)
         searchBar.snp.makeConstraints {
             $0.top.equalToSuperview().offset(60.0)
@@ -59,25 +72,46 @@ extension SearchViewController {
             $0.right.equalToSuperview().offset(-20.0)
             $0.height.equalTo(47.0)
         }
+    }
 
-        view.addSubview(titleLabel)
-        titleLabel.snp.makeConstraints {
-            $0.top.equalTo(searchBar.snp.bottom).offset(33.0)
-            $0.left.equalToSuperview().offset(20.0)
-        }
-
-        view.addSubview(tableView)
-        tableView.snp.makeConstraints {
-            $0.top.equalTo(titleLabel.snp.bottom).offset(8.0)
-            $0.left.equalToSuperview().offset(20.0)
-            $0.right.equalToSuperview().offset(-20.0)
+    func setSearchContentView() {
+        view.addSubview(searchContentView)
+        searchContentView.snp.makeConstraints {
+            $0.top.equalTo(searchBar.snp.bottom)
+            $0.left.right.equalToSuperview()
             $0.bottom.equalTo(view.safeAreaLayoutGuide).offset(-20.0)
         }
     }
 
+    func changeSearchContentStyle(style: SearchContentStyle) {
+        searchContentView.removeFromSuperview()
+
+        if style == .history {
+            searchContentView = searchHistoryView
+        } else {
+            searchContentView = searchResultView
+        }
+
+        setSearchContentView()
+    }
+
     func bindView() {
-        viewModel.output.recentSearchList
-            .bind(to: tableView.rx.items(dataSource: dataSource))
+
+        // input
+        Observable.of(["챌린지", "자유글", "릴레이"])
+            .bind(to: searchResultView.menuTabView.menuCollectionView.rx.items(cellIdentifier: SearchTabMenuCell.identifier,
+                                         cellType: SearchTabMenuCell.self)) { (_, element, cell) in
+                cell.textLabel.text = element
+                }
+            .disposed(by: disposeBag)
+
+        searchResultView.menuTabView.menuCollectionView
+            .rx.itemSelected
+            .withUnretained(self)
+            .bind { owner, indexPath in
+                let index = indexPath.row
+                owner.searchResultView.menuTabView.indicatorViewLeftContraint.constant = CGFloat(index)*((UIScreen.main.bounds.width - 40)/3)
+            }
             .disposed(by: disposeBag)
 
         searchBar.searchField.rx.text
@@ -92,5 +126,32 @@ extension SearchViewController {
         searchBar.backButton.rx.tap
             .bind(to: viewModel.input.backButtonTap)
             .disposed(by: disposeBag)
+
+        // output
+        viewModel.output.recentSearchList
+            .bind(to: searchHistoryView.tableView.rx.items(dataSource: historyDataSource))
+            .disposed(by: disposeBag)
+
+        viewModel.output.searchResultList
+            .bind(to: searchResultView.searchResultListView.collectionView.rx.items(dataSource: searchResultDataSource))
+            .disposed(by: disposeBag)
+
+        viewModel.output.searchContentStyle
+            .withUnretained(self)
+            .bind { owner, style in
+                owner.changeSearchContentStyle(style: style)
+            }
+            .disposed(by: disposeBag)
+
+        viewModel.output.dismissView
+            .withUnretained(self)
+            .bind { owner, _ in
+                owner.dismissView()
+            }
+            .disposed(by: disposeBag)
+    }
+
+    private func dismissView() {
+        self.navigationController?.popViewController(animated: true)
     }
 }

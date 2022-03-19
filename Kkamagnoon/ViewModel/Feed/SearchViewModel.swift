@@ -12,8 +12,6 @@ import RxDataSources
 
 class SearchViewModel: ViewModelType {
 
-    var commentList: [Comment]?
-
     struct Input {
         let backButtonTap = PublishSubject<Void>()
         let searchWord = BehaviorRelay<String>(value: "")
@@ -23,6 +21,8 @@ class SearchViewModel: ViewModelType {
     struct Output {
         let dismissView = PublishRelay<Void>()
         let recentSearchList = BehaviorRelay<[SectionModel<String, History>]>(value: [])
+        let searchResultList = BehaviorRelay<[SectionModel<String, Article>]>(value: [])
+        let searchContentStyle = BehaviorRelay<SearchContentStyle>(value: .history)
     }
 
     var input: Input
@@ -64,8 +64,9 @@ extension SearchViewModel {
             .bind { owner, _ in
                 let searchWord = owner.input.searchWord.value
                 owner.feedSearchService.getSearchFeed(cursor: nil, content: searchWord, type: nil, orderBy: "최신순")
-                    .bind { _ in
-
+                    .bind { result in
+                        owner.output.searchResultList.accept([SectionModel(model: "", items: result.articles ?? [])])
+                        owner.output.searchContentStyle.accept(.searchResult)
                     }
                     .disposed(by: owner.disposeBag)
             }
