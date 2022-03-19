@@ -15,7 +15,7 @@ struct ArticlesResponse: Decodable {
 struct Article: Decodable {
     var _id: String?
     var free: Bool?
-    var comments: [Comment]?
+    var comments: [String]?
     var scrapNum: Int?
     var commentNum: Int?
     var likeNum: Int?
