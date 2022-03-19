@@ -72,6 +72,10 @@
 		040D853127C0B8AD0003C96A /* SettingPersonnelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040D853027C0B8AD0003C96A /* SettingPersonnelView.swift */; };
 		040D853B27C1035F0003C96A /* SelectTagView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040D853A27C1035F0003C96A /* SelectTagView.swift */; };
 		040D853D27C10B5C0003C96A /* SelectingCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040D853C27C10B5C0003C96A /* SelectingCollectionReusableView.swift */; };
+		040E6B5727E6075F00EF9FB0 /* SearchTabTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040E6B5627E6075F00EF9FB0 /* SearchTabTitleView.swift */; };
+		040E6B5927E60E4D00EF9FB0 /* SearchTabMenuCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040E6B5827E60E4D00EF9FB0 /* SearchTabMenuCell.swift */; };
+		040E6B5B27E6125E00EF9FB0 /* SearchHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040E6B5A27E6125E00EF9FB0 /* SearchHistoryView.swift */; };
+		040E6B5D27E6127000EF9FB0 /* SearchResultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040E6B5C27E6127000EF9FB0 /* SearchResultView.swift */; };
 		043316BB27C3306900FE0E34 /* WritingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043316BA27C3306900FE0E34 /* WritingViewController.swift */; };
 		043316BE27C330BC00FE0E34 /* ChallengeHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043316BD27C330BC00FE0E34 /* ChallengeHeaderView.swift */; };
 		043316C027C330EB00FE0E34 /* MyChallengeCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043316BF27C330EB00FE0E34 /* MyChallengeCard.swift */; };
@@ -294,6 +298,10 @@
 		040D853027C0B8AD0003C96A /* SettingPersonnelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingPersonnelView.swift; sourceTree = "<group>"; };
 		040D853A27C1035F0003C96A /* SelectTagView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectTagView.swift; sourceTree = "<group>"; };
 		040D853C27C10B5C0003C96A /* SelectingCollectionReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectingCollectionReusableView.swift; sourceTree = "<group>"; };
+		040E6B5627E6075F00EF9FB0 /* SearchTabTitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTabTitleView.swift; sourceTree = "<group>"; };
+		040E6B5827E60E4D00EF9FB0 /* SearchTabMenuCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTabMenuCell.swift; sourceTree = "<group>"; };
+		040E6B5A27E6125E00EF9FB0 /* SearchHistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchHistoryView.swift; sourceTree = "<group>"; };
+		040E6B5C27E6127000EF9FB0 /* SearchResultView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultView.swift; sourceTree = "<group>"; };
 		043316BA27C3306900FE0E34 /* WritingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WritingViewController.swift; sourceTree = "<group>"; };
 		043316BD27C330BC00FE0E34 /* ChallengeHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallengeHeaderView.swift; sourceTree = "<group>"; };
 		043316BF27C330EB00FE0E34 /* MyChallengeCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyChallengeCard.swift; sourceTree = "<group>"; };
@@ -678,6 +686,9 @@
 				04DAAE5027B1FDB300AECFE4 /* WholeFeedView.swift */,
 				04DAAE5427B29EB700AECFE4 /* SubscribeFeedView.swift */,
 				040790B327B8F03D006C5374 /* FeedDetailView.swift */,
+				040E6B5627E6075F00EF9FB0 /* SearchTabTitleView.swift */,
+				040E6B5A27E6125E00EF9FB0 /* SearchHistoryView.swift */,
+				040E6B5C27E6127000EF9FB0 /* SearchResultView.swift */,
 			);
 			path = Feed;
 			sourceTree = "<group>";
@@ -1040,6 +1051,7 @@
 				0439AF4427B166B300E14E03 /* SubscribeFilterCell.swift */,
 				0439AF3027AFF97300E14E03 /* FeedCell.swift */,
 				0439AF2C27AFAF7000E14E03 /* CategoryFilterCell.swift */,
+				040E6B5827E60E4D00EF9FB0 /* SearchTabMenuCell.swift */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -1541,6 +1553,7 @@
 				048D44BD27AF5D7D0031974D /* MyWritingViewController.swift in Sources */,
 				040790A427B895D1006C5374 /* View.swift in Sources */,
 				048D44B727AF5D0F0031974D /* MyPageViewController.swift in Sources */,
+				040E6B5927E60E4D00EF9FB0 /* SearchTabMenuCell.swift in Sources */,
 				045F52B627C89A700082673B /* NextButton.swift in Sources */,
 				048D44AC27AF592D0031974D /* TabBarViewController.swift in Sources */,
 				0439AF4727B171EB00E14E03 /* DetailContentViewController.swift in Sources */,
@@ -1565,6 +1578,7 @@
 				040790F527BA76CC006C5374 /* PopUpView.swift in Sources */,
 				04C95FC627B55E9800A0F840 /* FeedRequestModel.swift in Sources */,
 				040D852F27C096390003C96A /* MultiLineTagListView.swift in Sources */,
+				040E6B5B27E6125E00EF9FB0 /* SearchHistoryView.swift in Sources */,
 				043316F127C34FC200FE0E34 /* SubscribeListViewModel.swift in Sources */,
 				045F528327C5CE1D0082673B /* MyWritingCell.swift in Sources */,
 				0433170927C3BF0600FE0E34 /* NoticeViewModel.swift in Sources */,
@@ -1575,6 +1589,7 @@
 				045F52C527C8C4450082673B /* ChallengeSelectingTagViewController.swift in Sources */,
 				04FD046527D7143D00EC87DC /* SuccessPopUpVC+Ext.swift in Sources */,
 				043316D627C338D300FE0E34 /* FeedSubscribeService.swift in Sources */,
+				040E6B5727E6075F00EF9FB0 /* SearchTabTitleView.swift in Sources */,
 				045F529727C740140082673B /* AddingTagCell.swift in Sources */,
 				040790E027B969A9006C5374 /* RelayRoomView.swift in Sources */,
 				04A40D5227BF4D30004DAB19 /* RelayNoticeEndPointCases.swift in Sources */,
@@ -1637,6 +1652,7 @@
 				0407910527BBD70E006C5374 /* BottomBar.swift in Sources */,
 				0433170227C37BC800FE0E34 /* NoticeCell.swift in Sources */,
 				043316F727C34FF600FE0E34 /* SearchViewModel.swift in Sources */,
+				040E6B5D27E6127000EF9FB0 /* SearchResultView.swift in Sources */,
 				04A40D5927BF5498004DAB19 /* RelayNoticeService.swift in Sources */,
 				040790B227B8DFDD006C5374 /* ImageLabelView.swift in Sources */,
 				040790E227B9F57C006C5374 /* RelayRoomCell.swift in Sources */,
