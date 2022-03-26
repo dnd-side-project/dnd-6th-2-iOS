@@ -198,8 +198,8 @@ extension DetailContentViewController {
         viewModel.output.scrap
             .withUnretained(self)
             .bind { owner, scrapnum in
-                owner.bottomView.likeButton.setTitle(String(scrapnum), for: .normal)
-                owner.bottomView.likeButton.setImage(UIImage(systemName: "heart.fill"), for: .normal)
+                owner.bottomView.bookmarkButton.setTitle(String(scrapnum), for: .normal)
+                owner.bottomView.bookmarkButton.setImage(UIImage(systemName: "heart.fill"), for: .normal)
             }
             .disposed(by: disposeBag)
 
@@ -209,7 +209,7 @@ extension DetailContentViewController {
 extension DetailContentViewController {
     func goToCommentVC() {
         let vc = BottomSheetViewController()
-        vc.viewModel.input.articleId.accept(viewModel.articleId ?? "")
+        vc.viewModel.input.articleId.accept(viewModel.input.articleId.value)
         vc.modalPresentationStyle = .overFullScreen
         self.present(vc, animated: false, completion: nil)
     }

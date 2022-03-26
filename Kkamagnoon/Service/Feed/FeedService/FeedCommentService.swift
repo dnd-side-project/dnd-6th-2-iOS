@@ -10,6 +10,29 @@ import Alamofire
 import RxAlamofire
 
 class FeedCommentService: Service {
+    func getComment(articleId: String) -> Observable<[Comment]> {
+        let endpoint = FeedCommentEndpointCases.getComment(articleId: articleId)
+        let request = makeRequest(endpoint: endpoint)
+
+        return RxAlamofire.request(request as URLRequestConvertible)
+            .responseData()
+            .asObservable()
+            .map { http, resData -> [Comment] in
+                print(">>>Comment: \(http)")
+                let decoder = JSONDecoder()
+
+                do {
+                    let result = try decoder.decode([Comment].self, from: resData)
+                    print(">>>Comment: \(result)")
+                    return result
+                } catch {
+                    print(error)
+                }
+
+                return [Comment]()
+            }
+    }
+
     func postComment(articleId: String, content: String) -> Observable<Comment> {
         let endpoint = FeedCommentEndpointCases.postComment(articleId: articleId, content: content)
         let request = makeRequest(endpoint: endpoint)
@@ -19,13 +42,12 @@ class FeedCommentService: Service {
             .asObservable()
             .map { http, resData -> Comment  in
 
-                print(http)
                 let decoder = JSONDecoder()
+                print(">>>sendComment : \(http)")
 
                 do {
                     let result = try decoder.decode(Comment.self, from: resData)
-
-                    print(result)
+                    print(">>>sendComment : \(result)")
                     return result
                 } catch {
                     print(error)

@@ -41,8 +41,8 @@ struct Category: Decodable {
 
 struct Comment: Decodable {
     var _id: String?
-    var user: User?
-    var article: Article?
+    var user: String?
+    var article: String?
     var content: String?
     var createAt: String?
     var updateAt: String?

@@ -56,10 +56,10 @@ class BottomSheetViewModel: ViewModelType {
 extension BottomSheetViewModel {
 
     func bindComment() {
-        feedService.getArticle(articleId: input.articleId.value)
+        commentService.getComment(articleId: input.articleId.value)
             .withUnretained(self)
-            .bind { _, _ in
-//                self.output.commentList.accept([SectionModel(model: "", items: article.comments ?? [])])
+            .bind { _, comments in
+                self.output.commentList.accept([SectionModel(model: "", items: comments)])
             }
             .disposed(by: disposeBag)
     }
@@ -90,8 +90,8 @@ extension BottomSheetViewModel {
             .withUnretained(self)
             .bind { owner, _ in
                 owner.commentService.postComment(articleId: owner.input.articleId.value, content: owner.commentString)
-                    .bind { _ in
-
+                    .bind { res in
+                        print(">>>commentRes: \(res)")
                     }
                     .disposed(by: owner.disposeBag)
             }
