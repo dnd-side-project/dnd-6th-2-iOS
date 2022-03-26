@@ -131,7 +131,7 @@ extension ChallengeViewController {
 
     private func setImageCaseNothing() {
         challengeMainView.subTitleLabel[1].isHidden = true
-        view.addSubview(nothingImageView)
+        scrollView.addSubview(nothingImageView)
         nothingImageView.snp.makeConstraints {
             $0.centerX.equalToSuperview()
             $0.top.equalTo(challengeMainView.todayKeyWordView.snp.bottom).offset(30.51)
@@ -139,10 +139,11 @@ extension ChallengeViewController {
             $0.height.equalTo(110)
         }
 
-        view.addSubview(nothingLabel)
+        scrollView.addSubview(nothingLabel)
         nothingLabel.snp.makeConstraints {
             $0.centerX.equalToSuperview()
             $0.top.equalTo(nothingImageView.snp.bottom).offset(9)
+            $0.bottom.equalToSuperview().offset(-30.0)
         }
     }
 
