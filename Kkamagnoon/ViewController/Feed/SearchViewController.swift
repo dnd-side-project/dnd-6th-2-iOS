@@ -41,10 +41,10 @@ class SearchViewController: UIViewController {
 
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MyWritingCell.identifier, for: indexPath) as! MyWritingCell
 
-        cell.card.titleLabel.text = element.title ?? ""
-        cell.card.contentLabel.text = element.content ?? ""
-        cell.card.likeLabel.labelView.text = String(element.likeNum ?? 0)
-        cell.card.commentLabel.labelView.text = String(element.commentNum ?? 0)
+        cell.titleLabel.text = element.title ?? ""
+        cell.contentLabel.text = element.content ?? ""
+        cell.likeLabel.labelView.text = String(element.likeNum ?? 0)
+        cell.commentLabel.labelView.text = String(element.commentNum ?? 0)
 
         return cell
     })

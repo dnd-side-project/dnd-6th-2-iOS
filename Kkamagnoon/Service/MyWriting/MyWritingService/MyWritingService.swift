@@ -97,24 +97,26 @@ class MyWritingService: Service {
             }
     }
 
-    func getMyArticleDetail(articleId: String) -> Observable<Article> {
+    func getMyArticleDetail(articleId: String) -> Observable<MyWriting> {
         let endpoint = MyWritingEndPointCases.getMyArticleDetail(articleId: articleId)
         let request = makeRequest(endpoint: endpoint)
 
         return RxAlamofire.request(request as URLRequestConvertible)
             .responseData()
             .asObservable()
-            .map { _, resData -> Article  in
+            .map { http, resData -> MyWriting  in
                 let decoder = JSONDecoder()
+                print(http)
 
                 do {
-                    let result = try decoder.decode(Article.self, from: resData)
+                    let result = try decoder.decode(MyWriting.self, from: resData)
+                    print(result)
                     return result
                 } catch {
                     print(error)
                 }
 
-                return Article()
+                return MyWriting()
             }
     }
 

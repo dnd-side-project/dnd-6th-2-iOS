@@ -14,7 +14,7 @@ import SnapKit
 
 class DetailContentViewController: UIViewController {
 
-    let viewModel = DetailContentViewModel()
+    var viewModel = DetailContentViewModel()
 
     var stackView = UIStackView()
           .then {

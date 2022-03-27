@@ -11,9 +11,6 @@ import RxCocoa
 
 class DetailContentViewModel: ViewModelType {
 
-//    var article: Article?
-//    var articleId: String?
-
     struct Input {
         let articleId = BehaviorRelay<String>(value: "")
         let backButtonTap = PublishSubject<Void>()
@@ -94,7 +91,7 @@ class DetailContentViewModel: ViewModelType {
         input.likeButtonTap
             .withUnretained(self)
             .bind { owner, _ in
-                
+
                 owner.feedService.postLike(articleId: owner.input.articleId.value, like: ScrapDTO(category: "string"))
                     .withUnretained(self)
                     .bind { owner, like in
@@ -114,7 +111,7 @@ class DetailContentViewModel: ViewModelType {
         input.scrapButtonTap
             .withUnretained(self)
             .bind { owner, _ in
-                
+
                 owner.feedService.postScrap(articleId: owner.input.articleId.value, scrap: ScrapDTO(category: "string"))
                     .withUnretained(self)
                     .bind { owner, scrap in

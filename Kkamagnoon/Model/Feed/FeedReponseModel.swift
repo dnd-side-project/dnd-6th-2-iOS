@@ -12,9 +12,29 @@ struct ArticlesResponse: Decodable {
     var next_cursor: String?
 }
 
+// struct Article: Decodable {
+//    var _id: String?
+//    var free: Bool?
+//    var comments: [String]?
+//    var scrapNum: Int?
+//    var commentNum: Int?
+//    var likeNum: Int?
+//    var `public`: Bool?
+//    var state: Bool?
+//    var keyWord: String?
+//    var category: String?
+//    var tags: [String]?
+//    var content: String?
+//    var title: String?
+//    var user: Host?
+//    var createdAt: String?
+//    var updatedAt: String?
+// }
+
 struct Article: Decodable {
     var _id: String?
-    var free: Bool?
+    var type: String?
+    var relay: String?
     var comments: [String]?
     var scrapNum: Int?
     var commentNum: Int?
