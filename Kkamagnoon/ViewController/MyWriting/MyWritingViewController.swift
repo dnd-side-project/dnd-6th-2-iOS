@@ -45,6 +45,11 @@ class MyWritingViewController: UIViewController {
     var listView: UIView!
 
     var myWritingListView = MyWritingListView()
+        .then {
+            $0.tagListView.filterView.allowsMultipleSelection = false
+
+        }
+
     var tempListView = TempListView()
 
     var addWritingButton = MakingRoomButton()
@@ -60,7 +65,7 @@ class MyWritingViewController: UIViewController {
         listView = myWritingListView
         setView()
         bindView()
-        viewModel.bindMyWritingList()
+        viewModel.bindMyWritingList(tag: nil)
     }
 
     override func viewDidLayoutSubviews() {
@@ -102,10 +107,7 @@ extension MyWritingViewController {
 
         myWritingListView.tagListView.filterView.rx
             .modelSelected(String.self)
-            .bind { str in
-                print("DDEBUG: \(str)")
-
-            }
+            .bind(to: viewModel.input.tagTap)
             .disposed(by: disposeBag)
 
         addWritingButton.rx.tap

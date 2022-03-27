@@ -35,7 +35,7 @@ class SubscribeListViewController: UIViewController {
         view.addSubview(backButton)
         backButton.translatesAutoresizingMaskIntoConstraints = false
 
-        backButton.setImage(UIImage(systemName: "heart.fill"), for: .normal)
+        backButton.setImage(UIImage(systemName: "Back"), for: .normal)
         backButton.topAnchor.constraint(equalTo: view.topAnchor, constant: 72).isActive = true
         backButton.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 25).isActive = true
 

@@ -43,8 +43,8 @@ class MyWritingViewModel: ViewModelType {
 
 extension MyWritingViewModel {
 
-    func bindMyWritingList() {
-        myWritingService.getMyArticle(cursor: nil, type: nil)
+    func bindMyWritingList(tag: String?) {
+        myWritingService.getMyArticle(cursor: nil, type: tag)
             .withUnretained(self)
             .bind { owner, articleResponse in
                 owner.output.articleList.accept(
@@ -58,7 +58,6 @@ extension MyWritingViewModel {
         input.myWritingCellTap
             .withUnretained(self)
             .bind { owner, article in
-                print("TPAPP!!")
                 owner.output.goToDetail.accept(article)
             }
             .disposed(by: disposeBag)
@@ -67,6 +66,22 @@ extension MyWritingViewModel {
             .withUnretained(self)
             .bind { owner, _ in
                 owner.output.goToWriting.accept(())
+            }
+            .disposed(by: disposeBag)
+
+        input.tagTap
+            .withUnretained(self)
+            .bind { owner, tagString in
+                var type: String = ""
+                if tagString == "챌린지" {
+                    type = "challenge"
+                } else if tagString == "릴레이" {
+                    type = "relay"
+                } else if tagString == "자유" {
+                    type = "free"
+                }
+
+                owner.bindMyWritingList(tag: type)
             }
             .disposed(by: disposeBag)
     }
