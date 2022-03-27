@@ -76,6 +76,9 @@
 		040E6B5927E60E4D00EF9FB0 /* SearchTabMenuCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040E6B5827E60E4D00EF9FB0 /* SearchTabMenuCell.swift */; };
 		040E6B5B27E6125E00EF9FB0 /* SearchHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040E6B5A27E6125E00EF9FB0 /* SearchHistoryView.swift */; };
 		040E6B5D27E6127000EF9FB0 /* SearchResultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040E6B5C27E6127000EF9FB0 /* SearchResultView.swift */; };
+		04301E0027F0336700A2ED93 /* DetailMyWritingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04301DFF27F0336700A2ED93 /* DetailMyWritingViewController.swift */; };
+		04301E0227F0339600A2ED93 /* DetailMyWritingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04301E0127F0339600A2ED93 /* DetailMyWritingViewModel.swift */; };
+		04301E0527F03DCF00A2ED93 /* MyWriting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04301E0427F03DCF00A2ED93 /* MyWriting.swift */; };
 		043316BB27C3306900FE0E34 /* WritingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043316BA27C3306900FE0E34 /* WritingViewController.swift */; };
 		043316BE27C330BC00FE0E34 /* ChallengeHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043316BD27C330BC00FE0E34 /* ChallengeHeaderView.swift */; };
 		043316C027C330EB00FE0E34 /* MyChallengeCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043316BF27C330EB00FE0E34 /* MyChallengeCard.swift */; };
@@ -302,6 +305,9 @@
 		040E6B5827E60E4D00EF9FB0 /* SearchTabMenuCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTabMenuCell.swift; sourceTree = "<group>"; };
 		040E6B5A27E6125E00EF9FB0 /* SearchHistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchHistoryView.swift; sourceTree = "<group>"; };
 		040E6B5C27E6127000EF9FB0 /* SearchResultView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultView.swift; sourceTree = "<group>"; };
+		04301DFF27F0336700A2ED93 /* DetailMyWritingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailMyWritingViewController.swift; sourceTree = "<group>"; };
+		04301E0127F0339600A2ED93 /* DetailMyWritingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailMyWritingViewModel.swift; sourceTree = "<group>"; };
+		04301E0427F03DCF00A2ED93 /* MyWriting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyWriting.swift; sourceTree = "<group>"; };
 		043316BA27C3306900FE0E34 /* WritingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WritingViewController.swift; sourceTree = "<group>"; };
 		043316BD27C330BC00FE0E34 /* ChallengeHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallengeHeaderView.swift; sourceTree = "<group>"; };
 		043316BF27C330EB00FE0E34 /* MyChallengeCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyChallengeCard.swift; sourceTree = "<group>"; };
@@ -554,6 +560,14 @@
 			path = Cell;
 			sourceTree = "<group>";
 		};
+		04301E0327F03DBE00A2ED93 /* MyWriting */ = {
+			isa = PBXGroup;
+			children = (
+				04301E0427F03DCF00A2ED93 /* MyWriting.swift */,
+			);
+			path = MyWriting;
+			sourceTree = "<group>";
+		};
 		043316BC27C3308A00FE0E34 /* Challenge */ = {
 			isa = PBXGroup;
 			children = (
@@ -719,6 +733,7 @@
 			isa = PBXGroup;
 			children = (
 				045F528927C690690082673B /* MyWritingViewModel.swift */,
+				04301E0127F0339600A2ED93 /* DetailMyWritingViewModel.swift */,
 			);
 			path = MyWriting;
 			sourceTree = "<group>";
@@ -919,6 +934,7 @@
 			isa = PBXGroup;
 			children = (
 				048D44BC27AF5D7D0031974D /* MyWritingViewController.swift */,
+				04301DFF27F0336700A2ED93 /* DetailMyWritingViewController.swift */,
 			);
 			path = MyWriting;
 			sourceTree = "<group>";
@@ -1086,6 +1102,7 @@
 		04D0637127AEC0C0005EB16C /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				04301E0327F03DBE00A2ED93 /* MyWriting */,
 				043316E827C3484300FE0E34 /* Challenge */,
 				04A40D3527BE25B1004DAB19 /* Relay */,
 				04C95FC427B55E8600A0F840 /* Feed */,
@@ -1575,6 +1592,7 @@
 				04FD047427D9D2EC00EC87DC /* SearchRecentTableViewCell.swift in Sources */,
 				0407909927B7CB38006C5374 /* EndPoint.swift in Sources */,
 				043316F927C3500F00FE0E34 /* WritingViewModel.swift in Sources */,
+				04301E0227F0339600A2ED93 /* DetailMyWritingViewModel.swift in Sources */,
 				040790F527BA76CC006C5374 /* PopUpView.swift in Sources */,
 				04C95FC627B55E9800A0F840 /* FeedRequestModel.swift in Sources */,
 				040D852F27C096390003C96A /* MultiLineTagListView.swift in Sources */,
@@ -1660,6 +1678,7 @@
 				045F529927C742ED0082673B /* AddingTagView.swift in Sources */,
 				045F529127C733890082673B /* MyWritingService.swift in Sources */,
 				043316C027C330EB00FE0E34 /* MyChallengeCard.swift in Sources */,
+				04301E0527F03DCF00A2ED93 /* MyWriting.swift in Sources */,
 				045F528A27C690690082673B /* MyWritingViewModel.swift in Sources */,
 				04A40D5F27BF57D5004DAB19 /* PopUpViewModel.swift in Sources */,
 				043316D827C338F700FE0E34 /* FeedSearchService.swift in Sources */,
@@ -1673,6 +1692,7 @@
 				040790F327BA75B2006C5374 /* PopUpViewController.swift in Sources */,
 				043316E127C33CB900FE0E34 /* BellNoticeViewController.swift in Sources */,
 				043316D427C338A900FE0E34 /* FeedService.swift in Sources */,
+				04301E0027F0336700A2ED93 /* DetailMyWritingViewController.swift in Sources */,
 				04FD046127D7127C00EC87DC /* ChallengeWritingVC+Ext.swift in Sources */,
 				040790AC27B89777006C5374 /* Notification.swift in Sources */,
 				0439AF3527B0B4AF00E14E03 /* ProfileView.swift in Sources */,

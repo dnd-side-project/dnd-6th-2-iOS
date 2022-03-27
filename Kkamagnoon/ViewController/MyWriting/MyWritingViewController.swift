@@ -21,11 +21,11 @@ class MyWritingViewController: UIViewController {
 
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MyWritingCell.identifier, for: indexPath) as! MyWritingCell
 
-        cell.card.titleLabel.text = element.title
-        cell.card.contentLabel.text = element.content
+        cell.titleLabel.text = element.title
+        cell.contentLabel.text = element.content
 
-        cell.card.likeLabel.labelView.text = "\(element.likeNum ?? 0)"
-        cell.card.commentLabel.labelView.text = "\(element.commentNum ?? 0)"
+        cell.likeLabel.labelView.text = "\(element.likeNum ?? 0)"
+        cell.commentLabel.labelView.text = "\(element.commentNum ?? 0)"
 
         return cell
     })
@@ -78,8 +78,8 @@ extension MyWritingViewController {
             $0.height.equalTo(115.0)
         }
 
-        view.addSubview(myWritingListView)
-        myWritingListView.snp.makeConstraints {
+        view.addSubview(listView)
+        listView.snp.makeConstraints {
             $0.left.right.equalToSuperview()
             $0.top.equalTo(topButtonView.snp.bottom)
             $0.bottom.equalTo(view.safeAreaLayoutGuide)
@@ -95,10 +95,17 @@ extension MyWritingViewController {
 
     func bindView() {
 
-        // TODO: 외않되?
         myWritingListView.writingListView.collectionView.rx
             .modelSelected(Article.self)
             .bind(to: viewModel.input.myWritingCellTap)
+            .disposed(by: disposeBag)
+
+        myWritingListView.tagListView.filterView.rx
+            .modelSelected(String.self)
+            .bind { str in
+                print("DDEBUG: \(str)")
+
+            }
             .disposed(by: disposeBag)
 
         addWritingButton.rx.tap
@@ -112,6 +119,7 @@ extension MyWritingViewController {
         viewModel.output.goToDetail
             .withUnretained(self)
             .bind { owner, article in
+
                 owner.goToDetailVC(article: article)
             }
             .disposed(by: disposeBag)
@@ -128,8 +136,8 @@ extension MyWritingViewController {
 
 extension MyWritingViewController {
     private func goToDetailVC(article: Article) {
-        let vc = DetailContentViewController()
-        vc.viewModel.articleId = article._id
+        let vc = DetailMyWritingViewController()
+        vc.detailViewModel.input.articleId.accept(article._id ?? "")
         vc.hidesBottomBarWhenPushed = true
 
         self.navigationController?.pushViewController(vc, animated: true)
