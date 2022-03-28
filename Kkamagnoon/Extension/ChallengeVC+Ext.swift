@@ -83,7 +83,7 @@ extension ChallengeViewController {
                 owner.challengeMainView.todayKeyWordView
                     .keywordLabel.text = challenge.keyword?.content
 
-                var stamp = 1
+                let stamp = 1
 
                 // TODO: stamp 갯수 채우기
                 owner.challengeMainView.subTitleLabel[0].text = "이번달은 \(stamp)개의 스탬프를 찍었어요!"
@@ -103,6 +103,7 @@ extension ChallengeViewController {
                 if articles.count == 0 {
                     owner.setImageCaseNothing()
                 } else {
+                    owner.removeImageCaseNothing()
                     owner.challengeMainView.removeCard()
 
                     articles.forEach({ article in
@@ -147,6 +148,12 @@ extension ChallengeViewController {
         }
     }
 
+    private func removeImageCaseNothing() {
+        challengeMainView.subTitleLabel[1].isHidden = false
+        nothingImageView.removeFromSuperview()
+        nothingLabel.removeFromSuperview()
+    }
+
     private func goToWritingVC() {
         let vc = WritingViewController()
         vc.modalPresentationStyle = .fullScreen
@@ -170,7 +177,6 @@ extension ChallengeViewController {
                 self.challengeMainView.calendarHeight.constant = 400
 
             }
-
         }
     }
 

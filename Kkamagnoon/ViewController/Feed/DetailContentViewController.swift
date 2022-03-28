@@ -184,7 +184,7 @@ extension DetailContentViewController {
             .withUnretained(self)
             .bind { owner, likenum in
                 owner.bottomView.likeButton.setTitle(String(likenum), for: .normal)
-                owner.bottomView.likeButton.setImage(UIImage(systemName: "heart.fill"), for: .normal)
+//                owner.bottomView.likeButton.setImage(UIImage(named: "Heart"), for: .normal)
             }
             .disposed(by: disposeBag)
 
@@ -199,7 +199,7 @@ extension DetailContentViewController {
             .withUnretained(self)
             .bind { owner, scrapnum in
                 owner.bottomView.bookmarkButton.setTitle(String(scrapnum), for: .normal)
-                owner.bottomView.bookmarkButton.setImage(UIImage(systemName: "heart.fill"), for: .normal)
+//                owner.bottomView.bookmarkButton.setImage(UIImage(systemName: "heart.fill"), for: .normal)
             }
             .disposed(by: disposeBag)
 
