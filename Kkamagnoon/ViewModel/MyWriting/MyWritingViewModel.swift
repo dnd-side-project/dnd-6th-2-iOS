@@ -12,9 +12,12 @@ import RxDataSources
 
 class MyWritingViewModel: ViewModelType {
     struct Input {
+        let myWritingTap = PublishSubject<Void>()
+        let tempWritingTap = PublishSubject<Void>()
         let tagTap = PublishSubject<String>()
         let addWritingButtonTap = PublishSubject<Void>()
         let myWritingCellTap = PublishSubject<Article>()
+//        let tempWritingCellTap = PublishSubject<Article>()
 
     }
 
@@ -22,8 +25,11 @@ class MyWritingViewModel: ViewModelType {
         let goToBellNotice = PublishRelay<Void>()
         let goToWriting = PublishRelay<Void>()
         let goToDetail = PublishRelay<Article>()
+        let changeToMyWritingList = PublishRelay<Void>()
+        let changeToTempWritingList = PublishRelay<Void>()
 
-        let articleList = PublishRelay<[FeedSection]>()
+        let myWritingList = PublishRelay<[FeedSection]>()
+        let tempWritingList = PublishRelay<[FeedSection]>()
     }
 
     var input: Input
@@ -47,7 +53,18 @@ extension MyWritingViewModel {
         myWritingService.getMyArticle(cursor: nil, type: tag)
             .withUnretained(self)
             .bind { owner, articleResponse in
-                owner.output.articleList.accept(
+                owner.output.myWritingList.accept(
+                    [FeedSection(header: Relay(), items: articleResponse.articles ?? [])]
+                )
+            }
+            .disposed(by: disposeBag)
+    }
+
+    func bindTempWritingList() {
+        myWritingService.getMyArticleTemp(cursor: nil)
+            .withUnretained(self)
+            .bind { owner, articleResponse in
+                owner.output.tempWritingList.accept(
                     [FeedSection(header: Relay(), items: articleResponse.articles ?? [])]
                 )
             }
@@ -82,6 +99,20 @@ extension MyWritingViewModel {
                 }
 
                 owner.bindMyWritingList(tag: type)
+            }
+            .disposed(by: disposeBag)
+
+        input.myWritingTap
+            .withUnretained(self)
+            .bind {owner, _ in
+                owner.output.changeToMyWritingList.accept(())
+            }
+            .disposed(by: disposeBag)
+
+        input.tempWritingTap
+            .withUnretained(self)
+            .bind {owner, _ in
+                owner.output.changeToTempWritingList.accept(())
             }
             .disposed(by: disposeBag)
     }

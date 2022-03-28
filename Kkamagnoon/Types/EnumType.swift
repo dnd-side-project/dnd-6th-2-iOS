@@ -36,3 +36,8 @@ enum SearchContentStyle {
     case history
     case searchResult
 }
+
+enum MyWritingStyle {
+    case myWriting
+    case tempWriting
+}
