@@ -177,7 +177,6 @@ extension ChallengeViewController {
                 self.challengeMainView.calendarHeight.constant = 400
 
             }
-
         }
     }
 
