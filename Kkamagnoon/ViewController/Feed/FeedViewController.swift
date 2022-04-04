@@ -14,52 +14,53 @@ import SnapKit
 class FeedViewController: UIViewController {
 
     var feedView: UIView!
-
     let viewModel = FeedViewModel()
     let disposeBag = DisposeBag()
 
-    let topButtonView = TopButtonView(frame: .zero, first: StringType.wholeFeed, second: StringType.subscribeFeed)
+    let stringToDateFormatter = DateFormatter()
+        .then {
+            $0.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
+        }
+
+    let dateToStringFormatter = DateFormatter()
+        .then {
+            $0.dateFormat = "yyyy년 MM월 dd일"
+        }
+
+    let topButtonView = TopButtonView(
+        frame: .zero,
+        first: StringType.wholeFeed,
+        second: StringType.subscribeFeed
+    )
         .then {
             $0.searchButton.setImage(UIImage(named: "Search"), for: .normal)
             $0.bellButton.setImage(UIImage(named: "Bell"), for: .normal)
         }
 
     let wholeFeedView = WholeFeedView()
-
     let subscribeFeedView = SubscribeFeedView()
 
     lazy var dataSource = RxCollectionViewSectionedReloadDataSource<FeedSection>(configureCell: { _, collectionView, indexPath, element in
 
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: FeedCell.feedCellIdentifier, for: indexPath) as! FeedCell
+        let cell = collectionView.dequeueReusableCell(
+            withReuseIdentifier: FeedCell.feedCellIdentifier,
+            for: indexPath
+        ) as! FeedCell
 
-        cell.profileView.nickNameLabel.text = element.user?.nickname
-        cell.articleTitle.text = element.title
-
-        cell.articleContents.setTextWithLineHeight(
-            text: element.content,
-            lineHeight: .lineheightInBox
-        )
-        cell.likeView.labelView.text = "\(element.likeNum ?? 0)"
-        cell.commentView.labelView.text = "\(element.commentNum ?? 0)"
+        self.setFeedCellData(cell: cell, element: element)
 
         return cell
     },
     configureSupplementaryView: { _, collectionView, _, indexPath in
-        let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: SortHeaderCell.sortHeaderCellReuseIdentifier, for: indexPath) as! SortHeaderCell
+        let sortHeaderView = collectionView
+            .dequeueReusableSupplementaryView(
+                ofKind: UICollectionView.elementKindSectionHeader,
+                withReuseIdentifier: SortHeaderCell.sortHeaderCellReuseIdentifier,
+                for: indexPath
+            ) as! SortHeaderCell
 
-        headerView.buttonTappedHandler = { [unowned self] in
-            if self.viewModel.sortStyle == .byLatest {
-                headerView.sortButton.setTitle("인기순", for: .normal)
-                self.viewModel.sortStyle = .byPopularity
-            } else {
-                headerView.sortButton.setTitle("최신순", for: .normal)
-                self.viewModel.sortStyle = .byLatest
-            }
-
-            viewModel.bindWholeFeedList()
-        }
-
-        return headerView
+        self.setHeaderViewHandler(sortHeaderView: sortHeaderView)
+        return sortHeaderView
     })
 
     override func viewDidLoad() {
@@ -68,7 +69,7 @@ class FeedViewController: UIViewController {
         navigationController?.interactivePopGestureRecognizer?.delegate = nil
         view.backgroundColor = UIColor(rgb: Color.basicBackground)
         feedView = wholeFeedView
-        setView()
+        setLayout()
         bindInput()
         bindOutput()
 
@@ -90,7 +91,7 @@ extension FeedViewController: UIScrollViewDelegate {
 
 extension FeedViewController {
 
-    func setView() {
+    func setLayout() {
         view.addSubview(topButtonView)
         topButtonView.snp.makeConstraints {
             $0.top.left.right.equalToSuperview()
@@ -146,30 +147,17 @@ extension FeedViewController {
 
         // subscribe feed
         subscribeFeedView.articleListView.collectionView.rx
-            .modelSelected(String.self)
-            .bind { _ in
-//                self.goToDetailContentVC()
-            }
+            .modelSelected(Article.self)
+            .bind(to: viewModel.input.feedCellTap)
             .disposed(by: disposeBag)
 
         subscribeFeedView.goAllListButton.rx.tap
-            .withUnretained(self)
-            .bind { owner, _ in
-                owner.goToAllSubscribe()
-            }
+            .bind(to: viewModel.input.allSubscriberButtonTap)
             .disposed(by: disposeBag)
 
     }
 
     func bindOutput() {
-
-//        viewModel.output.currentFeedStyle
-//            .asDriver()
-//            .drive { [weak self] feedStyle in
-//                guard let self = self else {return}
-//                self.changeFeedStyle(style: feedStyle)
-//            }
-//            .disposed(by: disposeBag)
 
         viewModel.output.goToSearch
             .observe(on: MainScheduler.instance)
@@ -182,22 +170,32 @@ extension FeedViewController {
             .disposed(by: disposeBag)
 
         viewModel.output.wholeFeedList
-            .bind(to: wholeFeedView.articleListView.collectionView.rx.items(dataSource: dataSource))
+            .bind(to: wholeFeedView
+                    .articleListView
+                    .collectionView
+                    .rx
+                    .items(dataSource: dataSource)
+            )
             .disposed(by: disposeBag)
 
         viewModel.output.goToDetailFeed
             .observe(on: MainScheduler.instance)
-            .bind { article in
-                self.goToDetailContentVC(article: article)
-            }
+            .bind(onNext: goToDetailContentVC(_:))
             .disposed(by: disposeBag)
 
         viewModel.output.subscribeFeedList
             .bind(to: subscribeFeedView.articleListView.collectionView
-                    .rx.items(cellIdentifier: FeedCell.feedCellIdentifier,
-                                         cellType: FeedCell.self)) { (_, _, _) in
+                    .rx.items(
+                        cellIdentifier: FeedCell.feedCellIdentifier,
+                        cellType: FeedCell.self
+                    )
+            ) { (_, _, _) in
 
-                }
+            }
+            .disposed(by: disposeBag)
+
+        viewModel.output.goToAllSubscriberList
+            .bind(onNext: goToAllSubscribe(_:))
             .disposed(by: disposeBag)
     }
 }
@@ -230,22 +228,52 @@ extension FeedViewController {
         self.navigationController?.pushViewController(vc, animated: true)
     }
 
-    private func goToDetailContentVC(article: Article) {
+    private func goToDetailContentVC(_ article: Article) {
 
         let vc = DetailContentViewController()
         vc.modalPresentationStyle = .fullScreen
         vc.hidesBottomBarWhenPushed = true
-        // TODO
-        // vc.feedInfo = indexPath.row 의 feedInfo
-        vc.viewModel.articleId = article._id
+
+        vc.viewModel.input.articleId.accept(article._id ?? "")
         self.navigationController?.pushViewController(vc, animated: true)
     }
 
-    private func goToAllSubscribe() {
+    private func goToAllSubscribe(_ authorList: [Host]) {
         let vc = SubscribeListViewController()
         vc.modalPresentationStyle = .fullScreen
         vc.hidesBottomBarWhenPushed = true
+        vc.viewModel.input.authorList.accept(authorList)
 
         self.navigationController?.pushViewController(vc, animated: true)
+    }
+
+    private func setHeaderViewHandler(sortHeaderView: SortHeaderCell) {
+        sortHeaderView.buttonTappedHandler = { [unowned self] in
+            if self.viewModel.sortStyle == .byLatest {
+                sortHeaderView.sortButton.setTitle("인기순", for: .normal)
+                self.viewModel.sortStyle = .byPopularity
+            } else {
+                sortHeaderView.sortButton.setTitle("최신순", for: .normal)
+                self.viewModel.sortStyle = .byLatest
+            }
+
+            viewModel.bindWholeFeedList()
+        }
+    }
+
+    private func setFeedCellData(cell: FeedCell, element: Article) {
+        cell.profileView.nickNameLabel.text = element.user?.nickname
+        cell.articleTitle.text = element.title
+
+        cell.articleContents.setTextWithLineHeight(
+            text: element.content,
+            lineHeight: .lineheightInBox
+        )
+
+        let date = stringToDateFormatter.date(from: element.updatedAt ?? "")!
+
+        cell.updateDate.text = dateToStringFormatter.string(from: date)
+        cell.likeView.labelView.text = "\(element.likeNum ?? 0)"
+        cell.commentView.labelView.text = "\(element.commentNum ?? 0)"
     }
 }

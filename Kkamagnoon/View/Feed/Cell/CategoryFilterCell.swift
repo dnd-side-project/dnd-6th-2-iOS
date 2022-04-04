@@ -43,12 +43,6 @@ final class CategoryFilterCell: UICollectionViewCell {
     }
 
     override var isSelected: Bool {
-        willSet {
-            if isSelected && selectCount >= 3 {
-                isSelected = false
-            }
-        }
-
         didSet {
             configureSelected()
         }

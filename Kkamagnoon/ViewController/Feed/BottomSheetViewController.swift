@@ -13,6 +13,11 @@ import SnapKit
 import RxDataSources
 import Then
 
+enum BottomSheetViewState {
+    case normal
+    case expanded
+}
+
 // UISheetPresentationController() 대체
 class BottomSheetViewController: UIViewController {
 
@@ -53,6 +58,9 @@ class BottomSheetViewController: UIViewController {
     })
 
     private var bottomSheetViewTopConstraint: NSLayoutConstraint!
+
+    var bottomSheetPanMinTopConstant: CGFloat = 0
+    private lazy var bottomSheetPanStartingTopConstant: CGFloat = bottomSheetPanMinTopConstant
     private var writingCommebtViewBottomConstraint: NSLayoutConstraint!
     private var keyboardHeight: CGFloat = 0.0
 
@@ -136,18 +144,6 @@ class BottomSheetViewController: UIViewController {
         commentTableView.leftAnchor.constraint(equalTo: bottomSheetView.leftAnchor).isActive = true
         commentTableView.rightAnchor.constraint(equalTo: bottomSheetView.rightAnchor).isActive = true
         commentTableView.heightAnchor.constraint(equalToConstant: view.frame.height - 114 - 110.5).isActive = true
-
-        // Dummy
-//        let testString = "내용이 너무 좋아요!!><"
-//        Observable<[String]>.of([testString, testString, testString])
-//            .bind(to: commentTableView.rx.items(cellIdentifier: CommentCell.commentCellIdentifier, cellType: CommentCell.self)) { (_, element, cell) in
-//                cell.commentContent.text = element
-//                cell.moreButtonTapHandler = {
-//                    print(">>>TAPP")
-//                    self.showActionView()
-//                }
-//            }
-//            .disposed(by: disposeBag)
     }
 
     func setWritingTextView() {
@@ -167,11 +163,16 @@ class BottomSheetViewController: UIViewController {
 
     private func addCloseTapGesture(to target: UIView) {
         let tapGesture = UITapGestureRecognizer()
+        tapGesture.delaysTouchesBegan = false
+        tapGesture.delaysTouchesEnded = false
+
         target.addGestureRecognizer(tapGesture)
 
         tapGesture.rx.event
-            .bind { _ in
-                self.animateCloseBottomSheet(duration: 0.15)
+            .withUnretained(self)
+            .bind { owner, _ in
+
+                owner.animateCloseBottomSheet(duration: 0.15)
             }
             .disposed(by: disposeBag)
     }
@@ -182,10 +183,75 @@ class BottomSheetViewController: UIViewController {
 
         // TODO : 아래로 내리는 팬 액션만 처리하기
         panGesture.rx.event
-            .bind { _ in
-                self.animateCloseBottomSheet(duration: 1)
+            .withUnretained(self)
+            .bind { owner, _ in
+                let translation = panGesture.translation(in: owner.view)
+                let topAnchorConstant = owner.view.safeAreaInsets.bottom + owner.view.safeAreaLayoutGuide.layoutFrame.height
+
+                switch panGesture.state {
+                case .began:
+                    owner.bottomSheetPanStartingTopConstant = owner.bottomSheetViewTopConstraint.constant
+                case .changed:
+                    if owner.bottomSheetPanStartingTopConstant + translation.y > owner.bottomSheetPanMinTopConstant {
+
+                        owner.bottomSheetViewTopConstraint.constant = owner.bottomSheetPanStartingTopConstant + translation.y
+                    }
+                case .ended:
+                    if owner.bottomSheetViewTopConstraint.constant < topAnchorConstant {
+                        owner.hideBottomSheetAndGoBack()
+                    }
+//                    let safeAreaHeight = owner.view.safeAreaLayoutGuide.layoutFrame.height
+//                    let bottomPadding = owner.view.safeAreaInsets.bottom
+//                    let defaultPadding = safeAreaHeight+bottomPadding
+
+//                    let nearestValue = owner.nearest(to: owner.bottomSheetViewTopConstraint.constant, inValues: [owner.bottomSheetPanMinTopConstant, UIScreen.main.bounds.height])
+
+//                    if nearestValue == owner.bottomSheetPanMinTopConstant {
+//                        print("Bottom Sheet을 Expanded 상태로 변경하기!")
+//                    } else {
+//                        owner.hideBottomSheetAndGoBack()
+//                    }
+                default:
+                    break
+                }
+
             }
             .disposed(by: disposeBag)
+    }
+
+    private func showBottomSheet(atState: BottomSheetViewState = .normal) {
+        if atState == .normal {
+            let safeAreaHeight: CGFloat = view.safeAreaLayoutGuide.layoutFrame.height
+            let bottomPadding: CGFloat = view.safeAreaInsets.bottom
+            bottomSheetViewTopConstraint.constant = (safeAreaHeight + bottomPadding)
+        } else {
+            bottomSheetViewTopConstraint.constant = bottomSheetPanMinTopConstant
+        }
+
+        UIView.animate(withDuration: 0.25, delay: 0, options: .curveEaseIn, animations: {
+            self.backView.alpha = 0.7
+            self.view.layoutIfNeeded()
+        }, completion: nil)
+    }
+
+    private func hideBottomSheetAndGoBack() {
+        let safeAreaHeight = view.safeAreaLayoutGuide.layoutFrame.height
+        let bottomPadding = view.safeAreaInsets.bottom
+        bottomSheetViewTopConstraint.constant = safeAreaHeight + bottomPadding
+        UIView.animate(withDuration: 0.25, delay: 0, options: .curveEaseIn, animations: {
+            self.backView.alpha = 0.0
+            self.view.layoutIfNeeded()
+        }) { _ in
+            if self.presentingViewController != nil {
+                self.dismiss(animated: false, completion: nil)
+            }
+        }
+    }
+
+    func nearest(to number: CGFloat, inValues values: [CGFloat]) -> CGFloat {
+        guard let nearestVal = values.min(by: { abs(number - $0) < abs(number - $1) })
+        else { return number }
+        return nearestVal
     }
 
     func animateOpenBottomSheet() {
@@ -207,6 +273,7 @@ class BottomSheetViewController: UIViewController {
                 self.dismiss(animated: false, completion: nil)
             }
         }
+
     }
 
     func animateWritingViewGoUp() {

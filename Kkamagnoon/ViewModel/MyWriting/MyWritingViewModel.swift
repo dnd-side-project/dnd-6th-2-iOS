@@ -12,9 +12,12 @@ import RxDataSources
 
 class MyWritingViewModel: ViewModelType {
     struct Input {
+        let myWritingTap = PublishSubject<Void>()
+        let tempWritingTap = PublishSubject<Void>()
         let tagTap = PublishSubject<String>()
         let addWritingButtonTap = PublishSubject<Void>()
         let myWritingCellTap = PublishSubject<Article>()
+//        let tempWritingCellTap = PublishSubject<Article>()
 
     }
 
@@ -22,8 +25,11 @@ class MyWritingViewModel: ViewModelType {
         let goToBellNotice = PublishRelay<Void>()
         let goToWriting = PublishRelay<Void>()
         let goToDetail = PublishRelay<Article>()
+        let changeToMyWritingList = PublishRelay<Void>()
+        let changeToTempWritingList = PublishRelay<Void>()
 
-        let articleList = PublishRelay<[FeedSection]>()
+        let myWritingList = PublishRelay<[FeedSection]>()
+        let tempWritingList = PublishRelay<[FeedSection]>()
     }
 
     var input: Input
@@ -43,11 +49,22 @@ class MyWritingViewModel: ViewModelType {
 
 extension MyWritingViewModel {
 
-    func bindMyWritingList() {
-        myWritingService.getMyArticle(cursor: nil, type: nil)
+    func bindMyWritingList(tag: String?) {
+        myWritingService.getMyArticle(cursor: nil, type: tag)
             .withUnretained(self)
             .bind { owner, articleResponse in
-                owner.output.articleList.accept(
+                owner.output.myWritingList.accept(
+                    [FeedSection(header: Relay(), items: articleResponse.articles ?? [])]
+                )
+            }
+            .disposed(by: disposeBag)
+    }
+
+    func bindTempWritingList() {
+        myWritingService.getMyArticleTemp(cursor: nil)
+            .withUnretained(self)
+            .bind { owner, articleResponse in
+                owner.output.tempWritingList.accept(
                     [FeedSection(header: Relay(), items: articleResponse.articles ?? [])]
                 )
             }
@@ -58,7 +75,6 @@ extension MyWritingViewModel {
         input.myWritingCellTap
             .withUnretained(self)
             .bind { owner, article in
-                print("TPAPP!!")
                 owner.output.goToDetail.accept(article)
             }
             .disposed(by: disposeBag)
@@ -67,6 +83,36 @@ extension MyWritingViewModel {
             .withUnretained(self)
             .bind { owner, _ in
                 owner.output.goToWriting.accept(())
+            }
+            .disposed(by: disposeBag)
+
+        input.tagTap
+            .withUnretained(self)
+            .bind { owner, tagString in
+                var type: String = ""
+                if tagString == "챌린지" {
+                    type = "challenge"
+                } else if tagString == "릴레이" {
+                    type = "relay"
+                } else if tagString == "자유" {
+                    type = "free"
+                }
+
+                owner.bindMyWritingList(tag: type)
+            }
+            .disposed(by: disposeBag)
+
+        input.myWritingTap
+            .withUnretained(self)
+            .bind {owner, _ in
+                owner.output.changeToMyWritingList.accept(())
+            }
+            .disposed(by: disposeBag)
+
+        input.tempWritingTap
+            .withUnretained(self)
+            .bind {owner, _ in
+                owner.output.changeToTempWritingList.accept(())
             }
             .disposed(by: disposeBag)
     }

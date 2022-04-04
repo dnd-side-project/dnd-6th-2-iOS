@@ -11,10 +11,8 @@ import RxCocoa
 
 class DetailContentViewModel: ViewModelType {
 
-//    var article: Article?
-    var articleId: String?
-
     struct Input {
+        let articleId = BehaviorRelay<String>(value: "")
         let backButtonTap = PublishSubject<Void>()
         let subscribeButtonTap = PublishSubject<Void>()
         let moreButtonTap = PublishSubject<Void>()
@@ -55,7 +53,7 @@ class DetailContentViewModel: ViewModelType {
     }
 
     func bindArticle() {
-        feedService.getArticle(articleId: articleId ?? "")
+        feedService.getArticle(articleId: input.articleId.value)
             .withUnretained(self)
             .bind { owner, article in
                 owner.output.article.accept(article)
@@ -92,15 +90,14 @@ class DetailContentViewModel: ViewModelType {
 
         input.likeButtonTap
             .withUnretained(self)
-            .bind { _, _ in
+            .bind { owner, _ in
 
-                // TODO: 좋아요 API 날리기
-//                owner.feedService.postLike(articleId: article._id ?? "", like: ScrapDTO(category: "string"))
-//                    .withUnretained(self)
-//                    .bind { owner, like in
-//
-//
-//                    }
+                owner.feedService.postLike(articleId: owner.input.articleId.value, like: ScrapDTO(category: "string"))
+                    .withUnretained(self)
+                    .bind { owner, like in
+                        owner.output.like.accept(like.article?.likeNum ?? 0)
+                    }
+                    .disposed(by: owner.disposeBag)
             }
             .disposed(by: disposeBag)
 
@@ -113,9 +110,14 @@ class DetailContentViewModel: ViewModelType {
 
         input.scrapButtonTap
             .withUnretained(self)
-            .bind {_, _ in
+            .bind { owner, _ in
 
-//                owner.feedService.postScrap(articleId: article._id ?? "", scrap: ScrapDTO(category: "string"))
+                owner.feedService.postScrap(articleId: owner.input.articleId.value, scrap: ScrapDTO(category: "string"))
+                    .withUnretained(self)
+                    .bind { owner, scrap in
+                        owner.output.scrap.accept(scrap.article?.scrapNum ?? 0)
+                    }
+                    .disposed(by: owner.disposeBag)
             }
         // map
             .disposed(by: disposeBag)

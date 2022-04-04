@@ -22,6 +22,7 @@ class FeedViewModel: ViewModelType {
 
         let feedCellTap = PublishSubject<Article>()
         let moreButtonTap = PublishSubject<Void>()
+        let allSubscriberButtonTap = PublishSubject<Void>()
 
     }
 
@@ -29,6 +30,7 @@ class FeedViewModel: ViewModelType {
         let goToSearch = PublishRelay<Void>()
         let goToBell = PublishRelay<Void>()
         let goToDetailFeed = PublishRelay<Article>()
+        let goToAllSubscriberList = PublishRelay<[Host]>()
 
         let wholeFeedList = PublishRelay<[FeedSection]>()
         let subscribeFeedList = BehaviorRelay<[String]>(value: [])
@@ -126,6 +128,17 @@ extension FeedViewModel {
             .bind { [weak self] article in
                 guard let self = self else {return}
                 self.output.goToDetailFeed.accept(article)
+            }
+            .disposed(by: disposeBag)
+
+        input.allSubscriberButtonTap
+            .withUnretained(self)
+            .bind { owner, _ in
+                owner.subscribeService.getSubscribeAuthorList()
+                    .bind { authorList in
+                        owner.output.goToAllSubscriberList.accept(authorList)
+                    }
+                    .disposed(by: owner.disposeBag)
             }
             .disposed(by: disposeBag)
     }

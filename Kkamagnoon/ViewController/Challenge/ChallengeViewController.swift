@@ -77,7 +77,7 @@ class ChallengeViewController: UIViewController {
     func bindCardView() {
         challengeMainView.stackView.subviews.forEach({ article in
             let card = article as! MyChallengeCard
-            print(">>>>>>>Card: \(card.titleLabel.text)")
+            print(">>>>>>>Card: \(card.titleLabel.text ?? " ")")
 
             card.tapHandler = {
                 print("TAPPED!!")

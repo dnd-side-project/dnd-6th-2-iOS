@@ -6,15 +6,32 @@
 //
 
 import UIKit
+import Then
+import SnapKit
 
 class TempListView: UIView {
 
-    /*
-    // Only override draw() if you perform custom drawing.
-    // An empty implementation adversely affects performance during animation.
-    override func draw(_ rect: CGRect) {
-        // Drawing code
-    }
-    */
+    var articleListView = ArticleListView()
+        .then {
+            $0.collectionView.register(MyWritingCell.self, forCellWithReuseIdentifier: MyWritingCell.identifier)
+        }
 
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        setView()
+    }
+
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+        setView()
+    }
+}
+
+extension TempListView {
+    func setView() {
+        self.addSubview(articleListView)
+        articleListView.snp.makeConstraints {
+            $0.edges.equalToSuperview()
+        }
+    }
 }
