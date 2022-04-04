@@ -7,6 +7,7 @@
 
 import UIKit
 import Then
+import SnapKit
 import RxSwift
 
 class FeedCell: UICollectionViewCell {
@@ -14,12 +15,27 @@ class FeedCell: UICollectionViewCell {
 
     let profileView: ProfileView = ProfileView(width: 31, height: 31, fontsize: 12)
     let updateDate: UILabel = UILabel()
+        .then {
+            $0.textColor = UIColor.appColor(.subTextGray)
+            $0.font = UIFont.pretendard(weight: .regular, size: 10)
+        }
 
     let articleTitle: UILabel = UILabel()
-    let articleContents = UILabel()
+        .then {
+            // TEMP
+            $0.text = "무제"
+            $0.textColor = .white
+            $0.font = UIFont.pretendard(weight: .semibold, size: 14)
+        }
 
-//    let likeLabel: UILabel = UILabel()
-//    let commentLabel: UILabel = UILabel()
+    let articleContents = UILabel()
+        .then {
+            $0.font = UIFont.pretendard(weight: .regular, size: 13)
+            $0.textColor = UIColor(rgb: Color.content)
+            $0.numberOfLines = 5
+            $0.lineBreakMode = .byTruncatingTail
+            $0.setTextWithLineHeight(text: "", lineHeight: .lineheightInBox)
+        }
 
     let likeView: ImageLabelView = ImageLabelView()
         .then {
@@ -48,57 +64,48 @@ class FeedCell: UICollectionViewCell {
         super.init(frame: frame)
         self.backgroundColor = UIColor(rgb: Color.feedListCard)
         self.layer.cornerRadius = 15.0
-        setView()
+        setLayout()
     }
 
     required init?(coder: NSCoder) {
         super.init(coder: coder)
         self.backgroundColor = UIColor(rgb: Color.feedListCard)
         self.layer.cornerRadius = 15.0
-        setView()
+        setLayout()
     }
 
-    func setView() {
+    func setLayout() {
         self.addSubview(profileView)
-        profileView.translatesAutoresizingMaskIntoConstraints = false
-        profileView.topAnchor.constraint(equalTo: self.topAnchor, constant: 13).isActive = true
-        profileView.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 20).isActive = true
+
+        profileView.snp.makeConstraints {
+            $0.top.equalToSuperview().offset(13.0)
+            $0.left.equalToSuperview().offset(20.0)
+        }
 
         // 작성일
-        updateDate.text = "2022년 2월 1일"
-        updateDate.textColor = UIColor(rgb: 0x626262)
-
-        updateDate.font = UIFont.pretendard(weight: .regular, size: 10)
         self.addSubview(updateDate)
-        updateDate.translatesAutoresizingMaskIntoConstraints = false
-        updateDate.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -16).isActive = true
-        updateDate.topAnchor.constraint(equalTo: self.topAnchor, constant: 15).isActive = true
+        updateDate.snp.makeConstraints {
+            $0.top.equalToSuperview().offset(15.0)
+            $0.right.equalToSuperview().offset(-16.0)
+        }
 
         // 글 제목
-        articleTitle.text = "무제"
-        articleTitle.textColor = .white
-        articleTitle.font = UIFont.pretendard(weight: .semibold, size: 14)
         self.addSubview(articleTitle)
-        articleTitle.translatesAutoresizingMaskIntoConstraints = false
-        articleTitle.topAnchor.constraint(equalTo: self.topAnchor, constant: 60).isActive = true
-        articleTitle.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 20).isActive = true
+        articleTitle.snp.makeConstraints {
+            $0.top.equalToSuperview().offset(60.0)
+            $0.left.equalToSuperview().offset(20.0)
+            $0.right.equalToSuperview().offset(-20.0)
+        }
 
         // 글 내용
-        articleContents.font = UIFont.pretendard(weight: .regular, size: 13)
-        articleContents.textColor = UIColor(rgb: Color.content)
-        articleContents.numberOfLines = 5
-        articleContents.lineBreakMode = .byTruncatingTail
-        articleContents.backgroundColor = UIColor(rgb: Color.feedListCard)
-        articleContents.setTextWithLineHeight(text: "", lineHeight: .lineheightInBox)
-
         self.addSubview(articleContents)
-        articleContents.translatesAutoresizingMaskIntoConstraints = false
-        articleContents.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 20).isActive = true
-        articleContents.topAnchor.constraint(equalTo: articleTitle.bottomAnchor, constant: 17).isActive = true
-        articleContents.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -20).isActive = true
+        articleContents.snp.makeConstraints {
+            $0.left.equalToSuperview().offset(20.0)
+            $0.right.equalToSuperview().offset(-20.0)
+            $0.top.equalTo(articleTitle.snp.bottom).offset(17.0)
+        }
 
         // 공감
-
         self.addSubview(likeView)
         likeView.snp.makeConstraints {
             $0.top.equalTo(articleContents.snp.bottom).offset(14.0)
@@ -107,7 +114,6 @@ class FeedCell: UICollectionViewCell {
         }
 
         // 댓글
-
         self.addSubview(commentView)
         commentView.snp.makeConstraints {
             $0.centerY.equalTo(likeView)
@@ -124,12 +130,15 @@ class FeedCell: UICollectionViewCell {
 
     }
 
-    override func preferredLayoutAttributesFitting(_ layoutAttributes: UICollectionViewLayoutAttributes)
+    override func preferredLayoutAttributesFitting(
+        _ layoutAttributes: UICollectionViewLayoutAttributes)
     -> UICollectionViewLayoutAttributes {
         super.preferredLayoutAttributesFitting(layoutAttributes)
-//        layoutIfNeeded()
+        layoutIfNeeded()
+
         let size = self.systemLayoutSizeFitting(layoutAttributes.size)
         var frame = layoutAttributes.frame
+
         frame.size.height = ceil(size.height)
         layoutAttributes.frame = frame
 

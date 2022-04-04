@@ -11,6 +11,8 @@ import RxCocoa
 
 class SubscribeListViewController: UIViewController {
 
+    let viewModel = SubscribeListViewModel()
+
     lazy var backButton = UIButton()
         .then {
             $0.setImage(UIImage(named: "Back"), for: .normal)
