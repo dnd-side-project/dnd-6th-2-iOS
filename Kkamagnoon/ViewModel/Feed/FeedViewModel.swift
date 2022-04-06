@@ -32,16 +32,18 @@ class FeedViewModel: ViewModelType {
         let goToDetailFeed = PublishRelay<Article>()
         let goToAllSubscriberList = PublishRelay<[Host]>()
 
-        let wholeFeedList = PublishRelay<[FeedSection]>()
+        let wholeFeedList = BehaviorRelay<[FeedSection]>(value: [])
         let subscribeFeedList = BehaviorRelay<[String]>(value: [])
     }
 
-    var input: Input
-    var output: Output
-    var feedService: FeedService!
-    var subscribeService: FeedSubscribeService!
+    let input: Input
+    let output: Output
+    let feedService: FeedService!
+    var feedSubscribeService: FeedSubscribeService!
 
     var disposeBag = DisposeBag()
+
+    // TODO: Change sortStyle to BehaviorRelay
     var sortStyle: SortStyle = .byLatest
 
     var checkSelectedTags = [String: Bool]()
@@ -51,12 +53,13 @@ class FeedViewModel: ViewModelType {
         self.input = input
         self.output = output
         self.feedService = FeedService()
+        self.feedSubscribeService = FeedSubscribeService()
 
         StringType.categories.forEach({ tag in
             checkSelectedTags.updateValue(false, forKey: tag)
         })
 
-        bind()
+        bindWork()
     }
 
     deinit {
@@ -66,25 +69,7 @@ class FeedViewModel: ViewModelType {
 
 extension FeedViewModel {
 
-    func bindWholeFeedList() {
-
-        feedService.getWholeFeed(next_cursor: nil, orderBy: sortStyle.rawValue, tags: checkSelectedTags)
-            .withUnretained(self)
-            .bind { owner, articleResponse in
-
-                owner.output.wholeFeedList.accept(
-                    [FeedSection(header: Relay(), items: articleResponse.articles ?? [])]
-                )
-            }
-            .disposed(by: disposeBag)
-    }
-
-    func bindSubscribedFeedList() {
-        // TODO: 구독 피드 요청
-
-    }
-
-    func bind() {
+    func bindWork() {
 //        input.wholeFeedButtonTap
 //            .withUnretained(self)
 //            .bind { owner, _ in
@@ -116,31 +101,59 @@ extension FeedViewModel {
         input.tagCellTap
             .withUnretained(self)
             .bind { owner, tagString in
-
-                let nowValue = owner.checkSelectedTags[tagString, default: false]
-                owner.checkSelectedTags.updateValue(!nowValue, forKey: tagString)
-                owner.bindWholeFeedList()
-
+                owner.updateTagList(tagString: tagString)
             }
             .disposed(by: disposeBag)
 
         input.feedCellTap
-            .bind { [weak self] article in
-                guard let self = self else {return}
-                self.output.goToDetailFeed.accept(article)
+            .withUnretained(self)
+            .bind { owner, article in
+                 owner.output.goToDetailFeed.accept(article)
             }
             .disposed(by: disposeBag)
 
         input.allSubscriberButtonTap
             .withUnretained(self)
             .bind { owner, _ in
-                owner.subscribeService.getSubscribeAuthorList()
-                    .bind { authorList in
-                        owner.output.goToAllSubscriberList.accept(authorList)
-                    }
-                    .disposed(by: owner.disposeBag)
+                owner.fetchAuthorList()
             }
             .disposed(by: disposeBag)
     }
 
+}
+
+extension FeedViewModel {
+    func bindWholeFeedList() {
+
+        feedService.getWholeFeed(next_cursor: nil, orderBy: sortStyle.rawValue, tags: checkSelectedTags)
+            .withUnretained(self)
+            .bind { owner, articleResponse in
+
+                owner.output.wholeFeedList.accept(
+                    [FeedSection(header: Relay(), items: articleResponse.articles ?? [])]
+                )
+            }
+            .disposed(by: disposeBag)
+    }
+
+    func bindSubscribedFeedList() {
+        // TODO: 구독 피드 요청
+
+    }
+
+    private func fetchAuthorList() {
+        feedSubscribeService.getSubscribeAuthorList()
+            .withUnretained(self)
+            .bind { owner, authorList in
+                owner.output.goToAllSubscriberList.accept(authorList)
+            }
+            .disposed(by: disposeBag)
+    }
+
+    private func updateTagList(tagString: String) {
+        let nowValue = checkSelectedTags[tagString, default: false]
+
+        checkSelectedTags.updateValue(!nowValue, forKey: tagString)
+        bindWholeFeedList()
+    }
 }

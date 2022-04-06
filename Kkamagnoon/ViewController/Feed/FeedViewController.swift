@@ -160,17 +160,18 @@ extension FeedViewController {
     func bindOutput() {
 
         viewModel.output.goToSearch
-            .observe(on: MainScheduler.instance)
-            .bind(onNext: goToSearchVC)
+            .asSignal()
+            .emit(onNext: goToSearchVC)
             .disposed(by: disposeBag)
 
         viewModel.output.goToBell
-            .observe(on: MainScheduler.instance)
-            .bind(onNext: goToBellVC)
+            .asSignal()
+            .emit(onNext: goToBellVC)
             .disposed(by: disposeBag)
 
         viewModel.output.wholeFeedList
-            .bind(to: wholeFeedView
+            .asDriver()
+            .drive(wholeFeedView
                     .articleListView
                     .collectionView
                     .rx
@@ -179,10 +180,11 @@ extension FeedViewController {
             .disposed(by: disposeBag)
 
         viewModel.output.goToDetailFeed
-            .observe(on: MainScheduler.instance)
-            .bind(onNext: goToDetailContentVC(_:))
+            .asSignal()
+            .emit(onNext: goToDetailContentVC(_:))
             .disposed(by: disposeBag)
 
+        // TODO: asDriver
         viewModel.output.subscribeFeedList
             .bind(to: subscribeFeedView.articleListView.collectionView
                     .rx.items(
@@ -195,7 +197,8 @@ extension FeedViewController {
             .disposed(by: disposeBag)
 
         viewModel.output.goToAllSubscriberList
-            .bind(onNext: goToAllSubscribe(_:))
+            .asSignal()
+            .emit(onNext: goToAllSubscribe(_:))
             .disposed(by: disposeBag)
     }
 }

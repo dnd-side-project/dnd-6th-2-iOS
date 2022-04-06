@@ -156,7 +156,7 @@ extension DetailContentViewController {
             .bind { owner, article in
                 owner.detailView.titleLabel.text = article.title
                 owner.detailView.profileView.nickNameLabel.text = article.user?.nickname
-                owner.detailView.contentTextView.text = article.content
+                owner.detailView.contentLabel.text = article.content
 
                 // TODO: Created Date
 
