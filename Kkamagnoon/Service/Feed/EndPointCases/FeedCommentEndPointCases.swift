@@ -9,6 +9,7 @@ import Foundation
 
 enum FeedCommentEndpointCases: EndPoint {
 
+    case getComment(articleId: String)
     case postComment(articleId: String, content: String)
     case patchComment(articleId: String, commentId: String, content: String)
     case deleteComment(articleId: String, commentId: String)
@@ -18,6 +19,8 @@ enum FeedCommentEndpointCases: EndPoint {
 extension FeedCommentEndpointCases {
     var httpMethod: String {
         switch self {
+        case .getComment:
+            return "GET"
         case .postComment:
             return "POST"
         case .patchComment:
@@ -37,6 +40,9 @@ extension FeedCommentEndpointCases {
 extension FeedCommentEndpointCases {
     var path: String {
         switch self {
+        case .getComment(let articleId):
+            return baseURLString + "/\(articleId)/comment"
+
         case .postComment(let articleId, _):
             return baseURLString + "/\(articleId)/comment"
 
@@ -65,8 +71,8 @@ extension FeedCommentEndpointCases {
 extension FeedCommentEndpointCases {
     var body: [String: Any]? {
         switch self {
-//        case .postComment(content: let content):
-//            return ["content": content]
+        case .postComment(_, content: let content):
+            return ["content": content]
         default:
             return [:]
         }

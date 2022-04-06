@@ -13,7 +13,7 @@ class SubscribeListViewModel: ViewModelType {
     struct Input {
         let backButtonTap = PublishSubject<Void>()
         let subscribeButtonTap = PublishSubject<Void>()
-
+        let authorList = BehaviorRelay<[Host]>(value: [])
     }
 
     struct Output {

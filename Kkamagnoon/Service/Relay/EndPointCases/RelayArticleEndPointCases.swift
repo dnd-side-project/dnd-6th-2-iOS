@@ -10,7 +10,7 @@ import Foundation
 enum RelayArticleEndPointCases: EndPoint {
 
     case getRelayArticle(relayId: String, cursor: String?)
-    case postRelayArticle(relayId: String, content: String)
+    case postRelayArticle(relayId: String, relayArticle: RelayArticleDTO)
     case patchRelatArticle(relayId: String, articleId: String, content: String)
     case deleteRelayArticle(relayId: String, articleId: String)
 }
@@ -74,9 +74,10 @@ extension RelayArticleEndPointCases {
 extension RelayArticleEndPointCases {
     var body: [String: Any]? {
         switch self {
-        case .postRelayArticle(_, content: let content):
+        case .postRelayArticle(_, relayArticle: let relayArticle):
             return [
-                "content": content
+                "content": relayArticle.content ?? "",
+                "categoryId": ""
             ]
 
         case .patchRelatArticle(_, _, content: let content):

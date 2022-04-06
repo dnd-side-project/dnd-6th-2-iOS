@@ -53,7 +53,12 @@ class TodayKeywordView: UIView {
     }
 
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        super.init(coder: coder)
+//        self.backgroundColor = UIColor(rgb: 0x1A1A1A)
+        self.backgroundColor = UIColor(rgb: Color.feedListCard)
+        self.layer.cornerRadius = 14
+
+        setView()
     }
 
 }

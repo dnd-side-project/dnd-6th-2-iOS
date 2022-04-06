@@ -13,20 +13,26 @@ import RxCocoa
 class RelayWritingViewController: UIViewController {
 
     var disposeBag = DisposeBag()
-    let viewModel = WritingViewModel()
+    let viewModel = RelayWritingViewModel()
 
     var header = HeaderViewWithBackBtn()
         .then {
             $0.titleLabel.isHidden = true
             $0.bellButton.isHidden = true
             $0.noticeButton.isEnabled = false
+            $0.noticeButton.setTitleColor(.white, for: .normal)
+            $0.noticeButton.titleLabel?.font = UIFont.pretendard(weight: .semibold, size: 14)
+            $0.noticeButton.setTitle("다음", for: .normal)
+            $0.noticeButton.setImage(nil, for: .normal)
+            $0.noticeButton.layer.cornerRadius = 18
         }
 
-    var writingView = WritingView()
+    var scrollView = UIScrollView()
         .then {
-            $0.titleTextField.isHidden = true
-            $0.contentTextView.backgroundColor = .clear
+            $0.showsVerticalScrollIndicator = false
         }
+
+    var relayWritingView = RelayWritingView()
 
     var writingSubView = WritingSubView()
 
@@ -63,11 +69,16 @@ extension RelayWritingViewController {
     func setView() {
 
         view.addSubview(header)
-//        setButton(state: false)
+        setButton(state: false)
         header.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide)
             $0.left.equalToSuperview().offset(20.0)
             $0.right.equalToSuperview().offset(-20.0)
+        }
+
+        header.noticeButton.snp.makeConstraints {
+            $0.width.equalTo(57)
+            $0.height.equalTo(25)
         }
 
         view.addSubview(writingSubView)
@@ -79,12 +90,28 @@ extension RelayWritingViewController {
         writingSubViewBottomConstraint = writingSubView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -44)
         writingSubViewBottomConstraint.isActive = true
 
-        view.addSubview(writingView)
-        writingView.snp.makeConstraints {
-            $0.top.equalTo(header.snp.bottom).offset(33.0)
+        view.addSubview(scrollView)
+        scrollView.snp.makeConstraints {
+            $0.top.equalTo(header.snp.bottom).offset(8.0)
             $0.bottom.equalTo(writingSubView.snp.top)
             $0.left.equalToSuperview().offset(20.0)
             $0.right.equalToSuperview().offset(-20.0)
+        }
+
+        scrollView.addSubview(relayWritingView)
+        relayWritingView.snp.makeConstraints {
+            $0.top.left.right.equalToSuperview()
+            $0.bottom.equalToSuperview().offset(-85.0)
+        }
+
+        for (index, article) in (viewModel.articleList ?? []).enumerated() {
+            let articleCard = RelayWritingCard()
+                .then {
+                    $0.pageLabel.text = "\(index + 1)"
+                    $0.contentLabel.text = article.content
+                    $0.setContentHuggingPriority(.required, for: .vertical)
+                }
+            relayWritingView.relayListStackView.addArrangedSubview(articleCard)
         }
 
         view.addSubview(tipBox)
@@ -138,22 +165,25 @@ extension RelayWritingViewController {
             .bind(to: viewModel.input.completeButtonTap)
             .disposed(by: disposeBag)
 
-        writingView.titleTextField.rx.text
-            .orEmpty
-            .bind(to: viewModel.input.title)
-            .disposed(by: disposeBag)
-
-        writingView.contentTextView.rx.text
+        relayWritingView.contentTextView.rx.text
             .orEmpty
             .bind(to: viewModel.input.contents)
             .disposed(by: disposeBag)
 
         // Output
+
         viewModel.output.enableCompleteButton
             .withUnretained(self)
             .bind { owner, value in
                 owner.header.noticeButton.isEnabled = value
-//                owner.setButton(state: value)
+                owner.setButton(state: value)
+            }
+            .disposed(by: disposeBag)
+
+        viewModel.output.registerWriting
+            .withUnretained(self)
+            .bind { owner, _ in
+                owner.goBackToRelayDetail()
             }
             .disposed(by: disposeBag)
 
@@ -164,16 +194,10 @@ extension RelayWritingViewController {
             }
             .disposed(by: disposeBag)
 
-        viewModel.output.goToSelection
-            .withUnretained(self)
-            .bind { _, _ in
-//                owner.goToTagSelectigVC(articleDTO: articleDTO)
-            }
-            .disposed(by: disposeBag)
     }
 }
 
-extension WritingViewController {
+extension RelayWritingViewController {
     private func goToTagSelectigVC(articleDTO: CreateArticleDTO ) {
         let vc = ChallengeSelectingTagViewController()
         vc.modalPresentationStyle = .fullScreen
@@ -191,5 +215,9 @@ extension WritingViewController {
             // TEMP
             header.noticeButton.backgroundColor = UIColor(rgb: Color.tag)
         }
+    }
+
+    private func goBackToRelayDetail() {
+        self.navigationController?.popViewController(animated: false)
     }
 }

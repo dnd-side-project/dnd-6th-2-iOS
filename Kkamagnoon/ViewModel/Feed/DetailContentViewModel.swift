@@ -11,9 +11,8 @@ import RxCocoa
 
 class DetailContentViewModel: ViewModelType {
 
-    var article: Article?
-
     struct Input {
+        let articleId = BehaviorRelay<String>(value: "")
         let backButtonTap = PublishSubject<Void>()
         let subscribeButtonTap = PublishSubject<Void>()
         let moreButtonTap = PublishSubject<Void>()
@@ -31,6 +30,7 @@ class DetailContentViewModel: ViewModelType {
         let like = BehaviorRelay<Int>(value: 0)
         let goToCommentPage = PublishRelay<Void>()
         let scrap = BehaviorRelay<Int>(value: 0)
+        let article = BehaviorRelay<Article>(value: Article())
     }
 
     var input: Input
@@ -52,6 +52,15 @@ class DetailContentViewModel: ViewModelType {
         bind()
     }
 
+    func bindArticle() {
+        feedService.getArticle(articleId: input.articleId.value)
+            .withUnretained(self)
+            .bind { owner, article in
+                owner.output.article.accept(article)
+            }
+            .disposed(by: disposeBag)
+    }
+
     func bind() {
         input.backButtonTap
             .withUnretained(self)
@@ -63,9 +72,12 @@ class DetailContentViewModel: ViewModelType {
         input.subscribeButtonTap
             .withUnretained(self)
             .bind { owner, _ in
-                guard let article = owner.article, let user = article.user, let id = user._id
-                else { return }
-                owner.subscribeService.patchSubscribe(authorId: id)
+                let id = owner.output.article.value.user?._id
+                owner.subscribeService.patchSubscribe(authorId: id ?? "")
+                    .bind { message in
+                        print(message.message ?? "")
+                    }
+                    .disposed(by: owner.disposeBag)
             }
             .disposed(by: disposeBag)
 
@@ -79,16 +91,13 @@ class DetailContentViewModel: ViewModelType {
         input.likeButtonTap
             .withUnretained(self)
             .bind { owner, _ in
-                guard let article = owner.article else {
-                    return
-                }
-                // TODO: 좋아요 API 날리기
-//                owner.feedService.postLike(articleId: article._id ?? "", like: ScrapDTO(category: "string"))
-//                    .withUnretained(self)
-//                    .bind { owner, like in
-//
-//
-//                    }
+
+                owner.feedService.postLike(articleId: owner.input.articleId.value, like: ScrapDTO(category: "string"))
+                    .withUnretained(self)
+                    .bind { owner, like in
+                        owner.output.like.accept(like.article?.likeNum ?? 0)
+                    }
+                    .disposed(by: owner.disposeBag)
             }
             .disposed(by: disposeBag)
 
@@ -101,12 +110,14 @@ class DetailContentViewModel: ViewModelType {
 
         input.scrapButtonTap
             .withUnretained(self)
-            .bind {owner, _ in
-                guard let article = owner.article else {
-                    return
-                }
+            .bind { owner, _ in
 
-//                owner.feedService.postScrap(articleId: article._id ?? "", scrap: ScrapDTO(category: "string"))
+                owner.feedService.postScrap(articleId: owner.input.articleId.value, scrap: ScrapDTO(category: "string"))
+                    .withUnretained(self)
+                    .bind { owner, scrap in
+                        owner.output.scrap.accept(scrap.article?.scrapNum ?? 0)
+                    }
+                    .disposed(by: owner.disposeBag)
             }
         // map
             .disposed(by: disposeBag)

@@ -7,6 +7,7 @@
 
 import UIKit
 import SnapKit
+import RxSwift
 
 class WritingCommentView: UIView {
 
@@ -25,7 +26,12 @@ class WritingCommentView: UIView {
     }
 
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        super.init(coder: coder)
+        self.backgroundColor = UIColor(rgb: Color.feedListCard)
+        setGrayLine()
+        setProfileImageView()
+        setTextView()
+        setPostingButton()
     }
 
     override func layoutSubviews() {
@@ -58,12 +64,35 @@ class WritingCommentView: UIView {
         // Dummy
         textView.text = "댓글달기"
         textView.backgroundColor = UIColor(rgb: Color.feedListCard)
-        textView.textColor = .white
+        textView.textColor = UIColor(rgb: Color.placeholder)
         textView.isScrollEnabled = false
         self.addSubview(textView)
         textView.translatesAutoresizingMaskIntoConstraints = false
         textView.leftAnchor.constraint(equalTo: profileImageView.rightAnchor, constant: 16).isActive = true
         textView.centerYAnchor.constraint(equalTo: profileImageView.centerYAnchor).isActive = true
+
+        let disposeBag = DisposeBag()
+
+        textView.rx.didBeginEditing
+            .withUnretained(self)
+            .bind { owner, _ in
+                if owner.textView.textColor == UIColor(rgb: Color.placeholder) {
+                    owner.textView.text = nil
+                    owner.textView.textColor = UIColor.white
+                }
+
+            }
+            .disposed(by: disposeBag)
+
+        textView.rx.didEndEditing
+            .withUnretained(self)
+            .bind { owner, _ in
+                if owner.textView.text.isEmpty {
+                    owner.textView.text = "댓글달기"
+                    owner.textView.textColor = UIColor(rgb: Color.placeholder)
+                }
+            }
+            .disposed(by: disposeBag)
     }
 
     func setPostingButton() {
@@ -73,11 +102,12 @@ class WritingCommentView: UIView {
         postingButton.setTitle("게시", for: .normal)
         postingButton.titleLabel?.font = UIFont.pretendard(weight: .semibold, size: 14)
 
-        postingButton.setTitleColor(UIColor(rgb: Color.whitePurple), for: .normal)
+        postingButton.setTitleColor(UIColor(rgb: Color.tag), for: .normal)
 
         postingButton.widthAnchor.constraint(equalToConstant: 25).isActive = true
         postingButton.leftAnchor.constraint(equalTo: textView.rightAnchor, constant: 16).isActive = true
         postingButton.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -34).isActive = true
         postingButton.centerYAnchor.constraint(equalTo: profileImageView.centerYAnchor).isActive = true
     }
+
 }

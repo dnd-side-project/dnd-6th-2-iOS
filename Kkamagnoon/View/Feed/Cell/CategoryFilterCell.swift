@@ -32,16 +32,17 @@ final class CategoryFilterCell: UICollectionViewCell {
     }
 
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        super.init(coder: coder)
+        self.layer.cornerRadius = 18.0
+
+        self.addSubview(tagView)
+
+        tagView.snp.makeConstraints {
+            $0.edges.equalToSuperview()
+        }
     }
 
     override var isSelected: Bool {
-        willSet {
-            if isSelected && selectCount >= 3 {
-                isSelected = false
-            }
-        }
-
         didSet {
             configureSelected()
         }

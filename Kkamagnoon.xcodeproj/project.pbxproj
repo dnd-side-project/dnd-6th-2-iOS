@@ -7,10 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		04040A5727E0453600BCA705 /* Heart2.png in Resources */ = {isa = PBXBuildFile; fileRef = 04040A5627E0453600BCA705 /* Heart2.png */; };
+		04040A5927E0473C00BCA705 /* More2.png in Resources */ = {isa = PBXBuildFile; fileRef = 04040A5827E0473C00BCA705 /* More2.png */; };
 		0407909927B7CB38006C5374 /* EndPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0407909827B7CB38006C5374 /* EndPoint.swift */; };
 		0407909B27B7D232006C5374 /* NetworkError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0407909A27B7D232006C5374 /* NetworkError.swift */; };
 		040790A427B895D1006C5374 /* View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040790A327B895D1006C5374 /* View.swift */; };
-		040790A627B8960D006C5374 /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040790A527B8960D006C5374 /* Color.swift */; };
+		040790A627B8960D006C5374 /* UIColor+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040790A527B8960D006C5374 /* UIColor+Ext.swift */; };
 		040790A827B8964E006C5374 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040790A727B8964E006C5374 /* String.swift */; };
 		040790AA27B89701006C5374 /* Decode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040790A927B89701006C5374 /* Decode.swift */; };
 		040790AC27B89777006C5374 /* Notification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040790AB27B89777006C5374 /* Notification.swift */; };
@@ -70,6 +72,15 @@
 		040D853127C0B8AD0003C96A /* SettingPersonnelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040D853027C0B8AD0003C96A /* SettingPersonnelView.swift */; };
 		040D853B27C1035F0003C96A /* SelectTagView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040D853A27C1035F0003C96A /* SelectTagView.swift */; };
 		040D853D27C10B5C0003C96A /* SelectingCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040D853C27C10B5C0003C96A /* SelectingCollectionReusableView.swift */; };
+		040E6B5727E6075F00EF9FB0 /* SearchTabTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040E6B5627E6075F00EF9FB0 /* SearchTabTitleView.swift */; };
+		040E6B5927E60E4D00EF9FB0 /* SearchTabMenuCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040E6B5827E60E4D00EF9FB0 /* SearchTabMenuCell.swift */; };
+		040E6B5B27E6125E00EF9FB0 /* SearchHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040E6B5A27E6125E00EF9FB0 /* SearchHistoryView.swift */; };
+		040E6B5D27E6127000EF9FB0 /* SearchResultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040E6B5C27E6127000EF9FB0 /* SearchResultView.swift */; };
+		04301E0027F0336700A2ED93 /* DetailMyWritingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04301DFF27F0336700A2ED93 /* DetailMyWritingViewController.swift */; };
+		04301E0227F0339600A2ED93 /* DetailMyWritingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04301E0127F0339600A2ED93 /* DetailMyWritingViewModel.swift */; };
+		04301E0527F03DCF00A2ED93 /* MyWriting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04301E0427F03DCF00A2ED93 /* MyWriting.swift */; };
+		04301E0727F0B8DB00A2ED93 /* Bookmark.png in Resources */ = {isa = PBXBuildFile; fileRef = 04301E0627F0B8DB00A2ED93 /* Bookmark.png */; };
+		04301E0927F0C08D00A2ED93 /* UIImage+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04301E0827F0C08D00A2ED93 /* UIImage+Ext.swift */; };
 		043316BB27C3306900FE0E34 /* WritingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043316BA27C3306900FE0E34 /* WritingViewController.swift */; };
 		043316BE27C330BC00FE0E34 /* ChallengeHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043316BD27C330BC00FE0E34 /* ChallengeHeaderView.swift */; };
 		043316C027C330EB00FE0E34 /* MyChallengeCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043316BF27C330EB00FE0E34 /* MyChallengeCard.swift */; };
@@ -210,6 +221,18 @@
 		04DAAE6427B4196F00AECFE4 /* BottomSheetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04DAAE6327B4196F00AECFE4 /* BottomSheetViewController.swift */; };
 		04DAAE6627B4C03A00AECFE4 /* CommentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04DAAE6527B4C03A00AECFE4 /* CommentCell.swift */; };
 		04DAAE6827B4D0D600AECFE4 /* WritingCommentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04DAAE6727B4D0D600AECFE4 /* WritingCommentView.swift */; };
+		04FD045F27D7116500EC87DC /* ChallengeVC+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04FD045E27D7116500EC87DC /* ChallengeVC+Ext.swift */; };
+		04FD046127D7127C00EC87DC /* ChallengeWritingVC+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04FD046027D7127C00EC87DC /* ChallengeWritingVC+Ext.swift */; };
+		04FD046327D7137700EC87DC /* ChallengeSelectingTagVC+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04FD046227D7137700EC87DC /* ChallengeSelectingTagVC+Ext.swift */; };
+		04FD046527D7143D00EC87DC /* SuccessPopUpVC+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04FD046427D7143D00EC87DC /* SuccessPopUpVC+Ext.swift */; };
+		04FD046727D791EA00EC87DC /* MyWritingListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04FD046627D791EA00EC87DC /* MyWritingListView.swift */; };
+		04FD046927D791FA00EC87DC /* TempListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04FD046827D791FA00EC87DC /* TempListView.swift */; };
+		04FD046B27D83D3100EC87DC /* RelayWritingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04FD046A27D83D3100EC87DC /* RelayWritingView.swift */; };
+		04FD046D27D83EE600EC87DC /* RelayWritingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04FD046C27D83EE600EC87DC /* RelayWritingCell.swift */; };
+		04FD046F27D85EC800EC87DC /* RelayWritingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04FD046E27D85EC800EC87DC /* RelayWritingViewModel.swift */; };
+		04FD047127D9CA0A00EC87DC /* SearchBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04FD047027D9CA0A00EC87DC /* SearchBarView.swift */; };
+		04FD047427D9D2EC00EC87DC /* SearchRecentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04FD047327D9D2EC00EC87DC /* SearchRecentTableViewCell.swift */; };
+		04FD047627D9D5F600EC87DC /* CancelX.png in Resources */ = {isa = PBXBuildFile; fileRef = 04FD047527D9D5F600EC87DC /* CancelX.png */; };
 		4772DCC31D58F618A0C97067 /* Pods_KkamagnoonTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BEA8A731D028EF2AE2C2F844 /* Pods_KkamagnoonTests.framework */; };
 		59262A405FB52911AA2ACCF1 /* Pods_Kkamagnoon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 21B18F934232A8239C156F77 /* Pods_Kkamagnoon.framework */; };
 		DA3759104807120025675467 /* Pods_Kkamagnoon_KkamagnoonUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D320D1CF105BFC278E7F0256 /* Pods_Kkamagnoon_KkamagnoonUITests.framework */; };
@@ -233,10 +256,12 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		04040A5627E0453600BCA705 /* Heart2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Heart2.png; sourceTree = "<group>"; };
+		04040A5827E0473C00BCA705 /* More2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = More2.png; sourceTree = "<group>"; };
 		0407909827B7CB38006C5374 /* EndPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EndPoint.swift; sourceTree = "<group>"; };
 		0407909A27B7D232006C5374 /* NetworkError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkError.swift; sourceTree = "<group>"; };
 		040790A327B895D1006C5374 /* View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = View.swift; sourceTree = "<group>"; };
-		040790A527B8960D006C5374 /* Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
+		040790A527B8960D006C5374 /* UIColor+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Ext.swift"; sourceTree = "<group>"; };
 		040790A727B8964E006C5374 /* String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
 		040790A927B89701006C5374 /* Decode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Decode.swift; sourceTree = "<group>"; };
 		040790AB27B89777006C5374 /* Notification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notification.swift; sourceTree = "<group>"; };
@@ -278,6 +303,15 @@
 		040D853027C0B8AD0003C96A /* SettingPersonnelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingPersonnelView.swift; sourceTree = "<group>"; };
 		040D853A27C1035F0003C96A /* SelectTagView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectTagView.swift; sourceTree = "<group>"; };
 		040D853C27C10B5C0003C96A /* SelectingCollectionReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectingCollectionReusableView.swift; sourceTree = "<group>"; };
+		040E6B5627E6075F00EF9FB0 /* SearchTabTitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTabTitleView.swift; sourceTree = "<group>"; };
+		040E6B5827E60E4D00EF9FB0 /* SearchTabMenuCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTabMenuCell.swift; sourceTree = "<group>"; };
+		040E6B5A27E6125E00EF9FB0 /* SearchHistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchHistoryView.swift; sourceTree = "<group>"; };
+		040E6B5C27E6127000EF9FB0 /* SearchResultView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultView.swift; sourceTree = "<group>"; };
+		04301DFF27F0336700A2ED93 /* DetailMyWritingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailMyWritingViewController.swift; sourceTree = "<group>"; };
+		04301E0127F0339600A2ED93 /* DetailMyWritingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailMyWritingViewModel.swift; sourceTree = "<group>"; };
+		04301E0427F03DCF00A2ED93 /* MyWriting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyWriting.swift; sourceTree = "<group>"; };
+		04301E0627F0B8DB00A2ED93 /* Bookmark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Bookmark.png; sourceTree = "<group>"; };
+		04301E0827F0C08D00A2ED93 /* UIImage+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Ext.swift"; sourceTree = "<group>"; };
 		043316BA27C3306900FE0E34 /* WritingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WritingViewController.swift; sourceTree = "<group>"; };
 		043316BD27C330BC00FE0E34 /* ChallengeHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallengeHeaderView.swift; sourceTree = "<group>"; };
 		043316BF27C330EB00FE0E34 /* MyChallengeCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyChallengeCard.swift; sourceTree = "<group>"; };
@@ -422,6 +456,18 @@
 		04DAAE6327B4196F00AECFE4 /* BottomSheetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomSheetViewController.swift; sourceTree = "<group>"; };
 		04DAAE6527B4C03A00AECFE4 /* CommentCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentCell.swift; sourceTree = "<group>"; };
 		04DAAE6727B4D0D600AECFE4 /* WritingCommentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WritingCommentView.swift; sourceTree = "<group>"; };
+		04FD045E27D7116500EC87DC /* ChallengeVC+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChallengeVC+Ext.swift"; sourceTree = "<group>"; };
+		04FD046027D7127C00EC87DC /* ChallengeWritingVC+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChallengeWritingVC+Ext.swift"; sourceTree = "<group>"; };
+		04FD046227D7137700EC87DC /* ChallengeSelectingTagVC+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChallengeSelectingTagVC+Ext.swift"; sourceTree = "<group>"; };
+		04FD046427D7143D00EC87DC /* SuccessPopUpVC+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SuccessPopUpVC+Ext.swift"; sourceTree = "<group>"; };
+		04FD046627D791EA00EC87DC /* MyWritingListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyWritingListView.swift; sourceTree = "<group>"; };
+		04FD046827D791FA00EC87DC /* TempListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TempListView.swift; sourceTree = "<group>"; };
+		04FD046A27D83D3100EC87DC /* RelayWritingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RelayWritingView.swift; sourceTree = "<group>"; };
+		04FD046C27D83EE600EC87DC /* RelayWritingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RelayWritingCell.swift; sourceTree = "<group>"; };
+		04FD046E27D85EC800EC87DC /* RelayWritingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RelayWritingViewModel.swift; sourceTree = "<group>"; };
+		04FD047027D9CA0A00EC87DC /* SearchBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBarView.swift; sourceTree = "<group>"; };
+		04FD047327D9D2EC00EC87DC /* SearchRecentTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchRecentTableViewCell.swift; sourceTree = "<group>"; };
+		04FD047527D9D5F600EC87DC /* CancelX.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = CancelX.png; sourceTree = "<group>"; };
 		18CC5DE48442606CD4F34580 /* Pods-Kkamagnoon.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Kkamagnoon.release.xcconfig"; path = "Target Support Files/Pods-Kkamagnoon/Pods-Kkamagnoon.release.xcconfig"; sourceTree = "<group>"; };
 		21B18F934232A8239C156F77 /* Pods_Kkamagnoon.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Kkamagnoon.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		24838BE1B7D5491B5C97CEAF /* Pods-KkamagnoonTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KkamagnoonTests.release.xcconfig"; path = "Target Support Files/Pods-KkamagnoonTests/Pods-KkamagnoonTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -498,6 +544,7 @@
 				040790EC27BA2AFF006C5374 /* RelayDetailView.swift */,
 				0407910827BBDD68006C5374 /* ParticipantListView.swift */,
 				04A40D6C27BFC1C2004DAB19 /* RelayListView.swift */,
+				04FD046A27D83D3100EC87DC /* RelayWritingView.swift */,
 			);
 			path = Relay;
 			sourceTree = "<group>";
@@ -512,8 +559,17 @@
 				0407910A27BBE003006C5374 /* ParticipantCell.swift */,
 				04A40D7227BFE22C004DAB19 /* SortHeaderCell.swift */,
 				040D853C27C10B5C0003C96A /* SelectingCollectionReusableView.swift */,
+				04FD046C27D83EE600EC87DC /* RelayWritingCell.swift */,
 			);
 			path = Cell;
+			sourceTree = "<group>";
+		};
+		04301E0327F03DBE00A2ED93 /* MyWriting */ = {
+			isa = PBXGroup;
+			children = (
+				04301E0427F03DCF00A2ED93 /* MyWriting.swift */,
+			);
+			path = MyWriting;
 			sourceTree = "<group>";
 		};
 		043316BC27C3308A00FE0E34 /* Challenge */ = {
@@ -648,6 +704,9 @@
 				04DAAE5027B1FDB300AECFE4 /* WholeFeedView.swift */,
 				04DAAE5427B29EB700AECFE4 /* SubscribeFeedView.swift */,
 				040790B327B8F03D006C5374 /* FeedDetailView.swift */,
+				040E6B5627E6075F00EF9FB0 /* SearchTabTitleView.swift */,
+				040E6B5A27E6125E00EF9FB0 /* SearchHistoryView.swift */,
+				040E6B5C27E6127000EF9FB0 /* SearchResultView.swift */,
 			);
 			path = Feed;
 			sourceTree = "<group>";
@@ -660,6 +719,8 @@
 				045F52B527C89A700082673B /* NextButton.swift */,
 				045F52B727C89E3F0082673B /* WritingSubView.swift */,
 				045F52B927C8A5F50082673B /* TipBox.swift */,
+				04FD046627D791EA00EC87DC /* MyWritingListView.swift */,
+				04FD046827D791FA00EC87DC /* TempListView.swift */,
 			);
 			path = MyWriting;
 			sourceTree = "<group>";
@@ -676,6 +737,7 @@
 			isa = PBXGroup;
 			children = (
 				045F528927C690690082673B /* MyWritingViewModel.swift */,
+				04301E0127F0339600A2ED93 /* DetailMyWritingViewModel.swift */,
 			);
 			path = MyWriting;
 			sourceTree = "<group>";
@@ -756,7 +818,11 @@
 		045F52A527C88DC90082673B /* Button */ = {
 			isa = PBXGroup;
 			children = (
+				04301E0627F0B8DB00A2ED93 /* Bookmark.png */,
+				04040A5827E0473C00BCA705 /* More2.png */,
+				04FD047527D9D5F600EC87DC /* CancelX.png */,
 				0439771927C9157D00935E0E /* Sort.png */,
+				04040A5627E0453600BCA705 /* Heart2.png */,
 				0439771727C911B100935E0E /* More.png */,
 				0439771527C910C700935E0E /* Search.png */,
 				045F52BE27C8B4A20082673B /* Comment.png */,
@@ -873,6 +939,7 @@
 			isa = PBXGroup;
 			children = (
 				048D44BC27AF5D7D0031974D /* MyWritingViewController.swift */,
+				04301DFF27F0336700A2ED93 /* DetailMyWritingViewController.swift */,
 			);
 			path = MyWriting;
 			sourceTree = "<group>";
@@ -932,6 +999,7 @@
 				04A40D6027BF57E7004DAB19 /* MakingRelayRoomViewModel.swift */,
 				04A40D6227BF57F9004DAB19 /* SelectTagViewModel.swift */,
 				04A40D6427BF5809004DAB19 /* ParticipantViewModel.swift */,
+				04FD046E27D85EC800EC87DC /* RelayWritingViewModel.swift */,
 			);
 			path = Relay;
 			sourceTree = "<group>";
@@ -1004,6 +1072,7 @@
 				0439AF4427B166B300E14E03 /* SubscribeFilterCell.swift */,
 				0439AF3027AFF97300E14E03 /* FeedCell.swift */,
 				0439AF2C27AFAF7000E14E03 /* CategoryFilterCell.swift */,
+				040E6B5827E60E4D00EF9FB0 /* SearchTabMenuCell.swift */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -1011,6 +1080,7 @@
 		04C95FD327B68C4400A0F840 /* Reusable */ = {
 			isa = PBXGroup;
 			children = (
+				04FD047227D9D2C500EC87DC /* Cell */,
 				0407910427BBD70E006C5374 /* BottomBar.swift */,
 				040790F827BB4E42006C5374 /* MakingRoomButton.swift */,
 				04A40D6A27BFC021004DAB19 /* HeaderViewWithBackBtn.swift */,
@@ -1029,6 +1099,7 @@
 				04A40D7027BFE19A004DAB19 /* ArticleListWithSortView.swift */,
 				040D852E27C096390003C96A /* MultiLineTagListView.swift */,
 				040D853A27C1035F0003C96A /* SelectTagView.swift */,
+				04FD047027D9CA0A00EC87DC /* SearchBarView.swift */,
 			);
 			path = Reusable;
 			sourceTree = "<group>";
@@ -1036,6 +1107,7 @@
 		04D0637127AEC0C0005EB16C /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				04301E0327F03DBE00A2ED93 /* MyWriting */,
 				043316E827C3484300FE0E34 /* Challenge */,
 				04A40D3527BE25B1004DAB19 /* Relay */,
 				04C95FC427B55E8600A0F840 /* Feed */,
@@ -1108,7 +1180,7 @@
 			children = (
 				04DAAE5927B2B1F500AECFE4 /* FlexibleDecode.swift */,
 				040790A327B895D1006C5374 /* View.swift */,
-				040790A527B8960D006C5374 /* Color.swift */,
+				040790A527B8960D006C5374 /* UIColor+Ext.swift */,
 				040790A727B8964E006C5374 /* String.swift */,
 				040790A927B89701006C5374 /* Decode.swift */,
 				040790AB27B89777006C5374 /* Notification.swift */,
@@ -1118,8 +1190,21 @@
 				0433170327C3A56100FE0E34 /* Label.swift */,
 				045F52AF27C88EF40082673B /* ImageExt.swift */,
 				045F52B327C8940C0082673B /* TextField.swift */,
+				04FD045E27D7116500EC87DC /* ChallengeVC+Ext.swift */,
+				04FD046027D7127C00EC87DC /* ChallengeWritingVC+Ext.swift */,
+				04FD046227D7137700EC87DC /* ChallengeSelectingTagVC+Ext.swift */,
+				04FD046427D7143D00EC87DC /* SuccessPopUpVC+Ext.swift */,
+				04301E0827F0C08D00A2ED93 /* UIImage+Ext.swift */,
 			);
 			path = Extension;
+			sourceTree = "<group>";
+		};
+		04FD047227D9D2C500EC87DC /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				04FD047327D9D2EC00EC87DC /* SearchRecentTableViewCell.swift */,
+			);
+			path = Cell;
 			sourceTree = "<group>";
 		};
 		2944082E5D2EC83FE904B05C /* Pods */ = {
@@ -1270,7 +1355,9 @@
 				045F52CD27C900430082673B /* NothingCharacter.png in Resources */,
 				0464F9CF27A578AE0054FD83 /* LaunchScreen.storyboard in Resources */,
 				0439773327C9237A00935E0E /* Copy.png in Resources */,
+				04040A5927E0473C00BCA705 /* More2.png in Resources */,
 				0439773927C92D0800935E0E /* Relay1x.png in Resources */,
+				04040A5727E0453600BCA705 /* Heart2.png in Resources */,
 				0439771427C90F0800935E0E /* Back.png in Resources */,
 				0439772C27C91FD200935E0E /* Feed1x.png in Resources */,
 				0439770E27C906C000935E0E /* CompletedCharacter.png in Resources */,
@@ -1283,6 +1370,8 @@
 				045F52A427C88DBA0082673B /* GoRight.png in Resources */,
 				045F52C027C8B4A20082673B /* Comment.png in Resources */,
 				0464F9CC27A578AE0054FD83 /* Assets.xcassets in Resources */,
+				04FD047627D9D5F600EC87DC /* CancelX.png in Resources */,
+				04301E0727F0B8DB00A2ED93 /* Bookmark.png in Resources */,
 				040790BF27B90E5C006C5374 /* Pretendard-Black.otf in Resources */,
 				040790D127B90E73006C5374 /* Pretendard-Regular.otf in Resources */,
 				0464F9CA27A578AA0054FD83 /* Main.storyboard in Resources */,
@@ -1475,6 +1564,7 @@
 				043316C827C3364E00FE0E34 /* ChallengeViewModel.swift in Sources */,
 				040790FF27BB96C0006C5374 /* SelectTagViewController.swift in Sources */,
 				040790F727BB4C7E006C5374 /* MakingRelayRoomViewController.swift in Sources */,
+				04FD046B27D83D3100EC87DC /* RelayWritingView.swift in Sources */,
 				048D44BF27AF5D930031974D /* ChallengeViewController.swift in Sources */,
 				043316C227C3311300FE0E34 /* TodayKeywordView.swift in Sources */,
 				043316DC27C3394700FE0E34 /* Service.swift in Sources */,
@@ -1487,11 +1577,13 @@
 				048D44BD27AF5D7D0031974D /* MyWritingViewController.swift in Sources */,
 				040790A427B895D1006C5374 /* View.swift in Sources */,
 				048D44B727AF5D0F0031974D /* MyPageViewController.swift in Sources */,
+				040E6B5927E60E4D00EF9FB0 /* SearchTabMenuCell.swift in Sources */,
 				045F52B627C89A700082673B /* NextButton.swift in Sources */,
 				048D44AC27AF592D0031974D /* TabBarViewController.swift in Sources */,
 				0439AF4727B171EB00E14E03 /* DetailContentViewController.swift in Sources */,
 				04DAAE5A27B2B1F500AECFE4 /* FlexibleDecode.swift in Sources */,
 				04C95FD127B68AD400A0F840 /* TagListView.swift in Sources */,
+				04FD045F27D7116500EC87DC /* ChallengeVC+Ext.swift in Sources */,
 				040790F127BA65ED006C5374 /* RelayTitleCell.swift in Sources */,
 				040790DD27B94125006C5374 /* GrayBorderView.swift in Sources */,
 				040790AE27B8B3F8006C5374 /* TagView.swift in Sources */,
@@ -1504,11 +1596,14 @@
 				043316C527C3314F00FE0E34 /* CalendarDateCell.swift in Sources */,
 				04A40D6327BF57F9004DAB19 /* SelectTagViewModel.swift in Sources */,
 				040790DB27B92620006C5374 /* TextView.swift in Sources */,
+				04FD047427D9D2EC00EC87DC /* SearchRecentTableViewCell.swift in Sources */,
 				0407909927B7CB38006C5374 /* EndPoint.swift in Sources */,
 				043316F927C3500F00FE0E34 /* WritingViewModel.swift in Sources */,
+				04301E0227F0339600A2ED93 /* DetailMyWritingViewModel.swift in Sources */,
 				040790F527BA76CC006C5374 /* PopUpView.swift in Sources */,
 				04C95FC627B55E9800A0F840 /* FeedRequestModel.swift in Sources */,
 				040D852F27C096390003C96A /* MultiLineTagListView.swift in Sources */,
+				040E6B5B27E6125E00EF9FB0 /* SearchHistoryView.swift in Sources */,
 				043316F127C34FC200FE0E34 /* SubscribeListViewModel.swift in Sources */,
 				045F528327C5CE1D0082673B /* MyWritingCell.swift in Sources */,
 				0433170927C3BF0600FE0E34 /* NoticeViewModel.swift in Sources */,
@@ -1517,20 +1612,26 @@
 				043316E327C33D0E00FE0E34 /* SearchViewController.swift in Sources */,
 				045F52BA27C8A5F50082673B /* TipBox.swift in Sources */,
 				045F52C527C8C4450082673B /* ChallengeSelectingTagViewController.swift in Sources */,
+				04FD046527D7143D00EC87DC /* SuccessPopUpVC+Ext.swift in Sources */,
 				043316D627C338D300FE0E34 /* FeedSubscribeService.swift in Sources */,
+				040E6B5727E6075F00EF9FB0 /* SearchTabTitleView.swift in Sources */,
 				045F529727C740140082673B /* AddingTagCell.swift in Sources */,
 				040790E027B969A9006C5374 /* RelayRoomView.swift in Sources */,
 				04A40D5227BF4D30004DAB19 /* RelayNoticeEndPointCases.swift in Sources */,
+				04FD047127D9CA0A00EC87DC /* SearchBarView.swift in Sources */,
 				040790B427B8F03D006C5374 /* FeedDetailView.swift in Sources */,
 				043316FF27C3744100FE0E34 /* ParticipatedRoomView.swift in Sources */,
 				040D853127C0B8AD0003C96A /* SettingPersonnelView.swift in Sources */,
 				0439AF3127AFF97400E14E03 /* FeedCell.swift in Sources */,
+				04FD046727D791EA00EC87DC /* MyWritingListView.swift in Sources */,
 				0407910B27BBE003006C5374 /* ParticipantCell.swift in Sources */,
 				0439771027C908AC00935E0E /* SuccessPopUpViewController.swift in Sources */,
+				04301E0927F0C08D00A2ED93 /* UIImage+Ext.swift in Sources */,
 				040790F927BB4E42006C5374 /* MakingRoomButton.swift in Sources */,
 				04A40D5427BF51C2004DAB19 /* RelayArticleEndPointCases.swift in Sources */,
-				040790A627B8960D006C5374 /* Color.swift in Sources */,
+				040790A627B8960D006C5374 /* UIColor+Ext.swift in Sources */,
 				043316DA27C3391A00FE0E34 /* FeedCommentService.swift in Sources */,
+				04FD046327D7137700EC87DC /* ChallengeSelectingTagVC+Ext.swift in Sources */,
 				040790AA27B89701006C5374 /* Decode.swift in Sources */,
 				04DAAE6227B3F41900AECFE4 /* SubscribeListCell.swift in Sources */,
 				045F52B227C892A50082673B /* WritingView.swift in Sources */,
@@ -1542,6 +1643,7 @@
 				040790A827B8964E006C5374 /* String.swift in Sources */,
 				043316BE27C330BC00FE0E34 /* ChallengeHeaderView.swift in Sources */,
 				043316DF27C33A9400FE0E34 /* FeedReponseModel.swift in Sources */,
+				04FD046927D791FA00EC87DC /* TempListView.swift in Sources */,
 				045F528E27C72CE00082673B /* MyWritingEndPointCases.swift in Sources */,
 				043316FB27C35A2500FE0E34 /* ChallengeMainView.swift in Sources */,
 				043316EF27C34FA900FE0E34 /* DetailContentViewModel.swift in Sources */,
@@ -1569,12 +1671,14 @@
 				040D853D27C10B5C0003C96A /* SelectingCollectionReusableView.swift in Sources */,
 				0433171127C3EBD600FE0E34 /* RelayResponseModel.swift in Sources */,
 				04A40D6D27BFC1C2004DAB19 /* RelayListView.swift in Sources */,
+				04FD046F27D85EC800EC87DC /* RelayWritingViewModel.swift in Sources */,
 				04DAAE5127B1FDB300AECFE4 /* WholeFeedView.swift in Sources */,
 				04DAAE6827B4D0D600AECFE4 /* WritingCommentView.swift in Sources */,
 				0439AF4527B166B300E14E03 /* SubscribeFilterCell.swift in Sources */,
 				0407910527BBD70E006C5374 /* BottomBar.swift in Sources */,
 				0433170227C37BC800FE0E34 /* NoticeCell.swift in Sources */,
 				043316F727C34FF600FE0E34 /* SearchViewModel.swift in Sources */,
+				040E6B5D27E6127000EF9FB0 /* SearchResultView.swift in Sources */,
 				04A40D5927BF5498004DAB19 /* RelayNoticeService.swift in Sources */,
 				040790B227B8DFDD006C5374 /* ImageLabelView.swift in Sources */,
 				040790E227B9F57C006C5374 /* RelayRoomCell.swift in Sources */,
@@ -1582,6 +1686,7 @@
 				045F529927C742ED0082673B /* AddingTagView.swift in Sources */,
 				045F529127C733890082673B /* MyWritingService.swift in Sources */,
 				043316C027C330EB00FE0E34 /* MyChallengeCard.swift in Sources */,
+				04301E0527F03DCF00A2ED93 /* MyWriting.swift in Sources */,
 				045F528A27C690690082673B /* MyWritingViewModel.swift in Sources */,
 				04A40D5F27BF57D5004DAB19 /* PopUpViewModel.swift in Sources */,
 				043316D827C338F700FE0E34 /* FeedSearchService.swift in Sources */,
@@ -1591,9 +1696,12 @@
 				045F528727C656DF0082673B /* ChallengeResponseModel.swift in Sources */,
 				0439AF3327B0B0A000E14E03 /* ArticleListView.swift in Sources */,
 				043316F327C34FD600FE0E34 /* BottomSheetViewModel.swift in Sources */,
+				04FD046D27D83EE600EC87DC /* RelayWritingCell.swift in Sources */,
 				040790F327BA75B2006C5374 /* PopUpViewController.swift in Sources */,
 				043316E127C33CB900FE0E34 /* BellNoticeViewController.swift in Sources */,
 				043316D427C338A900FE0E34 /* FeedService.swift in Sources */,
+				04301E0027F0336700A2ED93 /* DetailMyWritingViewController.swift in Sources */,
+				04FD046127D7127C00EC87DC /* ChallengeWritingVC+Ext.swift in Sources */,
 				040790AC27B89777006C5374 /* Notification.swift in Sources */,
 				0439AF3527B0B4AF00E14E03 /* ProfileView.swift in Sources */,
 				04A40D6127BF57E7004DAB19 /* MakingRelayRoomViewModel.swift in Sources */,

@@ -31,3 +31,13 @@ enum SubscribeStyle {
     case subscribing
     case notSubscribing
 }
+
+enum SearchContentStyle {
+    case history
+    case searchResult
+}
+
+enum MyWritingStyle {
+    case myWriting
+    case tempWriting
+}
