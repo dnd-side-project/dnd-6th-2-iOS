@@ -54,17 +54,18 @@ class SearchViewController: UIViewController {
         searchContentView = searchHistoryView
         view.backgroundColor = UIColor(rgb: Color.basicBackground)
 
-        setSearchBar()
-        setSearchContentView()
-        bindView()
+        setLayout()
+        bindInput()
+        bindOutput()
 
         viewModel.getRecentSearchList()
+
     }
 
 }
 
 extension SearchViewController {
-    func setSearchBar() {
+    func setLayout() {
         view.addSubview(searchBar)
         searchBar.snp.makeConstraints {
             $0.top.equalToSuperview().offset(60.0)
@@ -72,6 +73,8 @@ extension SearchViewController {
             $0.right.equalToSuperview().offset(-20.0)
             $0.height.equalTo(47.0)
         }
+
+        setSearchContentView()
     }
 
     func setSearchContentView() {
@@ -94,10 +97,10 @@ extension SearchViewController {
 
         setSearchContentView()
     }
+}
 
-    func bindView() {
-
-        // input
+extension SearchViewController {
+    func bindInput() {
         Observable.of(["챌린지", "자유글", "릴레이"])
             .bind(to: searchResultView.menuTabView.menuCollectionView.rx.items(cellIdentifier: SearchTabMenuCell.identifier,
                                          cellType: SearchTabMenuCell.self)) { (_, element, cell) in
@@ -105,17 +108,9 @@ extension SearchViewController {
                 }
             .disposed(by: disposeBag)
 
-        searchResultView.menuTabView.menuCollectionView
-            .rx.itemSelected
-            .withUnretained(self)
-            .bind { owner, indexPath in
-                let index = indexPath.row
-                owner.searchResultView.menuTabView.indicatorViewLeftContraint.constant = CGFloat(index)*((UIScreen.main.bounds.width - 40)/3)
-            }
-            .disposed(by: disposeBag)
-
         searchBar.searchField.rx.text
             .orEmpty
+            .filter { !$0.isEmpty }
             .bind(to: viewModel.input.searchWord)
             .disposed(by: disposeBag)
 
@@ -127,7 +122,22 @@ extension SearchViewController {
             .bind(to: viewModel.input.backButtonTap)
             .disposed(by: disposeBag)
 
-        // output
+        searchHistoryView.tableView
+            .rx.modelSelected(History.self)
+            .bind(to: viewModel.input.historyWordTap)
+            .disposed(by: disposeBag)
+
+        searchResultView.menuTabView.menuCollectionView
+            .rx.itemSelected
+            .withUnretained(self)
+            .bind { owner, indexPath in
+                let index = indexPath.row
+                owner.searchResultView.menuTabView.indicatorViewLeftContraint.constant = CGFloat(index)*((UIScreen.main.bounds.width - 40)/3)
+            }
+            .disposed(by: disposeBag)
+    }
+
+    func bindOutput() {
         viewModel.output.recentSearchList
             .bind(to: searchHistoryView.tableView.rx.items(dataSource: historyDataSource))
             .disposed(by: disposeBag)
@@ -149,8 +159,17 @@ extension SearchViewController {
                 owner.dismissView()
             }
             .disposed(by: disposeBag)
-    }
 
+        viewModel.output.searchWord
+            .withUnretained(self)
+            .bind { owner, word in
+                owner.searchBar.searchField.text = word
+            }
+            .disposed(by: disposeBag)
+    }
+}
+
+extension SearchViewController {
     private func dismissView() {
         self.navigationController?.popViewController(animated: true)
     }

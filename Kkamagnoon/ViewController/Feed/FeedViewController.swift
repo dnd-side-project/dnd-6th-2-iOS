@@ -72,7 +72,9 @@ class FeedViewController: UIViewController {
         setLayout()
         bindInput()
         bindOutput()
+    }
 
+    override func viewWillAppear(_ animated: Bool) {
         viewModel.bindWholeFeedList()
     }
 }

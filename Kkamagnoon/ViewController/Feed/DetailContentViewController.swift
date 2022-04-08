@@ -15,7 +15,7 @@ import SnapKit
 class DetailContentViewController: UIViewController {
 
     var viewModel = DetailContentViewModel()
-    
+
     let stringToDateFormatter = DateFormatter()
         .then {
             $0.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
@@ -65,8 +65,10 @@ class DetailContentViewController: UIViewController {
         layoutView()
         bindInput()
         bindOutput()
-        viewModel.bindArticle()
+    }
 
+    override func viewWillAppear(_ animated: Bool) {
+        viewModel.bindArticle()
     }
 
 }
@@ -203,29 +205,29 @@ extension DetailContentViewController {
         vc.modalPresentationStyle = .overFullScreen
         self.present(vc, animated: false, completion: nil)
     }
-    
+
     private func setDetailViewData(_ article: Article) {
         detailView.titleLabel.text = article.title
         detailView.profileView.nickNameLabel.text = article.user?.nickname
         detailView.contentLabel.text = article.content
 
-        let date = stringToDateFormatter.date(from: article.updatedAt ?? "")!
+        let date = stringToDateFormatter.date(from: article.updatedAt ?? "" ) ?? Date()
         detailView.updateDateLabel.text = dateToStringFormatter.string(from: date)
 
         bottomView.likeButton.setTitle("\(article.likeNum ?? 0)", for: .normal)
         bottomView.commentButton.setTitle("\(article.commentNum ?? 0)", for: .normal)
         bottomView.bookmarkButton.setTitle("\(article.scrapNum ?? 0)", for: .normal)
     }
-    
+
     private func popToBackView() {
         self.navigationController?.popViewController(animated: true)
     }
-    
+
     private func updateLikeView(_ likeNum: Int) {
         bottomView.bookmarkButton.setTitle(String(likeNum), for: .normal)
 //                bottomView.bookmarkButton.setImage(UIImage(systemName: "heart.fill"), for: .normal)
     }
-    
+
     private func updateScrapView(_ scrapNum: Int) {
         bottomView.bookmarkButton.setTitle(String(scrapNum), for: .normal)
 //                bottomView.bookmarkButton.setImage(UIImage(systemName: "heart.fill"), for: .normal)
