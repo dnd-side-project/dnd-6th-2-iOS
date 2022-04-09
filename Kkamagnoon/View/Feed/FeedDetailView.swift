@@ -45,18 +45,18 @@ class FeedDetailView: UIView {
 
         }
 
-    var tagListView: TagListView?
+    var tagListView: TagListView = TagListView()
 
     let disposeBag = DisposeBag()
 
-    init(frame: CGRect, tags: [String]) {
+    override init(frame: CGRect) {
         super.init(frame: frame)
         setProfileVeiw()
         setMoreButton()
         setUpdateDateLabel()
         setTitleLabel()
         setContentLabel()
-        setTagListView(tags: tags)
+        setTagListView()
     }
 
     required init?(coder: NSCoder) {
@@ -66,7 +66,7 @@ class FeedDetailView: UIView {
         setUpdateDateLabel()
         setTitleLabel()
         setContentLabel()
-//        setTagListView(tags: tags)
+        setTagListView()
     }
 
     func setProfileVeiw() {
@@ -119,14 +119,7 @@ class FeedDetailView: UIView {
 
     }
 
-    func setTagListView(tags: [String]) {
-
-        tagListView = TagListView(frame: .zero, tags: tags)
-        tagListView?.filterView.allowsSelection = false
-
-        guard let tagListView = tagListView else {
-            return
-        }
+    func setTagListView() {
 
         self.addSubview(tagListView)
 

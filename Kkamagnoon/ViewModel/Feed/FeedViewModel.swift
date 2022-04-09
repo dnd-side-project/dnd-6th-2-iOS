@@ -33,7 +33,9 @@ class FeedViewModel: ViewModelType {
         let goToAllSubscriberList = PublishRelay<[Host]>()
 
         let wholeFeedList = BehaviorRelay<[FeedSection]>(value: [])
+        let tagList = Observable<[String]>.of(StringType.categories)
         let subscribeFeedList = BehaviorRelay<[String]>(value: [])
+        let sortStyle = BehaviorRelay<SortStyle>(value: .byLatest)
     }
 
     let input: Input
@@ -42,9 +44,6 @@ class FeedViewModel: ViewModelType {
     var feedSubscribeService: FeedSubscribeService!
 
     var disposeBag = DisposeBag()
-
-    // TODO: Change sortStyle to BehaviorRelay
-    var sortStyle: SortStyle = .byLatest
 
     var checkSelectedTags = [String: Bool]()
 
@@ -99,10 +98,7 @@ extension FeedViewModel {
             .disposed(by: disposeBag)
 
         input.tagCellTap
-            .withUnretained(self)
-            .bind { owner, tagString in
-                owner.updateTagList(tagString: tagString)
-            }
+            .bind(onNext: updateTagList)
             .disposed(by: disposeBag)
 
         input.feedCellTap
@@ -113,10 +109,7 @@ extension FeedViewModel {
             .disposed(by: disposeBag)
 
         input.allSubscriberButtonTap
-            .withUnretained(self)
-            .bind { owner, _ in
-                owner.fetchAuthorList()
-            }
+            .bind(onNext: fetchAuthorList)
             .disposed(by: disposeBag)
     }
 
@@ -125,7 +118,7 @@ extension FeedViewModel {
 extension FeedViewModel {
     func bindWholeFeedList() {
 
-        feedService.getWholeFeed(next_cursor: nil, orderBy: sortStyle.rawValue, tags: checkSelectedTags)
+        feedService.getWholeFeed(next_cursor: nil, orderBy: output.sortStyle.value.rawValue, tags: checkSelectedTags)
             .withUnretained(self)
             .bind { owner, articleResponse in
 

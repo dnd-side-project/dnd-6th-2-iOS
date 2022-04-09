@@ -38,6 +38,10 @@ class FeedViewController: UIViewController {
         }
 
     let wholeFeedView = WholeFeedView()
+        .then {
+            $0.filterView.filterView.register(CategoryFilterCell.self, forCellWithReuseIdentifier: CategoryFilterCell.categoryFilterCellIdentifier)
+        }
+
     let subscribeFeedView = SubscribeFeedView()
 
     lazy var dataSource = RxCollectionViewSectionedReloadDataSource<FeedSection>(configureCell: { _, collectionView, indexPath, element in
@@ -171,6 +175,15 @@ extension FeedViewController {
             .emit(onNext: goToBellVC)
             .disposed(by: disposeBag)
 
+        viewModel.output.tagList
+            .asDriver(onErrorJustReturn: StringType.categories)
+            .drive(wholeFeedView.filterView.filterView.rx.items(
+                cellIdentifier: CategoryFilterCell.categoryFilterCellIdentifier,
+                cellType: CategoryFilterCell.self)) { (_, element, cell) in
+                    cell.tagView.categoryLabel.text = element
+                }
+                .disposed(by: disposeBag)
+
         viewModel.output.wholeFeedList
             .asDriver()
             .drive(wholeFeedView
@@ -254,12 +267,12 @@ extension FeedViewController {
 
     private func setHeaderViewHandler(sortHeaderView: SortHeaderCell) {
         sortHeaderView.buttonTappedHandler = { [unowned self] in
-            if self.viewModel.sortStyle == .byLatest {
+            if self.viewModel.output.sortStyle.value == .byLatest {
                 sortHeaderView.sortButton.setTitle("인기순", for: .normal)
-                self.viewModel.sortStyle = .byPopularity
+                self.viewModel.output.sortStyle.accept(.byPopularity)
             } else {
                 sortHeaderView.sortButton.setTitle("최신순", for: .normal)
-                self.viewModel.sortStyle = .byLatest
+                self.viewModel.output.sortStyle.accept(.byLatest)
             }
 
             viewModel.bindWholeFeedList()
