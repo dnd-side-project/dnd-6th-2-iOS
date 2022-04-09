@@ -280,6 +280,11 @@ extension FeedViewController {
     }
 
     private func setFeedCellData(cell: FeedCell, element: Article) {
+        // TODO: Save my id to User Defaults
+        if element.user?._id == "MyId" {
+            cell.backgroundColor = UIColor(rgb: 0x292929)
+        }
+
         cell.profileView.nickNameLabel.text = element.user?.nickname
         cell.articleTitle.text = element.title
 

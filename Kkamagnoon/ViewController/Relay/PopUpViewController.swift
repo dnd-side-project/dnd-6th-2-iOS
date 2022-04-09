@@ -69,7 +69,7 @@ class PopUpViewController: UIViewController {
             .bind(to: viewModel.input.enterButtonTap)
             .disposed(by: disposeBag)
     }
-    
+
     func bindOutput() {
         viewModel.output.relayDetailViewStyle
             .asDriver()

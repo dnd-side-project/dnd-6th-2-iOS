@@ -39,27 +39,13 @@ class RelayViewController: UIViewController {
     var makingRoomButton = MakingRoomButton()
         .then {
             $0.setImage(UIImage(named: "Pencil"), for: .normal)
-
         }
 
     lazy var relayRoomDataSource = RxCollectionViewSectionedReloadDataSource<RelaySection>(configureCell: { _, collectionView, indexPath, element in
 
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: RelayRoomCell.relayRoomCellIdentifier, for: indexPath) as! RelayRoomCell
 
-        cell.profileView.nickNameLabel.text = element.title
-        cell.contentLabel.text = element.notice?.notice
-        cell.tagListView.tagList = element.tags ?? []
-
-        if indexPath.row == 0 {
-            cell.backgroundColor = UIColor(rgb: Color.whitePurple)
-            cell.tagListView.setTags(tagViewColor: 0xFABDFF, tagTextColor: 0x5C1A62)
-
-        } else if indexPath.row == 1 {
-            cell.backgroundColor = UIColor(rgb: Color.cardBlue)
-            cell.tagListView.setTags(tagViewColor: 0xB7CBFF, tagTextColor: 0x1E2F59)
-        } else {
-            cell.tagListView.setTags(tagViewColor: 0x4B4B4B, tagTextColor: 0xFFFFFF)
-        }
+        self.setRelayRoomCell(cell: cell, element: element, indexPath: indexPath)
 
         return cell
     },
@@ -67,12 +53,12 @@ class RelayViewController: UIViewController {
         let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: SortHeaderCell.sortHeaderCellReuseIdentifier, for: indexPath) as! SortHeaderCell
 
         headerView.buttonTappedHandler = { [unowned self] in
-            if self.viewModel.sortStyle == .byLatest {
+            if self.viewModel.output.currentSortStyle.value == .byLatest {
                 headerView.sortButton.setTitle("인기순", for: .normal)
-                self.viewModel.sortStyle = .byPopularity
+                self.viewModel.output.currentSortStyle.accept(.byPopularity)
             } else {
                 headerView.sortButton.setTitle("최신순", for: .normal)
-                self.viewModel.sortStyle = .byLatest
+                self.viewModel.output.currentSortStyle.accept(.byLatest)
             }
 
         }
@@ -94,11 +80,8 @@ class RelayViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        navigationController?.setNavigationBarHidden(true, animated: false)
-        navigationController?.interactivePopGestureRecognizer?.delegate = nil
-        view.backgroundColor = UIColor(rgb: Color.basicBackground)
-        roomView = relayRoomView
 
+        configureView()
         setLayout()
         bindInput()
         bindOutput()
@@ -113,6 +96,14 @@ class RelayViewController: UIViewController {
 }
 
 extension RelayViewController {
+
+    func configureView() {
+        navigationController?.setNavigationBarHidden(true, animated: false)
+        navigationController?.interactivePopGestureRecognizer?.delegate = nil
+        view.backgroundColor = UIColor(rgb: Color.basicBackground)
+        roomView = relayRoomView
+    }
+
     func setLayout() {
         view.addSubview(topButtonView)
         topButtonView.snp.makeConstraints {
@@ -141,7 +132,7 @@ extension RelayViewController {
 
         view.bringSubviewToFront(makingRoomButton)
     }
-    
+
     func bindInput() {
         topButtonView.firstButton.rx.tap
             .bind(to: viewModel.input.relayRoomButtonTap)
@@ -159,7 +150,7 @@ extension RelayViewController {
             .rx.modelSelected(String.self)
             .bind(to: viewModel.input.tagCellTap)
             .disposed(by: disposeBag)
-        
+
         relayRoomView.categoryFilterView.filterView
             .rx.modelDeselected(String.self)
             .bind(to: viewModel.input.tagCellTap)
@@ -193,6 +184,15 @@ extension RelayViewController {
             .disposed(by: disposeBag)
 
         // relay room
+        viewModel.output.tagList
+            .asDriver(onErrorJustReturn: StringType.categories)
+            .drive(relayRoomView.categoryFilterView.filterView.rx.items(
+                cellIdentifier: CategoryFilterCell.categoryFilterCellIdentifier,
+                cellType: CategoryFilterCell.self)) { (_, element, cell) in
+                    cell.tagView.categoryLabel.text = element
+                }
+                .disposed(by: disposeBag)
+
         viewModel.output.relayRoomList
             .asDriver()
             .drive(relayRoomView.relayList.collectionView
@@ -230,7 +230,7 @@ extension RelayViewController {
         let vc = RelayDetailViewController()
         vc.viewModel.relayInfo = relay
 
-        if viewModel.participatedStyle == .relayRoom {
+        if viewModel.output.currentListStyle.value == .relayRoom {
             vc.viewModel.didEntered = false
         } else {
             vc.viewModel.didEntered = true
@@ -259,12 +259,27 @@ extension RelayViewController {
         roomView.removeFromSuperview()
 
         if style == .relayRoom {
-            viewModel.participatedStyle = .relayRoom
             roomView = relayRoomView
         } else {
-            viewModel.participatedStyle = .participatedRoom
             roomView = participatedRoomView
         }
         setRoomView()
+    }
+
+    private func setRelayRoomCell(cell: RelayRoomCell, element: Relay, indexPath: IndexPath) {
+        cell.profileView.nickNameLabel.text = element.title
+        cell.contentLabel.text = element.notice?.notice
+        cell.tagListView.tagList = element.tags ?? []
+
+        if indexPath.row == 0 {
+            cell.backgroundColor = UIColor(rgb: Color.whitePurple)
+            cell.tagListView.setTags(tagViewColor: 0xFABDFF, tagTextColor: 0x5C1A62)
+
+        } else if indexPath.row == 1 {
+            cell.backgroundColor = UIColor(rgb: Color.cardBlue)
+            cell.tagListView.setTags(tagViewColor: 0xB7CBFF, tagTextColor: 0x1E2F59)
+        } else {
+            cell.tagListView.setTags(tagViewColor: 0x4B4B4B, tagTextColor: 0xFFFFFF)
+        }
     }
 }
