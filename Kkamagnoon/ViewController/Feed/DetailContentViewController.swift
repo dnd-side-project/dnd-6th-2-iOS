@@ -8,7 +8,7 @@
 import UIKit
 import RxSwift
 import RxCocoa
-
+import RxDataSources
 import Then
 import SnapKit
 
@@ -52,17 +52,31 @@ class DetailContentViewController: UIViewController {
             $0.setContentHuggingPriority(.required, for: .vertical)
         }
 
-    var detailView: FeedDetailView!
+    var detailView = FeedDetailView()
+        .then {
+            $0.tagListView.filterView.allowsSelection = false
+            $0.tagListView.filterView.register(
+                CategoryFilterCell.self,
+                forCellWithReuseIdentifier: CategoryFilterCell.categoryFilterCellIdentifier)
+        }
 
     var disposeBag = DisposeBag()
+
+    lazy var tagDatasource = RxCollectionViewSectionedReloadDataSource<SectionModel<String, String>>(configureCell: { _, collectionView, indexPath, element in
+
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CategoryFilterCell.categoryFilterCellIdentifier, for: indexPath) as! CategoryFilterCell
+
+        cell.tagView.categoryLabel.text = element
+
+        return cell
+    })
 
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor(rgb: Color.basicBackground)
         navigationController?.isNavigationBarHidden = true
 
-        setView()
-        layoutView()
+        setLayout()
         bindInput()
         bindOutput()
     }
@@ -74,37 +88,19 @@ class DetailContentViewController: UIViewController {
 }
 
 extension DetailContentViewController {
-    func setView() {
 
-        let article = viewModel.output.article.value
-
+    func setLayout() {
         view.addSubview(backButton)
-        view.addSubview(stackView)
-        stackView.addArrangedSubview(scrollView)
-        stackView.addArrangedSubview(bottomView)
-
-        detailView = FeedDetailView(frame: .zero, tags: article.tags ?? [])
-
-        scrollView.addSubview(detailView)
-
-//        detailView.titleLabel.text = article.title
-//        detailView.profileView.nickNameLabel.text = article.user?.nickname
-//        detailView.contentTextView.text = article.content
-//
-//        // TODO: Created Date
-//
-//        bottomView.likeButton.setTitle("\(article.likeNum ?? 0)", for: .normal)
-//        bottomView.commentButton.setTitle("\(article.commentNum ?? 0)", for: .normal)
-//        bottomView.bookmarkButton.setTitle("\(article.scrapNum ?? 0)", for: .normal)
-    }
-
-    func layoutView() {
         backButton.snp.makeConstraints {
             $0.left.equalToSuperview().offset(20.0)
             $0.size.equalTo(28)
             // TEMP
             $0.top.equalTo(view.safeAreaLayoutGuide).offset(10.0)
         }
+
+        view.addSubview(stackView)
+        stackView.addArrangedSubview(scrollView)
+        stackView.addArrangedSubview(bottomView)
 
         stackView.snp.makeConstraints {
             // TEMP
@@ -123,6 +119,8 @@ extension DetailContentViewController {
             $0.left.right.equalTo(view.safeAreaLayoutGuide)
             $0.bottom.equalToSuperview().inset(-48.0)
         }
+
+        scrollView.addSubview(detailView)
 
         detailView.snp.makeConstraints {
             $0.width.equalToSuperview()
@@ -195,6 +193,11 @@ extension DetailContentViewController {
             .drive(onNext: updateScrapView)
             .disposed(by: disposeBag)
 
+        viewModel.output.tags
+            .asDriver()
+            .drive(detailView.tagListView.filterView.rx.items(dataSource: tagDatasource))
+            .disposed(by: disposeBag)
+
     }
 }
 
@@ -207,6 +210,7 @@ extension DetailContentViewController {
     }
 
     private func setDetailViewData(_ article: Article) {
+
         detailView.titleLabel.text = article.title
         detailView.profileView.nickNameLabel.text = article.user?.nickname
         detailView.contentLabel.text = article.content

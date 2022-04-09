@@ -17,14 +17,17 @@ class SearchViewModel: ViewModelType {
         let searchWord = BehaviorRelay<String>(value: "")
         let searchButtonTap = PublishSubject<Void>()
         let historyWordTap = PublishSubject<History>()
+        let menuTapAtIndex = PublishSubject<IndexPath>()
     }
 
     struct Output {
+        let menuList = Observable.of(["챌린지", "자유글", "릴레이"])
         let dismissView = PublishRelay<Void>()
         let recentSearchList = BehaviorRelay<[SectionModel<String, History>]>(value: [])
         let searchResultList = BehaviorRelay<[SectionModel<String, Article>]>(value: [])
         let searchContentStyle = BehaviorRelay<SearchContentStyle>(value: .history)
         let searchWord = BehaviorRelay<String>(value: "")
+        let moveIndicatorBar = PublishRelay<IndexPath>()
     }
 
     var input: Input
@@ -72,6 +75,13 @@ extension SearchViewModel {
             .withUnretained(self)
             .bind { owner, history in
                 owner.searchBy(word: history.content ?? "" )
+            }
+            .disposed(by: disposeBag)
+
+        input.menuTapAtIndex
+            .withUnretained(self)
+            .bind { owner, indexPath in
+                owner.output.moveIndicatorBar.accept(indexPath)
             }
             .disposed(by: disposeBag)
 

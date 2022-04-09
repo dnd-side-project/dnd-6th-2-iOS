@@ -8,7 +8,7 @@
 import UIKit
 import SnapKit
 
-final class CategoryFilterCell: UICollectionViewCell {
+class CategoryFilterCell: UICollectionViewCell {
 
     static let categoryFilterCellIdentifier = "CategoryFilterCellIdentifier"
 

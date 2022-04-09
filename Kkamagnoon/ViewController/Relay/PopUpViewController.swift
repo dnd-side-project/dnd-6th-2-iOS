@@ -32,11 +32,12 @@ class PopUpViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationController?.isNavigationBarHidden = true
-        setView()
-        bindView()
+        setLayout()
+        bindInput()
+        bindOutput()
     }
 
-    func setView() {
+    func setLayout() {
         view.addSubview(backView)
         backView.snp.makeConstraints {
             $0.edges.equalToSuperview()
@@ -59,8 +60,7 @@ class PopUpViewController: UIViewController {
         }
     }
 
-    func bindView() {
-        // Input
+    func bindInput() {
         popUpView.exitButton.rx.tap
             .bind(to: viewModel.input.exitButtonTap)
             .disposed(by: disposeBag)
@@ -68,15 +68,19 @@ class PopUpViewController: UIViewController {
         popUpView.enterButton.rx.tap
             .bind(to: viewModel.input.enterButtonTap)
             .disposed(by: disposeBag)
-
-        // Output
+    }
+    
+    func bindOutput() {
         viewModel.output.relayDetailViewStyle
-            .withUnretained(self)
-            .bind { owner, _ in
-                owner.dismiss(animated: false, completion: nil)
-            }
+            .asDriver()
+            .drive(onNext: closePopUpView)
             .disposed(by: disposeBag)
-
     }
 
+}
+
+extension PopUpViewController {
+    private func closePopUpView(_ style: RelayRoomState) {
+        self.dismiss(animated: false, completion: nil)
+    }
 }

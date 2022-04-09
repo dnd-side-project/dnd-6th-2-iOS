@@ -23,13 +23,15 @@ class RelayViewModel: ViewModelType {
     }
 
     struct Output {
-        let currentListStyle = BehaviorRelay<RelayListStyle>(value: .relayRoom)
         let goToBell = PublishRelay<Void>()
-        let currentSortStyle = BehaviorRelay<SortStyle>(value: .byLatest)
         let goToDetailRelayRoom = PublishRelay<Relay>()
         let goToMakingRelay = PublishRelay<Void>()
-        let relayRoomList = PublishRelay<[RelaySection]>()
-        let participatedRoomList = PublishRelay<[RelaySection]>()
+        
+        let currentListStyle = BehaviorRelay<RelayListStyle>(value: .relayRoom)
+        let currentSortStyle = BehaviorRelay<SortStyle>(value: .byLatest)
+        
+        let relayRoomList = BehaviorRelay<[RelaySection]>(value: [])
+        let participatedRoomList = BehaviorRelay<[RelaySection]>(value: [])
     }
 
     var input: Input
@@ -38,8 +40,6 @@ class RelayViewModel: ViewModelType {
     var relayService: RelayService!
     var disposeBag = DisposeBag()
 
-    var sortStyle: SortStyle = .byLatest
-    var participatedStyle: RelayListStyle = .relayRoom
     var checkSelectedTags = [String: Bool]()
 
     init(input: Input = Input(),
@@ -52,7 +52,7 @@ class RelayViewModel: ViewModelType {
             checkSelectedTags.updateValue(false, forKey: tag)
         })
 
-        bind()
+        bindWork()
     }
 
     deinit {
@@ -61,44 +61,7 @@ class RelayViewModel: ViewModelType {
 }
 
 extension RelayViewModel {
-    func bindRelayList() {
-
-        relayService.getRelayRoomList(cursor: nil, orderBy: sortStyle.rawValue, tags: checkSelectedTags)
-            .withUnretained(self)
-            .bind { owner, relayResponse in
-
-                owner.output.relayRoomList.accept(
-                    [RelaySection(header: "", items: relayResponse.relays ?? [])]
-                )
-            }
-            .disposed(by: disposeBag)
-    }
-
-    func bindParticipatedRoomList() {
-        relayService.getRelayRoomParticitated(cursor: nil)
-            .withUnretained(self)
-            .bind { owner, relayResponse in
-
-                owner.output.participatedRoomList.accept(
-                    [RelaySection(header: "", items: relayResponse.relays ?? [])]
-                )
-            }
-            .disposed(by: disposeBag)
-    }
-
-    func bindMyRoomList() {
-        relayService.getRelayUserMade(cursor: nil)
-            .withUnretained(self)
-            .bind { owner, relayResponse in
-
-                owner.output.participatedRoomList.accept(
-                    [RelaySection(header: "", items: relayResponse.relays ?? [])]
-                )
-            }
-            .disposed(by: disposeBag)
-    }
-
-    func bind() {
+    func bindWork() {
         input.relayRoomButtonTap
             .withUnretained(self)
             .bind { owner, _ in
@@ -137,9 +100,46 @@ extension RelayViewModel {
             .disposed(by: disposeBag)
 
         input.relayRoomCellTap
-            .bind { [weak self] relay in
-                guard let self = self else {return}
-                self.output.goToDetailRelayRoom.accept(relay)
+            .withUnretained(self)
+            .bind { owner, relay in
+                owner.output.goToDetailRelayRoom.accept(relay)
+            }
+            .disposed(by: disposeBag)
+    }
+    
+    func bindRelayList() {
+
+        relayService.getRelayRoomList(cursor: nil,
+                                      orderBy: output.currentSortStyle.value.rawValue,
+                                      tags: checkSelectedTags)
+            .withUnretained(self)
+            .bind { owner, relayResponse in
+
+                owner.output.relayRoomList.accept(
+                    [RelaySection(header: "", items: relayResponse.relays ?? [])]
+                )
+            }
+            .disposed(by: disposeBag)
+    }
+    
+    func bindParticipatedRoomList() {
+        relayService.getRelayRoomParticitated(cursor: nil)
+            .withUnretained(self)
+            .bind { owner, relayResponse in
+                owner.output.participatedRoomList.accept(
+                    [RelaySection(header: "", items: relayResponse.relays ?? [])]
+                )
+            }
+            .disposed(by: disposeBag)
+    }
+
+    func bindMyRoomList() {
+        relayService.getRelayUserMade(cursor: nil)
+            .withUnretained(self)
+            .bind { owner, relayResponse in
+                owner.output.participatedRoomList.accept(
+                    [RelaySection(header: "", items: relayResponse.relays ?? [])]
+                )
             }
             .disposed(by: disposeBag)
     }

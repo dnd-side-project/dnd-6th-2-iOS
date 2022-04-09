@@ -17,6 +17,16 @@ class RelayDetailViewController: UIViewController {
     var disposeBag = DisposeBag()
 
     let viewModel = RelayDetailViewModel()
+    
+    let stringToDateFormatter = DateFormatter()
+        .then {
+            $0.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
+        }
+
+    let dateToStringFormatter = DateFormatter()
+        .then {
+            $0.dateFormat = "yyyy년 MM월 dd일"
+        }
 
     var detailView = RelayDetailView()
         .then {
@@ -35,27 +45,14 @@ class RelayDetailViewController: UIViewController {
 
         }
 
-    let dataSource = RxCollectionViewSectionedReloadDataSource<FeedSection>(configureCell: { _, collectionView, indexPath, element in
+    lazy var dataSource = RxCollectionViewSectionedReloadDataSource<FeedSection>(configureCell: { _, collectionView, indexPath, element in
+        let cell = collectionView.dequeueReusableCell(
+            withReuseIdentifier: RelayContentCell.relayContentCellIdentifier,
+            for: indexPath
+        ) as! RelayContentCell
+        
+        self.setData(cell: cell, element: element, indexPath: indexPath)
 
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: RelayContentCell.relayContentCellIdentifier, for: indexPath) as! RelayContentCell
-
-        cell.contentTextLabel.setTextWithLineHeight(text: element.content, lineHeight: Numbers(rawValue: 24.0) ?? .lineheightInBox)
-        cell.writerLabel.text = "\(element.user?.nickname ?? "") 지음"
-
-        let stringToDateFormatter = DateFormatter()
-            .then {
-                $0.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
-            }
-
-        let dateToStringFormatter = DateFormatter()
-            .then {
-                $0.dateFormat = "yyyy년 MM월 dd일"
-            }
-
-        let date = stringToDateFormatter.date(from: element.updatedAt ?? "")!
-
-        cell.updateDate.text = "\(dateToStringFormatter.string(from: date))"
-        cell.pageLabel.text = "\(indexPath.row+1)"
         return cell
 
     }, configureSupplementaryView: { dataSource, collectionView, _, indexPath in
@@ -90,15 +87,9 @@ class RelayDetailViewController: UIViewController {
         view.backgroundColor = UIColor(rgb: Color.basicBackground)
         navigationController?.isNavigationBarHidden = true
 
-        setDetailView()
-
-        if viewModel.isNew || viewModel.didEntered {
-            setBottomBar()
-            setAddWritingButton()
-        } else {
-            setEnterButton()
-        }
-        bindView()
+        setLayout()
+        bindInput()
+        bindOutput()
     }
 
     override func viewDidLayoutSubviews() {
@@ -106,7 +97,7 @@ class RelayDetailViewController: UIViewController {
         addWritingButton.layer.cornerRadius = addWritingButton.frame.size.width / 2
     }
 
-    func setDetailView() {
+    func setLayout() {
 
         view.addSubview(detailView)
 
@@ -115,6 +106,13 @@ class RelayDetailViewController: UIViewController {
             $0.centerX.equalToSuperview()
             $0.bottom.equalToSuperview()
             $0.top.equalTo(view.safeAreaLayoutGuide)
+        }
+        
+        if viewModel.isNew || viewModel.didEntered {
+            setBottomBar()
+            setAddWritingButton()
+        } else {
+            setEnterButton()
         }
     }
 
@@ -146,9 +144,8 @@ class RelayDetailViewController: UIViewController {
             $0.bottom.equalTo(bottomBar.snp.top).offset(-14.0)
         }
     }
-
-    func bindView() {
-        // Input
+    
+    func bindInput() {
         enterButton.rx.tap
             .bind(to: viewModel.input.enterButtonTap)
             .disposed(by: disposeBag)
@@ -161,30 +158,28 @@ class RelayDetailViewController: UIViewController {
             .bind(to: viewModel.input.participantButtonTap)
             .disposed(by: disposeBag)
 
-        // Output
+    }
+
+    func bindOutput() {
         viewModel.output.goToRoom
-            .withUnretained(self)
-            .bind { owner, _ in
-                owner.goToPopUpVC()
-            }
+            .asSignal()
+            .emit(onNext: goToPopUpVC)
             .disposed(by: disposeBag)
 
         viewModel.output.goToWriting
-            .withUnretained(self)
-            .bind {owner, articleList in
-                owner.goToWritingVC(articleList: articleList)
-            }
+            .asSignal()
+            .emit(onNext: goToWritingVC)
             .disposed(by: disposeBag)
 
         viewModel.output.goToParticipantView
-            .withUnretained(self)
-            .bind { owner, _ in
-                owner.goToParticipationVC()
-            }
+            .asSignal()
+            .emit(onNext: goToParticipationVC)
             .disposed(by: disposeBag)
 
         viewModel.output.articleList
-            .bind(to: detailView.relayWritingList.collectionView.rx.items(dataSource: dataSource))
+            .asDriver()
+            .drive(detailView.relayWritingList.collectionView.rx.items(
+                dataSource: dataSource))
             .disposed(by: disposeBag)
     }
 
@@ -223,6 +218,17 @@ class RelayDetailViewController: UIViewController {
         vc.modalPresentationStyle = .fullScreen
 
         self.present(vc, animated: false, completion: nil)
+    }
+    
+    private func setData(cell: RelayContentCell, element: Article, indexPath: IndexPath) {
+        
+        cell.contentTextLabel.setTextWithLineHeight(text: element.content, lineHeight: Numbers(rawValue: 24.0) ?? .lineheightInBox)
+        cell.writerLabel.text = "\(element.user?.nickname ?? "") 지음"
+
+        let date = stringToDateFormatter.date(from: element.updatedAt ?? "")!
+
+        cell.updateDate.text = "\(dateToStringFormatter.string(from: date))"
+        cell.pageLabel.text = "\(indexPath.row+1)"
     }
 
 }

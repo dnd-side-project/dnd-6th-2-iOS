@@ -31,22 +31,13 @@ class MakingRelayRoomViewController: UIViewController {
             )
         }
 
-    var tagDataSource = RxCollectionViewSectionedReloadDataSource<SectionModel<String, String>> { _, collectionView, indexPath, element in
+    lazy var tagDataSource = RxCollectionViewSectionedReloadDataSource<SectionModel<String, String>> { _, collectionView, indexPath, element in
 
         let cell = collectionView.dequeueReusableCell(
             withReuseIdentifier: AddingTagCell.identifier,
             for: indexPath) as! AddingTagCell
 
-        cell.tagView.categoryLabel.text = element
-
-        if element == StringType.addTagString {
-            cell.tagView.backgroundColor = UIColor(rgb: Color.tag)
-
-            if indexPath.row != 0 {
-                cell.tagView.categoryLabel.text = "+"
-            }
-        }
-
+        self.setTagText(cell: cell, element: element, indexPath: indexPath)
         return cell
     }
 
@@ -65,12 +56,13 @@ class MakingRelayRoomViewController: UIViewController {
         view.backgroundColor = UIColor(rgb: Color.basicBackground)
         navigationController?.setNavigationBarHidden(true, animated: false)
 
-        setView()
-        bindView()
+        setLayout()
+        bindInput()
+        bindOutput()
         viewModel.bindTagList()
     }
 
-    func setView() {
+    func setLayout() {
 
         view.addSubview(enterButton)
         enterButton.snp.makeConstraints {
@@ -98,9 +90,8 @@ class MakingRelayRoomViewController: UIViewController {
         }
 
     }
-
-    func bindView() {
-        // Input
+    
+    func bindInput() {
         makingRelayView.backButton
             .rx.tap
             .bind(to: viewModel.input.backButtonTap)
@@ -134,41 +125,34 @@ class MakingRelayRoomViewController: UIViewController {
             .rx.tap
             .bind(to: viewModel.input.plusButtonTap)
             .disposed(by: disposeBag)
+    }
 
-        // Output
-
+    func bindOutput() {
         viewModel.output.tagList
-            .bind(to: makingRelayView.addingTagView.collectionView
-                    .rx.items(dataSource: tagDataSource))
+            .asDriver()
+            .drive( makingRelayView.addingTagView.collectionView
+                    .rx.items(
+                        dataSource: tagDataSource))
             .disposed(by: disposeBag)
 
         viewModel.output.goToSelectTag
-            .withUnretained(self)
-            .bind { owner, _ in
-                owner.goToSelectTagVC()
-            }
+            .asSignal()
+            .emit(onNext: goToSelectTagVC)
             .disposed(by: disposeBag)
 
         viewModel.output.enableStartButton
-            .observe(on: MainScheduler.instance)
-            .bind { [weak self] isEnable in
-                self?.enableEnterButton(isEnable: isEnable)
-            }
+            .asSignal()
+            .emit(onNext: enableEnterButton)
             .disposed(by: disposeBag)
 
         viewModel.output.goToNewRelay
-            .withUnretained(self)
-            .bind { owner, relay in
-                owner.goToNewRelay(relay: relay)
-            }
+            .asSignal()
+            .emit(onNext: goToNewRelay)
             .disposed(by: disposeBag)
 
         viewModel.output.personnelCount
-            .withUnretained(self)
-            .bind { owner, count in
-                owner.makingRelayView.settingPersonnelView
-                    .personnelLabel.text = "\(count)명"
-            }
+            .asDriver()
+            .drive(onNext: setPersonnelCount)
             .disposed(by: disposeBag)
     }
 
@@ -212,4 +196,21 @@ class MakingRelayRoomViewController: UIViewController {
 
     }
 
+    private func setPersonnelCount(_ count: Int) {
+        makingRelayView.settingPersonnelView
+            .personnelLabel.text = "\(count)명"
+    }
+    
+    private func setTagText(cell: AddingTagCell, element: String, indexPath: IndexPath) {
+        cell.tagView.categoryLabel.text = element
+
+        if element == StringType.addTagString {
+            cell.tagView.backgroundColor = UIColor(rgb: Color.tag)
+
+            if indexPath.row != 0 {
+                cell.tagView.categoryLabel.text = "+"
+            }
+        }
+
+    }
 }

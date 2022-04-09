@@ -46,48 +46,33 @@ class SelectTagViewController: UIViewController {
         }
 
     var selectTagView = SelectTagView()
-
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor(rgb: Color.basicBackground)
         self.navigationController?.isNavigationBarHidden = true
 
-        setBackButton()
-
-        setCompleteButton()
-        setSelectTagView()
-        bindView()
+        setLayout()
+        bindInput()
+        bindOutput()
     }
-
-    func setBackButton() {
-
+    
+    func setLayout() {
         view.addSubview(backButton)
-
         backButton.snp.makeConstraints {
             $0.size.equalTo(28)
             $0.left.equalToSuperview().offset(21.0)
             $0.top.equalTo(view.safeAreaLayoutGuide).offset(26.24)
         }
-    }
-
-    func setSelectTagView() {
+        
         view.addSubview(selectTagView)
-
         selectTagView.snp.makeConstraints {
             $0.left.equalToSuperview().offset(20.0)
             $0.right.equalToSuperview().offset(-20.0)
             $0.top.equalTo(backButton.snp.bottom)
             $0.bottom.equalTo(completeButton.snp.top).offset(-20.0)
         }
-
-        Observable.just([SectionModel(model: "title", items: StringType.categories)])
-            .bind(to: selectTagView.collectionView.rx.items(dataSource: dataSource))
-            .disposed(by: disposeBag)
-    }
-
-    func setCompleteButton() {
+        
         view.addSubview(completeButton)
-
         completeButton.snp.makeConstraints {
             $0.width.equalToSuperview().offset(-40.0)
             $0.height.equalTo(56.0)
@@ -96,9 +81,7 @@ class SelectTagViewController: UIViewController {
         }
     }
 
-    func bindView() {
-
-        // Input
+    func bindInput() {
         backButton.rx.tap
             .bind(to: viewModel.input.backButtonTap)
             .disposed(by: disposeBag)
@@ -111,13 +94,18 @@ class SelectTagViewController: UIViewController {
         completeButton.rx.tap
             .bind(to: viewModel.input.completeButtonTap)
             .disposed(by: disposeBag)
+    }
 
-        // Output
+    func bindOutput() {
+
         viewModel.output.goBackToMakingView
-            .withUnretained(self)
-            .bind { owner, _ in
-                owner.popBack()
-            }
+            .asSignal()
+            .emit(onNext: popBack)
+            .disposed(by: disposeBag)
+        
+        viewModel.output.basicTags
+            .asDriver(onErrorJustReturn: [SectionModel(model: "", items: StringType.categories)])
+            .drive(selectTagView.collectionView.rx.items(dataSource: dataSource))
             .disposed(by: disposeBag)
 
     }

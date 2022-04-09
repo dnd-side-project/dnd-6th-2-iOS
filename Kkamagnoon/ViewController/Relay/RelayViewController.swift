@@ -28,6 +28,11 @@ class RelayViewController: UIViewController {
         }
 
     var relayRoomView = RelayRoomView()
+        .then {
+            $0.categoryFilterView.filterView
+                .register(CategoryFilterCell.self,
+                          forCellWithReuseIdentifier: CategoryFilterCell.categoryFilterCellIdentifier)
+        }
 
     var participatedRoomView = ParticipatedRoomView()
 
@@ -94,19 +99,21 @@ class RelayViewController: UIViewController {
         view.backgroundColor = UIColor(rgb: Color.basicBackground)
         roomView = relayRoomView
 
-        setView()
-        bindView()
+        setLayout()
+        bindInput()
+        bindOutput()
         viewModel.bindRelayList()
         viewModel.bindParticipatedRoomList()
-
     }
 
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         makingRoomButton.layer.cornerRadius = makingRoomButton.frame.size.width / 2
     }
+}
 
-    func setView() {
+extension RelayViewController {
+    func setLayout() {
         view.addSubview(topButtonView)
         topButtonView.snp.makeConstraints {
             $0.top.left.right.equalToSuperview()
@@ -134,9 +141,8 @@ class RelayViewController: UIViewController {
 
         view.bringSubviewToFront(makingRoomButton)
     }
-
-    func bindView() {
-        // Input
+    
+    func bindInput() {
         topButtonView.firstButton.rx.tap
             .bind(to: viewModel.input.relayRoomButtonTap)
             .disposed(by: disposeBag)
@@ -153,7 +159,7 @@ class RelayViewController: UIViewController {
             .rx.modelSelected(String.self)
             .bind(to: viewModel.input.tagCellTap)
             .disposed(by: disposeBag)
-
+        
         relayRoomView.categoryFilterView.filterView
             .rx.modelDeselected(String.self)
             .bind(to: viewModel.input.tagCellTap)
@@ -172,49 +178,47 @@ class RelayViewController: UIViewController {
         makingRoomButton.rx.tap
             .bind(to: viewModel.input.makingRoomButtonTap)
             .disposed(by: disposeBag)
+    }
 
-        // Output
+    func bindOutput() {
+
         viewModel.output.currentListStyle
-            .withUnretained(self)
-            .bind { owner, style in
-                owner.changeRoomStyle(style: style)
-            }
+            .asDriver()
+            .drive(onNext: changeRoomStyle)
             .disposed(by: disposeBag)
 
         viewModel.output.goToBell
-            .withUnretained(self)
-            .bind { owner, _ in
-                owner.goToBellNoticeViewController()
-            }
+            .asSignal()
+            .emit(onNext: goToBellNoticeViewController)
             .disposed(by: disposeBag)
 
         // relay room
         viewModel.output.relayRoomList
-            .bind(to: relayRoomView.relayList.collectionView
+            .asDriver()
+            .drive(relayRoomView.relayList.collectionView
                     .rx.items(dataSource: relayRoomDataSource))
             .disposed(by: disposeBag)
 
         viewModel.output.goToDetailRelayRoom
-            .withUnretained(self)
-            .bind { owner, relay in
-                owner.goToRelayDetailViewController(relay: relay)
-            }
+            .asSignal()
+            .emit(onNext: goToRelayDetailViewController)
             .disposed(by: disposeBag)
 
         // participated room
         viewModel.output.participatedRoomList
-            .bind(to: participatedRoomView.relayList.collectionView
+            .asDriver()
+            .drive(participatedRoomView.relayList.collectionView
                     .rx.items(dataSource: participatedRoomDataSource))
             .disposed(by: disposeBag)
 
         viewModel.output.goToMakingRelay
-            .withUnretained(self)
-            .bind { owner, _ in
-                owner.goToMakingRelayViewController()
-            }
+            .asSignal()
+            .emit(onNext: goToMakingRelayViewController)
             .disposed(by: disposeBag)
     }
+}
 
+extension RelayViewController {
     private func goToBellNoticeViewController() {
         let vc = BellNoticeViewController()
         vc.hidesBottomBarWhenPushed = true
@@ -251,7 +255,7 @@ class RelayViewController: UIViewController {
         self.navigationController?.pushViewController(vc, animated: true)
     }
 
-    private func changeRoomStyle(style: RelayListStyle) {
+    private func changeRoomStyle(_ style: RelayListStyle) {
         roomView.removeFromSuperview()
 
         if style == .relayRoom {

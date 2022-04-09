@@ -9,7 +9,7 @@ import UIKit
 
 class MyWritingListView: UIView {
 
-    var tagListView = TagListView(frame: .zero, tags: StringType.myWritingTags)
+    var tagListView = TagListView()
 
     var writingListView = ArticleListView()
         .then {
