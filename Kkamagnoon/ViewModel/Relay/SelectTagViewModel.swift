@@ -25,6 +25,7 @@ class SelectTagViewModel: ViewModelType {
     struct Output {
         let tagList = PublishRelay<[String]>()
         let goBackToMakingView = PublishRelay<Void>()
+        let basicTags = Observable.just([SectionModel(model: "title", items: StringType.categories)])
     }
 
     var input: Input

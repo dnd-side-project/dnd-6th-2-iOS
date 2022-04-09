@@ -34,7 +34,7 @@ class MakingRelayRoomModel: ViewModelType {
 
     struct Output {
         let goBack = PublishRelay<Void>()
-        let tagList = PublishRelay<[SectionModel<String, String>]>()
+        let tagList = BehaviorRelay<[SectionModel<String, String>]>(value: [])
 
         let goToSelectTag = PublishRelay<Void>()
 

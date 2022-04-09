@@ -29,11 +29,11 @@ class ParticipantViewController: UIViewController {
         super.viewDidLoad()
         self.navigationController?.isNavigationBarHidden = true
 
-        setView()
+        setLayout()
 
     }
 
-    func setView() {
+    func setLayout() {
 
         view.addSubview(backView)
         backView.snp.makeConstraints {

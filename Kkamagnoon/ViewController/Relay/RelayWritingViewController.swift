@@ -46,27 +46,35 @@ class RelayWritingViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.navigationController?.isNavigationBarHidden = true
-        view.backgroundColor = UIColor(rgb: Color.basicBackground)
+        
+        configureView()
+        
         setKeyBoard()
-        animateWritingViewGoUp()
-        animateWritingViewGoDown()
-        setView()
+        setLayout()
 
-        bindView()
+        bindInput()
+        bindOutput()
         viewModel.bindTips()
     }
 
 }
 
 extension RelayWritingViewController {
+    
+    func configureView() {
+        self.navigationController?.isNavigationBarHidden = true
+        view.backgroundColor = UIColor(rgb: Color.basicBackground)
+    }
 
     func setKeyBoard() {
         IQKeyboardManager.shared.enable = false
         IQKeyboardManager.shared.enableAutoToolbar = false
+        
+        setAnimateWritingViewGoUp()
+        setAnimateWritingViewGoDown()
     }
 
-    func setView() {
+    func setLayout() {
 
         view.addSubview(header)
         setButton(state: false)
@@ -124,43 +132,41 @@ extension RelayWritingViewController {
 
     }
 
-    func animateWritingViewGoUp() {
+    private func setAnimateWritingViewGoUp() {
 
         keyboardShowObserver
-            .bind { [weak self] keyboardAnimationInfo in
-                guard let self = self else { return }
-
+            .withUnretained(self)
+            .bind { owner, keyboardAnimationInfo in
                 UIView.animate(withDuration: keyboardAnimationInfo.duration,
                                delay: .zero,
                                options: [UIView.AnimationOptions(rawValue: keyboardAnimationInfo.curve)]) {
-                    self.writingSubViewBottomConstraint.constant = -keyboardAnimationInfo.height
+                    owner.writingSubViewBottomConstraint.constant = -keyboardAnimationInfo.height
                 }
-                self.view.layoutIfNeeded()
+                owner.view.layoutIfNeeded()
             }
             .disposed(by: disposeBag)
     }
 
-    func animateWritingViewGoDown() {
+    private func setAnimateWritingViewGoDown() {
 
         keyboardHideObserver
-            .bind { [weak self] keyboardAnimationInfo in
-                guard let self = self else { return }
+            .withUnretained(self)
+            .bind { owner, keyboardAnimationInfo in
 
                 UIView.animate(withDuration: keyboardAnimationInfo.duration,
                                delay: .zero,
                                options: [UIView.AnimationOptions(rawValue: keyboardAnimationInfo.curve)]) {
-                    self.writingSubViewBottomConstraint.constant = -44
+                    owner.writingSubViewBottomConstraint.constant = -44
                 }
-                self.view.layoutIfNeeded()
+                owner.view.layoutIfNeeded()
             }
             .disposed(by: disposeBag)
     }
 }
 
 extension RelayWritingViewController {
-    func bindView() {
-
-        // Input
+    
+    func bindInput() {
         header.noticeButton.rx.tap
             .bind(to: viewModel.input.completeButtonTap)
             .disposed(by: disposeBag)
@@ -169,31 +175,22 @@ extension RelayWritingViewController {
             .orEmpty
             .bind(to: viewModel.input.contents)
             .disposed(by: disposeBag)
-
-        // Output
-
+    }
+    
+    func bindOutput() {
         viewModel.output.enableCompleteButton
-            .withUnretained(self)
-            .bind { owner, value in
-                owner.header.noticeButton.isEnabled = value
-                owner.setButton(state: value)
-            }
+            .asSignal()
+            .emit(onNext: setButton)
             .disposed(by: disposeBag)
 
         viewModel.output.registerWriting
-            .withUnretained(self)
-            .bind { owner, _ in
-                owner.goBackToRelayDetail()
-            }
+            .asSignal()
+            .emit(onNext: goBackToRelayDetail)
             .disposed(by: disposeBag)
 
         viewModel.output.tips
-            .withUnretained(self)
-            .bind { owner, tips in
-                owner.tipBox.textLabel.text = tips
-            }
+            .bind(to: tipBox.textLabel.rx.text)
             .disposed(by: disposeBag)
-
     }
 }
 
@@ -209,6 +206,8 @@ extension RelayWritingViewController {
     }
 
     private func setButton(state: Bool) {
+        header.noticeButton.isEnabled = state
+        
         if state {
             header.noticeButton.backgroundColor = UIColor(rgb: Color.whitePurple)
         } else {
@@ -217,7 +216,7 @@ extension RelayWritingViewController {
         }
     }
 
-    private func goBackToRelayDetail() {
+    private func goBackToRelayDetail(_ article: Article) {
         self.navigationController?.popViewController(animated: false)
     }
 }
