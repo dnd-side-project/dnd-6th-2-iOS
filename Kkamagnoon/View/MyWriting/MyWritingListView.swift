@@ -12,9 +12,6 @@ class MyWritingListView: UIView {
     var tagListView = TagListView()
 
     var writingListView = ArticleListView()
-        .then {
-            $0.collectionView.register(MyWritingCell.self, forCellWithReuseIdentifier: MyWritingCell.identifier)
-        }
 
     override init(frame: CGRect) {
         super.init(frame: frame)

@@ -90,7 +90,7 @@ class MakingRelayRoomViewController: UIViewController {
         }
 
     }
-    
+
     func bindInput() {
         makingRelayView.backButton
             .rx.tap
@@ -200,7 +200,7 @@ class MakingRelayRoomViewController: UIViewController {
         makingRelayView.settingPersonnelView
             .personnelLabel.text = "\(count)명"
     }
-    
+
     private func setTagText(cell: AddingTagCell, element: String, indexPath: IndexPath) {
         cell.tagView.categoryLabel.text = element
 

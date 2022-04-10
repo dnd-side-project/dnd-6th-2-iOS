@@ -26,12 +26,13 @@ class RelayViewModel: ViewModelType {
         let goToBell = PublishRelay<Void>()
         let goToDetailRelayRoom = PublishRelay<Relay>()
         let goToMakingRelay = PublishRelay<Void>()
-        
+
         let currentListStyle = BehaviorRelay<RelayListStyle>(value: .relayRoom)
         let currentSortStyle = BehaviorRelay<SortStyle>(value: .byLatest)
-        
+
         let relayRoomList = BehaviorRelay<[RelaySection]>(value: [])
         let participatedRoomList = BehaviorRelay<[RelaySection]>(value: [])
+        let tagList = Observable<[String]>.of(StringType.categories)
     }
 
     var input: Input
@@ -105,8 +106,13 @@ extension RelayViewModel {
                 owner.output.goToDetailRelayRoom.accept(relay)
             }
             .disposed(by: disposeBag)
+
+        input.sortButtonTap
+            .bind(onNext: bindRelayList)
+            .disposed(by: disposeBag)
+
     }
-    
+
     func bindRelayList() {
 
         relayService.getRelayRoomList(cursor: nil,
@@ -121,7 +127,7 @@ extension RelayViewModel {
             }
             .disposed(by: disposeBag)
     }
-    
+
     func bindParticipatedRoomList() {
         relayService.getRelayRoomParticitated(cursor: nil)
             .withUnretained(self)

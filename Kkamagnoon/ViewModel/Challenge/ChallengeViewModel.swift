@@ -14,14 +14,15 @@ class ChallengeViewModel: ViewModelType {
         let bellButtonTap = PublishSubject<Void>()
         let addWritingButtonTap = PublishSubject<Void>()
         let cardTap = PublishSubject<UITapGestureRecognizer>()
-
+        let expansionButtonTap = PublishSubject<Void>()
     }
 
     struct Output {
         let goToBellNotice = PublishRelay<Void>()
         let goToWriting = PublishRelay<Void>()
         let goToDetail = PublishRelay<Void>()
-        let keyWord = PublishRelay<GetChallengeMain>()
+        let challenge = BehaviorRelay<GetChallengeMain>(value: GetChallengeMain())
+        let calendarState = BehaviorRelay<CalendarState>(value: .week)
     }
 
     var input: Input
@@ -37,13 +38,14 @@ class ChallengeViewModel: ViewModelType {
         bindBellButton()
         bindAddWritingButton()
         bindCard()
+        bindWork()
     }
 
     func bindKeyword() {
         challengeService.getChallenge()
             .withUnretained(self)
             .bind { owner, challengeMain in
-                owner.output.keyWord.accept(challengeMain)
+                owner.output.challenge.accept(challengeMain)
             }
             .disposed(by: disposeBag)
     }
@@ -73,6 +75,19 @@ class ChallengeViewModel: ViewModelType {
             .bind { owner, _ in
                 print("TAPPED!!")
                 owner.output.goToDetail.accept(())
+            }
+            .disposed(by: disposeBag)
+    }
+
+    func bindWork() {
+        input.expansionButtonTap
+            .withUnretained(self)
+            .bind { owner, _ in
+                if owner.output.calendarState.value == .week {
+                    owner.output.calendarState.accept(.month)
+                } else {
+                    owner.output.calendarState.accept(.week)
+                }
             }
             .disposed(by: disposeBag)
     }

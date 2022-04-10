@@ -17,7 +17,7 @@ class RelayDetailViewController: UIViewController {
     var disposeBag = DisposeBag()
 
     let viewModel = RelayDetailViewModel()
-    
+
     let stringToDateFormatter = DateFormatter()
         .then {
             $0.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
@@ -50,7 +50,7 @@ class RelayDetailViewController: UIViewController {
             withReuseIdentifier: RelayContentCell.relayContentCellIdentifier,
             for: indexPath
         ) as! RelayContentCell
-        
+
         self.setData(cell: cell, element: element, indexPath: indexPath)
 
         return cell
@@ -107,7 +107,7 @@ class RelayDetailViewController: UIViewController {
             $0.bottom.equalToSuperview()
             $0.top.equalTo(view.safeAreaLayoutGuide)
         }
-        
+
         if viewModel.isNew || viewModel.didEntered {
             setBottomBar()
             setAddWritingButton()
@@ -144,7 +144,7 @@ class RelayDetailViewController: UIViewController {
             $0.bottom.equalTo(bottomBar.snp.top).offset(-14.0)
         }
     }
-    
+
     func bindInput() {
         enterButton.rx.tap
             .bind(to: viewModel.input.enterButtonTap)
@@ -219,9 +219,9 @@ class RelayDetailViewController: UIViewController {
 
         self.present(vc, animated: false, completion: nil)
     }
-    
+
     private func setData(cell: RelayContentCell, element: Article, indexPath: IndexPath) {
-        
+
         cell.contentTextLabel.setTextWithLineHeight(text: element.content, lineHeight: Numbers(rawValue: 24.0) ?? .lineheightInBox)
         cell.writerLabel.text = "\(element.user?.nickname ?? "") 지음"
 

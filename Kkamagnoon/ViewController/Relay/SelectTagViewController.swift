@@ -55,7 +55,7 @@ class SelectTagViewController: UIViewController {
         bindInput()
         bindOutput()
     }
-    
+
     func setLayout() {
         view.addSubview(backButton)
         backButton.snp.makeConstraints {
@@ -63,7 +63,7 @@ class SelectTagViewController: UIViewController {
             $0.left.equalToSuperview().offset(21.0)
             $0.top.equalTo(view.safeAreaLayoutGuide).offset(26.24)
         }
-        
+
         view.addSubview(selectTagView)
         selectTagView.snp.makeConstraints {
             $0.left.equalToSuperview().offset(20.0)
@@ -71,7 +71,7 @@ class SelectTagViewController: UIViewController {
             $0.top.equalTo(backButton.snp.bottom)
             $0.bottom.equalTo(completeButton.snp.top).offset(-20.0)
         }
-        
+
         view.addSubview(completeButton)
         completeButton.snp.makeConstraints {
             $0.width.equalToSuperview().offset(-40.0)
@@ -102,7 +102,7 @@ class SelectTagViewController: UIViewController {
             .asSignal()
             .emit(onNext: popBack)
             .disposed(by: disposeBag)
-        
+
         viewModel.output.basicTags
             .asDriver(onErrorJustReturn: [SectionModel(model: "", items: StringType.categories)])
             .drive(selectTagView.collectionView.rx.items(dataSource: dataSource))

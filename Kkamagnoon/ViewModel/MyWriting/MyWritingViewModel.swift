@@ -25,11 +25,11 @@ class MyWritingViewModel: ViewModelType {
         let goToBellNotice = PublishRelay<Void>()
         let goToWriting = PublishRelay<Void>()
         let goToDetail = PublishRelay<Article>()
-        let changeToMyWritingList = PublishRelay<Void>()
-        let changeToTempWritingList = PublishRelay<Void>()
+        let changeListStyle = BehaviorRelay<MyWritingStyle>(value: .myWriting)
 
-        let myWritingList = PublishRelay<[FeedSection]>()
-        let tempWritingList = PublishRelay<[FeedSection]>()
+        let myWritingList = BehaviorRelay<[FeedSection]>(value: [])
+        let tempWritingList = BehaviorRelay<[FeedSection]>(value: [])
+        let tagList = Observable<[String]>.of(StringType.categories)
     }
 
     var input: Input
@@ -105,14 +105,14 @@ extension MyWritingViewModel {
         input.myWritingTap
             .withUnretained(self)
             .bind {owner, _ in
-                owner.output.changeToMyWritingList.accept(())
+                owner.output.changeListStyle.accept(.myWriting)
             }
             .disposed(by: disposeBag)
 
         input.tempWritingTap
             .withUnretained(self)
             .bind {owner, _ in
-                owner.output.changeToTempWritingList.accept(())
+                owner.output.changeListStyle.accept(.tempWriting)
             }
             .disposed(by: disposeBag)
     }

@@ -46,9 +46,9 @@ class RelayWritingViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         configureView()
-        
+
         setKeyBoard()
         setLayout()
 
@@ -60,7 +60,7 @@ class RelayWritingViewController: UIViewController {
 }
 
 extension RelayWritingViewController {
-    
+
     func configureView() {
         self.navigationController?.isNavigationBarHidden = true
         view.backgroundColor = UIColor(rgb: Color.basicBackground)
@@ -69,7 +69,7 @@ extension RelayWritingViewController {
     func setKeyBoard() {
         IQKeyboardManager.shared.enable = false
         IQKeyboardManager.shared.enableAutoToolbar = false
-        
+
         setAnimateWritingViewGoUp()
         setAnimateWritingViewGoDown()
     }
@@ -165,7 +165,7 @@ extension RelayWritingViewController {
 }
 
 extension RelayWritingViewController {
-    
+
     func bindInput() {
         header.noticeButton.rx.tap
             .bind(to: viewModel.input.completeButtonTap)
@@ -176,7 +176,7 @@ extension RelayWritingViewController {
             .bind(to: viewModel.input.contents)
             .disposed(by: disposeBag)
     }
-    
+
     func bindOutput() {
         viewModel.output.enableCompleteButton
             .asSignal()
@@ -207,7 +207,7 @@ extension RelayWritingViewController {
 
     private func setButton(state: Bool) {
         header.noticeButton.isEnabled = state
-        
+
         if state {
             header.noticeButton.backgroundColor = UIColor(rgb: Color.whitePurple)
         } else {

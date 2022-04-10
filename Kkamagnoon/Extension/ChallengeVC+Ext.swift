@@ -8,7 +8,7 @@ import UIKit
 import FSCalendar
 
 extension ChallengeViewController {
-    func setView() {
+    func setLayout() {
 
         view.addSubview(headerView)
         headerView.snp.makeConstraints {
@@ -38,8 +38,8 @@ extension ChallengeViewController {
 }
 
 extension ChallengeViewController {
-    func bindView() {
-        // Input
+
+    func bindInput() {
         headerView.bellButton.rx.tap
             .bind(to: viewModel.input.bellButtonTap)
             .disposed(by: disposeBag)
@@ -49,74 +49,35 @@ extension ChallengeViewController {
             .disposed(by: disposeBag)
 
         challengeMainView.expansionButton.rx.tap
-            .withUnretained(self)
-            .bind { owner, _ in
-                owner.setCalendarState()
-            }
+            .bind(to: viewModel.input.expansionButtonTap)
             .disposed(by: disposeBag)
+    }
 
-        // Output
+    func bindOutput() {
         viewModel.output.goToBellNotice
-            .withUnretained(self)
-            .bind { owner, _ in
-                owner.goToBellNoticeVC()
-            }
+            .asSignal()
+            .emit(onNext: goToBellNoticeVC)
             .disposed(by: disposeBag)
 
         viewModel.output.goToWriting
-            .withUnretained(self)
-            .bind { owner, _ in
-                owner.goToWritingVC()
-            }
+            .asSignal()
+            .emit(onNext: goToWritingVC)
             .disposed(by: disposeBag)
 
         viewModel.output.goToDetail
-            .withUnretained(self)
-            .bind { owner, _ in
-                owner.goToDetail()
-            }
+            .asSignal()
+            .emit(onNext: goToDetail)
             .disposed(by: disposeBag)
 
-        viewModel.output.keyWord
-            .withUnretained(self)
-            .bind { owner, challenge in
-                owner.challengeMainView.todayKeyWordView
-                    .keywordLabel.text = challenge.keyword?.content
+        viewModel.output.calendarState
+            .skip(1)
+            .asDriver(onErrorJustReturn: .week)
+            .drive(onNext: setCalendarState)
+            .disposed(by: disposeBag)
 
-                let stamp = 1
-
-                // TODO: stamp 갯수 채우기
-                owner.challengeMainView.subTitleLabel[0].text = "이번달은 \(stamp)개의 스탬프를 찍었어요!"
-
-                let history = challenge.challengeHistory ?? []
-
-                history.forEach({ date in
-                    print(date)
-                    if let date = self.formatter.date(from: date) {
-                        self.eventsArray.append(date)
-                    }
-
-                })
-
-                let articles = challenge.articles ?? []
-
-                if articles.count == 0 {
-                    owner.setImageCaseNothing()
-                } else {
-                    owner.removeImageCaseNothing()
-                    owner.challengeMainView.removeCard()
-
-                    articles.forEach({ article in
-                        let card = MyChallengeCard()
-                        card.titleLabel.text = article.title
-                        card.contentLabel.text = article.content
-                        card.likeLabel.labelView.text = "\(article.likeNum ?? 0)"
-                        card.commentLabel.labelView.text = "\(article.commentNum ?? 0)"
-
-                        self.challengeMainView.stackView.addArrangedSubview(card)
-                    })
-                }
-            }
+        viewModel.output.challenge
+            .asDriver()
+            .drive(onNext: setChallengeMainData)
             .disposed(by: disposeBag)
     }
 }
@@ -163,19 +124,16 @@ extension ChallengeViewController {
         self.navigationController?.pushViewController(vc, animated: true)
     }
 
-    private func setCalendarState() {
-        if isMonth {
-            isMonth = false
+    private func setCalendarState(_ state: CalendarState) {
+        if state == .week {
             challengeMainView.calendarView.setScope(.week, animated: true)
             UIView.animate(withDuration: 10.0, delay: 0) {
                 self.challengeMainView.calendarHeight.constant = 144
             }
         } else {
-            isMonth = true
             challengeMainView.calendarView.setScope(.month, animated: true)
             UIView.animate(withDuration: 10.0, delay: 0) {
                 self.challengeMainView.calendarHeight.constant = 400
-
             }
         }
     }
@@ -203,14 +161,55 @@ extension ChallengeViewController: FSCalendarDataSource {
 
         if self.eventsArray.contains(date) {
             return 1
-
         }
+        view.layoutIfNeeded()
+
         if self.eventsArray_Done.contains(date) {
             return 1
-
         }
-        return 0
 
+        return 0
+    }
+
+    private func setChallengeMainData(_ challenge: GetChallengeMain) {
+        setKeyword(keyword: challenge.keyword?.content ?? "NaN")
+        setStamp(history: challenge.challengeHistory ?? [])
+        setChallengeArticle(articles: challenge.articles ?? [])
+    }
+
+    private func setKeyword(keyword: String) {
+        challengeMainView.todayKeyWordView
+            .keywordLabel.text = keyword
+    }
+
+    private func setStamp(history: [String]) {
+        history.forEach({ date in
+            print(date)
+            if let date = self.formatter.date(from: date) {
+                self.eventsArray.append(date)
+            }
+        })
+
+    }
+
+    private func setChallengeArticle(articles: [Article]) {
+
+        if articles.count == 0 {
+            setImageCaseNothing()
+        } else {
+            removeImageCaseNothing()
+            challengeMainView.removeCard()
+
+            articles.forEach({ article in
+                let card = MyChallengeCard()
+                card.titleLabel.text = article.title
+                card.contentLabel.text = article.content
+                card.likeLabel.labelView.text = "\(article.likeNum ?? 0)"
+                card.commentLabel.labelView.text = "\(article.commentNum ?? 0)"
+
+                self.challengeMainView.stackView.addArrangedSubview(card)
+            })
+        }
     }
 
 }
