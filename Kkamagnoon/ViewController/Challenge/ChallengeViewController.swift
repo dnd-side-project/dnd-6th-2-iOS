@@ -16,9 +16,11 @@ class ChallengeViewController: UIViewController {
     let viewModel = ChallengeViewModel()
     var disposeBag = DisposeBag()
 
-    var isMonth: Bool = false
-
     let formatter = DateFormatter()
+        .then {
+            $0.dateFormat = "EEE MMM dd yyyy"
+        }
+
     var eventsArray = [Date]()
     var eventsArray_Done = [Date]()
 
@@ -63,9 +65,9 @@ class ChallengeViewController: UIViewController {
         challengeMainView.calendarView.delegate = self
         challengeMainView.calendarView.dataSource = self
 
-        formatter.dateFormat = "EEE MMM dd yyyy"
-        setView()
-        bindView()
+        setLayout()
+        bindInput()
+        bindOutput()
     }
 
     override func viewWillAppear(_ animated: Bool) {

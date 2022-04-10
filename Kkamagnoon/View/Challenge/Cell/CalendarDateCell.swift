@@ -108,7 +108,6 @@ class CalendarDateCell: FSCalendarCell {
     }
 
     private func configureSelected() {
-
         if isSelected {
             self.selectorView.backgroundColor = UIColor(rgb: 0x515151)
         } else {
