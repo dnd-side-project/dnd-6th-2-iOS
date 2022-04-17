@@ -41,3 +41,8 @@ enum MyWritingStyle {
     case myWriting
     case tempWriting
 }
+
+enum CalendarState {
+    case month
+    case week
+}

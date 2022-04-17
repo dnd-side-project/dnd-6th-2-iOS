@@ -78,10 +78,9 @@ class ChallengeMainView: UIView {
 //            $0.adjustsBoundingRectWhenChangingMonths = true
             $0.collectionView.register(CalendarDateCell.self, forCellWithReuseIdentifier: CalendarDateCell.identifier)
             // selection
-
             $0.appearance.todayColor = .clear
-
             $0.appearance.borderRadius = 5
+            $0.select($0.today)
         }
 
     // TEMP
@@ -116,7 +115,6 @@ class ChallengeMainView: UIView {
             $0.top.equalTo(subTitleLabel[0].snp.bottom).offset(15.0)
             $0.left.equalToSuperview().offset(20.0)
             $0.right.equalToSuperview().offset(-20.0)
-
         }
         calendarHeight = calendarView.heightAnchor.constraint(equalToConstant: 370)
         calendarHeight.isActive = true

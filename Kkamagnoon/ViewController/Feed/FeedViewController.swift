@@ -38,6 +38,10 @@ class FeedViewController: UIViewController {
         }
 
     let wholeFeedView = WholeFeedView()
+        .then {
+            $0.filterView.filterView.register(CategoryFilterCell.self, forCellWithReuseIdentifier: CategoryFilterCell.categoryFilterCellIdentifier)
+        }
+
     let subscribeFeedView = SubscribeFeedView()
 
     lazy var dataSource = RxCollectionViewSectionedReloadDataSource<FeedSection>(configureCell: { _, collectionView, indexPath, element in
@@ -72,7 +76,9 @@ class FeedViewController: UIViewController {
         setLayout()
         bindInput()
         bindOutput()
+    }
 
+    override func viewWillAppear(_ animated: Bool) {
         viewModel.bindWholeFeedList()
     }
 }
@@ -160,17 +166,27 @@ extension FeedViewController {
     func bindOutput() {
 
         viewModel.output.goToSearch
-            .observe(on: MainScheduler.instance)
-            .bind(onNext: goToSearchVC)
+            .asSignal()
+            .emit(onNext: goToSearchVC)
             .disposed(by: disposeBag)
 
         viewModel.output.goToBell
-            .observe(on: MainScheduler.instance)
-            .bind(onNext: goToBellVC)
+            .asSignal()
+            .emit(onNext: goToBellVC)
             .disposed(by: disposeBag)
 
+        viewModel.output.tagList
+            .asDriver(onErrorJustReturn: StringType.categories)
+            .drive(wholeFeedView.filterView.filterView.rx.items(
+                cellIdentifier: CategoryFilterCell.categoryFilterCellIdentifier,
+                cellType: CategoryFilterCell.self)) { (_, element, cell) in
+                    cell.tagView.categoryLabel.text = element
+                }
+                .disposed(by: disposeBag)
+
         viewModel.output.wholeFeedList
-            .bind(to: wholeFeedView
+            .asDriver()
+            .drive(wholeFeedView
                     .articleListView
                     .collectionView
                     .rx
@@ -179,10 +195,11 @@ extension FeedViewController {
             .disposed(by: disposeBag)
 
         viewModel.output.goToDetailFeed
-            .observe(on: MainScheduler.instance)
-            .bind(onNext: goToDetailContentVC(_:))
+            .asSignal()
+            .emit(onNext: goToDetailContentVC(_:))
             .disposed(by: disposeBag)
 
+        // TODO: asDriver
         viewModel.output.subscribeFeedList
             .bind(to: subscribeFeedView.articleListView.collectionView
                     .rx.items(
@@ -195,7 +212,8 @@ extension FeedViewController {
             .disposed(by: disposeBag)
 
         viewModel.output.goToAllSubscriberList
-            .bind(onNext: goToAllSubscribe(_:))
+            .asSignal()
+            .emit(onNext: goToAllSubscribe(_:))
             .disposed(by: disposeBag)
     }
 }
@@ -249,12 +267,12 @@ extension FeedViewController {
 
     private func setHeaderViewHandler(sortHeaderView: SortHeaderCell) {
         sortHeaderView.buttonTappedHandler = { [unowned self] in
-            if self.viewModel.sortStyle == .byLatest {
+            if self.viewModel.output.sortStyle.value == .byLatest {
                 sortHeaderView.sortButton.setTitle("인기순", for: .normal)
-                self.viewModel.sortStyle = .byPopularity
+                self.viewModel.output.sortStyle.accept(.byPopularity)
             } else {
                 sortHeaderView.sortButton.setTitle("최신순", for: .normal)
-                self.viewModel.sortStyle = .byLatest
+                self.viewModel.output.sortStyle.accept(.byLatest)
             }
 
             viewModel.bindWholeFeedList()
@@ -262,6 +280,11 @@ extension FeedViewController {
     }
 
     private func setFeedCellData(cell: FeedCell, element: Article) {
+        // TODO: Save my id to User Defaults
+        if element.user?._id == "MyId" {
+            cell.backgroundColor = UIColor(rgb: 0x292929)
+        }
+
         cell.profileView.nickNameLabel.text = element.user?.nickname
         cell.articleTitle.text = element.title
 

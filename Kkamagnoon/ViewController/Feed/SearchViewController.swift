@@ -18,7 +18,6 @@ class SearchViewController: UIViewController {
     var disposeBag = DisposeBag()
 
     var searchBar = SearchBarView()
-
     var searchContentView: UIView!
 
     var searchHistoryView = SearchHistoryView()
@@ -54,17 +53,18 @@ class SearchViewController: UIViewController {
         searchContentView = searchHistoryView
         view.backgroundColor = UIColor(rgb: Color.basicBackground)
 
-        setSearchBar()
-        setSearchContentView()
-        bindView()
+        setLayout()
+        bindInput()
+        bindOutput()
 
         viewModel.getRecentSearchList()
+
     }
 
 }
 
 extension SearchViewController {
-    func setSearchBar() {
+    func setLayout() {
         view.addSubview(searchBar)
         searchBar.snp.makeConstraints {
             $0.top.equalToSuperview().offset(60.0)
@@ -72,6 +72,8 @@ extension SearchViewController {
             $0.right.equalToSuperview().offset(-20.0)
             $0.height.equalTo(47.0)
         }
+
+        setSearchContentView()
     }
 
     func setSearchContentView() {
@@ -83,7 +85,7 @@ extension SearchViewController {
         }
     }
 
-    func changeSearchContentStyle(style: SearchContentStyle) {
+    func changeSearchContentStyle(_ style: SearchContentStyle) {
         searchContentView.removeFromSuperview()
 
         if style == .history {
@@ -94,28 +96,14 @@ extension SearchViewController {
 
         setSearchContentView()
     }
+}
 
-    func bindView() {
-
-        // input
-        Observable.of(["챌린지", "자유글", "릴레이"])
-            .bind(to: searchResultView.menuTabView.menuCollectionView.rx.items(cellIdentifier: SearchTabMenuCell.identifier,
-                                         cellType: SearchTabMenuCell.self)) { (_, element, cell) in
-                cell.textLabel.text = element
-                }
-            .disposed(by: disposeBag)
-
-        searchResultView.menuTabView.menuCollectionView
-            .rx.itemSelected
-            .withUnretained(self)
-            .bind { owner, indexPath in
-                let index = indexPath.row
-                owner.searchResultView.menuTabView.indicatorViewLeftContraint.constant = CGFloat(index)*((UIScreen.main.bounds.width - 40)/3)
-            }
-            .disposed(by: disposeBag)
+extension SearchViewController {
+    func bindInput() {
 
         searchBar.searchField.rx.text
             .orEmpty
+            .filter { !$0.isEmpty }
             .bind(to: viewModel.input.searchWord)
             .disposed(by: disposeBag)
 
@@ -127,31 +115,72 @@ extension SearchViewController {
             .bind(to: viewModel.input.backButtonTap)
             .disposed(by: disposeBag)
 
-        // output
-        viewModel.output.recentSearchList
-            .bind(to: searchHistoryView.tableView.rx.items(dataSource: historyDataSource))
+        searchHistoryView.tableView
+            .rx.modelSelected(History.self)
+            .bind(to: viewModel.input.historyWordTap)
             .disposed(by: disposeBag)
 
-        viewModel.output.searchResultList
-            .bind(to: searchResultView.searchResultListView.collectionView.rx.items(dataSource: searchResultDataSource))
-            .disposed(by: disposeBag)
-
-        viewModel.output.searchContentStyle
-            .withUnretained(self)
-            .bind { owner, style in
-                owner.changeSearchContentStyle(style: style)
-            }
-            .disposed(by: disposeBag)
-
-        viewModel.output.dismissView
-            .withUnretained(self)
-            .bind { owner, _ in
-                owner.dismissView()
-            }
+        searchResultView.menuTabView.menuCollectionView
+            .rx.itemSelected
+            .bind(to: viewModel.input.menuTapAtIndex)
             .disposed(by: disposeBag)
     }
 
+    func bindOutput() {
+
+        viewModel.output.menuList
+            .bind(to: searchResultView.menuTabView.menuCollectionView.rx
+                    .items(cellIdentifier: SearchTabMenuCell.identifier,
+                           cellType: SearchTabMenuCell.self)
+                    ) { (_, element, cell) in
+                        cell.textLabel.text = element
+                    }
+            .disposed(by: disposeBag)
+
+        viewModel.output.recentSearchList
+            .asDriver()
+            .drive(searchHistoryView.tableView.rx.items(dataSource: historyDataSource))
+            .disposed(by: disposeBag)
+
+        viewModel.output.searchResultList
+            .asDriver()
+            .drive(searchResultView.searchResultListView
+                    .collectionView.rx.items(dataSource: searchResultDataSource))
+            .disposed(by: disposeBag)
+
+        viewModel.output.searchContentStyle
+            .asDriver()
+            .drive(onNext: changeSearchContentStyle)
+            .disposed(by: disposeBag)
+
+        viewModel.output.dismissView
+            .asSignal()
+            .emit(onNext: dismissView)
+            .disposed(by: disposeBag)
+
+        viewModel.output.searchWord
+            .asDriver()
+            .drive(onNext: setSearchBarText)
+            .disposed(by: disposeBag)
+
+        viewModel.output.moveIndicatorBar
+            .asSignal()
+            .emit(onNext: moveIndicatorBar)
+            .disposed(by: disposeBag)
+    }
+}
+
+extension SearchViewController {
     private func dismissView() {
         self.navigationController?.popViewController(animated: true)
+    }
+
+    private func moveIndicatorBar(_ indexPath: IndexPath) {
+        let index = indexPath.row
+        searchResultView.menuTabView.indicatorViewLeftContraint.constant = CGFloat(index)*((UIScreen.main.bounds.width - 40)/3)
+    }
+
+    private func setSearchBarText(_ word: String) {
+        searchBar.searchField.text = word
     }
 }

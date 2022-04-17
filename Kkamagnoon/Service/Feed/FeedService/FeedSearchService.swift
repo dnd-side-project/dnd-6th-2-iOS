@@ -16,13 +16,14 @@ class FeedSearchService: Service {
         return RxAlamofire.request(request as URLRequestConvertible)
             .responseData()
             .asObservable()
-            .map { _, resData -> GetMainFeedResDTO  in
+            .map { http, resData -> GetMainFeedResDTO  in
+                print(http)
 
                 let decoder = JSONDecoder()
 
                 do {
                     let result = try decoder.decode(GetMainFeedResDTO.self, from: resData)
-
+                    print(result)
                     return result
                 } catch {
                     print(error)

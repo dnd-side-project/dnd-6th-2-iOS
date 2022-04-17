@@ -13,24 +13,23 @@ class TagListView: UIView {
     var filterView: UICollectionView!
     let disposeBag = DisposeBag()
 
-    init(frame: CGRect, tags: [String]) {
+    override init(frame: CGRect) {
         super.init(frame: frame)
-        setView(tags: tags)
+        setView()
     }
 
     required init?(coder: NSCoder) {
         super.init(coder: coder)
-//        setView(tags: tags)
+        setView()
     }
 
-    func setView(tags: [String]) {
+    func setView() {
         let flowLayout = UICollectionViewFlowLayout()
         flowLayout.scrollDirection = .horizontal
         flowLayout.minimumInteritemSpacing = 6
         flowLayout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 50)
 
         filterView = UICollectionView(frame: .zero, collectionViewLayout: flowLayout)
-        filterView.register(CategoryFilterCell.self, forCellWithReuseIdentifier: CategoryFilterCell.categoryFilterCellIdentifier)
         filterView.allowsMultipleSelection = true
 
         filterView.backgroundColor = UIColor(rgb: Color.basicBackground)
@@ -48,15 +47,6 @@ class TagListView: UIView {
         filterView.rightAnchor.constraint(equalTo: self.rightAnchor).isActive = true
         filterView.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
         filterView.heightAnchor.constraint(equalToConstant: 30).isActive = true
-
-        Observable<[String]>.of(tags)
-            .bind(to: filterView.rx
-                    .items(cellIdentifier: CategoryFilterCell.categoryFilterCellIdentifier,
-                               cellType: CategoryFilterCell.self)) { (_, element, cell) in
-                cell.tagView.categoryLabel.text = element
-
-            }
-            .disposed(by: disposeBag)
 
     }
 

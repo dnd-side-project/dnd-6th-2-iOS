@@ -23,19 +23,22 @@ class DetailMyWritingViewController: DetailContentViewController {
     func bindDetailView() {
 
         detailViewModel.output.article
-            .withUnretained(self)
-            .bind { owner, article in
-                owner.detailView.titleLabel.text = article.title
-                owner.detailView.profileView.nickNameLabel.text = article.user?.nickname
-                owner.detailView.contentTextView.text = article.content
-
-                // TODO: Created Date
-
-                owner.bottomView.likeButton.setTitle("\(article.likeNum ?? 0)", for: .normal)
-                owner.bottomView.commentButton.setTitle("\(article.commentNum ?? 0)", for: .normal)
-                owner.bottomView.bookmarkButton.setTitle("\(article.scrapNum ?? 0)", for: .normal)
-            }
+            .asDriver()
+            .drive(onNext: setArticleData)
             .disposed(by: disposeBag)
+    }
+
+    private func setArticleData(_ article: Article) {
+        detailView.titleLabel.text = article.title
+        detailView.profileView.nickNameLabel.text = article.user?.nickname
+        detailView.contentLabel.text = article.content
+
+        let date = stringToDateFormatter.date(from: article.updatedAt ?? "") ?? Date()
+        detailView.updateDateLabel.text = "\(dateToStringFormatter.string(from: date))"
+
+        bottomView.likeButton.setTitle("\(article.likeNum ?? 0)", for: .normal)
+        bottomView.commentButton.setTitle("\(article.commentNum ?? 0)", for: .normal)
+        bottomView.bookmarkButton.setTitle("\(article.scrapNum ?? 0)", for: .normal)
     }
 
 }

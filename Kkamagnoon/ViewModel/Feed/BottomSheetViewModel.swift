@@ -24,7 +24,7 @@ class BottomSheetViewModel: ViewModelType {
 
     struct Output {
         let dismissView = PublishRelay<Void>()
-        let enableSendButton = PublishRelay<Bool>()
+        let enableSendButton = BehaviorRelay<Bool>(value: false)
         let commentList = BehaviorRelay<[SectionModel<String, Comment>]>(value: [])
         // TODO: 댓글 게시
     }

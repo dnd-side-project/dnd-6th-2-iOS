@@ -16,13 +16,18 @@ class SearchViewModel: ViewModelType {
         let backButtonTap = PublishSubject<Void>()
         let searchWord = BehaviorRelay<String>(value: "")
         let searchButtonTap = PublishSubject<Void>()
+        let historyWordTap = PublishSubject<History>()
+        let menuTapAtIndex = PublishSubject<IndexPath>()
     }
 
     struct Output {
+        let menuList = Observable.of(["챌린지", "자유글", "릴레이"])
         let dismissView = PublishRelay<Void>()
         let recentSearchList = BehaviorRelay<[SectionModel<String, History>]>(value: [])
         let searchResultList = BehaviorRelay<[SectionModel<String, Article>]>(value: [])
         let searchContentStyle = BehaviorRelay<SearchContentStyle>(value: .history)
+        let searchWord = BehaviorRelay<String>(value: "")
+        let moveIndicatorBar = PublishRelay<IndexPath>()
     }
 
     var input: Input
@@ -62,16 +67,35 @@ extension SearchViewModel {
         input.searchButtonTap
             .withUnretained(self)
             .bind { owner, _ in
-                let searchWord = owner.input.searchWord.value
-                owner.feedSearchService.getSearchFeed(cursor: nil, content: searchWord, type: nil, orderBy: "최신순")
-                    .bind { result in
-                        owner.output.searchResultList.accept([SectionModel(model: "", items: result.articles ?? [])])
-                        owner.output.searchContentStyle.accept(.searchResult)
-                    }
-                    .disposed(by: owner.disposeBag)
+                owner.searchBy(word: owner.input.searchWord.value)
             }
             .disposed(by: disposeBag)
 
+        input.historyWordTap
+            .withUnretained(self)
+            .bind { owner, history in
+                owner.searchBy(word: history.content ?? "" )
+            }
+            .disposed(by: disposeBag)
+
+        input.menuTapAtIndex
+            .withUnretained(self)
+            .bind { owner, indexPath in
+                owner.output.moveIndicatorBar.accept(indexPath)
+            }
+            .disposed(by: disposeBag)
+
+    }
+
+    private func searchBy(word: String) {
+        feedSearchService.getSearchFeed(cursor: nil, content: word, type: nil, orderBy: "최신순")
+            .withUnretained(self)
+            .bind { owner, result in
+                owner.output.searchResultList.accept([SectionModel(model: "", items: result.articles ?? [])])
+                owner.output.searchWord.accept(word)
+                owner.output.searchContentStyle.accept(.searchResult)
+            }
+            .disposed(by: disposeBag)
     }
 
 }

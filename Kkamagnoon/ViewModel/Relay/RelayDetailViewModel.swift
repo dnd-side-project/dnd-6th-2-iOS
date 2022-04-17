@@ -28,7 +28,7 @@ class RelayDetailViewModel: ViewModelType {
         let goToRoom = PublishRelay<Void>()
         let goToWriting = PublishRelay<[Article]>()
         let goToParticipantView = PublishRelay<Void>()
-        let articleList = PublishRelay<[FeedSection]>()
+        let articleList = BehaviorRelay<[FeedSection]>(value: [])
     }
 
     var input: Input
@@ -85,7 +85,6 @@ class RelayDetailViewModel: ViewModelType {
                     .bind { articleList in
 
                         let list = articleList.relayArticles ?? []
-                        print("LIST>>>>>> \(relay._id) \(list)")
 
                         owner.output.articleList
                             .accept([FeedSection(header: relay, items: list)])

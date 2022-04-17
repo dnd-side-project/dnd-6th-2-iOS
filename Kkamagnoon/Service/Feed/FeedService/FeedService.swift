@@ -47,9 +47,7 @@ class FeedService: Service {
             .responseData()
             .asObservable()
             .map { _, resData -> Article  in
-
                 let decoder = JSONDecoder()
-
                 do {
                     let result = try decoder.decode(Article.self, from: resData)
                     return result

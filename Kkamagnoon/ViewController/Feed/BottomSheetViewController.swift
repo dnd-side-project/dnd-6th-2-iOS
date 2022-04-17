@@ -26,10 +26,22 @@ class BottomSheetViewController: UIViewController {
     let backView = UIView()
 
     let bottomSheetView = UIView()
+        .then {
+            $0.layer.cornerRadius = 10
+            $0.backgroundColor = UIColor(rgb: Color.feedListCard)
+        }
 
     let dragIndicatorView = UIView()
+        .then {
+            $0.backgroundColor = UIColor(rgb: 0x4B4B4B)
+            $0.layer.cornerRadius = 3
+        }
 
     lazy var commentTableView = UITableView()
+        .then {
+            $0.backgroundColor = UIColor(rgb: Color.feedListCard)
+            $0.register(CommentCell.self, forCellReuseIdentifier: CommentCell.commentCellIdentifier)
+        }
 
     let writingCommentView = WritingCommentView()
         .then {
@@ -61,17 +73,17 @@ class BottomSheetViewController: UIViewController {
 
     var bottomSheetPanMinTopConstant: CGFloat = 0
     private lazy var bottomSheetPanStartingTopConstant: CGFloat = bottomSheetPanMinTopConstant
-    private var writingCommebtViewBottomConstraint: NSLayoutConstraint!
+    private var writingCommentViewBottomConstraint: NSLayoutConstraint!
     private var keyboardHeight: CGFloat = 0.0
 
     override func viewDidLoad() {
         super.viewDidLoad()
         setKeyBoard()
-        setBackView()
-        setBottomSheetView()
-        bind()
-        viewModel.bindComment()
+        setLayout()
+        bindInput()
+        bindOutput()
 
+        viewModel.bindComment()
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -83,84 +95,106 @@ class BottomSheetViewController: UIViewController {
         animateWritingViewGoUp()
         animateWritingViewGoDown()
     }
+}
 
+extension BottomSheetViewController {
+
+    func bindInput() {
+        writingCommentView.textView.rx.text
+            .orEmpty
+            .filter { !$0.isEmpty }
+            .bind(to: viewModel.input.content)
+            .disposed(by: disposeBag)
+
+        writingCommentView.postingButton.rx.tap
+            .bind(to: viewModel.input.sendButtonTap)
+            .disposed(by: disposeBag)
+    }
+
+    func bindOutput() {
+        viewModel.output.commentList
+            .asDriver()
+            .drive(commentTableView.rx.items(dataSource: dataSource))
+            .disposed(by: disposeBag)
+
+        viewModel.output.enableSendButton
+            .asDriver()
+            .drive(onNext: enableSendButton(_:))
+            .disposed(by: disposeBag)
+    }
+
+}
+
+extension BottomSheetViewController {
     func setKeyBoard() {
         IQKeyboardManager.shared.enable = false
         IQKeyboardManager.shared.enableAutoToolbar = false
     }
 
-    func setBackView() {
-        view.addSubview(backView)
-        backView.translatesAutoresizingMaskIntoConstraints = false
-        backView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
-        backView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
-        backView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
-        backView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+    func setLayout() {
+        setBackView()
+        setBottomSheetView()
+    }
+}
 
+extension BottomSheetViewController {
+    private func setBackView() {
+        view.addSubview(backView)
+        backView.snp.makeConstraints {
+            $0.edges.equalToSuperview()
+        }
         addCloseTapGesture(to: backView)
     }
 
-    func setBottomSheetView() {
-        view.addSubview(bottomSheetView)
-        bottomSheetView.translatesAutoresizingMaskIntoConstraints = false
-
-        bottomSheetView.layer.cornerRadius = 10
-        bottomSheetView.backgroundColor = UIColor(rgb: Color.feedListCard)
-
+    private func setBottomSheetView() {
         let topAnchorConstant = view.safeAreaInsets.bottom + view.safeAreaLayoutGuide.layoutFrame.height
-        bottomSheetViewTopConstraint = bottomSheetView.topAnchor
-            .constraint(equalTo: view.topAnchor,
-                        constant: topAnchorConstant)
 
+        view.addSubview(bottomSheetView)
+
+        bottomSheetView.snp.makeConstraints {
+            $0.left.right.bottom.equalToSuperview()
+        }
+
+        bottomSheetViewTopConstraint = bottomSheetView.topAnchor.constraint(equalTo: view.topAnchor)
         bottomSheetViewTopConstraint.isActive = true
-        bottomSheetView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
-        bottomSheetView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
-        bottomSheetView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+        bottomSheetViewTopConstraint.constant = topAnchorConstant
 
         addClosePanGesture(to: bottomSheetView)
     }
 
-    func setDragIndicatorView() {
+    private func setDragIndicatorView() {
         bottomSheetView.addSubview(dragIndicatorView)
-        dragIndicatorView.translatesAutoresizingMaskIntoConstraints = false
-
-        dragIndicatorView.backgroundColor = UIColor(rgb: 0x4B4B4B)
-        dragIndicatorView.layer.cornerRadius = 3
-
-        dragIndicatorView.widthAnchor.constraint(equalToConstant: 74).isActive = true
-        dragIndicatorView.heightAnchor.constraint(equalToConstant: 6).isActive = true
-        dragIndicatorView.topAnchor.constraint(equalTo: bottomSheetView.topAnchor, constant: 16).isActive = true
-        dragIndicatorView.centerXAnchor.constraint(equalTo: bottomSheetView.centerXAnchor).isActive = true
+        dragIndicatorView.snp.makeConstraints {
+            $0.width.equalTo(74.0)
+            $0.height.equalTo(6.0)
+            $0.top.equalTo(bottomSheetView).offset(16.0)
+            $0.centerX.equalTo(bottomSheetView)
+        }
     }
 
-    func setCommentTableView() {
+    private func setCommentTableView() {
         bottomSheetView.addSubview(commentTableView)
-        commentTableView.translatesAutoresizingMaskIntoConstraints = false
-
-        commentTableView.backgroundColor = UIColor(rgb: Color.feedListCard)
-        commentTableView.register(CommentCell.self, forCellReuseIdentifier: CommentCell.commentCellIdentifier)
-        // TODO
-        commentTableView.topAnchor.constraint(equalTo: bottomSheetView.topAnchor, constant: 21.5).isActive = true
-        commentTableView.leftAnchor.constraint(equalTo: bottomSheetView.leftAnchor).isActive = true
-        commentTableView.rightAnchor.constraint(equalTo: bottomSheetView.rightAnchor).isActive = true
-        commentTableView.heightAnchor.constraint(equalToConstant: view.frame.height - 114 - 110.5).isActive = true
+        commentTableView.snp.makeConstraints {
+            $0.top.equalTo(bottomSheetView).offset(21.5)
+            $0.left.right.equalToSuperview()
+            $0.height.equalTo(view.frame.height - 114 - 110.5)
+        }
     }
 
-    func setWritingTextView() {
+    private func setWritingTextView() {
 
         bottomSheetView.addSubview(writingCommentView)
-        writingCommentView.translatesAutoresizingMaskIntoConstraints = false
+        writingCommentView.snp.makeConstraints {
+            $0.left.right.equalToSuperview()
+        }
 
-        writingCommentView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
-        writingCommentView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
-
-        // 44=65-21
-        writingCommebtViewBottomConstraint = writingCommentView.bottomAnchor
-            .constraint(equalTo: view.bottomAnchor, constant: -44)
-        writingCommebtViewBottomConstraint.isActive = true
+        writingCommentViewBottomConstraint = writingCommentView.bottomAnchor.constraint(equalTo: bottomSheetView.bottomAnchor, constant: -44.0) // 44=65-21
+        writingCommentViewBottomConstraint.isActive = true
 
     }
+}
 
+extension BottomSheetViewController {
     private func addCloseTapGesture(to target: UIView) {
         let tapGesture = UITapGestureRecognizer()
         tapGesture.delaysTouchesBegan = false
@@ -200,17 +234,7 @@ class BottomSheetViewController: UIViewController {
                     if owner.bottomSheetViewTopConstraint.constant < topAnchorConstant {
                         owner.hideBottomSheetAndGoBack()
                     }
-//                    let safeAreaHeight = owner.view.safeAreaLayoutGuide.layoutFrame.height
-//                    let bottomPadding = owner.view.safeAreaInsets.bottom
-//                    let defaultPadding = safeAreaHeight+bottomPadding
 
-//                    let nearestValue = owner.nearest(to: owner.bottomSheetViewTopConstraint.constant, inValues: [owner.bottomSheetPanMinTopConstant, UIScreen.main.bounds.height])
-
-//                    if nearestValue == owner.bottomSheetPanMinTopConstant {
-//                        print("Bottom Sheet을 Expanded 상태로 변경하기!")
-//                    } else {
-//                        owner.hideBottomSheetAndGoBack()
-//                    }
                 default:
                     break
                 }
@@ -218,7 +242,9 @@ class BottomSheetViewController: UIViewController {
             }
             .disposed(by: disposeBag)
     }
+}
 
+extension BottomSheetViewController {
     private func showBottomSheet(atState: BottomSheetViewState = .normal) {
         if atState == .normal {
             let safeAreaHeight: CGFloat = view.safeAreaLayoutGuide.layoutFrame.height
@@ -285,7 +311,7 @@ class BottomSheetViewController: UIViewController {
                 UIView.animate(withDuration: keyboardAnimationInfo.duration,
                                delay: .zero,
                                options: [UIView.AnimationOptions(rawValue: keyboardAnimationInfo.curve)]) {
-                    self.writingCommebtViewBottomConstraint.constant = -keyboardAnimationInfo.height
+                    self.writingCommentViewBottomConstraint.constant = -keyboardAnimationInfo.height
                 }
                 self.view.layoutIfNeeded()
             }
@@ -301,7 +327,7 @@ class BottomSheetViewController: UIViewController {
                 UIView.animate(withDuration: keyboardAnimationInfo.duration,
                                delay: .zero,
                                options: [UIView.AnimationOptions(rawValue: keyboardAnimationInfo.curve)]) {
-                    self.writingCommebtViewBottomConstraint.constant = -44
+                    self.writingCommentViewBottomConstraint.constant = -44
                 }
                 self.view.layoutIfNeeded()
             }
@@ -323,31 +349,12 @@ class BottomSheetViewController: UIViewController {
         actionsheetController.addAction(actionCancel)
     }
 
-}
-
-extension BottomSheetViewController {
-    func bind() {
-
-        writingCommentView.textView.rx.text
-            .orEmpty
-            .bind(to: viewModel.input.content)
-            .disposed(by: disposeBag)
-
-        writingCommentView.postingButton.rx.tap
-            .bind(to: viewModel.input.sendButtonTap)
-            .disposed(by: disposeBag)
-
-        viewModel.output.commentList
-            .bind(to: commentTableView.rx.items(dataSource: dataSource))
-            .disposed(by: disposeBag)
-
-        viewModel.output.enableSendButton
-            .withUnretained(self)
-            .bind { owenr, _ in
-                owenr.writingCommentView.postingButton.isEnabled = true
-                owenr.writingCommentView.postingButton.setTitleColor(UIColor(rgb: Color.whitePurple), for: .normal)
-            }
-            .disposed(by: disposeBag)
-
+    private func enableSendButton(_ result: Bool) {
+        writingCommentView.postingButton.isEnabled = result
+        if result {
+            writingCommentView.postingButton.setTitleColor(UIColor(rgb: Color.whitePurple), for: .normal)
+        } else {
+            writingCommentView.postingButton.setTitleColor(UIColor(rgb: Color.tag), for: .normal)
+        }
     }
 }

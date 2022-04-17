@@ -17,28 +17,34 @@ class MyWritingViewController: UIViewController {
     let viewModel = MyWritingViewModel()
     var disposeBag = DisposeBag()
 
+    let stringToDateFormatter = DateFormatter()
+        .then {
+            $0.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
+        }
+
+    let dateToStringFormatter = DateFormatter()
+        .then {
+            $0.dateFormat = "yyyy년 MM월 dd일"
+        }
+
     lazy var myWritingDataSource = RxCollectionViewSectionedReloadDataSource<FeedSection>(configureCell: { _, collectionView, indexPath, element in
 
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MyWritingCell.identifier, for: indexPath) as! MyWritingCell
+        let cell = collectionView.dequeueReusableCell(
+            withReuseIdentifier: MyWritingCell.identifier,
+            for: indexPath) as! MyWritingCell
 
-        cell.titleLabel.text = element.title
-        cell.contentLabel.text = element.content
-
-        cell.likeLabel.labelView.text = "\(element.likeNum ?? 0)"
-        cell.commentLabel.labelView.text = "\(element.commentNum ?? 0)"
+        self.setMyWritingCell(cell: cell, element: element)
 
         return cell
     })
 
     lazy var tempWritingDataSource = RxCollectionViewSectionedReloadDataSource<FeedSection>(configureCell: { _, collectionView, indexPath, element in
 
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MyWritingCell.identifier, for: indexPath) as! MyWritingCell
+        let cell = collectionView.dequeueReusableCell(
+            withReuseIdentifier: MyWritingCell.identifier,
+            for: indexPath) as! MyWritingCell
 
-        cell.titleLabel.text = element.title
-        cell.contentLabel.text = element.content
-
-        cell.likeLabel.labelView.text = "\(element.likeNum ?? 0)"
-        cell.commentLabel.labelView.text = "\(element.commentNum ?? 0)"
+        self.setMyWritingCell(cell: cell, element: element)
 
         return cell
     })
@@ -60,7 +66,11 @@ class MyWritingViewController: UIViewController {
     var myWritingListView = MyWritingListView()
         .then {
             $0.tagListView.filterView.allowsMultipleSelection = false
+            $0.tagListView.filterView.register(CategoryFilterCell.self,
+                                               forCellWithReuseIdentifier: CategoryFilterCell.categoryFilterCellIdentifier)
 
+            $0.writingListView.collectionView.register(MyWritingCell.self,
+                                                       forCellWithReuseIdentifier: MyWritingCell.identifier)
         }
 
     var tempListView = TempListView()
@@ -72,12 +82,10 @@ class MyWritingViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = UIColor(rgb: Color.basicBackground)
-        navigationController?.setNavigationBarHidden(true, animated: false)
-        navigationController?.interactivePopGestureRecognizer?.delegate = nil
-        listView = myWritingListView
-        setView()
-        bindView()
+        configureView()
+        setLayout()
+        bindInput()
+        bindOutput()
         viewModel.bindMyWritingList(tag: nil)
         viewModel.bindTempWritingList()
     }
@@ -91,16 +99,14 @@ class MyWritingViewController: UIViewController {
 
 extension MyWritingViewController {
 
-    func setListView() {
-        view.addSubview(listView)
-        listView.snp.makeConstraints {
-            $0.left.right.equalToSuperview()
-            $0.top.equalTo(topButtonView.snp.bottom)
-            $0.bottom.equalTo(view.safeAreaLayoutGuide)
-        }
+    func configureView() {
+        view.backgroundColor = UIColor(rgb: Color.basicBackground)
+        navigationController?.setNavigationBarHidden(true, animated: false)
+        navigationController?.interactivePopGestureRecognizer?.delegate = nil
+        listView = myWritingListView
     }
 
-    func setView() {
+    func setLayout() {
         view.addSubview(topButtonView)
         topButtonView.snp.makeConstraints {
             $0.top.left.right.equalToSuperview()
@@ -117,7 +123,7 @@ extension MyWritingViewController {
         }
     }
 
-    func bindView() {
+    func bindInput() {
         topButtonView.firstButton.rx.tap
             .bind(to: viewModel.input.myWritingTap)
             .disposed(by: disposeBag)
@@ -144,43 +150,43 @@ extension MyWritingViewController {
         addWritingButton.rx.tap
             .bind(to: viewModel.input.addWritingButtonTap)
             .disposed(by: disposeBag)
+    }
 
-        viewModel.output.changeToMyWritingList
-            .withUnretained(self)
-            .bind { owner, _ in
-                owner.changeViewStyle(style: .myWriting)
-            }
+    func bindOutput() {
+
+        viewModel.output.tagList
+            .asDriver(onErrorJustReturn: StringType.categories)
+            .drive(myWritingListView.tagListView.filterView.rx.items(
+                cellIdentifier: CategoryFilterCell.categoryFilterCellIdentifier,
+                cellType: CategoryFilterCell.self)) { (_, element, cell) in
+                    cell.tagView.categoryLabel.text = element
+                }
             .disposed(by: disposeBag)
 
-        viewModel.output.changeToTempWritingList
-            .withUnretained(self)
-            .bind { owner, _ in
-                owner.changeViewStyle(style: .tempWriting)
-            }
+        viewModel.output.changeListStyle
+            .asDriver()
+            .drive(onNext: changeViewStyle)
             .disposed(by: disposeBag)
 
         viewModel.output.myWritingList
-            .bind(to: myWritingListView.writingListView.collectionView.rx.items(dataSource: myWritingDataSource))
+            .asDriver()
+            .drive(myWritingListView.writingListView.collectionView.rx.items(dataSource: myWritingDataSource))
             .disposed(by: disposeBag)
 
         viewModel.output.tempWritingList
-            .bind(to: tempListView.articleListView.collectionView.rx.items(dataSource: tempWritingDataSource))
+            .asDriver()
+            .drive(tempListView.articleListView.collectionView.rx.items(dataSource: tempWritingDataSource))
             .disposed(by: disposeBag)
 
         viewModel.output.goToDetail
-            .withUnretained(self)
-            .bind { owner, article in
-                owner.goToDetailVC(article: article)
-            }
+            .asSignal()
+            .emit(onNext: goToDetailVC)
             .disposed(by: disposeBag)
 
         viewModel.output.goToWriting
-            .withUnretained(self)
-            .bind { owner, _ in
-                owner.goToWritingVC()
-            }
+            .asSignal()
+            .emit(onNext: goToWritingVC)
             .disposed(by: disposeBag)
-
     }
 }
 
@@ -212,4 +218,22 @@ extension MyWritingViewController {
         setListView()
     }
 
+    private func setMyWritingCell(cell: MyWritingCell, element: Article) {
+        cell.titleLabel.text = element.title
+        cell.contentLabel.text = element.content
+
+        let date = stringToDateFormatter.date(from: element.updatedAt ?? "") ?? Date()
+        cell.dateLabel.text = "\(dateToStringFormatter.string(from: date))"
+        cell.likeLabel.labelView.text = "\(element.likeNum ?? 0)"
+        cell.commentLabel.labelView.text = "\(element.commentNum ?? 0)"
+    }
+
+    private func setListView() {
+        view.addSubview(listView)
+        listView.snp.makeConstraints {
+            $0.left.right.equalToSuperview()
+            $0.top.equalTo(topButtonView.snp.bottom)
+            $0.bottom.equalTo(view.safeAreaLayoutGuide)
+        }
+    }
 }

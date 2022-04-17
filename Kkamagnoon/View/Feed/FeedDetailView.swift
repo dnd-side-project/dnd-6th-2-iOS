@@ -29,35 +29,34 @@ class FeedDetailView: UIView {
     lazy var titleLabel: UILabel = UILabel()
         .then {
             $0.textColor = .white
+            $0.numberOfLines = 0
+            $0.lineBreakMode = .byWordWrapping
             $0.font = UIFont.pretendard(weight: .semibold, size: 20)
             // DUMMY
             $0.text = "언젠가는"
         }
 
-    lazy var contentTextView: UITextView = UITextView()
+    lazy var contentLabel: UILabel = UILabel()
         .then {
-            $0.setTextWithLineHeight(text: StringType.dummyContents, lineHeight: 27, fontSize: 18.0, fontWeight: .regular, color: .white)
-            $0.isEditable = false
-            $0.isUserInteractionEnabled = false
-            $0.backgroundColor = UIColor(rgb: Color.basicBackground)
-            $0.textContainerInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
-            $0.isScrollEnabled = false
-            $0.sizeToFit()
+            $0.setTextWithLineHeight(text: StringType.dummyContents, lineHeight: .lineheightInBox)
+            $0.textColor = .white
+            $0.font = UIFont.pretendard(weight: .regular, size: 18.0)
+//            $0.setTextWithLineHeight(text: StringType.dummyContents, lineHeight: 27, fontSize: 18.0, fontWeight: .regular, color: .white)
 
         }
 
-    var tagListView: TagListView?
+    var tagListView: TagListView = TagListView()
 
     let disposeBag = DisposeBag()
 
-    init(frame: CGRect, tags: [String]) {
+    override init(frame: CGRect) {
         super.init(frame: frame)
         setProfileVeiw()
         setMoreButton()
         setUpdateDateLabel()
         setTitleLabel()
-        setContentTextView()
-        setTagListView(tags: tags)
+        setContentLabel()
+        setTagListView()
     }
 
     required init?(coder: NSCoder) {
@@ -66,8 +65,8 @@ class FeedDetailView: UIView {
         setMoreButton()
         setUpdateDateLabel()
         setTitleLabel()
-        setContentTextView()
-//        setTagListView(tags: tags)
+        setContentLabel()
+        setTagListView()
     }
 
     func setProfileVeiw() {
@@ -108,11 +107,11 @@ class FeedDetailView: UIView {
         }
     }
 
-    func setContentTextView() {
+    func setContentLabel() {
 
-        self.addSubview(contentTextView)
+        self.addSubview(contentLabel)
 
-        contentTextView.snp.makeConstraints {
+        contentLabel.snp.makeConstraints {
             $0.top.equalTo(titleLabel.snp.bottom).offset(21.0)
             $0.width.equalToSuperview()
             $0.left.right.equalToSuperview()
@@ -120,20 +119,13 @@ class FeedDetailView: UIView {
 
     }
 
-    func setTagListView(tags: [String]) {
-
-        tagListView = TagListView(frame: .zero, tags: tags)
-        tagListView?.filterView.allowsSelection = false
-
-        guard let tagListView = tagListView else {
-            return
-        }
+    func setTagListView() {
 
         self.addSubview(tagListView)
 
         tagListView.snp.makeConstraints {
             $0.left.right.equalToSuperview()
-            $0.top.equalTo(contentTextView.snp.bottom).offset(74.0)
+            $0.top.equalTo(contentLabel.snp.bottom).offset(74.0)
             $0.bottom.equalToSuperview().offset(-15.0)
             $0.height.equalTo(30.0)
         }

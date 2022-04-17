@@ -8,6 +8,7 @@
 import Foundation
 import RxSwift
 import RxCocoa
+import Differentiator
 
 class DetailContentViewModel: ViewModelType {
 
@@ -31,6 +32,7 @@ class DetailContentViewModel: ViewModelType {
         let goToCommentPage = PublishRelay<Void>()
         let scrap = BehaviorRelay<Int>(value: 0)
         let article = BehaviorRelay<Article>(value: Article())
+        let tags = BehaviorRelay<[SectionModel<String, String>]>(value: [])
     }
 
     var input: Input
@@ -57,6 +59,7 @@ class DetailContentViewModel: ViewModelType {
             .withUnretained(self)
             .bind { owner, article in
                 owner.output.article.accept(article)
+                owner.output.tags.accept([SectionModel(model: "", items: article.tags ?? [])])
             }
             .disposed(by: disposeBag)
     }
@@ -70,15 +73,7 @@ class DetailContentViewModel: ViewModelType {
             .disposed(by: disposeBag)
 
         input.subscribeButtonTap
-            .withUnretained(self)
-            .bind { owner, _ in
-                let id = owner.output.article.value.user?._id
-                owner.subscribeService.patchSubscribe(authorId: id ?? "")
-                    .bind { message in
-                        print(message.message ?? "")
-                    }
-                    .disposed(by: owner.disposeBag)
-            }
+            .bind(onNext: patchSubscribeService)
             .disposed(by: disposeBag)
 
         input.moreButtonTap
@@ -89,16 +84,7 @@ class DetailContentViewModel: ViewModelType {
             .disposed(by: disposeBag)
 
         input.likeButtonTap
-            .withUnretained(self)
-            .bind { owner, _ in
-
-                owner.feedService.postLike(articleId: owner.input.articleId.value, like: ScrapDTO(category: "string"))
-                    .withUnretained(self)
-                    .bind { owner, like in
-                        owner.output.like.accept(like.article?.likeNum ?? 0)
-                    }
-                    .disposed(by: owner.disposeBag)
-            }
+            .bind(onNext: postLikeService)
             .disposed(by: disposeBag)
 
         input.commentButtonTap
@@ -109,21 +95,41 @@ class DetailContentViewModel: ViewModelType {
             .disposed(by: disposeBag)
 
         input.scrapButtonTap
-            .withUnretained(self)
-            .bind { owner, _ in
-
-                owner.feedService.postScrap(articleId: owner.input.articleId.value, scrap: ScrapDTO(category: "string"))
-                    .withUnretained(self)
-                    .bind { owner, scrap in
-                        owner.output.scrap.accept(scrap.article?.scrapNum ?? 0)
-                    }
-                    .disposed(by: owner.disposeBag)
-            }
-        // map
+            .bind(onNext: postScrapService)
             .disposed(by: disposeBag)
     }
 
     deinit {
         disposeBag = DisposeBag()
+    }
+}
+
+extension DetailContentViewModel {
+
+    private func patchSubscribeService() {
+        let id = output.article.value.user?._id
+        subscribeService.patchSubscribe(authorId: id ?? "")
+            .bind { message in
+                print(message.message ?? "")
+            }
+            .disposed(by: disposeBag)
+    }
+
+    private func postLikeService() {
+        feedService.postLike(articleId: input.articleId.value, like: ScrapDTO(category: "string"))
+            .withUnretained(self)
+            .bind { owner, like in
+                owner.output.like.accept(like.article?.likeNum ?? 0)
+            }
+            .disposed(by: disposeBag)
+    }
+
+    private func postScrapService() {
+        feedService.postScrap(articleId: input.articleId.value, scrap: ScrapDTO(category: "string"))
+            .withUnretained(self)
+            .bind { owner, scrap in
+                owner.output.scrap.accept(scrap.article?.scrapNum ?? 0)
+            }
+            .disposed(by: disposeBag)
     }
 }

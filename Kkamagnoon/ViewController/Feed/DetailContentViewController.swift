@@ -8,13 +8,23 @@
 import UIKit
 import RxSwift
 import RxCocoa
-
+import RxDataSources
 import Then
 import SnapKit
 
 class DetailContentViewController: UIViewController {
 
     var viewModel = DetailContentViewModel()
+
+    let stringToDateFormatter = DateFormatter()
+        .then {
+            $0.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
+        }
+
+    let dateToStringFormatter = DateFormatter()
+        .then {
+            $0.dateFormat = "yyyy년 MM월 dd일"
+        }
 
     var stackView = UIStackView()
           .then {
@@ -42,57 +52,55 @@ class DetailContentViewController: UIViewController {
             $0.setContentHuggingPriority(.required, for: .vertical)
         }
 
-    var detailView: FeedDetailView!
+    var detailView = FeedDetailView()
+        .then {
+            $0.tagListView.filterView.allowsSelection = false
+            $0.tagListView.filterView.register(
+                CategoryFilterCell.self,
+                forCellWithReuseIdentifier: CategoryFilterCell.categoryFilterCellIdentifier)
+        }
 
     var disposeBag = DisposeBag()
+
+    lazy var tagDatasource = RxCollectionViewSectionedReloadDataSource<SectionModel<String, String>>(configureCell: { _, collectionView, indexPath, element in
+
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CategoryFilterCell.categoryFilterCellIdentifier, for: indexPath) as! CategoryFilterCell
+
+        cell.tagView.categoryLabel.text = element
+
+        return cell
+    })
 
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor(rgb: Color.basicBackground)
         navigationController?.isNavigationBarHidden = true
 
-        setView()
-        layoutView()
+        setLayout()
         bindInput()
         bindOutput()
-        viewModel.bindArticle()
+    }
 
+    override func viewWillAppear(_ animated: Bool) {
+        viewModel.bindArticle()
     }
 
 }
 
 extension DetailContentViewController {
-    func setView() {
 
-        let article = viewModel.output.article.value
-
+    func setLayout() {
         view.addSubview(backButton)
-        view.addSubview(stackView)
-        stackView.addArrangedSubview(scrollView)
-        stackView.addArrangedSubview(bottomView)
-
-        detailView = FeedDetailView(frame: .zero, tags: article.tags ?? [])
-
-        scrollView.addSubview(detailView)
-
-//        detailView.titleLabel.text = article.title
-//        detailView.profileView.nickNameLabel.text = article.user?.nickname
-//        detailView.contentTextView.text = article.content
-//
-//        // TODO: Created Date
-//
-//        bottomView.likeButton.setTitle("\(article.likeNum ?? 0)", for: .normal)
-//        bottomView.commentButton.setTitle("\(article.commentNum ?? 0)", for: .normal)
-//        bottomView.bookmarkButton.setTitle("\(article.scrapNum ?? 0)", for: .normal)
-    }
-
-    func layoutView() {
         backButton.snp.makeConstraints {
             $0.left.equalToSuperview().offset(20.0)
             $0.size.equalTo(28)
             // TEMP
             $0.top.equalTo(view.safeAreaLayoutGuide).offset(10.0)
         }
+
+        view.addSubview(stackView)
+        stackView.addArrangedSubview(scrollView)
+        stackView.addArrangedSubview(bottomView)
 
         stackView.snp.makeConstraints {
             // TEMP
@@ -111,6 +119,8 @@ extension DetailContentViewController {
             $0.left.right.equalTo(view.safeAreaLayoutGuide)
             $0.bottom.equalToSuperview().inset(-48.0)
         }
+
+        scrollView.addSubview(detailView)
 
         detailView.snp.makeConstraints {
             $0.width.equalToSuperview()
@@ -152,25 +162,13 @@ extension DetailContentViewController {
         // TODO: 구독하기 반영
 
         viewModel.output.article
-            .withUnretained(self)
-            .bind { owner, article in
-                owner.detailView.titleLabel.text = article.title
-                owner.detailView.profileView.nickNameLabel.text = article.user?.nickname
-                owner.detailView.contentTextView.text = article.content
-
-                // TODO: Created Date
-
-                owner.bottomView.likeButton.setTitle("\(article.likeNum ?? 0)", for: .normal)
-                owner.bottomView.commentButton.setTitle("\(article.commentNum ?? 0)", for: .normal)
-                owner.bottomView.bookmarkButton.setTitle("\(article.scrapNum ?? 0)", for: .normal)
-            }
+            .asDriver()
+            .drive(onNext: setDetailViewData)
             .disposed(by: disposeBag)
 
         viewModel.output.popBack
-            .withUnretained(self)
-            .bind { owner, _ in
-                owner.navigationController?.popViewController(animated: true)
-            }
+            .asSignal()
+            .emit(onNext: popToBackView)
             .disposed(by: disposeBag)
 
         viewModel.output.goToReport
@@ -181,36 +179,61 @@ extension DetailContentViewController {
             .disposed(by: disposeBag)
 
         viewModel.output.like
-            .withUnretained(self)
-            .bind { owner, likenum in
-                owner.bottomView.likeButton.setTitle(String(likenum), for: .normal)
-//                owner.bottomView.likeButton.setImage(UIImage(named: "Heart"), for: .normal)
-            }
+            .asDriver()
+            .drive(onNext: updateLikeView)
             .disposed(by: disposeBag)
 
         viewModel.output.goToCommentPage
-            .withUnretained(self)
-            .bind { owner, _ in
-                owner.goToCommentVC()
-            }
+            .asSignal()
+            .emit(onNext: goToCommentVC)
             .disposed(by: disposeBag)
 
         viewModel.output.scrap
-            .withUnretained(self)
-            .bind { owner, scrapnum in
-                owner.bottomView.bookmarkButton.setTitle(String(scrapnum), for: .normal)
-//                owner.bottomView.bookmarkButton.setImage(UIImage(systemName: "heart.fill"), for: .normal)
-            }
+            .asDriver()
+            .drive(onNext: updateScrapView)
+            .disposed(by: disposeBag)
+
+        viewModel.output.tags
+            .asDriver()
+            .drive(detailView.tagListView.filterView.rx.items(dataSource: tagDatasource))
             .disposed(by: disposeBag)
 
     }
 }
 
 extension DetailContentViewController {
-    func goToCommentVC() {
+    private func goToCommentVC() {
         let vc = BottomSheetViewController()
         vc.viewModel.input.articleId.accept(viewModel.input.articleId.value)
         vc.modalPresentationStyle = .overFullScreen
         self.present(vc, animated: false, completion: nil)
+    }
+
+    private func setDetailViewData(_ article: Article) {
+
+        detailView.titleLabel.text = article.title
+        detailView.profileView.nickNameLabel.text = article.user?.nickname
+        detailView.contentLabel.text = article.content
+
+        let date = stringToDateFormatter.date(from: article.updatedAt ?? "" ) ?? Date()
+        detailView.updateDateLabel.text = dateToStringFormatter.string(from: date)
+
+        bottomView.likeButton.setTitle("\(article.likeNum ?? 0)", for: .normal)
+        bottomView.commentButton.setTitle("\(article.commentNum ?? 0)", for: .normal)
+        bottomView.bookmarkButton.setTitle("\(article.scrapNum ?? 0)", for: .normal)
+    }
+
+    private func popToBackView() {
+        self.navigationController?.popViewController(animated: true)
+    }
+
+    private func updateLikeView(_ likeNum: Int) {
+        bottomView.bookmarkButton.setTitle(String(likeNum), for: .normal)
+//                bottomView.bookmarkButton.setImage(UIImage(systemName: "heart.fill"), for: .normal)
+    }
+
+    private func updateScrapView(_ scrapNum: Int) {
+        bottomView.bookmarkButton.setTitle(String(scrapNum), for: .normal)
+//                bottomView.bookmarkButton.setImage(UIImage(systemName: "heart.fill"), for: .normal)
     }
 }

@@ -6,11 +6,11 @@
 |Title|Contents
 |-----|------------------
 Architecture | MVVM
-Language | Swift
-UI | UIKit, Storyboard, Then
-Network | Alamofire, RxSwift
+Language | Swift, RxSwift
+UI | UIKit, Then, Snapkit
+Network | Alamofire, RxAlamofire
 Convention | SwiftLint
-Others | Github, Zenhub, Slack, Notion, TDD
+Others | Github, Zenhub, Slack, Notion
 
 
 ## Branch Strategy

@@ -15,7 +15,7 @@ class DetailMyWritingViewModel: ViewModelType {
     }
 
     struct Output {
-        let article = PublishRelay<Article>()
+        let article = BehaviorRelay<Article>(value: Article())
     }
 
     var input: Input

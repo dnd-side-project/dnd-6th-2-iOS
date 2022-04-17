@@ -28,33 +28,24 @@ class RelayViewController: UIViewController {
         }
 
     var relayRoomView = RelayRoomView()
+        .then {
+            $0.categoryFilterView.filterView
+                .register(CategoryFilterCell.self,
+                          forCellWithReuseIdentifier: CategoryFilterCell.categoryFilterCellIdentifier)
+        }
 
     var participatedRoomView = ParticipatedRoomView()
 
     var makingRoomButton = MakingRoomButton()
         .then {
             $0.setImage(UIImage(named: "Pencil"), for: .normal)
-
         }
 
     lazy var relayRoomDataSource = RxCollectionViewSectionedReloadDataSource<RelaySection>(configureCell: { _, collectionView, indexPath, element in
 
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: RelayRoomCell.relayRoomCellIdentifier, for: indexPath) as! RelayRoomCell
 
-        cell.profileView.nickNameLabel.text = element.title
-        cell.contentLabel.text = element.notice?.notice
-        cell.tagListView.tagList = element.tags ?? []
-
-        if indexPath.row == 0 {
-            cell.backgroundColor = UIColor(rgb: Color.whitePurple)
-            cell.tagListView.setTags(tagViewColor: 0xFABDFF, tagTextColor: 0x5C1A62)
-
-        } else if indexPath.row == 1 {
-            cell.backgroundColor = UIColor(rgb: Color.cardBlue)
-            cell.tagListView.setTags(tagViewColor: 0xB7CBFF, tagTextColor: 0x1E2F59)
-        } else {
-            cell.tagListView.setTags(tagViewColor: 0x4B4B4B, tagTextColor: 0xFFFFFF)
-        }
+        self.setRelayRoomCell(cell: cell, element: element, indexPath: indexPath)
 
         return cell
     },
@@ -62,12 +53,12 @@ class RelayViewController: UIViewController {
         let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: SortHeaderCell.sortHeaderCellReuseIdentifier, for: indexPath) as! SortHeaderCell
 
         headerView.buttonTappedHandler = { [unowned self] in
-            if self.viewModel.sortStyle == .byLatest {
+            if self.viewModel.output.currentSortStyle.value == .byLatest {
                 headerView.sortButton.setTitle("인기순", for: .normal)
-                self.viewModel.sortStyle = .byPopularity
+                self.viewModel.output.currentSortStyle.accept(.byPopularity)
             } else {
                 headerView.sortButton.setTitle("최신순", for: .normal)
-                self.viewModel.sortStyle = .byLatest
+                self.viewModel.output.currentSortStyle.accept(.byLatest)
             }
 
         }
@@ -89,24 +80,31 @@ class RelayViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        navigationController?.setNavigationBarHidden(true, animated: false)
-        navigationController?.interactivePopGestureRecognizer?.delegate = nil
-        view.backgroundColor = UIColor(rgb: Color.basicBackground)
-        roomView = relayRoomView
 
-        setView()
-        bindView()
+        configureView()
+        setLayout()
+        bindInput()
+        bindOutput()
         viewModel.bindRelayList()
         viewModel.bindParticipatedRoomList()
-
     }
 
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         makingRoomButton.layer.cornerRadius = makingRoomButton.frame.size.width / 2
     }
+}
 
-    func setView() {
+extension RelayViewController {
+
+    func configureView() {
+        navigationController?.setNavigationBarHidden(true, animated: false)
+        navigationController?.interactivePopGestureRecognizer?.delegate = nil
+        view.backgroundColor = UIColor(rgb: Color.basicBackground)
+        roomView = relayRoomView
+    }
+
+    func setLayout() {
         view.addSubview(topButtonView)
         topButtonView.snp.makeConstraints {
             $0.top.left.right.equalToSuperview()
@@ -135,8 +133,7 @@ class RelayViewController: UIViewController {
         view.bringSubviewToFront(makingRoomButton)
     }
 
-    func bindView() {
-        // Input
+    func bindInput() {
         topButtonView.firstButton.rx.tap
             .bind(to: viewModel.input.relayRoomButtonTap)
             .disposed(by: disposeBag)
@@ -172,49 +169,56 @@ class RelayViewController: UIViewController {
         makingRoomButton.rx.tap
             .bind(to: viewModel.input.makingRoomButtonTap)
             .disposed(by: disposeBag)
+    }
 
-        // Output
+    func bindOutput() {
+
         viewModel.output.currentListStyle
-            .withUnretained(self)
-            .bind { owner, style in
-                owner.changeRoomStyle(style: style)
-            }
+            .asDriver()
+            .drive(onNext: changeRoomStyle)
             .disposed(by: disposeBag)
 
         viewModel.output.goToBell
-            .withUnretained(self)
-            .bind { owner, _ in
-                owner.goToBellNoticeViewController()
-            }
+            .asSignal()
+            .emit(onNext: goToBellNoticeViewController)
             .disposed(by: disposeBag)
 
         // relay room
+        viewModel.output.tagList
+            .asDriver(onErrorJustReturn: StringType.categories)
+            .drive(relayRoomView.categoryFilterView.filterView.rx.items(
+                cellIdentifier: CategoryFilterCell.categoryFilterCellIdentifier,
+                cellType: CategoryFilterCell.self)) { (_, element, cell) in
+                    cell.tagView.categoryLabel.text = element
+                }
+                .disposed(by: disposeBag)
+
         viewModel.output.relayRoomList
-            .bind(to: relayRoomView.relayList.collectionView
+            .asDriver()
+            .drive(relayRoomView.relayList.collectionView
                     .rx.items(dataSource: relayRoomDataSource))
             .disposed(by: disposeBag)
 
         viewModel.output.goToDetailRelayRoom
-            .withUnretained(self)
-            .bind { owner, relay in
-                owner.goToRelayDetailViewController(relay: relay)
-            }
+            .asSignal()
+            .emit(onNext: goToRelayDetailViewController)
             .disposed(by: disposeBag)
 
         // participated room
         viewModel.output.participatedRoomList
-            .bind(to: participatedRoomView.relayList.collectionView
+            .asDriver()
+            .drive(participatedRoomView.relayList.collectionView
                     .rx.items(dataSource: participatedRoomDataSource))
             .disposed(by: disposeBag)
 
         viewModel.output.goToMakingRelay
-            .withUnretained(self)
-            .bind { owner, _ in
-                owner.goToMakingRelayViewController()
-            }
+            .asSignal()
+            .emit(onNext: goToMakingRelayViewController)
             .disposed(by: disposeBag)
     }
+}
 
+extension RelayViewController {
     private func goToBellNoticeViewController() {
         let vc = BellNoticeViewController()
         vc.hidesBottomBarWhenPushed = true
@@ -226,7 +230,7 @@ class RelayViewController: UIViewController {
         let vc = RelayDetailViewController()
         vc.viewModel.relayInfo = relay
 
-        if viewModel.participatedStyle == .relayRoom {
+        if viewModel.output.currentListStyle.value == .relayRoom {
             vc.viewModel.didEntered = false
         } else {
             vc.viewModel.didEntered = true
@@ -251,16 +255,31 @@ class RelayViewController: UIViewController {
         self.navigationController?.pushViewController(vc, animated: true)
     }
 
-    private func changeRoomStyle(style: RelayListStyle) {
+    private func changeRoomStyle(_ style: RelayListStyle) {
         roomView.removeFromSuperview()
 
         if style == .relayRoom {
-            viewModel.participatedStyle = .relayRoom
             roomView = relayRoomView
         } else {
-            viewModel.participatedStyle = .participatedRoom
             roomView = participatedRoomView
         }
         setRoomView()
+    }
+
+    private func setRelayRoomCell(cell: RelayRoomCell, element: Relay, indexPath: IndexPath) {
+        cell.profileView.nickNameLabel.text = element.title
+        cell.contentLabel.text = element.notice?.notice
+        cell.tagListView.tagList = element.tags ?? []
+
+        if indexPath.row == 0 {
+            cell.backgroundColor = UIColor(rgb: Color.whitePurple)
+            cell.tagListView.setTags(tagViewColor: 0xFABDFF, tagTextColor: 0x5C1A62)
+
+        } else if indexPath.row == 1 {
+            cell.backgroundColor = UIColor(rgb: Color.cardBlue)
+            cell.tagListView.setTags(tagViewColor: 0xB7CBFF, tagTextColor: 0x1E2F59)
+        } else {
+            cell.tagListView.setTags(tagViewColor: 0x4B4B4B, tagTextColor: 0xFFFFFF)
+        }
     }
 }
