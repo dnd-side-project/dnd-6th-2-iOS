@@ -45,7 +45,7 @@ class CommentCell: UITableViewCell {
     }
 
     func setProfileView() {
-        self.addSubview(profileView)
+        contentView.addSubview(profileView)
         profileView.subscribeStatus.isHidden = true
 
         profileView.translatesAutoresizingMaskIntoConstraints = false
@@ -55,7 +55,7 @@ class CommentCell: UITableViewCell {
     }
 
     func setCreatedDateLabel() {
-        self.addSubview(createdDateLabel)
+        contentView.addSubview(createdDateLabel)
         createdDateLabel.text = "8시간 전"
         createdDateLabel.textColor = UIColor(rgb: 0x999999)
         createdDateLabel.font = UIFont.pretendard(weight: .regular, size: 14)
@@ -66,7 +66,7 @@ class CommentCell: UITableViewCell {
     }
 
     func setMoreButton() {
-        self.addSubview(moreButton)
+        contentView.addSubview(moreButton)
         moreButton.setImage(UIImage(systemName: "heart.fill"), for: .normal)
         moreButton.translatesAutoresizingMaskIntoConstraints = false
 
@@ -83,7 +83,7 @@ class CommentCell: UITableViewCell {
     }
 
     func setCommentContent() {
-        self.addSubview(commentContent)
+        contentView.addSubview(commentContent)
 
         commentContent.translatesAutoresizingMaskIntoConstraints = false
         commentContent.isEditable = false
