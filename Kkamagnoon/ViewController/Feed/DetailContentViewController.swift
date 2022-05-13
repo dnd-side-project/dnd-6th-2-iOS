@@ -79,11 +79,17 @@ class DetailContentViewController: UIViewController {
         setLayout()
         bindInput()
         bindOutput()
+        bindData()
     }
 
-    override func viewWillAppear(_ animated: Bool) {
+    func bindData() {
         viewModel.bindArticle()
     }
+
+//    override func viewWillAppear(_ animated: Bool) {
+//        super.viewWillAppear(true)
+//        viewModel.bindArticle()
+//    }
 
 }
 

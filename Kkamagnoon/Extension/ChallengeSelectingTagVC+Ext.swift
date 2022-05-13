@@ -83,6 +83,7 @@ extension ChallengeSelectingTagViewController {
             .bind { owner, _ in
                 owner.navigationController?.popToRootViewController(animated: false, completion: {
                     let vc = SuccessPopUpViewController()
+                    vc.modalPresentationStyle = .fullScreen
 
                     owner.viewModel.rootView?.present(vc, animated: false, completion: nil)
                 })
