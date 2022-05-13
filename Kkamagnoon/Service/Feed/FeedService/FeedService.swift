@@ -43,13 +43,16 @@ class FeedService: Service {
         let endpoint = FeedEndpointCases.getArticle(articleId: articleId)
         let request = makeRequest(endpoint: endpoint)
 
+        print(request)
         return RxAlamofire.request(request as URLRequestConvertible)
             .responseData()
             .asObservable()
-            .map { _, resData -> Article  in
+            .map { http, resData -> Article  in
+                print(http)
                 let decoder = JSONDecoder()
                 do {
                     let result = try decoder.decode(Article.self, from: resData)
+                    print(result)
                     return result
                 } catch {
                     print(error)

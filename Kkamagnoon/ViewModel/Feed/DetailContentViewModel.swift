@@ -55,6 +55,7 @@ class DetailContentViewModel: ViewModelType {
     }
 
     func bindArticle() {
+        print("!!!!! >> \(input.articleId.value)")
         feedService.getArticle(articleId: input.articleId.value)
             .withUnretained(self)
             .bind { owner, article in

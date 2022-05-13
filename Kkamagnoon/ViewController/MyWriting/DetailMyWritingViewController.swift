@@ -15,9 +15,7 @@ class DetailMyWritingViewController: DetailContentViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
         bindDetailView()
-        detailViewModel.bindArticle()
     }
 
     func bindDetailView() {
@@ -26,6 +24,10 @@ class DetailMyWritingViewController: DetailContentViewController {
             .asDriver()
             .drive(onNext: setArticleData)
             .disposed(by: disposeBag)
+    }
+
+    override func bindData() {
+        detailViewModel.bindArticle()
     }
 
     private func setArticleData(_ article: Article) {

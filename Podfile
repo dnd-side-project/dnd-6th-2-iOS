@@ -17,6 +17,7 @@ target 'Kkamagnoon' do
   pod 'RxDataSources'
   pod 'Then'
   pod 'FSCalendar'
+  pod 'RxGesture'
 
   # Pods for Kkamagnoon
 

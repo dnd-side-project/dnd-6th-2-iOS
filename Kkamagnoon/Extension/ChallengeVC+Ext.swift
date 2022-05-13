@@ -6,6 +6,7 @@
 //
 import UIKit
 import FSCalendar
+import RxGesture
 
 extension ChallengeViewController {
     func setLayout() {
@@ -64,10 +65,10 @@ extension ChallengeViewController {
             .emit(onNext: goToWritingVC)
             .disposed(by: disposeBag)
 
-        viewModel.output.goToDetail
-            .asSignal()
-            .emit(onNext: goToDetail)
-            .disposed(by: disposeBag)
+//        viewModel.output.goToDetail
+//            .asSignal()
+//            .emit(onNext: goToDetail)
+//            .disposed(by: disposeBag)
 
         viewModel.output.calendarState
             .skip(1)
@@ -207,9 +208,26 @@ extension ChallengeViewController: FSCalendarDataSource {
                 card.likeLabel.labelView.text = "\(article.likeNum ?? 0)"
                 card.commentLabel.labelView.text = "\(article.commentNum ?? 0)"
 
+                card.rx.tapGesture()
+                    .when(.recognized)
+                    .withUnretained(self)
+                    .subscribe(onNext: { owner, _ in
+                        owner.goToDetailPage(article: article)
+                    })
+                    .disposed(by: disposeBag)
+
                 self.challengeMainView.stackView.addArrangedSubview(card)
             })
         }
+    }
+
+    private func goToDetailPage(article: Article) {
+        let vc = DetailMyWritingViewController()
+        vc.modalPresentationStyle = .fullScreen
+        vc.hidesBottomBarWhenPushed = true
+
+        vc.detailViewModel.input.articleId.accept(article._id ?? "")
+        self.navigationController?.pushViewController(vc, animated: true)
     }
 
 }

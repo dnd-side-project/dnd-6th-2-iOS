@@ -20,7 +20,7 @@ class ChallengeViewModel: ViewModelType {
     struct Output {
         let goToBellNotice = PublishRelay<Void>()
         let goToWriting = PublishRelay<Void>()
-        let goToDetail = PublishRelay<Void>()
+//        let goToDetail = PublishRelay<Void>()
         let challenge = BehaviorRelay<GetChallengeMain>(value: GetChallengeMain())
         let calendarState = BehaviorRelay<CalendarState>(value: .week)
     }
@@ -37,7 +37,7 @@ class ChallengeViewModel: ViewModelType {
         self.output = output
         bindBellButton()
         bindAddWritingButton()
-        bindCard()
+//        bindCard()
         bindWork()
     }
 
@@ -69,15 +69,15 @@ class ChallengeViewModel: ViewModelType {
 
     }
 
-    func bindCard() {
-        input.cardTap
-            .withUnretained(self)
-            .bind { owner, _ in
-                print("TAPPED!!")
-                owner.output.goToDetail.accept(())
-            }
-            .disposed(by: disposeBag)
-    }
+//    func bindCard() {
+//        input.cardTap
+//            .withUnretained(self)
+//            .bind { owner, _ in
+//                print("TAPPED!!")
+//                owner.output.goToDetail.accept(())
+//            }
+//            .disposed(by: disposeBag)
+//    }
 
     func bindWork() {
         input.expansionButtonTap

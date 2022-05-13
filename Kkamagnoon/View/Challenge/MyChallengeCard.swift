@@ -12,8 +12,8 @@ import RxCocoa
 
 class MyChallengeCard: UIView {
 
-    var tapHandler: (() -> Void)?
-    let tapGesture = UITapGestureRecognizer()
+//    var tapHandler: (() -> Void)?
+//    let tapGesture = UITapGestureRecognizer()
 
     var titleLabel = UILabel()
         .then {
@@ -73,15 +73,14 @@ class MyChallengeCard: UIView {
         self.backgroundColor = UIColor(rgb: 0x292929)
         self.layer.cornerRadius = 15
         setView()
-        self.addGestureRecognizer(tapGesture)
 
         // TODO: ViewModel로 이동
-        tapGesture.rx.event
-            .withUnretained(self)
-            .bind { owner, _ in
-                owner.tapHandler?()
-            }
-            .disposed(by: disposeBag)
+//        tapGesture.rx.event
+//            .withUnretained(self)
+//            .bind { owner, _ in
+//                owner.tapHandler?()
+//            }
+//            .disposed(by: disposeBag)
     }
 
     required init?(coder: NSCoder) {
@@ -89,7 +88,7 @@ class MyChallengeCard: UIView {
         self.backgroundColor = UIColor(rgb: 0x292929)
         self.layer.cornerRadius = 15
         setView()
-        self.addGestureRecognizer(tapGesture)
+//        self.addGestureRecognizer(tapGesture)
     }
 }
 

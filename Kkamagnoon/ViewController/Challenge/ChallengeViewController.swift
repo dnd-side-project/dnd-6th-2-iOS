@@ -10,6 +10,7 @@ import SnapKit
 import RxSwift
 import RxCocoa
 import FSCalendar
+import RxGesture
 
 class ChallengeViewController: UIViewController {
 
@@ -73,17 +74,6 @@ class ChallengeViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         viewModel.bindKeyword()
-        bindCardView()
-    }
 
-    func bindCardView() {
-        challengeMainView.stackView.subviews.forEach({ article in
-            let card = article as! MyChallengeCard
-            print(">>>>>>>Card: \(card.titleLabel.text ?? " ")")
-
-            card.tapHandler = {
-                print("TAPPED!!")
-            }
-        })
     }
 }
