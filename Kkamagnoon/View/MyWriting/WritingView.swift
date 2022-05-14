@@ -30,6 +30,7 @@ class WritingView: UIView {
     var contentTextView = UITextView()
         .then {
             $0.text = "내용을 자유롭게 써주세요"
+            $0.textAlignment = .left
             $0.textColor = UIColor(rgb: 0x929292)
             $0.font = UIFont.pretendard(weight: .regular, size: 18)
             $0.textContainerInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
