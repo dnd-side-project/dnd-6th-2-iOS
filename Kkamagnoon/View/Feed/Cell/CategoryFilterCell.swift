@@ -21,25 +21,15 @@ class CategoryFilterCell: UICollectionViewCell {
 
     override init(frame: CGRect = .zero) {
         super.init(frame: frame)
-        self.layer.cornerRadius = 18.0
-
-        self.addSubview(tagView)
-
-        tagView.snp.makeConstraints {
-            $0.edges.equalToSuperview()
-        }
+        configureView()
+        layoutView()
 
     }
 
     required init?(coder: NSCoder) {
         super.init(coder: coder)
-        self.layer.cornerRadius = 18.0
-
-        self.addSubview(tagView)
-
-        tagView.snp.makeConstraints {
-            $0.edges.equalToSuperview()
-        }
+        configureView()
+        layoutView()
     }
 
     override var isSelected: Bool {
@@ -62,10 +52,21 @@ class CategoryFilterCell: UICollectionViewCell {
     }
 
     override func prepareForReuse() {
-        // super 꼭 부르기
         super.prepareForReuse()
         tagView.categoryLabel.text = nil
         configureSelected()
+    }
+
+    private func configureView() {
+        self.layer.cornerRadius = 18.0
+    }
+
+    private func layoutView() {
+        self.addSubview(tagView)
+
+        tagView.snp.makeConstraints {
+            $0.edges.equalToSuperview()
+        }
     }
 
     private func configureSelected() {

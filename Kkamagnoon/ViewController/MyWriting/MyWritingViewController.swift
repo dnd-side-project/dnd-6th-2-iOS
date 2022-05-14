@@ -86,6 +86,7 @@ class MyWritingViewController: UIViewController {
         setLayout()
         bindInput()
         bindOutput()
+        myWritingListView.tagListView.filterView.selectItem(at: IndexPath(item: .zero, section: .zero), animated: false, scrollPosition: [])
         viewModel.bindMyWritingList(tag: nil)
         viewModel.bindTempWritingList()
     }
@@ -103,6 +104,7 @@ extension MyWritingViewController {
         view.backgroundColor = UIColor(rgb: Color.basicBackground)
         navigationController?.setNavigationBarHidden(true, animated: false)
         navigationController?.interactivePopGestureRecognizer?.delegate = nil
+
         listView = myWritingListView
     }
 

@@ -29,7 +29,7 @@ class MyWritingViewModel: ViewModelType {
 
         let myWritingList = BehaviorRelay<[FeedSection]>(value: [])
         let tempWritingList = BehaviorRelay<[FeedSection]>(value: [])
-        let tagList = Observable<[String]>.of(StringType.categories)
+        let tagList = Observable<[String]>.of(["전체"] + StringType.myWritingTags)
     }
 
     var input: Input
