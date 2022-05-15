@@ -10,6 +10,7 @@ import Foundation
 enum ChallengeEndPointCases: EndPoint {
 
     case getChallenge
+    case getChallengeStamp(month: String, year: String)
     case getChallengeArticle
     case postChallengeArticle(article: CreateArticleDTO)
     case postChallengeArticleTemp(article: CreateArticleDTO)
@@ -23,6 +24,8 @@ extension ChallengeEndPointCases {
     var httpMethod: String {
         switch self {
         case .getChallenge:
+            return "GET"
+        case .getChallengeStamp:
             return "GET"
         case .getChallengeArticle:
             return "GET"
@@ -49,6 +52,8 @@ extension ChallengeEndPointCases {
         switch self {
         case .getChallenge:
             return baseURLString
+        case .getChallengeStamp(let month, let year):
+            return baseURLString + "/\(month)/\(year)"
         case .getChallengeArticle:
             return baseURLString + "/article"
         case .postChallengeArticle:

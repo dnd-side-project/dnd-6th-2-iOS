@@ -23,6 +23,7 @@ class ChallengeViewModel: ViewModelType {
 //        let goToDetail = PublishRelay<Void>()
         let challenge = BehaviorRelay<GetChallengeMain>(value: GetChallengeMain())
         let calendarState = BehaviorRelay<CalendarState>(value: .week)
+        let challangeStamp = BehaviorRelay<GetMonthlyDTO>(value: GetMonthlyDTO())
     }
 
     var input: Input
@@ -46,6 +47,15 @@ class ChallengeViewModel: ViewModelType {
             .withUnretained(self)
             .bind { owner, challengeMain in
                 owner.output.challenge.accept(challengeMain)
+            }
+            .disposed(by: disposeBag)
+    }
+
+    func bindChallengeStamp(month: String, year: String) {
+        challengeService.getChallengeStamp(month: month, year: year)
+            .withUnretained(self)
+            .bind { owner, challengeStamp in
+                owner.output.challangeStamp.accept(challengeStamp)
             }
             .disposed(by: disposeBag)
     }

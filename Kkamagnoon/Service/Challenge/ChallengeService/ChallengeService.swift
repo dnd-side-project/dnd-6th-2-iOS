@@ -34,6 +34,30 @@ class ChallengeService: Service {
             }
     }
 
+    func getChallengeStamp(month: String, year: String) -> Observable<GetMonthlyDTO> {
+        let endpoint = ChallengeEndPointCases.getChallengeStamp(month: month, year: year)
+        let request = makeRequest(endpoint: endpoint)
+
+        return RxAlamofire.request(request as URLRequestConvertible)
+            .responseData()
+            .asObservable()
+            .map { http, resData -> GetMonthlyDTO  in
+                print(http)
+
+                let decoder = JSONDecoder()
+
+                do {
+                    let result = try decoder.decode(GetMonthlyDTO.self, from: resData)
+                    print("RES>>>>>\(result)")
+                    return result
+                } catch {
+                    print(error)
+                }
+
+                return GetMonthlyDTO()
+            }
+    }
+
     func getChallengeArticle() -> Observable<Tip> {
         let endpoint = ChallengeEndPointCases.getChallengeArticle
         let request = makeRequest(endpoint: endpoint)

@@ -32,3 +32,8 @@ struct Keyword: Decodable {
     var state: Bool?
     var updateDay: String?
 }
+
+struct GetMonthlyDTO: Decodable {
+    var monthlyChallengeHistory: [String]?
+    var monthlyStamp: Int?
+}

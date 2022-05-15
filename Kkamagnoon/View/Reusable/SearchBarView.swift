@@ -18,6 +18,9 @@ class SearchBarView: UIView {
         }
 
     var searchField = UITextField()
+        .then {
+            $0.textColor = .white
+        }
 
     var searchButton = UIButton()
         .then {
@@ -60,7 +63,7 @@ extension SearchBarView {
         self.addSubview(searchField)
         searchField.snp.makeConstraints {
             $0.centerY.equalToSuperview()
-            $0.left.equalTo(backButton.snp.right).offset(10.0)
+            $0.left.equalTo(backButton.snp.right).offset(5.0)
             $0.right.equalTo(searchButton.snp.left).offset(-10.0)
             $0.height.equalTo(30)
         }

@@ -80,6 +80,11 @@ extension ChallengeViewController {
             .asDriver()
             .drive(onNext: setChallengeMainData)
             .disposed(by: disposeBag)
+
+        viewModel.output.challangeStamp
+            .asDriver()
+            .drive(onNext: setStampData)
+            .disposed(by: disposeBag)
     }
 }
 
@@ -174,8 +179,13 @@ extension ChallengeViewController: FSCalendarDataSource {
 
     private func setChallengeMainData(_ challenge: GetChallengeMain) {
         setKeyword(keyword: challenge.keyword?.content ?? "NaN")
-        setStamp(history: challenge.challengeHistory ?? [])
+
         setChallengeArticle(articles: challenge.articles ?? [])
+    }
+
+    private func setStampData(challengeStamp: GetMonthlyDTO) {
+        challengeMainView.subTitleLabel[0].text = "이번달은 \(challengeStamp.monthlyStamp ?? 0)개의 O를 찍었어요!"
+        setStamp(history: challengeStamp.monthlyChallengeHistory ?? [])
     }
 
     private func setKeyword(keyword: String) {
