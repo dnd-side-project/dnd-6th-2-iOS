@@ -47,17 +47,28 @@ class WritingViewController: UIViewController {
         self.navigationController?.isNavigationBarHidden = true
         view.backgroundColor = UIColor(rgb: Color.basicBackground)
         setKeyBoard()
-        animateWritingViewGoUp()
-        animateWritingViewGoDown()
-        setView()
+        setWritingSubView()
 
-        bindView()
+        layoutView()
+        bindInput()
+        bindOutput()
         viewModel.bindTips()
     }
 
 }
 
 extension WritingViewController {
+
+    func setWritingSubView() {
+        setAnimateWritingSubView()
+        setWritingSubViewButtonHandler()
+    }
+
+    func setAnimateWritingSubView() {
+        animateWritingViewGoUp()
+        animateWritingViewGoDown()
+    }
+
     func animateWritingViewGoUp() {
 
         keyboardShowObserver
@@ -89,4 +100,29 @@ extension WritingViewController {
             }
             .disposed(by: disposeBag)
     }
+
+    func setWritingSubViewButtonHandler() {
+        writingSubView.copyWritingButtonTapHandler = { [weak self] in
+            UIPasteboard.general.string = self?.writingView.contentTextView.text
+
+            if let storedString = UIPasteboard.general.string {
+                print(storedString)
+            }
+        }
+
+        writingSubView.alignButtonTapHandler = { [weak self] in
+            let alignment = self?.writingView.contentTextView.textAlignment
+            if alignment == .left {
+                self?.writingView.contentTextView.textAlignment = .center
+            } else if alignment == .center {
+                self?.writingView.contentTextView.textAlignment = .left
+            }
+        }
+
+        writingSubView.showTipsButtonTapHandler = { [weak self] in
+            let visivlity = self?.tipBox.isHidden ?? false
+            self?.tipBox.isHidden = !visivlity
+        }
+    }
+
 }

@@ -8,8 +8,12 @@
 import UIKit
 import Then
 import SnapKit
+import RxSwift
+import RxCocoa
 
 class WritingSubView: UIView {
+
+    var disposeBag = DisposeBag()
 
     var grayLine = GrayBorderView()
 
@@ -34,23 +38,32 @@ class WritingSubView: UIView {
             $0.imageEdgeInsets = UIEdgeInsets(top: 2, left: 4, bottom: 2, right: 4)
         }
 
+    var copyWritingButtonTapHandler: (() -> Void)?
+    var alignButtonTapHandler: (() -> Void)?
+    var showTipsButtonTapHandler: (() -> Void)?
+
     override init(frame: CGRect) {
         super.init(frame: frame)
-        setView()
+        layoutView()
+        bindView()
     }
 
     required init?(coder: NSCoder) {
         super.init(coder: coder)
-        setView()
+        layoutView()
+        bindView()
+    }
+
+    deinit {
+        disposeBag = DisposeBag()
     }
 
 }
 
 extension WritingSubView {
-    func setView() {
+    private func layoutView() {
         self.addSubview(grayLine)
         grayLine.snp.makeConstraints {
-
             $0.left.right.equalToSuperview()
             $0.top.equalToSuperview().offset(-0.5)
         }
@@ -75,5 +88,29 @@ extension WritingSubView {
             $0.centerY.equalToSuperview()
             $0.left.equalTo(alignButton.snp.right).offset(30.0)
         }
+    }
+
+    private func bindView() {
+        copyWritingButton.rx.tap
+            .withUnretained(self)
+            .bind { owner, _ in
+                owner.copyWritingButtonTapHandler?()
+            }
+            .disposed(by: disposeBag)
+
+        alignButton.rx.tap
+            .withUnretained(self)
+            .bind { owner, _ in
+                owner.alignButtonTapHandler?()
+            }
+            .disposed(by: disposeBag)
+
+        showTipsButton.rx.tap
+            .withUnretained(self)
+            .bind { owner, _ in
+                owner.showTipsButtonTapHandler?()
+            }
+            .disposed(by: disposeBag)
+
     }
 }

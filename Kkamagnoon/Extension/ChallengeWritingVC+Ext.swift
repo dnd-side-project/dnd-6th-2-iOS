@@ -15,7 +15,7 @@ extension WritingViewController {
         IQKeyboardManager.shared.enableAutoToolbar = false
     }
 
-    func setView() {
+    func layoutView() {
 
         view.addSubview(header)
         setButton(state: false)
@@ -60,9 +60,7 @@ extension WritingViewController {
 }
 
 extension WritingViewController {
-    func bindView() {
-
-        // Input
+    func bindInput() {
         header.noticeButton.rx.tap
             .bind(to: viewModel.input.completeButtonTap)
             .disposed(by: disposeBag)
@@ -76,8 +74,9 @@ extension WritingViewController {
             .orEmpty
             .bind(to: viewModel.input.contents)
             .disposed(by: disposeBag)
+    }
 
-        // Output
+    func bindOutput() {
         viewModel.output.enableCompleteButton
             .withUnretained(self)
             .bind { owner, value in
