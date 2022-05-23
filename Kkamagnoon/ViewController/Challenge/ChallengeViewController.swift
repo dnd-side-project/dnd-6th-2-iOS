@@ -74,6 +74,6 @@ class ChallengeViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         viewModel.bindKeyword()
-
+        viewModel.bindChallengeStamp(month: "May", year: "2022")
     }
 }

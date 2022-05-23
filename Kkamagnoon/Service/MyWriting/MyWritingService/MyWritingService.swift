@@ -10,24 +10,34 @@ import RxAlamofire
 import Alamofire
 
 class MyWritingService: Service {
-    func getMyArticle(cursor: String?, type: String?) -> Observable<ArticlesResponse> {
+    var isPaginating = false
+
+    func getMyArticle(cursor: String?, type: String?, pagination: Bool) -> Observable<ArticlesResponse> {
+        if pagination {
+            isPaginating = true
+        }
+
         let endpoint = MyWritingEndPointCases.getMyArticle(cursor: cursor, type: type)
         let request = makeRequest(endpoint: endpoint)
 
         return RxAlamofire.request(request as URLRequestConvertible)
             .responseData()
             .asObservable()
-            .map { _, resData -> ArticlesResponse  in
-//                print(http)
+            .map { http, resData -> ArticlesResponse  in
+                print(http)
 
                 let decoder = JSONDecoder()
 
                 do {
                     let result = try decoder.decode(ArticlesResponse.self, from: resData)
-//                    print("RES>>>>>\(result)")
+                    print("RES>>>>>\(result)")
                     return result
                 } catch {
                     print(error)
+                }
+
+                if pagination {
+                    self.isPaginating = false
                 }
 
                 return ArticlesResponse()

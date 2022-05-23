@@ -86,8 +86,9 @@ class MyWritingViewController: UIViewController {
         setLayout()
         bindInput()
         bindOutput()
+        myWritingListView.writingListView.collectionView.delegate = self
         myWritingListView.tagListView.filterView.selectItem(at: IndexPath(item: .zero, section: .zero), animated: false, scrollPosition: [])
-        viewModel.bindMyWritingList(tag: nil)
+        viewModel.bindMyWritingList(cursor: nil, tag: nil, pagination: false)
         viewModel.bindTempWritingList()
     }
 
@@ -236,6 +237,22 @@ extension MyWritingViewController {
             $0.left.right.equalToSuperview()
             $0.top.equalTo(topButtonView.snp.bottom)
             $0.bottom.equalTo(view.safeAreaLayoutGuide)
+        }
+    }
+}
+
+extension MyWritingViewController: UICollectionViewDelegate, UIScrollViewDelegate {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let contentOffset_y = scrollView.contentOffset.y
+        let collectionViewContentSize = myWritingListView.writingListView.collectionView.contentSize.height
+
+        let pagination_y = collectionViewContentSize*0.4
+        if contentOffset_y > collectionViewContentSize - pagination_y {
+
+            let nowCursor = viewModel.output.cursor.value
+            if nowCursor != "" {
+                viewModel.bindMyWritingList(cursor: nowCursor, tag: viewModel.output.nowTag.value, pagination: true)
+            }
         }
     }
 }

@@ -17,7 +17,7 @@ class FeedSearchService: Service {
             .responseData()
             .asObservable()
             .map { http, resData -> GetMainFeedResDTO  in
-                print(http)
+                print("~~~~>>\(http)")
 
                 let decoder = JSONDecoder()
 

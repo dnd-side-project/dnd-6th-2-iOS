@@ -19,8 +19,11 @@ enum Colors {
     case subTextGray
     case tagTextGray
     case titleTabGray
+    case scrapBoxGray
     case feedBoxWhite
     case writingBoxWhite
+    case gray_1
+    case alertBoxGray
 }
 
 extension UIColor {
@@ -88,12 +91,21 @@ extension UIColor {
         case .titleTabGray:
             return UIColor(rgb: 0x787878)
 
+        case .scrapBoxGray:
+            return UIColor(rgb: 0x282828)
+
         // white
         case .feedBoxWhite:
             return UIColor(rgb: 0xE2E2E2)
 
         case .writingBoxWhite:
             return UIColor(rgb: 0xEAEAEA)
+
+        case .gray_1:
+            return UIColor(rgb: 0xDFDFDF)
+
+        case .alertBoxGray:
+            return UIColor(rgb: 0x313131)
         }
     }
 }

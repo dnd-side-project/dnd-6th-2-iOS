@@ -30,6 +30,8 @@ class MyWritingViewModel: ViewModelType {
         let myWritingList = BehaviorRelay<[FeedSection]>(value: [])
         let tempWritingList = BehaviorRelay<[FeedSection]>(value: [])
         let tagList = Observable<[String]>.of(["전체"] + StringType.myWritingTags)
+        let cursor = BehaviorRelay<String>(value: "")
+        let nowTag = BehaviorRelay<String>(value: "")
     }
 
     var input: Input
@@ -49,12 +51,30 @@ class MyWritingViewModel: ViewModelType {
 
 extension MyWritingViewModel {
 
-    func bindMyWritingList(tag: String?) {
-        myWritingService.getMyArticle(cursor: nil, type: tag)
+    func bindMyWritingList(cursor: String?, tag: String?, pagination: Bool) {
+
+        guard !myWritingService.isPaginating else {
+            return
+        }
+
+        print("Call network!")
+
+        myWritingService.getMyArticle(cursor: cursor, type: tag == "" ? nil : tag, pagination: pagination)
             .withUnretained(self)
             .bind { owner, articleResponse in
+                owner.output.cursor.accept(articleResponse.next_cursor ?? "")
+
+                let oldList = owner.output.myWritingList.value
+                var oldArticles: [Article] = []
+                if pagination && !oldList.isEmpty {
+                    oldArticles = oldList[0].items
+                }
+
                 owner.output.myWritingList.accept(
-                    [FeedSection(header: Relay(), items: articleResponse.articles ?? [])]
+                    [FeedSection(
+                        header: Relay(),
+                        items: oldArticles + (articleResponse.articles ?? [])
+                    )]
                 )
             }
             .disposed(by: disposeBag)
@@ -89,6 +109,7 @@ extension MyWritingViewModel {
         input.tagTap
             .withUnretained(self)
             .bind { owner, tagString in
+
                 var type: String = ""
                 if tagString == "챌린지" {
                     type = "challenge"
@@ -98,7 +119,10 @@ extension MyWritingViewModel {
                     type = "free"
                 }
 
-                owner.bindMyWritingList(tag: type)
+                print("TAGSTRING: \(tagString)")
+
+                owner.output.nowTag.accept(type)
+                owner.bindMyWritingList(cursor: nil, tag: type, pagination: false)
             }
             .disposed(by: disposeBag)
 

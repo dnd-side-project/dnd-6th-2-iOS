@@ -91,15 +91,15 @@ class ChallengeMainView: UIView {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        setView()
+        layoutView()
     }
 
     required init?(coder: NSCoder) {
         super.init(coder: coder)
-        setView()
+        layoutView()
     }
 
-    func setView() {
+    func layoutView() {
         self.addSubview(subTitleLabel[0])
         subTitleLabel[0].snp.makeConstraints {
             $0.top.equalToSuperview().offset(7.0)

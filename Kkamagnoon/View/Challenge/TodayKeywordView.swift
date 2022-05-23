@@ -45,26 +45,28 @@ class TodayKeywordView: UIView {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-//        self.backgroundColor = UIColor(rgb: 0x1A1A1A)
-        self.backgroundColor = UIColor(rgb: Color.feedListCard)
-        self.layer.cornerRadius = 14
-
-        setView()
+        configureView()
+        layoutView()
     }
 
     required init?(coder: NSCoder) {
         super.init(coder: coder)
-//        self.backgroundColor = UIColor(rgb: 0x1A1A1A)
-        self.backgroundColor = UIColor(rgb: Color.feedListCard)
-        self.layer.cornerRadius = 14
-
-        setView()
+        configureView()
+        layoutView()
     }
 
 }
 
 extension TodayKeywordView {
-    func setView() {
+    func configureView() {
+
+//        self.backgroundColor = UIColor(rgb: 0x1A1A1A)
+        self.backgroundColor = UIColor(rgb: Color.feedListCard)
+        self.layer.cornerRadius = 14
+
+    }
+
+    func layoutView() {
         self.addSubview(subLabel)
         subLabel.snp.makeConstraints {
             $0.left.equalToSuperview().offset(20.0)

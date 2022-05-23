@@ -25,7 +25,6 @@ class SearchViewController: UIViewController {
         .then {
             $0.menuTabView.menuCollectionView.register(SearchTabMenuCell.self, forCellWithReuseIdentifier: SearchTabMenuCell.identifier)
             $0.searchResultListView.collectionView.register(MyWritingCell.self, forCellWithReuseIdentifier: MyWritingCell.identifier)
-
         }
 
     lazy var historyDataSource = RxTableViewSectionedReloadDataSource<SectionModel<String, History>>(configureCell: { _, tableView, indexPath, element in
@@ -158,7 +157,7 @@ extension SearchViewController {
             .emit(onNext: dismissView)
             .disposed(by: disposeBag)
 
-        viewModel.output.searchWord
+        viewModel.input.searchWord
             .asDriver()
             .drive(onNext: setSearchBarText)
             .disposed(by: disposeBag)
