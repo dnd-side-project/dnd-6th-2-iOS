@@ -18,19 +18,30 @@ class ChallengeService: Service {
             .responseData()
             .asObservable()
             .map { http, resData -> GetChallengeMain  in
-                print(http)
+                switch http.statusCode {
+                case 200 ..< 300 :
+                    do {
+                        let result = try self.decoder.decode(GetChallengeMain.self, from: resData)
+                        return result
+                    } catch {
+                        throw NetworkError.decodeError
+                    }
 
-                let decoder = JSONDecoder()
+                case 400:
+                    throw NetworkError.wrongDataFormat
 
-                do {
-                    let result = try decoder.decode(GetChallengeMain.self, from: resData)
-                    print("RES>>>>>\(result)")
-                    return result
-                } catch {
-                    print(error)
+                case 401:
+                    throw NetworkError.unauthorized
+
+                case 403:
+                    throw NetworkError.invalidRequest
+
+                case 500:
+                    throw NetworkError.serverError
+
+                default:
+                    throw NetworkError.emptyData
                 }
-
-                return GetChallengeMain()
             }
     }
 

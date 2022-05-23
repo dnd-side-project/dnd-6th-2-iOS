@@ -142,6 +142,9 @@
 		0439AF4527B166B300E14E03 /* SubscribeFilterCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0439AF4427B166B300E14E03 /* SubscribeFilterCell.swift */; };
 		0439AF4727B171EB00E14E03 /* DetailContentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0439AF4627B171EB00E14E03 /* DetailContentViewController.swift */; };
 		0439AF4B27B1EBBF00E14E03 /* FeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0439AF4A27B1EBBF00E14E03 /* FeedViewController.swift */; };
+		043C02402834D01100A9E708 /* ErrorAlertPopup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043C023F2834D01100A9E708 /* ErrorAlertPopup.swift */; };
+		043C02422834DA3B00A9E708 /* ScrapBottomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043C02412834DA3B00A9E708 /* ScrapBottomView.swift */; };
+		043C02442834E01B00A9E708 /* ScrapTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043C02432834E01B00A9E708 /* ScrapTableViewCell.swift */; };
 		045F528327C5CE1D0082673B /* MyWritingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 045F528227C5CE1D0082673B /* MyWritingCell.swift */; };
 		045F528727C656DF0082673B /* ChallengeResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 045F528627C656DF0082673B /* ChallengeResponseModel.swift */; };
 		045F528A27C690690082673B /* MyWritingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 045F528927C690690082673B /* MyWritingViewModel.swift */; };
@@ -373,6 +376,9 @@
 		0439AF4427B166B300E14E03 /* SubscribeFilterCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscribeFilterCell.swift; sourceTree = "<group>"; };
 		0439AF4627B171EB00E14E03 /* DetailContentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailContentViewController.swift; sourceTree = "<group>"; };
 		0439AF4A27B1EBBF00E14E03 /* FeedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedViewController.swift; sourceTree = "<group>"; };
+		043C023F2834D01100A9E708 /* ErrorAlertPopup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorAlertPopup.swift; sourceTree = "<group>"; };
+		043C02412834DA3B00A9E708 /* ScrapBottomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrapBottomView.swift; sourceTree = "<group>"; };
+		043C02432834E01B00A9E708 /* ScrapTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrapTableViewCell.swift; sourceTree = "<group>"; };
 		045F528227C5CE1D0082673B /* MyWritingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyWritingCell.swift; sourceTree = "<group>"; };
 		045F528627C656DF0082673B /* ChallengeResponseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallengeResponseModel.swift; sourceTree = "<group>"; };
 		045F528927C690690082673B /* MyWritingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyWritingViewModel.swift; sourceTree = "<group>"; };
@@ -1100,6 +1106,8 @@
 				040D852E27C096390003C96A /* MultiLineTagListView.swift */,
 				040D853A27C1035F0003C96A /* SelectTagView.swift */,
 				04FD047027D9CA0A00EC87DC /* SearchBarView.swift */,
+				043C023F2834D01100A9E708 /* ErrorAlertPopup.swift */,
+				043C02412834DA3B00A9E708 /* ScrapBottomView.swift */,
 			);
 			path = Reusable;
 			sourceTree = "<group>";
@@ -1203,6 +1211,7 @@
 			isa = PBXGroup;
 			children = (
 				04FD047327D9D2EC00EC87DC /* SearchRecentTableViewCell.swift */,
+				043C02432834E01B00A9E708 /* ScrapTableViewCell.swift */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -1632,6 +1641,7 @@
 				040790A627B8960D006C5374 /* UIColor+Ext.swift in Sources */,
 				043316DA27C3391A00FE0E34 /* FeedCommentService.swift in Sources */,
 				04FD046327D7137700EC87DC /* ChallengeSelectingTagVC+Ext.swift in Sources */,
+				043C02402834D01100A9E708 /* ErrorAlertPopup.swift in Sources */,
 				040790AA27B89701006C5374 /* Decode.swift in Sources */,
 				04DAAE6227B3F41900AECFE4 /* SubscribeListCell.swift in Sources */,
 				045F52B227C892A50082673B /* WritingView.swift in Sources */,
@@ -1669,10 +1679,12 @@
 				04A40D6727BF6A17004DAB19 /* ViewModelType.swift in Sources */,
 				04DAAE6427B4196F00AECFE4 /* BottomSheetViewController.swift in Sources */,
 				040D853D27C10B5C0003C96A /* SelectingCollectionReusableView.swift in Sources */,
+				043C02422834DA3B00A9E708 /* ScrapBottomView.swift in Sources */,
 				0433171127C3EBD600FE0E34 /* RelayResponseModel.swift in Sources */,
 				04A40D6D27BFC1C2004DAB19 /* RelayListView.swift in Sources */,
 				04FD046F27D85EC800EC87DC /* RelayWritingViewModel.swift in Sources */,
 				04DAAE5127B1FDB300AECFE4 /* WholeFeedView.swift in Sources */,
+				043C02442834E01B00A9E708 /* ScrapTableViewCell.swift in Sources */,
 				04DAAE6827B4D0D600AECFE4 /* WritingCommentView.swift in Sources */,
 				0439AF4527B166B300E14E03 /* SubscribeFilterCell.swift in Sources */,
 				0407910527BBD70E006C5374 /* BottomBar.swift in Sources */,

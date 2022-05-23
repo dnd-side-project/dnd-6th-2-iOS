@@ -8,6 +8,8 @@ import Foundation
 
 class Service {
 
+    let decoder = JSONDecoder()
+
     func makeRequest(endpoint: EndPoint) -> URLRequest {
 
         let url = URL(string: endpoint.url)!
@@ -16,7 +18,7 @@ class Service {
         endpoint.headers?.forEach({ header in
             request.setValue(header.value as? String, forHTTPHeaderField: header.key)
         })
-        if let body = try endpoint.body {
+        if let body = endpoint.body {
             if !body.isEmpty {
                 request.httpBody = try? JSONSerialization.data(withJSONObject: body)
             }
@@ -24,4 +26,5 @@ class Service {
 
         return request
     }
+    
 }

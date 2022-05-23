@@ -52,9 +52,19 @@ extension ChallengeViewController {
         challengeMainView.expansionButton.rx.tap
             .bind(to: viewModel.input.expansionButtonTap)
             .disposed(by: disposeBag)
+
+        challengeMainView.todayKeyWordView.goToFeedButton
+            .rx.tap
+            .bind(to: viewModel.input.goToFeedButtonTap)
+            .disposed(by: disposeBag)
     }
 
     func bindOutput() {
+        viewModel.output.showError
+            .asSignal()
+            .emit(onNext: showError)
+            .disposed(by: disposeBag)
+
         viewModel.output.goToBellNotice
             .asSignal()
             .emit(onNext: goToBellNoticeVC)
@@ -77,18 +87,39 @@ extension ChallengeViewController {
             .disposed(by: disposeBag)
 
         viewModel.output.challenge
-            .asDriver()
-            .drive(onNext: setChallengeMainData)
+            .bind(onNext: setChallengeMainData)
             .disposed(by: disposeBag)
 
         viewModel.output.challangeStamp
             .asDriver()
             .drive(onNext: setStampData)
             .disposed(by: disposeBag)
+
+        viewModel.output.goToFeed
+            .asSignal()
+            .emit(onNext: goToFeed)
+            .disposed(by: disposeBag)
     }
 }
 
 extension ChallengeViewController {
+    private func showError(_ e: Error) {
+
+        guard let e = e as? NetworkError else {
+            ErrorAlertPopup.showIn(viewController: self, message: "에러 발생")
+            return
+        }
+
+        switch e {
+        case .wrongDataFormat:
+            ErrorAlertPopup.showIn(viewController: self, message: e.errorDescription)
+
+        default:
+            ErrorAlertPopup.showIn(viewController: self, message: "에러 발생")
+
+        }
+    }
+
     private func goToBellNoticeVC() {
         let vc = BellNoticeViewController()
         vc.modalPresentationStyle = .fullScreen
@@ -148,6 +179,12 @@ extension ChallengeViewController {
         let vc = DetailContentViewController()
         vc.modalPresentationStyle = .fullScreen
 
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
+
+    private func goToFeed() {
+        let vc = FeedViewController()
+        vc.modalPresentationStyle = .fullScreen
         self.navigationController?.pushViewController(vc, animated: true)
     }
 }

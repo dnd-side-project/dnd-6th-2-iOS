@@ -119,6 +119,8 @@ extension MyWritingViewModel {
                     type = "free"
                 }
 
+                print("TAGSTRING: \(tagString)")
+
                 owner.output.nowTag.accept(type)
                 owner.bindMyWritingList(cursor: nil, tag: type, pagination: false)
             }
