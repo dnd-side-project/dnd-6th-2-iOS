@@ -18,20 +18,31 @@ class RelayArticleService: Service {
         return RxAlamofire.request(request as URLRequestConvertible)
             .responseData()
             .asObservable()
-            .map { _, resData -> GetRelayArticleResDTO  in
-                print("RELAYArticle >>> \(request)")
-                let decoder = JSONDecoder()
+            .map { http, resData -> GetRelayArticleResDTO  in
+                switch http.statusCode {
+                case 200 ..< 300 :
+                    do {
+                        let result = try self.decoder.decode(GetRelayArticleResDTO.self, from: resData)
+                        return result
+                    } catch {
+                        throw NetworkError.decodeError
+                    }
 
-                do {
-                    let result = try decoder.decode(GetRelayArticleResDTO.self, from: resData)
+                case 400:
+                    throw NetworkError.wrongDataFormat
 
-                    print("RELAYArticle >>> \(result)")
-                    return result
-                } catch {
-                    print(error)
+                case 401:
+                    throw NetworkError.unauthorized
+
+                case 403:
+                    throw NetworkError.invalidRequest
+
+                case 500:
+                    throw NetworkError.serverError
+
+                default:
+                    throw NetworkError.emptyData
                 }
-
-                return GetRelayArticleResDTO()
             }
     }
 
@@ -44,19 +55,30 @@ class RelayArticleService: Service {
             .responseData()
             .asObservable()
             .map { http, resData -> Article  in
+                switch http.statusCode {
+                case 200 ..< 300 :
+                    do {
+                        let result = try self.decoder.decode(Article.self, from: resData)
+                        return result
+                    } catch {
+                        throw NetworkError.decodeError
+                    }
 
-                print("!!>>> \(http)")
-                let decoder = JSONDecoder()
+                case 400:
+                    throw NetworkError.wrongDataFormat
 
-                do {
-                    let result = try decoder.decode(Article.self, from: resData)
-                    print("!!>>> \(result)")
-                    return result
-                } catch {
-                    print(error)
+                case 401:
+                    throw NetworkError.unauthorized
+
+                case 403:
+                    throw NetworkError.invalidRequest
+
+                case 500:
+                    throw NetworkError.serverError
+
+                default:
+                    throw NetworkError.emptyData
                 }
-
-                return Article()
             }
     }
 
@@ -68,18 +90,31 @@ class RelayArticleService: Service {
         return RxAlamofire.request(request as URLRequestConvertible)
             .responseData()
             .asObservable()
-            .map { _, resData -> RelayArticleDTO  in
+            .map { http, resData -> RelayArticleDTO  in
+                switch http.statusCode {
+                case 200 ..< 300 :
+                    do {
+                        let result = try self.decoder.decode(RelayArticleDTO.self, from: resData)
+                        return result
+                    } catch {
+                        throw NetworkError.decodeError
+                    }
 
-                let decoder = JSONDecoder()
+                case 400:
+                    throw NetworkError.wrongDataFormat
 
-                do {
-                    let result = try decoder.decode(RelayArticleDTO.self, from: resData)
-                    return result
-                } catch {
-                    print(error)
+                case 401:
+                    throw NetworkError.unauthorized
+
+                case 403:
+                    throw NetworkError.invalidRequest
+
+                case 500:
+                    throw NetworkError.serverError
+
+                default:
+                    throw NetworkError.emptyData
                 }
-
-                return RelayArticleDTO()
             }
     }
 
@@ -91,18 +126,31 @@ class RelayArticleService: Service {
         return RxAlamofire.request(request as URLRequestConvertible)
             .responseData()
             .asObservable()
-            .map { _, resData -> MessageResDTO  in
+            .map { http, resData -> MessageResDTO  in
+                switch http.statusCode {
+                case 200 ..< 300 :
+                    do {
+                        let result = try self.decoder.decode(MessageResDTO.self, from: resData)
+                        return result
+                    } catch {
+                        throw NetworkError.decodeError
+                    }
 
-                let decoder = JSONDecoder()
+                case 400:
+                    throw NetworkError.wrongDataFormat
 
-                do {
-                    let result = try decoder.decode(MessageResDTO.self, from: resData)
-                    return result
-                } catch {
-                    print(error)
+                case 401:
+                    throw NetworkError.unauthorized
+
+                case 403:
+                    throw NetworkError.invalidRequest
+
+                case 500:
+                    throw NetworkError.serverError
+
+                default:
+                    throw NetworkError.emptyData
                 }
-
-                return MessageResDTO()
             }
     }
 

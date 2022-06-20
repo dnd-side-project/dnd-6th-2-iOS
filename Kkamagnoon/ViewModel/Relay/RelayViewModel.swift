@@ -23,6 +23,8 @@ class RelayViewModel: ViewModelType {
     }
 
     struct Output {
+        let showError = PublishRelay<Error>()
+        
         let goToBell = PublishRelay<Void>()
         let goToDetailRelayRoom = PublishRelay<Relay>()
         let goToMakingRelay = PublishRelay<Void>()
@@ -119,34 +121,40 @@ extension RelayViewModel {
                                       orderBy: output.currentSortStyle.value.rawValue,
                                       tags: checkSelectedTags)
             .withUnretained(self)
-            .bind { owner, relayResponse in
+            .subscribe(onNext: { owner, relayResponse in
 
                 owner.output.relayRoomList.accept(
                     [RelaySection(header: "", items: relayResponse.relays ?? [])]
                 )
-            }
+            }, onError: { [weak self] error in
+                self?.output.showError.accept(error)
+            })
             .disposed(by: disposeBag)
     }
 
     func bindParticipatedRoomList() {
         relayService.getRelayRoomParticitated(cursor: nil)
             .withUnretained(self)
-            .bind { owner, relayResponse in
+            .subscribe(onNext: { owner, relayResponse in
                 owner.output.participatedRoomList.accept(
                     [RelaySection(header: "", items: relayResponse.relays ?? [])]
                 )
-            }
+            }, onError: { [weak self] error in
+                self?.output.showError.accept(error)
+            })
             .disposed(by: disposeBag)
     }
 
     func bindMyRoomList() {
         relayService.getRelayUserMade(cursor: nil)
             .withUnretained(self)
-            .bind { owner, relayResponse in
+            .subscribe(onNext: { owner, relayResponse in
                 owner.output.participatedRoomList.accept(
                     [RelaySection(header: "", items: relayResponse.relays ?? [])]
                 )
-            }
+            }, onError: { [weak self] error in
+                self?.output.showError.accept(error)
+            })
             .disposed(by: disposeBag)
     }
 }

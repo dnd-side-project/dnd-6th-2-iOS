@@ -23,6 +23,8 @@ class ParticipantViewModel: ViewModelType {
     }
 
     struct Output {
+        let showError = PublishRelay<Error>()
+        
         let currentListStyle = BehaviorRelay<RelayListStyle>(value: .relayRoom)
 
         let goToBell = PublishRelay<Void>()
