@@ -24,23 +24,35 @@ class MyWritingService: Service {
             .responseData()
             .asObservable()
             .map { http, resData -> ArticlesResponse  in
-                print(http)
+                switch http.statusCode {
+                case 200 ..< 300 :
+                    do {
+                        let result = try self.decoder.decode(ArticlesResponse.self, from: resData)
 
-                let decoder = JSONDecoder()
+                        if pagination {
+                            self.isPaginating = false
+                        }
 
-                do {
-                    let result = try decoder.decode(ArticlesResponse.self, from: resData)
-                    print("RES>>>>>\(result)")
-                    return result
-                } catch {
-                    print(error)
+                        return result
+                    } catch {
+                        throw NetworkError.decodeError
+                    }
+
+                case 400:
+                    throw NetworkError.wrongDataFormat
+
+                case 401:
+                    throw NetworkError.unauthorized
+
+                case 403:
+                    throw NetworkError.invalidRequest
+
+                case 500:
+                    throw NetworkError.serverError
+
+                default:
+                    throw NetworkError.emptyData
                 }
-
-                if pagination {
-                    self.isPaginating = false
-                }
-
-                return ArticlesResponse()
             }
     }
 
@@ -51,17 +63,31 @@ class MyWritingService: Service {
         return RxAlamofire.request(request as URLRequestConvertible)
             .responseData()
             .asObservable()
-            .map { _, resData -> Article  in
-                let decoder = JSONDecoder()
+            .map { http, resData -> Article  in
+                switch http.statusCode {
+                case 200 ..< 300 :
+                    do {
+                        let result = try self.decoder.decode(Article.self, from: resData)
+                        return result
+                    } catch {
+                        throw NetworkError.decodeError
+                    }
 
-                do {
-                    let result = try decoder.decode(Article.self, from: resData)
-                    return result
-                } catch {
-                    print(error)
+                case 400:
+                    throw NetworkError.wrongDataFormat
+
+                case 401:
+                    throw NetworkError.unauthorized
+
+                case 403:
+                    throw NetworkError.invalidRequest
+
+                case 500:
+                    throw NetworkError.serverError
+
+                default:
+                    throw NetworkError.emptyData
                 }
-
-                return Article()
             }
     }
 
@@ -72,17 +98,31 @@ class MyWritingService: Service {
         return RxAlamofire.request(request as URLRequestConvertible)
             .responseData()
             .asObservable()
-            .map { _, resData -> Article  in
-                let decoder = JSONDecoder()
+            .map { http, resData -> Article  in
+                switch http.statusCode {
+                case 200 ..< 300 :
+                    do {
+                        let result = try self.decoder.decode(Article.self, from: resData)
+                        return result
+                    } catch {
+                        throw NetworkError.decodeError
+                    }
 
-                do {
-                    let result = try decoder.decode(Article.self, from: resData)
-                    return result
-                } catch {
-                    print(error)
+                case 400:
+                    throw NetworkError.wrongDataFormat
+
+                case 401:
+                    throw NetworkError.unauthorized
+
+                case 403:
+                    throw NetworkError.invalidRequest
+
+                case 500:
+                    throw NetworkError.serverError
+
+                default:
+                    throw NetworkError.emptyData
                 }
-
-                return Article()
             }
     }
 
@@ -93,17 +133,31 @@ class MyWritingService: Service {
         return RxAlamofire.request(request as URLRequestConvertible)
             .responseData()
             .asObservable()
-            .map { _, resData -> ArticlesResponse  in
-                let decoder = JSONDecoder()
+            .map { http, resData -> ArticlesResponse  in
+                switch http.statusCode {
+                case 200 ..< 300 :
+                    do {
+                        let result = try self.decoder.decode(ArticlesResponse.self, from: resData)
+                        return result
+                    } catch {
+                        throw NetworkError.decodeError
+                    }
 
-                do {
-                    let result = try decoder.decode(ArticlesResponse.self, from: resData)
-                    return result
-                } catch {
-                    print(error)
+                case 400:
+                    throw NetworkError.wrongDataFormat
+
+                case 401:
+                    throw NetworkError.unauthorized
+
+                case 403:
+                    throw NetworkError.invalidRequest
+
+                case 500:
+                    throw NetworkError.serverError
+
+                default:
+                    throw NetworkError.emptyData
                 }
-
-                return ArticlesResponse()
             }
     }
 
@@ -115,18 +169,30 @@ class MyWritingService: Service {
             .responseData()
             .asObservable()
             .map { http, resData -> MyWriting  in
-                let decoder = JSONDecoder()
-                print(http)
+                switch http.statusCode {
+                case 200 ..< 300 :
+                    do {
+                        let result = try self.decoder.decode(MyWriting.self, from: resData)
+                        return result
+                    } catch {
+                        throw NetworkError.decodeError
+                    }
 
-                do {
-                    let result = try decoder.decode(MyWriting.self, from: resData)
-                    print(result)
-                    return result
-                } catch {
-                    print(error)
+                case 400:
+                    throw NetworkError.wrongDataFormat
+
+                case 401:
+                    throw NetworkError.unauthorized
+
+                case 403:
+                    throw NetworkError.invalidRequest
+
+                case 500:
+                    throw NetworkError.serverError
+
+                default:
+                    throw NetworkError.emptyData
                 }
-
-                return MyWriting()
             }
     }
 
@@ -137,17 +203,31 @@ class MyWritingService: Service {
         return RxAlamofire.request(request as URLRequestConvertible)
             .responseData()
             .asObservable()
-            .map { _, resData -> Article  in
-                let decoder = JSONDecoder()
+            .map { http, resData -> Article  in
+                switch http.statusCode {
+                case 200 ..< 300 :
+                    do {
+                        let result = try self.decoder.decode(Article.self, from: resData)
+                        return result
+                    } catch {
+                        throw NetworkError.decodeError
+                    }
 
-                do {
-                    let result = try decoder.decode(Article.self, from: resData)
-                    return result
-                } catch {
-                    print(error)
+                case 400:
+                    throw NetworkError.wrongDataFormat
+
+                case 401:
+                    throw NetworkError.unauthorized
+
+                case 403:
+                    throw NetworkError.invalidRequest
+
+                case 500:
+                    throw NetworkError.serverError
+
+                default:
+                    throw NetworkError.emptyData
                 }
-
-                return Article()
             }
     }
 
@@ -158,17 +238,31 @@ class MyWritingService: Service {
         return RxAlamofire.request(request as URLRequestConvertible)
             .responseData()
             .asObservable()
-            .map { _, resData -> Int  in
-                let decoder = JSONDecoder()
+            .map { http, resData -> Int  in
+                switch http.statusCode {
+                case 200 ..< 300 :
+                    do {
+                        let result = try self.decoder.decode(Int.self, from: resData)
+                        return result
+                    } catch {
+                        throw NetworkError.decodeError
+                    }
 
-                do {
-                    let result = try decoder.decode(Int.self, from: resData)
-                    return result
-                } catch {
-                    print(error)
+                case 400:
+                    throw NetworkError.wrongDataFormat
+
+                case 401:
+                    throw NetworkError.unauthorized
+
+                case 403:
+                    throw NetworkError.invalidRequest
+
+                case 500:
+                    throw NetworkError.serverError
+
+                default:
+                    throw NetworkError.emptyData
                 }
-
-                return 0
             }
     }
 

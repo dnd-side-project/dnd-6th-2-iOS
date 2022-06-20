@@ -29,7 +29,10 @@ class MyWritingViewModel: ViewModelType {
 
         let myWritingList = BehaviorRelay<[FeedSection]>(value: [])
         let tempWritingList = BehaviorRelay<[FeedSection]>(value: [])
+
         let tagList = Observable<[String]>.of(["전체"] + StringType.myWritingTags)
+
+        let showError = PublishRelay<Error>()
         let cursor = BehaviorRelay<String>(value: "")
         let nowTag = BehaviorRelay<String>(value: "")
     }
@@ -57,14 +60,13 @@ extension MyWritingViewModel {
             return
         }
 
-        print("Call network!")
-
         myWritingService.getMyArticle(cursor: cursor, type: tag == "" ? nil : tag, pagination: pagination)
             .withUnretained(self)
-            .bind { owner, articleResponse in
+            .subscribe(onNext: { owner, articleResponse in
                 owner.output.cursor.accept(articleResponse.next_cursor ?? "")
 
                 let oldList = owner.output.myWritingList.value
+
                 var oldArticles: [Article] = []
                 if pagination && !oldList.isEmpty {
                     oldArticles = oldList[0].items
@@ -76,18 +78,23 @@ extension MyWritingViewModel {
                         items: oldArticles + (articleResponse.articles ?? [])
                     )]
                 )
-            }
+            },
+                       onError: {[weak self] error in
+                self?.output.showError.accept(error)
+            })
             .disposed(by: disposeBag)
     }
 
     func bindTempWritingList() {
         myWritingService.getMyArticleTemp(cursor: nil)
             .withUnretained(self)
-            .bind { owner, articleResponse in
+            .subscribe(onNext: { owner, articleResponse in
                 owner.output.tempWritingList.accept(
                     [FeedSection(header: Relay(), items: articleResponse.articles ?? [])]
                 )
-            }
+            }, onError: { [weak self] error in
+                self?.output.showError.accept(error)
+            })
             .disposed(by: disposeBag)
     }
 

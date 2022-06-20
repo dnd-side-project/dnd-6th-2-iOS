@@ -21,10 +21,10 @@ class ChallengeViewModel: ViewModelType {
     struct Output {
         let challenge = PublishSubject<GetChallengeMain>()
         let challangeStamp = PublishSubject<GetMonthlyDTO>()
-        
+
         let showError = PublishRelay<Error>()
         let calendarState = BehaviorRelay<CalendarState>(value: .week)
-        
+
         let goToBellNotice = PublishRelay<Void>()
         let goToWriting = PublishRelay<Void>()
         let goToFeed = PublishRelay<Void>()
