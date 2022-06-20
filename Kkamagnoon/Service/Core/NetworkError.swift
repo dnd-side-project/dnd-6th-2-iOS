@@ -69,4 +69,33 @@ enum NetworkError: LocalizedError {
             return "서버 에러입니다."
         }
     }
+
+    var errorDescriptionDetail: String {
+        switch self {
+        case .unknownError:
+            return "알수 없는 에러가 발생했습니다."
+        case .invalidHttpStatusCode:
+            return "알수 없는 에러가 발생했습니다."
+        case .components:
+            return "알수 없는 에러가 발생했습니다."
+        case .urlRequest:
+            return "알수 없는 에러가 발생했습니다."
+        case .parsing:
+            return "알수 없는 에러가 발생했습니다."
+        case .emptyData:
+            return "알수 없는 에러가 발생했습니다."
+        case .decodeError:
+            return "알수 없는 에러가 발생했습니다."
+        case .wrongDataFormat:
+            return "잘못된 데이터 포맷입니다."
+        case .unauthorized:
+            return "권한이 없습니다."
+        case .invalidRequest:
+            return "알수 없는 요청입니다."
+        case .cannotFindData:
+            return "데이터를 찾을 수 없습니다."
+        case .serverError:
+            return "서버 내부에서 에러가 발생했습니다."
+        }
+    }
 }

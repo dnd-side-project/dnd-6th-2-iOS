@@ -35,7 +35,6 @@ class ErrorAlertPopup: UIView {
 
     var contentLabel = UILabel()
         .then {
-            $0.text = "인터넷이 원활하지 않습니다\n 인터넷 연결을 다시 확인해주세요"
             $0.numberOfLines = 0
             $0.lineBreakMode = .byTruncatingTail
             $0.textAlignment = .center
@@ -120,7 +119,7 @@ extension ErrorAlertPopup {
             .disposed(by: disposeBag)
     }
 
-    static func showIn(viewController: UIViewController, message: String) {
+    static func showIn(viewController: UIViewController, message: String, subMessage: String) {
         var displayVC = viewController
 
         if let tabController = viewController as? UITabBarController {
@@ -132,6 +131,7 @@ extension ErrorAlertPopup {
         }
 
         sharedView.titleLabel.text = message
+        sharedView.contentLabel.text = subMessage
 
         displayVC.view.addSubview(sharedView)
         sharedView.snp.makeConstraints {

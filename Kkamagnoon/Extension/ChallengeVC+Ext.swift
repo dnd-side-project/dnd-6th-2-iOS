@@ -91,8 +91,7 @@ extension ChallengeViewController {
             .disposed(by: disposeBag)
 
         viewModel.output.challangeStamp
-            .asDriver()
-            .drive(onNext: setStampData)
+            .bind(onNext: setStampData)
             .disposed(by: disposeBag)
 
         viewModel.output.goToFeed
@@ -106,18 +105,10 @@ extension ChallengeViewController {
     private func showError(_ e: Error) {
 
         guard let e = e as? NetworkError else {
-            ErrorAlertPopup.showIn(viewController: self, message: "에러 발생")
             return
         }
 
-        switch e {
-        case .wrongDataFormat:
-            ErrorAlertPopup.showIn(viewController: self, message: e.errorDescription)
-
-        default:
-            ErrorAlertPopup.showIn(viewController: self, message: "에러 발생")
-
-        }
+        ErrorAlertPopup.showIn(viewController: self, message: e.errorDescription, subMessage: e.errorDescriptionDetail)
     }
 
     private func goToBellNoticeVC() {

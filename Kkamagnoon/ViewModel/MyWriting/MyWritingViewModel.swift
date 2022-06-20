@@ -95,6 +95,7 @@ extension MyWritingViewModel {
         input.myWritingCellTap
             .withUnretained(self)
             .bind { owner, article in
+                print("TAPPED!")
                 owner.output.goToDetail.accept(article)
             }
             .disposed(by: disposeBag)

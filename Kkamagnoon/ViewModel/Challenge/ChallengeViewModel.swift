@@ -19,14 +19,14 @@ class ChallengeViewModel: ViewModelType {
     }
 
     struct Output {
+        let challenge = PublishSubject<GetChallengeMain>()
+        let challangeStamp = PublishSubject<GetMonthlyDTO>()
+        
         let showError = PublishRelay<Error>()
+        let calendarState = BehaviorRelay<CalendarState>(value: .week)
+        
         let goToBellNotice = PublishRelay<Void>()
         let goToWriting = PublishRelay<Void>()
-//        let goToDetail = PublishRelay<Void>()
-//        let challenge = BehaviorRelay<GetChallengeMain>(value: GetChallengeMain())
-        let challenge = PublishSubject<GetChallengeMain>()
-        let calendarState = BehaviorRelay<CalendarState>(value: .week)
-        let challangeStamp = BehaviorRelay<GetMonthlyDTO>(value: GetMonthlyDTO())
         let goToFeed = PublishRelay<Void>()
     }
 
@@ -50,7 +50,6 @@ class ChallengeViewModel: ViewModelType {
         challengeService.getChallenge()
             .withUnretained(self)
             .subscribe(onNext: { owner, challengeMain in
-//                owner.output.challenge.accept(challengeMain)
                 owner.output.challenge.onNext(challengeMain)
             },
                         onError: { [weak self] error in
@@ -62,9 +61,12 @@ class ChallengeViewModel: ViewModelType {
     func bindChallengeStamp(month: String, year: String) {
         challengeService.getChallengeStamp(month: month, year: year)
             .withUnretained(self)
-            .bind { owner, challengeStamp in
-                owner.output.challangeStamp.accept(challengeStamp)
-            }
+            .subscribe(onNext: { owner, challengeStamp in
+                owner.output.challangeStamp.onNext(challengeStamp)
+            },
+                       onError: { [weak self] error in
+                self?.output.showError.accept(error)
+            })
             .disposed(by: disposeBag)
     }
 

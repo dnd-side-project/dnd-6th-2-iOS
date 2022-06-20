@@ -6,39 +6,40 @@
 //
 
 import UIKit
+import SnapKit
 import Then
 
 class MyWritingCell: UICollectionViewCell {
 
     static let identifier = "MyWritingCellIdentifier"
-    var titleLabel = UILabel()
+    let titleLabel = UILabel()
         .then {
             $0.font = UIFont.pretendard(weight: .semibold, size: 14)
             $0.textColor = .white
         }
 
-    var statusLabel = UILabel()
+    let statusLabel = UILabel()
         .then {
             $0.font = UIFont.pretendard(weight: .regular, size: 10)
             $0.text = "비공개"
             $0.textColor = UIColor(rgb: 0x9C9C9C)
         }
 
-    var dotLabel = UILabel()
+    let dotLabel = UILabel()
         .then {
             $0.text = StringType.dot
             $0.font = UIFont.pretendard(weight: .regular, size: 10)
             $0.textColor = UIColor(rgb: 0x626262)
         }
 
-    var dateLabel = UILabel()
+    let dateLabel = UILabel()
         .then {
             $0.font = UIFont.pretendard(weight: .regular, size: 10)
             $0.textColor = UIColor(rgb: 0x626262)
             $0.text = "2022년 2월 1일"
         }
 
-    var contentLabel = UILabel()
+    let contentLabel = UILabel()
         .then {
             $0.font = UIFont.pretendard(weight: .regular, size: 13)
             $0.numberOfLines = 5
@@ -48,64 +49,72 @@ class MyWritingCell: UICollectionViewCell {
                 lineHeight: .lineheightInBox)
         }
 
-    var likeLabel = ImageLabelView()
+    let likeLabel = ImageLabelView()
         .then {
             $0.imageView.image = UIImage(named: "Heart")
         }
 
-    var commentLabel = ImageLabelView()
+    let commentLabel = ImageLabelView()
         .then {
             $0.imageView.image = UIImage(named: "Comment")
         }
 
-    var moreButton = UIButton()
+    let moreButton = UIButton()
         .then {
             $0.setImage(UIImage(named: "More"), for: .normal)
         }
 
+    override func prepareForReuse() {
+      super.prepareForReuse()
+      // TODO: 셀 내용 초기화...
+    }
+
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.backgroundColor = UIColor(rgb: 0x292929)
-        self.layer.cornerRadius = 15
-        setView()
+        configureView()
+        layoutView()
     }
 
     required init?(coder: NSCoder) {
         super.init(coder: coder)
-        self.backgroundColor = UIColor(rgb: 0x292929)
-        self.layer.cornerRadius = 15
-        setView()
+        configureView()
+        layoutView()
     }
 }
 
 extension MyWritingCell {
 
-    func setView() {
-        self.addSubview(titleLabel)
+    func configureView() {
+        contentView.backgroundColor = UIColor(rgb: 0x292929)
+        contentView.layer.cornerRadius = 15
+    }
+
+    func layoutView() {
+        contentView.addSubview(titleLabel)
         titleLabel.snp.makeConstraints {
             $0.top.equalToSuperview().offset(28.0)
             $0.left.equalToSuperview().offset(20.0)
         }
 
-        self.addSubview(dateLabel)
+        contentView.addSubview(dateLabel)
         dateLabel.snp.makeConstraints {
             $0.centerY.equalTo(titleLabel)
             $0.right.equalToSuperview().offset(-20.0)
         }
 
-        self.addSubview(dotLabel)
+        contentView.addSubview(dotLabel)
         dotLabel.snp.makeConstraints {
             $0.centerY.equalTo(titleLabel)
             $0.right.equalTo(dateLabel.snp.left).offset(-6.0)
         }
 
-        self.addSubview(statusLabel)
+        contentView.addSubview(statusLabel)
         statusLabel.snp.makeConstraints {
             $0.centerY.equalTo(titleLabel)
             $0.right.equalTo(dotLabel.snp.left).offset(-6.0)
         }
 
-        self.addSubview(contentLabel)
+        contentView.addSubview(contentLabel)
         contentLabel.snp.makeConstraints {
             $0.left.equalTo(titleLabel)
             $0.width.equalTo(UIScreen.main.bounds.width - 80)
@@ -113,20 +122,20 @@ extension MyWritingCell {
             $0.top.equalTo(titleLabel.snp.bottom).offset(8.0)
         }
 
-        self.addSubview(likeLabel)
+        contentView.addSubview(likeLabel)
         likeLabel.snp.makeConstraints {
             $0.left.equalToSuperview().offset(20.0)
             $0.bottom.equalToSuperview().offset(-28.0)
             $0.top.equalTo(contentLabel.snp.bottom).offset(12.0)
         }
 
-        self.addSubview(commentLabel)
+        contentView.addSubview(commentLabel)
         commentLabel.snp.makeConstraints {
             $0.left.equalTo(likeLabel.snp.right).offset(32.0)
             $0.centerY.equalTo(likeLabel)
         }
 
-        self.addSubview(moreButton)
+        contentView.addSubview(moreButton)
         moreButton.snp.makeConstraints {
             $0.size.equalTo(24.0)
             $0.right.equalToSuperview().offset(-20.0)
