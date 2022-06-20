@@ -27,6 +27,8 @@ class WritingViewModel: ViewModelType {
 
     struct Output {
 //        let article = PublishRelay<CreateArticleDTO>()
+        let showError = PublishRelay<Error>()
+        
         let enableCompleteButton = PublishRelay<Bool>()
         let tips = PublishRelay<String>()
 
@@ -54,10 +56,11 @@ extension WritingViewModel {
     func bindTips() {
         challengeService.getChallengeArticle()
             .withUnretained(self)
-            .bind { owner, tip in
-
+            .subscribe(onNext: { owner, tip in
                 owner.output.tips.accept(tip.content ?? "글쓰기를 위한 팁")
-            }
+            }, onError: { [weak self] error in
+                self?.output.showError.accept(error)
+            })
             .disposed(by: disposeBag)
     }
 

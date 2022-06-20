@@ -15,6 +15,7 @@ class DetailMyWritingViewModel: ViewModelType {
     }
 
     struct Output {
+        let showError = PublishRelay<Error>()
         let article = BehaviorRelay<Article>(value: Article())
     }
 
@@ -34,9 +35,11 @@ class DetailMyWritingViewModel: ViewModelType {
         myWritingService
             .getMyArticleDetail(articleId: input.articleId.value)
             .withUnretained(self)
-            .bind { owner, myWriting in
+            .subscribe(onNext: { owner, myWriting in
                 owner.output.article.accept(myWriting.article ?? Article())
-            }
+            }, onError: { [weak self] error in
+                self?.output.showError.accept(error)
+            })
             .disposed(by: disposeBag)
     }
 }
