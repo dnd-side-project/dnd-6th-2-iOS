@@ -28,7 +28,7 @@ class WritingViewModel: ViewModelType {
     struct Output {
 //        let article = PublishRelay<CreateArticleDTO>()
         let showError = PublishRelay<Error>()
-        
+
         let enableCompleteButton = PublishRelay<Bool>()
         let tips = PublishRelay<String>()
 

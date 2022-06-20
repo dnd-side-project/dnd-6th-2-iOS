@@ -17,7 +17,7 @@ class SubscribeListViewModel: ViewModelType {
     }
 
     struct Output {
-        
+
         let showError = PublishRelay<Error>()
         let popBack = PublishRelay<Void>()
         let subscribe = BehaviorRelay<SubscribeStyle>(value: .notSubscribing)

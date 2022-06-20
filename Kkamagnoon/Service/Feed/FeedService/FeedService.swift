@@ -157,7 +157,7 @@ class FeedService: Service {
                 default:
                     throw NetworkError.emptyData
                 }
-                
+
             }
     }
 

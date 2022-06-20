@@ -24,7 +24,7 @@ class RelayViewModel: ViewModelType {
 
     struct Output {
         let showError = PublishRelay<Error>()
-        
+
         let goToBell = PublishRelay<Void>()
         let goToDetailRelayRoom = PublishRelay<Relay>()
         let goToMakingRelay = PublishRelay<Void>()

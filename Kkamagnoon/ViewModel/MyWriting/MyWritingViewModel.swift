@@ -25,7 +25,7 @@ class MyWritingViewModel: ViewModelType {
         let goToBellNotice = PublishRelay<Void>()
         let goToWriting = PublishRelay<Void>()
         let goToDetail = PublishRelay<Article>()
-        let changeListStyle = BehaviorRelay<MyWritingStyle>(value: .myWriting)
+        let currentStyle = BehaviorRelay<MyWritingStyle>(value: .myWriting)
 
         let myWritingList = BehaviorRelay<[FeedSection]>(value: [])
         let tempWritingList = BehaviorRelay<[FeedSection]>(value: [])
@@ -33,8 +33,10 @@ class MyWritingViewModel: ViewModelType {
         let tagList = Observable<[String]>.of(["전체"] + StringType.myWritingTags)
 
         let showError = PublishRelay<Error>()
-        let cursor = BehaviorRelay<String>(value: "")
+        let myWritingCursor = BehaviorRelay<String>(value: "")
+        let tempWritingCursor = BehaviorRelay<String>(value: "")
         let nowTag = BehaviorRelay<String>(value: "")
+
     }
 
     var input: Input
@@ -56,14 +58,14 @@ extension MyWritingViewModel {
 
     func bindMyWritingList(cursor: String?, tag: String?, pagination: Bool) {
 
-        guard !myWritingService.isPaginating else {
+        guard !myWritingService.isMyWritingPaginating else {
             return
         }
 
         myWritingService.getMyArticle(cursor: cursor, type: tag == "" ? nil : tag, pagination: pagination)
             .withUnretained(self)
             .subscribe(onNext: { owner, articleResponse in
-                owner.output.cursor.accept(articleResponse.next_cursor ?? "")
+                owner.output.myWritingCursor.accept(articleResponse.next_cursor ?? "")
 
                 let oldList = owner.output.myWritingList.value
 
@@ -78,19 +80,35 @@ extension MyWritingViewModel {
                         items: oldArticles + (articleResponse.articles ?? [])
                     )]
                 )
-            },
-                       onError: {[weak self] error in
+            }, onError: {[weak self] error in
                 self?.output.showError.accept(error)
             })
             .disposed(by: disposeBag)
     }
 
-    func bindTempWritingList() {
-        myWritingService.getMyArticleTemp(cursor: nil)
+    func bindTempWritingList(cursor: String?, pagination: Bool) {
+
+        guard !myWritingService.isTempWritingPaginating else {
+            return
+        }
+
+        myWritingService.getMyArticleTemp(cursor: cursor, pagination: pagination)
             .withUnretained(self)
             .subscribe(onNext: { owner, articleResponse in
+                owner.output.tempWritingCursor.accept(articleResponse.next_cursor ?? "")
+
+                let oldList = owner.output.tempWritingList.value
+
+                var oldArticles: [Article] = []
+                if pagination && !oldList.isEmpty {
+                    oldArticles = oldList[0].items
+                }
+
                 owner.output.tempWritingList.accept(
-                    [FeedSection(header: Relay(), items: articleResponse.articles ?? [])]
+                    [FeedSection(
+                        header: Relay(),
+                        items: oldArticles + (articleResponse.articles ?? [])
+                    )]
                 )
             }, onError: { [weak self] error in
                 self?.output.showError.accept(error)
@@ -137,14 +155,14 @@ extension MyWritingViewModel {
         input.myWritingTap
             .withUnretained(self)
             .bind {owner, _ in
-                owner.output.changeListStyle.accept(.myWriting)
+                owner.output.currentStyle.accept(.myWriting)
             }
             .disposed(by: disposeBag)
 
         input.tempWritingTap
             .withUnretained(self)
             .bind {owner, _ in
-                owner.output.changeListStyle.accept(.tempWriting)
+                owner.output.currentStyle.accept(.tempWriting)
             }
             .disposed(by: disposeBag)
     }
