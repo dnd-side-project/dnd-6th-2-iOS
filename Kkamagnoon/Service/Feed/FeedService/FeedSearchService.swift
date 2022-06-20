@@ -17,19 +17,30 @@ class FeedSearchService: Service {
             .responseData()
             .asObservable()
             .map { http, resData -> GetMainFeedResDTO  in
-                print("~~~~>>\(http)")
+                switch http.statusCode {
+                case 200 ..< 300 :
+                    do {
+                        let result = try self.decoder.decode(GetMainFeedResDTO.self, from: resData)
+                        return result
+                    } catch {
+                        throw NetworkError.decodeError
+                    }
 
-                let decoder = JSONDecoder()
+                case 400:
+                    throw NetworkError.wrongDataFormat
 
-                do {
-                    let result = try decoder.decode(GetMainFeedResDTO.self, from: resData)
-                    print(result)
-                    return result
-                } catch {
-                    print(error)
+                case 401:
+                    throw NetworkError.unauthorized
+
+                case 403:
+                    throw NetworkError.invalidRequest
+
+                case 500:
+                    throw NetworkError.serverError
+
+                default:
+                    throw NetworkError.emptyData
                 }
-
-                return GetMainFeedResDTO()
             }
     }
 
@@ -40,19 +51,32 @@ class FeedSearchService: Service {
         return RxAlamofire.request(request as URLRequestConvertible)
             .responseData()
             .asObservable()
-            .map { _, resData -> [History]  in
+            .map { http, resData -> [History]  in
 
-                let decoder = JSONDecoder()
+                switch http.statusCode {
+                case 200 ..< 300 :
+                    do {
+                        let result = try self.decoder.decode([History].self, from: resData)
+                        return result
+                    } catch {
+                        throw NetworkError.decodeError
+                    }
 
-                do {
-                    let result = try decoder.decode([History].self, from: resData)
+                case 400:
+                    throw NetworkError.wrongDataFormat
 
-                    return result
-                } catch {
-                    print(error)
+                case 401:
+                    throw NetworkError.unauthorized
+
+                case 403:
+                    throw NetworkError.invalidRequest
+
+                case 500:
+                    throw NetworkError.serverError
+
+                default:
+                    throw NetworkError.emptyData
                 }
-
-                return [History]()
             }
     }
 
@@ -63,19 +87,32 @@ class FeedSearchService: Service {
         return RxAlamofire.request(request as URLRequestConvertible)
             .responseData()
             .asObservable()
-            .map { _, resData -> String  in
+            .map { http, resData -> String  in
 
-                let decoder = JSONDecoder()
+                switch http.statusCode {
+                case 200 ..< 300 :
+                    do {
+                        let result = try self.decoder.decode(String.self, from: resData)
+                        return result
+                    } catch {
+                        throw NetworkError.decodeError
+                    }
 
-                do {
-                    let result = try decoder.decode(String.self, from: resData)
+                case 400:
+                    throw NetworkError.wrongDataFormat
 
-                    return result
-                } catch {
-                    print(error)
+                case 401:
+                    throw NetworkError.unauthorized
+
+                case 403:
+                    throw NetworkError.invalidRequest
+
+                case 500:
+                    throw NetworkError.serverError
+
+                default:
+                    throw NetworkError.emptyData
                 }
-
-                return String()
             }
     }
 

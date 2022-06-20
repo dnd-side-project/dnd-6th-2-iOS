@@ -23,6 +23,8 @@ class BottomSheetViewModel: ViewModelType {
     }
 
     struct Output {
+        let showError = PublishRelay<Error>()
+        
         let dismissView = PublishRelay<Void>()
         let enableSendButton = BehaviorRelay<Bool>(value: false)
         let commentList = BehaviorRelay<[SectionModel<String, Comment>]>(value: [])
@@ -58,9 +60,11 @@ extension BottomSheetViewModel {
     func bindComment() {
         commentService.getComment(articleId: input.articleId.value)
             .withUnretained(self)
-            .bind { _, comments in
-                self.output.commentList.accept([SectionModel(model: "", items: comments)])
-            }
+            .subscribe(onNext: { owner, comments in
+                owner.output.commentList.accept([SectionModel(model: "", items: comments)])
+            }, onError: { [weak self] error in
+                self?.output.showError.accept(error)
+            })
             .disposed(by: disposeBag)
     }
 

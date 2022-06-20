@@ -23,6 +23,8 @@ class DetailContentViewModel: ViewModelType {
     }
 
     struct Output {
+        
+        let showError = PublishRelay<Error>()
 
         // TODO: 구독하기 버튼 클릭시
 
@@ -55,13 +57,14 @@ class DetailContentViewModel: ViewModelType {
     }
 
     func bindArticle() {
-        print("!!!!! >> \(input.articleId.value)")
         feedService.getArticle(articleId: input.articleId.value)
             .withUnretained(self)
-            .bind { owner, article in
+            .subscribe(onNext: { owner, article in
                 owner.output.article.accept(article)
                 owner.output.tags.accept([SectionModel(model: "", items: article.tags ?? [])])
-            }
+            }, onError: { [weak self] error in
+                self?.output.showError.accept(error)
+            })
             .disposed(by: disposeBag)
     }
 

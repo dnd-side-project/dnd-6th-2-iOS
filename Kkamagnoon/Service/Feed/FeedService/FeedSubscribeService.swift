@@ -16,19 +16,32 @@ class FeedSubscribeService: Service {
         return RxAlamofire.request(request as URLRequestConvertible)
             .responseData()
             .asObservable()
-            .map { _, resData -> GetSubFeedResDTO  in
+            .map { http, resData -> GetSubFeedResDTO  in
 
-                let decoder = JSONDecoder()
+                switch http.statusCode {
+                case 200 ..< 300 :
+                    do {
+                        let result = try self.decoder.decode(GetSubFeedResDTO.self, from: resData)
+                        return result
+                    } catch {
+                        throw NetworkError.decodeError
+                    }
 
-                do {
-                    let result = try decoder.decode(GetSubFeedResDTO.self, from: resData)
+                case 400:
+                    throw NetworkError.wrongDataFormat
 
-                    return result
-                } catch {
-                    print(error)
+                case 401:
+                    throw NetworkError.unauthorized
+
+                case 403:
+                    throw NetworkError.invalidRequest
+
+                case 500:
+                    throw NetworkError.serverError
+
+                default:
+                    throw NetworkError.emptyData
                 }
-
-                return GetSubFeedResDTO()
             }
     }
 
@@ -39,19 +52,32 @@ class FeedSubscribeService: Service {
         return RxAlamofire.request(request as URLRequestConvertible)
             .responseData()
             .asObservable()
-            .map { _, resData -> [Host]  in
+            .map { http, resData -> [Host]  in
 
-                let decoder = JSONDecoder()
+                switch http.statusCode {
+                case 200 ..< 300 :
+                    do {
+                        let result = try self.decoder.decode([Host].self, from: resData)
+                        return result
+                    } catch {
+                        throw NetworkError.decodeError
+                    }
 
-                do {
-                    let result = try decoder.decode([Host].self, from: resData)
+                case 400:
+                    throw NetworkError.wrongDataFormat
 
-                    return result
-                } catch {
-                    print(error)
+                case 401:
+                    throw NetworkError.unauthorized
+
+                case 403:
+                    throw NetworkError.invalidRequest
+
+                case 500:
+                    throw NetworkError.serverError
+
+                default:
+                    throw NetworkError.emptyData
                 }
-
-                return [Host]()
             }
     }
 
@@ -62,19 +88,32 @@ class FeedSubscribeService: Service {
         return RxAlamofire.request(request as URLRequestConvertible)
             .responseData()
             .asObservable()
-            .map { _, resData -> GetSubFeedResDTO  in
+            .map { http, resData -> GetSubFeedResDTO  in
 
-                let decoder = JSONDecoder()
+                switch http.statusCode {
+                case 200 ..< 300 :
+                    do {
+                        let result = try self.decoder.decode(GetSubFeedResDTO.self, from: resData)
+                        return result
+                    } catch {
+                        throw NetworkError.decodeError
+                    }
 
-                do {
-                    let result = try decoder.decode(GetSubFeedResDTO.self, from: resData)
+                case 400:
+                    throw NetworkError.wrongDataFormat
 
-                    return result
-                } catch {
-                    print(error)
+                case 401:
+                    throw NetworkError.unauthorized
+
+                case 403:
+                    throw NetworkError.invalidRequest
+
+                case 500:
+                    throw NetworkError.serverError
+
+                default:
+                    throw NetworkError.emptyData
                 }
-
-                return GetSubFeedResDTO()
             }
     }
 
@@ -85,19 +124,32 @@ class FeedSubscribeService: Service {
         return RxAlamofire.request(request as URLRequestConvertible)
             .responseData()
             .asObservable()
-            .map { _, resData -> MessageResDTO  in
+            .map { http, resData -> MessageResDTO  in
 
-                let decoder = JSONDecoder()
+                switch http.statusCode {
+                case 200 ..< 300 :
+                    do {
+                        let result = try self.decoder.decode(MessageResDTO.self, from: resData)
+                        return result
+                    } catch {
+                        throw NetworkError.decodeError
+                    }
 
-                do {
-                    let result = try decoder.decode(MessageResDTO.self, from: resData)
+                case 400:
+                    throw NetworkError.wrongDataFormat
 
-                    return result
-                } catch {
-                    print(error)
+                case 401:
+                    throw NetworkError.unauthorized
+
+                case 403:
+                    throw NetworkError.invalidRequest
+
+                case 500:
+                    throw NetworkError.serverError
+
+                default:
+                    throw NetworkError.emptyData
                 }
-
-                return MessageResDTO()
             }
     }
 
@@ -108,19 +160,32 @@ class FeedSubscribeService: Service {
         return RxAlamofire.request(request as URLRequestConvertible)
             .responseData()
             .asObservable()
-            .map { _, resData -> MessageResDTO  in
+            .map { http, resData -> MessageResDTO  in
 
-                let decoder = JSONDecoder()
+                switch http.statusCode {
+                case 200 ..< 300 :
+                    do {
+                        let result = try self.decoder.decode(MessageResDTO.self, from: resData)
+                        return result
+                    } catch {
+                        throw NetworkError.decodeError
+                    }
 
-                do {
-                    let result = try decoder.decode(MessageResDTO.self, from: resData)
+                case 400:
+                    throw NetworkError.wrongDataFormat
 
-                    return result
-                } catch {
-                    print(error)
+                case 401:
+                    throw NetworkError.unauthorized
+
+                case 403:
+                    throw NetworkError.invalidRequest
+
+                case 500:
+                    throw NetworkError.serverError
+
+                default:
+                    throw NetworkError.emptyData
                 }
-
-                return MessageResDTO()
             }
     }
 }

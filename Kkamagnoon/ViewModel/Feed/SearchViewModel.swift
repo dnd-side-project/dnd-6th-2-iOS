@@ -21,6 +21,8 @@ class SearchViewModel: ViewModelType {
     }
 
     struct Output {
+        let showError = PublishRelay<Error>()
+        
         let menuList = Observable.of(["챌린지", "자유글", "릴레이"])
         let dismissView = PublishRelay<Void>()
         let recentSearchList = BehaviorRelay<[SectionModel<String, History>]>(value: [])
@@ -55,9 +57,11 @@ extension SearchViewModel {
     func getRecentSearchList() {
         feedSearchService.getSearchFeedHistory()
             .withUnretained(self)
-            .bind { owner, list in
+            .subscribe(onNext: { owner, list in
                 owner.output.recentSearchList.accept([SectionModel(model: "", items: list)])
-            }
+            }, onError: { [weak self] error in
+                self?.output.showError.accept(error)
+            })
             .disposed(by: disposeBag)
     }
 
@@ -110,11 +114,13 @@ extension SearchViewModel {
     private func searchBy(word: String, type: String) {
         feedSearchService.getSearchFeed(cursor: nil, content: word, type: type, orderBy: "최신순")
             .withUnretained(self)
-            .bind { owner, result in
+            .subscribe(onNext: { owner, result in
                 owner.output.searchResultList.accept([SectionModel(model: "", items: result.articles ?? [])])
 //                owner.output.searchWord.accept(word)
                 owner.output.searchContentStyle.accept(.searchResult)
-            }
+            }, onError: { [weak self] error in
+                self?.output.showError.accept(error)
+            })
             .disposed(by: disposeBag)
     }
 

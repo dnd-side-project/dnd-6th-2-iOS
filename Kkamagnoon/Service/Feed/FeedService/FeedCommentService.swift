@@ -18,18 +18,30 @@ class FeedCommentService: Service {
             .responseData()
             .asObservable()
             .map { http, resData -> [Comment] in
-                print(">>>Comment: \(http)")
-                let decoder = JSONDecoder()
+                switch http.statusCode {
+                case 200 ..< 300 :
+                    do {
+                        let result = try self.decoder.decode([Comment].self, from: resData)
+                        return result
+                    } catch {
+                        throw NetworkError.decodeError
+                    }
 
-                do {
-                    let result = try decoder.decode([Comment].self, from: resData)
-                    print(">>>Comment: \(result)")
-                    return result
-                } catch {
-                    print(error)
+                case 400:
+                    throw NetworkError.wrongDataFormat
+
+                case 401:
+                    throw NetworkError.unauthorized
+
+                case 403:
+                    throw NetworkError.invalidRequest
+
+                case 500:
+                    throw NetworkError.serverError
+
+                default:
+                    throw NetworkError.emptyData
                 }
-
-                return [Comment]()
             }
     }
 
@@ -42,18 +54,30 @@ class FeedCommentService: Service {
             .asObservable()
             .map { http, resData -> Comment  in
 
-                let decoder = JSONDecoder()
-                print(">>>sendComment : \(http)")
+                switch http.statusCode {
+                case 200 ..< 300 :
+                    do {
+                        let result = try self.decoder.decode(Comment.self, from: resData)
+                        return result
+                    } catch {
+                        throw NetworkError.decodeError
+                    }
 
-                do {
-                    let result = try decoder.decode(Comment.self, from: resData)
-                    print(">>>sendComment : \(result)")
-                    return result
-                } catch {
-                    print(error)
+                case 400:
+                    throw NetworkError.wrongDataFormat
+
+                case 401:
+                    throw NetworkError.unauthorized
+
+                case 403:
+                    throw NetworkError.invalidRequest
+
+                case 500:
+                    throw NetworkError.serverError
+
+                default:
+                    throw NetworkError.emptyData
                 }
-
-                return Comment()
             }
     }
 
@@ -64,19 +88,32 @@ class FeedCommentService: Service {
         return RxAlamofire.request(request as URLRequestConvertible)
             .responseData()
             .asObservable()
-            .map { _, resData -> Comment  in
+            .map { http, resData -> Comment  in
 
-                let decoder = JSONDecoder()
+                switch http.statusCode {
+                case 200 ..< 300 :
+                    do {
+                        let result = try self.decoder.decode(Comment.self, from: resData)
+                        return result
+                    } catch {
+                        throw NetworkError.decodeError
+                    }
 
-                do {
-                    let result = try decoder.decode(Comment.self, from: resData)
+                case 400:
+                    throw NetworkError.wrongDataFormat
 
-                    return result
-                } catch {
-                    print(error)
+                case 401:
+                    throw NetworkError.unauthorized
+
+                case 403:
+                    throw NetworkError.invalidRequest
+
+                case 500:
+                    throw NetworkError.serverError
+
+                default:
+                    throw NetworkError.emptyData
                 }
-
-                return Comment()
             }
     }
 
@@ -87,19 +124,32 @@ class FeedCommentService: Service {
         return RxAlamofire.request(request as URLRequestConvertible)
             .responseData()
             .asObservable()
-            .map { _, resData -> MessageResDTO  in
+            .map { http, resData -> MessageResDTO  in
 
-                let decoder = JSONDecoder()
+                switch http.statusCode {
+                case 200 ..< 300 :
+                    do {
+                        let result = try self.decoder.decode(MessageResDTO.self, from: resData)
+                        return result
+                    } catch {
+                        throw NetworkError.decodeError
+                    }
 
-                do {
-                    let result = try decoder.decode(MessageResDTO.self, from: resData)
+                case 400:
+                    throw NetworkError.wrongDataFormat
 
-                    return result
-                } catch {
-                    print(error)
+                case 401:
+                    throw NetworkError.unauthorized
+
+                case 403:
+                    throw NetworkError.invalidRequest
+
+                case 500:
+                    throw NetworkError.serverError
+
+                default:
+                    throw NetworkError.emptyData
                 }
-
-                return MessageResDTO()
             }
     }
 }
