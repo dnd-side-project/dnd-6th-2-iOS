@@ -11,7 +11,7 @@ import SnapKit
 import RxSwift
 import RxCocoa
 
-class ParticipantViewController: UIViewController {
+class ParticipantViewController: BaseViewController {
 
     var disposeBag = DisposeBag()
 

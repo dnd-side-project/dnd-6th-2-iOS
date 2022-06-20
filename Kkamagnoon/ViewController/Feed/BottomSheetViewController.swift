@@ -19,7 +19,7 @@ enum BottomSheetViewState {
 }
 
 // UISheetPresentationController() 대체
-class BottomSheetViewController: UIViewController {
+class BottomSheetViewController: BaseViewController {
 
     let viewModel = BottomSheetViewModel()
 
@@ -120,6 +120,11 @@ extension BottomSheetViewController {
         viewModel.output.enableSendButton
             .asDriver()
             .drive(onNext: enableSendButton(_:))
+            .disposed(by: disposeBag)
+
+        viewModel.output.showError
+            .asSignal()
+            .emit(onNext: showError)
             .disposed(by: disposeBag)
     }
 

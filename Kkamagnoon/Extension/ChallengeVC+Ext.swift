@@ -102,14 +102,14 @@ extension ChallengeViewController {
 }
 
 extension ChallengeViewController {
-    private func showError(_ e: Error) {
-
-        guard let e = e as? NetworkError else {
-            return
-        }
-
-        ErrorAlertPopup.showIn(viewController: self, message: e.errorDescription, subMessage: e.errorDescriptionDetail)
-    }
+//    func showError(_ e: Error) {
+//
+//        guard let e = e as? NetworkError else {
+//            return
+//        }
+//
+//        ErrorAlertPopup.showIn(viewController: self, message: e.errorDescription, subMessage: e.errorDescriptionDetail)
+//    }
 
     private func goToBellNoticeVC() {
         let vc = BellNoticeViewController()

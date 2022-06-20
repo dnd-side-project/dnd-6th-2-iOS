@@ -11,7 +11,7 @@ import RxCocoa
 import SnapKit
 import Then
 
-class SuccessPopUpViewController: UIViewController {
+class SuccessPopUpViewController: BaseViewController {
 
     var disposeBag = DisposeBag()
     let viewModel = PopUpViewModel()

@@ -9,7 +9,7 @@ import UIKit
 import RxSwift
 import RxCocoa
 
-class SubscribeListViewController: UIViewController {
+class SubscribeListViewController: BaseViewController {
 
     let viewModel = SubscribeListViewModel()
 
@@ -90,6 +90,10 @@ extension SubscribeListViewController {
     }
 
     func bindOutput() {
+        viewModel.output.showError
+            .asSignal()
+            .emit(onNext: showError)
+            .disposed(by: disposeBag)
 
     }
 }

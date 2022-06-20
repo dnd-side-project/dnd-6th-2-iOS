@@ -12,7 +12,7 @@ import RxSwift
 import RxCocoa
 import RxDataSources
 
-class MakingRelayRoomViewController: UIViewController {
+class MakingRelayRoomViewController: BaseViewController {
 
     var disposeBag = DisposeBag()
     var viewModel = MakingRelayRoomModel()
@@ -153,6 +153,11 @@ class MakingRelayRoomViewController: UIViewController {
         viewModel.output.personnelCount
             .asDriver()
             .drive(onNext: setPersonnelCount)
+            .disposed(by: disposeBag)
+
+        viewModel.output.showError
+            .asSignal()
+            .emit(onNext: showError)
             .disposed(by: disposeBag)
     }
 

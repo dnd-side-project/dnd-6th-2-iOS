@@ -12,7 +12,7 @@ import RxCocoa
 import FSCalendar
 import RxGesture
 
-class ChallengeViewController: UIViewController {
+class ChallengeViewController: BaseViewController {
 
     let viewModel = ChallengeViewModel()
     var disposeBag = DisposeBag()

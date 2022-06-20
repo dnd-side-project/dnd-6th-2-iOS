@@ -12,7 +12,7 @@ import RxDataSources
 import RxSwift
 import RxCocoa
 
-class ChallengeSelectingTagViewController: UIViewController {
+class ChallengeSelectingTagViewController: BaseViewController {
 
     var disposeBag = DisposeBag()
     let viewModel = ChallengeSelectingTagViewModel()

@@ -12,7 +12,7 @@ import RxSwift
 import RxCocoa
 import RxDataSources
 
-class RelayDetailViewController: UIViewController {
+class RelayDetailViewController: BaseViewController {
 
     var disposeBag = DisposeBag()
 
@@ -180,6 +180,11 @@ class RelayDetailViewController: UIViewController {
             .asDriver()
             .drive(detailView.relayWritingList.collectionView.rx.items(
                 dataSource: dataSource))
+            .disposed(by: disposeBag)
+
+        viewModel.output.showError
+            .asSignal()
+            .emit(onNext: showError)
             .disposed(by: disposeBag)
     }
 

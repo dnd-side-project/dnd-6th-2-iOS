@@ -115,6 +115,7 @@
 		0433170D27C3E8B800FE0E34 /* Numbers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0433170C27C3E8B800FE0E34 /* Numbers.swift */; };
 		0433170F27C3EB9900FE0E34 /* RelaySectionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0433170E27C3EB9900FE0E34 /* RelaySectionModel.swift */; };
 		0433171127C3EBD600FE0E34 /* RelayResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0433171027C3EBD600FE0E34 /* RelayResponseModel.swift */; };
+		04354AB62860994700B135DB /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04354AB52860994700B135DB /* BaseViewController.swift */; };
 		0439770E27C906C000935E0E /* CompletedCharacter.png in Resources */ = {isa = PBXBuildFile; fileRef = 0439770D27C906C000935E0E /* CompletedCharacter.png */; };
 		0439771027C908AC00935E0E /* SuccessPopUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0439770F27C908AC00935E0E /* SuccessPopUpViewController.swift */; };
 		0439771227C9094100935E0E /* SucceedPopUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0439771127C9094100935E0E /* SucceedPopUpView.swift */; };
@@ -349,6 +350,7 @@
 		0433170C27C3E8B800FE0E34 /* Numbers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Numbers.swift; sourceTree = "<group>"; };
 		0433170E27C3EB9900FE0E34 /* RelaySectionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RelaySectionModel.swift; sourceTree = "<group>"; };
 		0433171027C3EBD600FE0E34 /* RelayResponseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RelayResponseModel.swift; sourceTree = "<group>"; };
+		04354AB52860994700B135DB /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		0439770D27C906C000935E0E /* CompletedCharacter.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = CompletedCharacter.png; sourceTree = "<group>"; };
 		0439770F27C908AC00935E0E /* SuccessPopUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuccessPopUpViewController.swift; sourceTree = "<group>"; };
 		0439771127C9094100935E0E /* SucceedPopUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SucceedPopUpView.swift; sourceTree = "<group>"; };
@@ -1146,6 +1148,7 @@
 				048D44AE27AF5BCB0031974D /* MyWriting */,
 				048D44AD27AF5B8F0031974D /* Challenge */,
 				048D44AA27AF58BE0031974D /* Tabbar */,
+				04354AB52860994700B135DB /* BaseViewController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -1563,6 +1566,7 @@
 				04A40D3427BE1C5C004DAB19 /* RelayViewModel.swift in Sources */,
 				0407910927BBDD68006C5374 /* ParticipantListView.swift in Sources */,
 				040D852D27C092390003C96A /* RelayWritingViewController.swift in Sources */,
+				04354AB62860994700B135DB /* BaseViewController.swift in Sources */,
 				04DAAE6027B3EA0500AECFE4 /* SubscribeListViewController.swift in Sources */,
 				04A40D6927BF97C4004DAB19 /* Navigation.swift in Sources */,
 				040790ED27BA2AFF006C5374 /* RelayDetailView.swift in Sources */,

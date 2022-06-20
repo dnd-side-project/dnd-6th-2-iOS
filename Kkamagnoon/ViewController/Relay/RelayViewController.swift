@@ -12,7 +12,7 @@ import RxSwift
 import RxCocoa
 import RxDataSources
 
-class RelayViewController: UIViewController {
+class RelayViewController: BaseViewController {
 
     let viewModel = RelayViewModel()
     var disposeBag = DisposeBag()
@@ -214,6 +214,11 @@ extension RelayViewController {
         viewModel.output.goToMakingRelay
             .asSignal()
             .emit(onNext: goToMakingRelayViewController)
+            .disposed(by: disposeBag)
+
+        viewModel.output.showError
+            .asSignal()
+            .emit(onNext: showError)
             .disposed(by: disposeBag)
     }
 }

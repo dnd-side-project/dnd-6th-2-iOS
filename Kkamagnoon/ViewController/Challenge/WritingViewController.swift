@@ -9,7 +9,7 @@ import IQKeyboardManagerSwift
 import RxSwift
 import RxCocoa
 
-class WritingViewController: UIViewController {
+class WritingViewController: BaseViewController {
 
     var disposeBag = DisposeBag()
     let viewModel = WritingViewModel()
