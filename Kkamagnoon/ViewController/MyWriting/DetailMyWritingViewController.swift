@@ -24,6 +24,11 @@ class DetailMyWritingViewController: DetailContentViewController {
             .asDriver()
             .drive(onNext: setArticleData)
             .disposed(by: disposeBag)
+
+        detailViewModel.output.showError
+            .asSignal()
+            .emit(onNext: showError)
+            .disposed(by: disposeBag)
     }
 
     override func bindData() {

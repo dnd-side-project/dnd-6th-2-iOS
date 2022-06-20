@@ -11,7 +11,7 @@ import RxDataSources
 import Then
 import SnapKit
 
-class FeedViewController: UIViewController {
+class FeedViewController: BaseViewController {
 
     var feedView: UIView!
     let viewModel = FeedViewModel()
@@ -214,6 +214,11 @@ extension FeedViewController {
         viewModel.output.goToAllSubscriberList
             .asSignal()
             .emit(onNext: goToAllSubscribe(_:))
+            .disposed(by: disposeBag)
+
+        viewModel.output.showError
+            .asSignal()
+            .emit(onNext: showError)
             .disposed(by: disposeBag)
     }
 }

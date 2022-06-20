@@ -12,7 +12,7 @@ import RxSwift
 import RxCocoa
 import RxDataSources
 
-class SearchViewController: UIViewController {
+class SearchViewController: BaseViewController {
 
     let viewModel = SearchViewModel()
     var disposeBag = DisposeBag()
@@ -165,6 +165,11 @@ extension SearchViewController {
         viewModel.output.moveIndicatorBar
             .asSignal()
             .emit(onNext: moveIndicatorBar)
+            .disposed(by: disposeBag)
+
+        viewModel.output.showError
+            .asSignal()
+            .emit(onNext: showError)
             .disposed(by: disposeBag)
     }
 }

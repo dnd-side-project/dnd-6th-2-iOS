@@ -12,7 +12,7 @@ import RxSwift
 import RxCocoa
 import RxDataSources
 
-class MyWritingViewController: UIViewController {
+class MyWritingViewController: BaseViewController {
 
     let viewModel = MyWritingViewModel()
     var disposeBag = DisposeBag()
@@ -189,6 +189,11 @@ extension MyWritingViewController {
         viewModel.output.goToWriting
             .asSignal()
             .emit(onNext: goToWritingVC)
+            .disposed(by: disposeBag)
+
+        viewModel.output.showError
+            .asSignal()
+            .emit(onNext: showError)
             .disposed(by: disposeBag)
     }
 }

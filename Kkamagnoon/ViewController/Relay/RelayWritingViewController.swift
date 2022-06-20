@@ -10,7 +10,7 @@ import IQKeyboardManagerSwift
 import RxSwift
 import RxCocoa
 
-class RelayWritingViewController: UIViewController {
+class RelayWritingViewController: BaseViewController {
 
     var disposeBag = DisposeBag()
     let viewModel = RelayWritingViewModel()
@@ -190,6 +190,11 @@ extension RelayWritingViewController {
 
         viewModel.output.tips
             .bind(to: tipBox.textLabel.rx.text)
+            .disposed(by: disposeBag)
+
+        viewModel.output.showError
+            .asSignal()
+            .emit(onNext: showError)
             .disposed(by: disposeBag)
     }
 }

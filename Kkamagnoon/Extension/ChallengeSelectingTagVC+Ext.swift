@@ -90,5 +90,10 @@ extension ChallengeSelectingTagViewController {
 
             }
             .disposed(by: disposeBag)
+
+        viewModel.output.showError
+            .asSignal()
+            .emit(onNext: showError)
+            .disposed(by: disposeBag)
     }
 }

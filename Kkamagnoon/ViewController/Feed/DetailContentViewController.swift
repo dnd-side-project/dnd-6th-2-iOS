@@ -12,7 +12,7 @@ import RxDataSources
 import Then
 import SnapKit
 
-class DetailContentViewController: UIViewController {
+class DetailContentViewController: BaseViewController {
 
     var viewModel = DetailContentViewModel()
 
@@ -202,6 +202,11 @@ extension DetailContentViewController {
         viewModel.output.tags
             .asDriver()
             .drive(detailView.tagListView.filterView.rx.items(dataSource: tagDatasource))
+            .disposed(by: disposeBag)
+
+        viewModel.output.showError
+            .asSignal()
+            .emit(onNext: showError)
             .disposed(by: disposeBag)
 
     }

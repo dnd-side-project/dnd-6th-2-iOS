@@ -98,6 +98,11 @@ extension WritingViewController {
                 owner.goToTagSelectigVC(articleDTO: articleDTO)
             }
             .disposed(by: disposeBag)
+
+        viewModel.output.showError
+            .asSignal()
+            .emit(onNext: showError)
+            .disposed(by: disposeBag)
     }
 }
 
