@@ -8,8 +8,10 @@
 import RxSwift
 import RxAlamofire
 import Alamofire
+import Foundation
 
 class ChallengeService: Service {
+
     func getChallenge() -> Observable<GetChallengeMain> {
         let endpoint = ChallengeEndPointCases.getChallenge
         let request = makeRequest(endpoint: endpoint)
@@ -53,19 +55,32 @@ class ChallengeService: Service {
             .responseData()
             .asObservable()
             .map { http, resData -> GetMonthlyDTO  in
-                print(http)
 
-                let decoder = JSONDecoder()
+                switch http.statusCode {
+                case 200 ..< 300 :
+                    do {
+                        let decoder = JSONDecoder()
+                        let result = try decoder.decode(GetMonthlyDTO.self, from: resData)
+                        return result
+                    } catch {
+                        throw NetworkError.decodeError
+                    }
 
-                do {
-                    let result = try decoder.decode(GetMonthlyDTO.self, from: resData)
-                    print("RES>>>>>\(result)")
-                    return result
-                } catch {
-                    print(error)
+                case 400:
+                    throw NetworkError.wrongDataFormat
+
+                case 401:
+                    throw NetworkError.unauthorized
+
+                case 403:
+                    throw NetworkError.invalidRequest
+
+                case 500:
+                    throw NetworkError.serverError
+
+                default:
+                    throw NetworkError.emptyData
                 }
-
-                return GetMonthlyDTO()
             }
     }
 
@@ -76,20 +91,31 @@ class ChallengeService: Service {
         return RxAlamofire.request(request as URLRequestConvertible)
             .responseData()
             .asObservable()
-            .map { _, resData -> Tip  in
-//                print(http)
+            .map { http, resData -> Tip  in
+                switch http.statusCode {
+                case 200 ..< 300 :
+                    do {
+                        let result = try self.decoder.decode(Tip.self, from: resData)
+                        return result
+                    } catch {
+                        throw NetworkError.decodeError
+                    }
 
-                let decoder = JSONDecoder()
+                case 400:
+                    throw NetworkError.wrongDataFormat
 
-                do {
-                    let result = try decoder.decode(Tip.self, from: resData)
-//                    print("RES>>>>>\(result)")
-                    return result
-                } catch {
-                    print(error)
+                case 401:
+                    throw NetworkError.unauthorized
+
+                case 403:
+                    throw NetworkError.invalidRequest
+
+                case 500:
+                    throw NetworkError.serverError
+
+                default:
+                    throw NetworkError.emptyData
                 }
-
-                return Tip()
             }
     }
 
@@ -97,25 +123,34 @@ class ChallengeService: Service {
         let endpoint = ChallengeEndPointCases.postChallengeArticle(article: article)
         let request = makeRequest(endpoint: endpoint)
 
-        print("RES Challenge ARTICLE>>>>> \(article)")
-
         return RxAlamofire.request(request as URLRequestConvertible)
             .responseData()
             .asObservable()
             .map { http, resData -> Article  in
-                print("RES Challenge>>>>>\(http)")
+                switch http.statusCode {
+                case 200 ..< 300 :
+                    do {
+                        let result = try self.decoder.decode(Article.self, from: resData)
+                        return result
+                    } catch {
+                        throw NetworkError.decodeError
+                    }
 
-                let decoder = JSONDecoder()
+                case 400:
+                    throw NetworkError.wrongDataFormat
 
-                do {
-                    let result = try decoder.decode(Article.self, from: resData)
-                    print("RES Challenge>>>>>\(result)")
-                    return result
-                } catch {
-                    print(error)
+                case 401:
+                    throw NetworkError.unauthorized
+
+                case 403:
+                    throw NetworkError.invalidRequest
+
+                case 500:
+                    throw NetworkError.serverError
+
+                default:
+                    throw NetworkError.emptyData
                 }
-
-                return Article()
             }
     }
 
@@ -126,20 +161,31 @@ class ChallengeService: Service {
         return RxAlamofire.request(request as URLRequestConvertible)
             .responseData()
             .asObservable()
-            .map { _, resData -> Article  in
-//                print(http)
+            .map { http, resData -> Article  in
+                switch http.statusCode {
+                case 200 ..< 300 :
+                    do {
+                        let result = try self.decoder.decode(Article.self, from: resData)
+                        return result
+                    } catch {
+                        throw NetworkError.decodeError
+                    }
 
-                let decoder = JSONDecoder()
+                case 400:
+                    throw NetworkError.wrongDataFormat
 
-                do {
-                    let result = try decoder.decode(Article.self, from: resData)
-//                    print("RES>>>>>\(result)")
-                    return result
-                } catch {
-                    print(error)
+                case 401:
+                    throw NetworkError.unauthorized
+
+                case 403:
+                    throw NetworkError.invalidRequest
+
+                case 500:
+                    throw NetworkError.serverError
+
+                default:
+                    throw NetworkError.emptyData
                 }
-
-                return Article()
             }
     }
 
