@@ -25,6 +25,8 @@ class RelayDetailViewModel: ViewModelType {
     }
 
     struct Output {
+        let showError = PublishRelay<Error>()
+        
         let goToRoom = PublishRelay<Void>()
         let goToWriting = PublishRelay<[Article]>()
         let goToParticipantView = PublishRelay<Void>()
@@ -79,7 +81,7 @@ class RelayDetailViewModel: ViewModelType {
     func bindRelayInfo() {
         input.relayInfo
             .withUnretained(self)
-            .bind { owner, relay in
+            .subscribe(onNext: { owner, relay in
                 // article 조회
                 owner.relayArticleService.getRelayArticle(relayId: relay._id ?? "", cursor: nil)
                     .bind { articleList in
@@ -91,7 +93,9 @@ class RelayDetailViewModel: ViewModelType {
                         owner.articleList = list
                     }
                     .disposed(by: owner.disposeBag)
-            }
+            }, onError: { [weak self] error in
+                self?.output.showError.accept(error)
+            })
             .disposed(by: disposeBag)
     }
 }

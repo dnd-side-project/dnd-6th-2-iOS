@@ -33,6 +33,8 @@ class MakingRelayRoomModel: ViewModelType {
     }
 
     struct Output {
+        let showError = PublishRelay<Error>()
+        
         let goBack = PublishRelay<Void>()
         let tagList = BehaviorRelay<[SectionModel<String, String>]>(value: [])
 
@@ -118,11 +120,7 @@ class MakingRelayRoomModel: ViewModelType {
         input.startButtonTap
             .withUnretained(self)
             .bind { owner, _ in
-                owner.relayService.postRelayRoom(relay: owner.relayDTO)
-                    .bind { relay in
-                        owner.output.goToNewRelay.accept(relay)
-                    }
-                    .disposed(by: owner.disposeBag)
+                owner.postRelayRoom()
             }
             .disposed(by: disposeBag)
     }
@@ -159,6 +157,17 @@ class MakingRelayRoomModel: ViewModelType {
                     owner.output.goToSelectTag.accept(())
                 }
             }
+            .disposed(by: disposeBag)
+    }
+    
+    private func postRelayRoom() {
+        relayService.postRelayRoom(relay: relayDTO)
+            .withUnretained(self)
+            .subscribe(onNext: { owner, relay in
+                owner.output.goToNewRelay.accept(relay)
+            }, onError: { [weak self] error in
+                self?.output.showError.accept(error)
+            })
             .disposed(by: disposeBag)
     }
 

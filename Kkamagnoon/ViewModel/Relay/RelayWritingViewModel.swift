@@ -25,6 +25,9 @@ class RelayWritingViewModel: ViewModelType {
     }
 
     struct Output {
+        
+        let showError = PublishRelay<Error>()
+        
 //        let article = PublishRelay<CreateArticleDTO>()
         let enableCompleteButton = PublishRelay<Bool>()
         let registerWriting = PublishRelay<Article>()
@@ -74,15 +77,22 @@ extension RelayWritingViewModel {
         input.completeButtonTap
             .withUnretained(self)
             .bind { owner, _ in
-                owner.relayArticleService.postRelayArticle(
-                    relayId: owner.relayInfo?._id ?? "",
-                    relayArticle: owner.relayArticleDTO)
-                    .bind { article in
-                        owner.output.registerWriting.accept(article)
-                    }
-                    .disposed(by: owner.disposeBag)
+                owner.postRelayArticle()
             }
             .disposed(by: disposeBag)
 
+    }
+    
+    private func postRelayArticle() {
+        relayArticleService.postRelayArticle(
+            relayId: relayInfo?._id ?? "",
+            relayArticle: relayArticleDTO)
+        .withUnretained(self)
+        .subscribe(onNext: { owner, article in
+            owner.output.registerWriting.accept(article)
+        }, onError: { [weak self] error in
+            self?.output.showError.accept(error)
+        })
+        .disposed(by: disposeBag)
     }
 }
