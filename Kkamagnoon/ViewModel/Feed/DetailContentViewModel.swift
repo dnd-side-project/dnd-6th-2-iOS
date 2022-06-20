@@ -23,7 +23,7 @@ class DetailContentViewModel: ViewModelType {
     }
 
     struct Output {
-        
+
         let showError = PublishRelay<Error>()
 
         // TODO: 구독하기 버튼 클릭시

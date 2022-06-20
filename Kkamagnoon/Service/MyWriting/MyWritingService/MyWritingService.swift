@@ -10,11 +10,12 @@ import RxAlamofire
 import Alamofire
 
 class MyWritingService: Service {
-    var isPaginating = false
+    var isMyWritingPaginating = false
+    var isTempWritingPaginating = false
 
     func getMyArticle(cursor: String?, type: String?, pagination: Bool) -> Observable<ArticlesResponse> {
         if pagination {
-            isPaginating = true
+            isMyWritingPaginating = true
         }
 
         let endpoint = MyWritingEndPointCases.getMyArticle(cursor: cursor, type: type)
@@ -30,7 +31,7 @@ class MyWritingService: Service {
                         let result = try self.decoder.decode(ArticlesResponse.self, from: resData)
 
                         if pagination {
-                            self.isPaginating = false
+                            self.isMyWritingPaginating = false
                         }
 
                         return result
@@ -126,9 +127,13 @@ class MyWritingService: Service {
             }
     }
 
-    func getMyArticleTemp(cursor: String?) -> Observable<ArticlesResponse> {
+    func getMyArticleTemp(cursor: String?, pagination: Bool) -> Observable<ArticlesResponse> {
         let endpoint = MyWritingEndPointCases.getMyArticleTemp(cursor: cursor)
         let request = makeRequest(endpoint: endpoint)
+
+        if pagination {
+            isTempWritingPaginating = true
+        }
 
         return RxAlamofire.request(request as URLRequestConvertible)
             .responseData()
@@ -138,6 +143,10 @@ class MyWritingService: Service {
                 case 200 ..< 300 :
                     do {
                         let result = try self.decoder.decode(ArticlesResponse.self, from: resData)
+
+                        if pagination {
+                            self.isTempWritingPaginating = false
+                        }
                         return result
                     } catch {
                         throw NetworkError.decodeError

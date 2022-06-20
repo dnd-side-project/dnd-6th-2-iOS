@@ -31,7 +31,7 @@ class FeedViewModel: ViewModelType {
         let goToBell = PublishRelay<Void>()
         let goToDetailFeed = PublishRelay<Article>()
         let goToAllSubscriberList = PublishRelay<[Host]>()
-        
+
         let showError = PublishRelay<Error>()
 
         let wholeFeedList = BehaviorRelay<[FeedSection]>(value: [])
@@ -122,7 +122,7 @@ extension FeedViewModel {
 
         feedService.getWholeFeed(next_cursor: nil, orderBy: output.sortStyle.value.rawValue, tags: checkSelectedTags)
             .withUnretained(self)
-            .subscribe (onNext: { owner, articleResponse in
+            .subscribe(onNext: { owner, articleResponse in
                 owner.output.wholeFeedList.accept(
                     [FeedSection(header: Relay(), items: articleResponse.articles ?? [])]
                 )

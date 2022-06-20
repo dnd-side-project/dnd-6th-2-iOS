@@ -89,7 +89,7 @@ class MyWritingViewController: UIViewController {
         myWritingListView.writingListView.collectionView.delegate = self
         myWritingListView.tagListView.filterView.selectItem(at: IndexPath(item: .zero, section: .zero), animated: false, scrollPosition: [])
         viewModel.bindMyWritingList(cursor: nil, tag: nil, pagination: false)
-        viewModel.bindTempWritingList()
+        viewModel.bindTempWritingList(cursor: nil, pagination: false)
     }
 
     override func viewDidLayoutSubviews() {
@@ -166,7 +166,7 @@ extension MyWritingViewController {
                 }
             .disposed(by: disposeBag)
 
-        viewModel.output.changeListStyle
+        viewModel.output.currentStyle
             .asDriver()
             .drive(onNext: changeViewStyle)
             .disposed(by: disposeBag)
@@ -244,15 +244,33 @@ extension MyWritingViewController {
 extension MyWritingViewController: UICollectionViewDelegate, UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let contentOffset_y = scrollView.contentOffset.y
-        let collectionViewContentSize = myWritingListView.writingListView.collectionView.contentSize.height
 
-        let pagination_y = collectionViewContentSize*0.4
-        if contentOffset_y > collectionViewContentSize - pagination_y {
+        let myWritingListViewContentSize = myWritingListView.writingListView.collectionView.contentSize.height
 
-            let nowCursor = viewModel.output.cursor.value
-            if nowCursor != "" {
-                viewModel.bindMyWritingList(cursor: nowCursor, tag: viewModel.output.nowTag.value, pagination: true)
+        let tempWritingListViewContentSize = tempListView.articleListView.collectionView.contentSize.height
+
+        let currentStyle = viewModel.output.currentStyle.value
+
+        let myWritingPagination_y = myWritingListViewContentSize*0.4
+        let tempWritingPagination_y = tempWritingListViewContentSize*0.4
+
+        if currentStyle == .myWriting {
+            if contentOffset_y > myWritingListViewContentSize - myWritingPagination_y {
+
+                let nowCursor = viewModel.output.myWritingCursor.value
+                if nowCursor != "" {
+                    viewModel.bindMyWritingList(cursor: nowCursor, tag: viewModel.output.nowTag.value, pagination: true)
+                }
+            }
+        } else {
+            if contentOffset_y > tempWritingListViewContentSize - tempWritingPagination_y {
+
+                let nowCursor = viewModel.output.tempWritingCursor.value
+                if nowCursor != "" {
+                    viewModel.bindTempWritingList(cursor: nowCursor, pagination: true)
+                }
             }
         }
+
     }
 }

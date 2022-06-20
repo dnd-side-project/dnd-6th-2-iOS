@@ -25,9 +25,9 @@ class RelayWritingViewModel: ViewModelType {
     }
 
     struct Output {
-        
+
         let showError = PublishRelay<Error>()
-        
+
 //        let article = PublishRelay<CreateArticleDTO>()
         let enableCompleteButton = PublishRelay<Bool>()
         let registerWriting = PublishRelay<Article>()
@@ -82,7 +82,7 @@ extension RelayWritingViewModel {
             .disposed(by: disposeBag)
 
     }
-    
+
     private func postRelayArticle() {
         relayArticleService.postRelayArticle(
             relayId: relayInfo?._id ?? "",

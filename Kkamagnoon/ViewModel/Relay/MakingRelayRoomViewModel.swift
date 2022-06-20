@@ -34,7 +34,7 @@ class MakingRelayRoomModel: ViewModelType {
 
     struct Output {
         let showError = PublishRelay<Error>()
-        
+
         let goBack = PublishRelay<Void>()
         let tagList = BehaviorRelay<[SectionModel<String, String>]>(value: [])
 
@@ -159,7 +159,7 @@ class MakingRelayRoomModel: ViewModelType {
             }
             .disposed(by: disposeBag)
     }
-    
+
     private func postRelayRoom() {
         relayService.postRelayRoom(relay: relayDTO)
             .withUnretained(self)

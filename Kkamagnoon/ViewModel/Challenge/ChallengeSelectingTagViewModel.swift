@@ -95,7 +95,7 @@ extension ChallengeSelectingTagViewModel {
             }
             .disposed(by: disposeBag)
     }
-    
+
     private func postChallengeArticle() {
         challengeService.postChallengeArticle(article: articleDTO ?? CreateArticleDTO())
             .withUnretained(self)

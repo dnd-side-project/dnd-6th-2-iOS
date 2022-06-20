@@ -22,7 +22,7 @@ class SearchViewModel: ViewModelType {
 
     struct Output {
         let showError = PublishRelay<Error>()
-        
+
         let menuList = Observable.of(["챌린지", "자유글", "릴레이"])
         let dismissView = PublishRelay<Void>()
         let recentSearchList = BehaviorRelay<[SectionModel<String, History>]>(value: [])
