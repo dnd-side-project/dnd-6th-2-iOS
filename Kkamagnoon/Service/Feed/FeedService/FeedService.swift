@@ -10,15 +10,16 @@
 
 class FeedService: Service {
 
-    // TEMP
-    var bag = DisposeBag()
+    var isWholeFeedPaginating = false
 
-    func getWholeFeed(next_cursor: String?, orderBy: String = "최신순", tags: [String: Bool]?) -> Observable<ArticlesResponse> {
+    func getWholeFeed(next_cursor: String?, orderBy: String = "최신순", tags: [String: Bool]?, pagination: Bool) -> Observable<ArticlesResponse> {
         let endpoint = FeedEndpointCases.getWholeFeed(cursor: next_cursor, orderBy: orderBy, tags: tags)
 
         let request = makeRequest(endpoint: endpoint)
 
-        // DEBUG
+        if pagination {
+            isWholeFeedPaginating = true
+        }
 
         return RxAlamofire.request(request as URLRequestConvertible)
             .responseData()
@@ -29,6 +30,9 @@ class FeedService: Service {
                 case 200 ..< 300 :
                     do {
                         let result = try self.decoder.decode(ArticlesResponse.self, from: resData)
+                        if pagination {
+                            self.isWholeFeedPaginating = false
+                        }
                         return result
                     } catch {
                         throw NetworkError.decodeError
@@ -47,6 +51,9 @@ class FeedService: Service {
                     throw NetworkError.serverError
 
                 default:
+                    if pagination {
+                        self.isWholeFeedPaginating = false
+                    }
                     return ArticlesResponse(articles: [], next_cursor: nil)
                 }
             }

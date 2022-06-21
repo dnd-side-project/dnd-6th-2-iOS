@@ -79,19 +79,7 @@ class FeedViewController: BaseViewController {
     }
 
     override func viewWillAppear(_ animated: Bool) {
-        viewModel.bindWholeFeedList()
-    }
-}
-
-extension FeedViewController: UIScrollViewDelegate {
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        let contentOffset_y = scrollView.contentOffset.y
-        let collectionViewContentSize = wholeFeedView.articleListView.collectionView.contentSize.height
-
-        let pagination_y = collectionViewContentSize*0.2
-        if contentOffset_y > collectionViewContentSize - pagination_y {
-            // 네트워크 호출
-        }
+        viewModel.bindWholeFeedList(cursor: nil, pagination: false)
     }
 }
 
@@ -280,7 +268,7 @@ extension FeedViewController {
                 self.viewModel.output.sortStyle.accept(.byLatest)
             }
 
-            viewModel.bindWholeFeedList()
+            viewModel.bindWholeFeedList(cursor: nil, pagination: false)
         }
     }
 
@@ -303,5 +291,39 @@ extension FeedViewController {
         cell.updateDate.text = dateToStringFormatter.string(from: date)
         cell.likeView.labelView.text = "\(element.likeNum ?? 0)"
         cell.commentView.labelView.text = "\(element.commentNum ?? 0)"
+    }
+}
+
+extension FeedViewController: UICollectionViewDelegate, UIScrollViewDelegate {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let contentOffset_y = scrollView.contentOffset.y
+
+        let wholeFeedViewContentSize = wholeFeedView.articleListView.collectionView.contentSize.height
+
+        let subscribeFeedViewContentSize = subscribeFeedView.articleListView.collectionView.contentSize.height
+
+        let currentStyle = viewModel.output.currentFeedStyle.value
+
+        let wholeFeedPagination_y = wholeFeedViewContentSize*0.4
+        let subscribeFeedPagination_y = subscribeFeedViewContentSize*0.4
+
+        if currentStyle == .whole {
+            if contentOffset_y > wholeFeedViewContentSize - wholeFeedPagination_y {
+
+                let nowCursor = viewModel.output.wholeFeedCursor.value
+                if nowCursor != "" {
+                    viewModel.bindWholeFeedList(cursor: nowCursor, pagination: true)
+                }
+            }
+        } else {
+            if contentOffset_y > subscribeFeedViewContentSize - subscribeFeedPagination_y {
+
+                let nowCursor = viewModel.output.subscribeFeedCursor.value
+                if nowCursor != "" {
+                    viewModel.bindSubscribedFeedList(cursor: nowCursor, pagination: true)
+                }
+            }
+        }
+
     }
 }

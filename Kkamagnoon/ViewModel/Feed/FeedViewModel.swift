@@ -36,8 +36,13 @@ class FeedViewModel: ViewModelType {
 
         let wholeFeedList = BehaviorRelay<[FeedSection]>(value: [])
         let tagList = Observable<[String]>.of(StringType.categories)
-        let subscribeFeedList = BehaviorRelay<[String]>(value: [])
+        let subscribeFeedList = BehaviorRelay<[Article]>(value: [])
         let sortStyle = BehaviorRelay<SortStyle>(value: .byLatest)
+
+        let currentFeedStyle = BehaviorRelay<FeedStyle>(value: .whole)
+
+        let wholeFeedCursor = BehaviorRelay<String>(value: "")
+        let subscribeFeedCursor = BehaviorRelay<String>(value: "")
     }
 
     let input: Input
@@ -71,19 +76,19 @@ class FeedViewModel: ViewModelType {
 extension FeedViewModel {
 
     func bindWork() {
-//        input.wholeFeedButtonTap
-//            .withUnretained(self)
-//            .bind { owner, _ in
-//                owner.output.currentFeedStyle.accept(.whole)
-//            }
-//            .disposed(by: disposeBag)
-//
-//        input.subscribedFeedButtonTap
-//            .withUnretained(self)
-//            .bind { owner, _ in
-//                owner.output.currentFeedStyle.accept(.subscribed)
-//            }
-//            .disposed(by: disposeBag)
+        input.wholeFeedButtonTap
+            .withUnretained(self)
+            .bind { owner, _ in
+                owner.output.currentFeedStyle.accept(.whole)
+            }
+            .disposed(by: disposeBag)
+
+        input.subscribedFeedButtonTap
+            .withUnretained(self)
+            .bind { owner, _ in
+                owner.output.currentFeedStyle.accept(.subscribed)
+            }
+            .disposed(by: disposeBag)
 
         input.searchButtonTap
             .withUnretained(self)
@@ -118,22 +123,34 @@ extension FeedViewModel {
 }
 
 extension FeedViewModel {
-    func bindWholeFeedList() {
+    func bindWholeFeedList(cursor: String?, pagination: Bool) {
 
-        feedService.getWholeFeed(next_cursor: nil, orderBy: output.sortStyle.value.rawValue, tags: checkSelectedTags)
+        feedService.getWholeFeed(next_cursor: cursor, orderBy: output.sortStyle.value.rawValue, tags: checkSelectedTags, pagination: pagination)
             .withUnretained(self)
             .subscribe(onNext: { owner, articleResponse in
                 owner.output.wholeFeedList.accept(
                     [FeedSection(header: Relay(), items: articleResponse.articles ?? [])]
                 )
+                owner.output.wholeFeedCursor.accept(articleResponse.next_cursor ?? "")
             }, onError: { [weak self] error in
                 self?.output.showError.accept(error)
             })
             .disposed(by: disposeBag)
     }
 
-    func bindSubscribedFeedList() {
-        // TODO: 구독 피드 요청
+    func bindSubscribedFeedList(cursor: String?, pagination: Bool) {
+        feedSubscribeService.getSubscribeFeed(cursor: cursor, pagination: pagination)
+            .withUnretained(self)
+            .subscribe(onNext: { owner, getSubFeedRes in
+                owner.output.subscribeFeedList.accept(
+                    getSubFeedRes.articles ?? []
+                )
+                owner.output.subscribeFeedCursor.accept(getSubFeedRes.next_cursor ?? "")
+
+            }, onError: { [weak self] error in
+                self?.output.showError.accept(error)
+            })
+            .disposed(by: disposeBag)
 
     }
 
@@ -152,6 +169,6 @@ extension FeedViewModel {
         let nowValue = checkSelectedTags[tagString, default: false]
 
         checkSelectedTags.updateValue(!nowValue, forKey: tagString)
-        bindWholeFeedList()
+        bindWholeFeedList(cursor: nil, pagination: false)
     }
 }

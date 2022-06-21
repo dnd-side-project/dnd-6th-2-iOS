@@ -9,9 +9,15 @@ import Alamofire
 import RxAlamofire
 
 class FeedSubscribeService: Service {
-    func getSubscribeFeed(cursor: String?) -> Observable<GetSubFeedResDTO> {
+    var isSubscribeFeedPaginating = false
+
+    func getSubscribeFeed(cursor: String?, pagination: Bool) -> Observable<GetSubFeedResDTO> {
         let endpoint = FeedSubscribeEndpointCases.getSubscribeFeed(cursor: cursor)
         let request = makeRequest(endpoint: endpoint)
+
+        if pagination {
+            isSubscribeFeedPaginating = true
+        }
 
         return RxAlamofire.request(request as URLRequestConvertible)
             .responseData()
@@ -22,6 +28,11 @@ class FeedSubscribeService: Service {
                 case 200 ..< 300 :
                     do {
                         let result = try self.decoder.decode(GetSubFeedResDTO.self, from: resData)
+
+                        if pagination {
+                            self.isSubscribeFeedPaginating = false
+                        }
+
                         return result
                     } catch {
                         throw NetworkError.decodeError
@@ -40,7 +51,10 @@ class FeedSubscribeService: Service {
                     throw NetworkError.serverError
 
                 default:
-                    throw NetworkError.emptyData
+                    if pagination {
+                        self.isSubscribeFeedPaginating = false
+                    }
+                    return GetSubFeedResDTO(articles: [], subscribeUserList: [], next_cursor: nil)
                 }
             }
     }
