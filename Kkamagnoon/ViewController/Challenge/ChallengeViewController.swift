@@ -75,5 +75,16 @@ class ChallengeViewController: BaseViewController {
         super.viewWillAppear(animated)
         viewModel.bindKeyword()
         viewModel.bindChallengeStamp()
+
+    }
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        challengeMainView.calendarView.setScope(.week, animated: false)
+        UIView.animate(withDuration: 10.0, delay: 0) {
+            self.challengeMainView.calendarView.snp.updateConstraints {
+                $0.height.equalTo(144.0)
+            }
+        }
     }
 }

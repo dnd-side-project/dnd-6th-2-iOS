@@ -13,12 +13,12 @@ import DropDown
 
 class ChallengeMainView: UIView {
 
-    var calendarHeight: NSLayoutConstraint!
+//    var calendarHeight: NSLayoutConstraint!
     var buttonHeight: NSLayoutConstraint!
 
     var subTitleLabel = [
             UILabel().then {
-                $0.text = "이번달은 n개의 스탬프를 찍었어요!"
+                $0.text = "이번달은 0개의 스탬프를 찍었어요!"
                 $0.font = UIFont.pretendard(weight: .medium, size: 18)
                 $0.textColor = .white
             },
@@ -74,7 +74,6 @@ class ChallengeMainView: UIView {
             $0.layer.cornerRadius = 15.0
 
             $0.locale = Locale(identifier: "ko_KR")
-            $0.setScope(.week, animated: false)
 
             // header
             $0.calendarHeaderView.removeFromSuperview()
@@ -147,9 +146,12 @@ class ChallengeMainView: UIView {
             $0.top.equalTo(subTitleLabel[0].snp.bottom).offset(15.0)
             $0.left.equalToSuperview().offset(20.0)
             $0.right.equalToSuperview().offset(-20.0)
+            $0.height.equalTo(365.0)
         }
-        calendarHeight = calendarView.heightAnchor.constraint(equalToConstant: 370)
-        calendarHeight.isActive = true
+//
+//        calendarHeight = calendarView.heightAnchor.constraint(equalToConstant: 144)
+//        calendarHeight.isActive = true
+//        self.layoutIfNeeded()
 
         self.addSubview(expansionButton)
 

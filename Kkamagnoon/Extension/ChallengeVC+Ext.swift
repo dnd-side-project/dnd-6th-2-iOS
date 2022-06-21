@@ -163,17 +163,23 @@ extension ChallengeViewController {
         self.navigationController?.pushViewController(vc, animated: true)
     }
 
-    private func setCalendarState(_ state: CalendarState) {
+    func setCalendarState(_ state: CalendarState) {
         if state == .week {
             challengeMainView.calendarView.setScope(.week, animated: true)
             UIView.animate(withDuration: 10.0, delay: 0) {
-                self.challengeMainView.calendarHeight.constant = 144
+                self.challengeMainView.calendarView.snp.updateConstraints {
+                    $0.height.equalTo(144.0)
+                }
             }
+//            self.challengeMainView.layoutIfNeeded()
         } else {
             challengeMainView.calendarView.setScope(.month, animated: true)
             UIView.animate(withDuration: 10.0, delay: 0) {
-                self.challengeMainView.calendarHeight.constant = 400
+                self.challengeMainView.calendarView.snp.updateConstraints {
+                    $0.height.equalTo(400.0)
+                }
             }
+//            self.challengeMainView.layoutIfNeeded()
         }
     }
 
@@ -267,9 +273,10 @@ extension ChallengeViewController: FSCalendarDataSource {
     func calendar(_ calendar: FSCalendar,
                   boundingRectWillChange bounds: CGRect,
                   animated: Bool) {
-
-        challengeMainView.calendarHeight.constant = 144
-
+        print(bounds.height)
+        self.challengeMainView.calendarView.snp.updateConstraints { (make) in
+            make.height.equalTo(bounds.height)
+        }
         self.view.layoutIfNeeded()
     }
 

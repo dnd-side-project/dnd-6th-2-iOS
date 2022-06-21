@@ -52,7 +52,10 @@ class MyWritingService: Service {
                     throw NetworkError.serverError
 
                 default:
-                    throw NetworkError.emptyData
+                    if pagination {
+                        self.isMyWritingPaginating = false
+                    }
+                    return ArticlesResponse(articles: [], next_cursor: nil)
                 }
             }
     }
@@ -165,7 +168,10 @@ class MyWritingService: Service {
                     throw NetworkError.serverError
 
                 default:
-                    throw NetworkError.emptyData
+                    if pagination {
+                        self.isTempWritingPaginating = false
+                    }
+                    return ArticlesResponse(articles: [], next_cursor: nil)
                 }
             }
     }
