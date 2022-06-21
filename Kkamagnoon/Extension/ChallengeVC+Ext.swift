@@ -57,6 +57,15 @@ extension ChallengeViewController {
             .rx.tap
             .bind(to: viewModel.input.goToFeedButtonTap)
             .disposed(by: disposeBag)
+
+        challengeMainView.selectMonthButton.rx.tap
+            .bind(to: viewModel.input.selectMonthButtonTap)
+            .disposed(by: disposeBag)
+
+        challengeMainView.dropdown.selectionAction = { [weak self] (_, item) in
+            guard let self = self else { return }
+            self.viewModel.output.month.accept(self.convertMMMString(month: item))
+        }
     }
 
     func bindOutput() {
@@ -98,18 +107,20 @@ extension ChallengeViewController {
             .asSignal()
             .emit(onNext: goToFeed)
             .disposed(by: disposeBag)
+
+        viewModel.output.month
+            .asDriver()
+            .drive(onNext: setMonthDropdownText)
+            .disposed(by: disposeBag)
+
+        viewModel.output.openDropdown
+            .asSignal()
+            .emit(onNext: openDropdown)
+            .disposed(by: disposeBag)
     }
 }
 
 extension ChallengeViewController {
-//    func showError(_ e: Error) {
-//
-//        guard let e = e as? NetworkError else {
-//            return
-//        }
-//
-//        ErrorAlertPopup.showIn(viewController: self, message: e.errorDescription, subMessage: e.errorDescriptionDetail)
-//    }
 
     private func goToBellNoticeVC() {
         let vc = BellNoticeViewController()
@@ -178,6 +189,77 @@ extension ChallengeViewController {
         vc.modalPresentationStyle = .fullScreen
         self.navigationController?.pushViewController(vc, animated: true)
     }
+
+    private func convertMonthString(monthMMM: String) -> String {
+        switch monthMMM {
+        case "Jan":
+            return "1월"
+        case "Feb":
+            return "2월"
+        case "Mar":
+            return "3월"
+        case "Apr":
+            return "4월"
+        case "May":
+            return "5월"
+        case "Jun":
+            return "6월"
+        case "Jul":
+            return "7월"
+        case "Aug":
+            return "8월"
+        case "Sep":
+            return "9월"
+        case "Oct":
+            return "10월"
+        case "Nov":
+            return "11월"
+        case "Dec":
+            return "12월"
+        default:
+            return ""
+        }
+    }
+
+    private func convertMMMString(month: String) -> String {
+        switch month {
+        case "1월":
+            return "Jan"
+        case "2월":
+            return "Feb"
+        case "3월":
+            return "Mar"
+        case "4월":
+            return "Apr"
+        case "5월":
+            return "May"
+        case "6월":
+            return "Jun"
+        case "7월":
+            return "Jul"
+        case "8월":
+            return "Aug"
+        case "9월":
+            return "Sep"
+        case "10월":
+            return "Oct"
+        case "11월":
+            return "Nov"
+        case "12월":
+            return "Dec"
+        default:
+            return ""
+        }
+    }
+
+    private func setMonthDropdownText(month: String) {
+        let monthString = convertMonthString(monthMMM: month)
+        challengeMainView.selectMonthButton.setTitle(monthString, for: .normal)
+    }
+
+    private func openDropdown() {
+        challengeMainView.dropdown.show()
+    }
 }
 
 extension ChallengeViewController: FSCalendarDataSource {
@@ -212,7 +294,7 @@ extension ChallengeViewController: FSCalendarDataSource {
     }
 
     private func setStampData(challengeStamp: GetMonthlyDTO) {
-        challengeMainView.subTitleLabel[0].text = "이번달은 \(challengeStamp.monthlyStamp ?? 0)개의 O를 찍었어요!"
+        challengeMainView.subTitleLabel[0].text = "이번달은 \(challengeStamp.monthlyStamp ?? 0)개의 스탬프를 찍었어요!"
         setStamp(history: challengeStamp.monthlyChallengeHistory ?? [])
     }
 

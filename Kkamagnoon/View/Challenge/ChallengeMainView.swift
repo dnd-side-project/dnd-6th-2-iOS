@@ -9,6 +9,7 @@ import UIKit
 import Then
 import SnapKit
 import FSCalendar
+import DropDown
 
 class ChallengeMainView: UIView {
 
@@ -17,7 +18,7 @@ class ChallengeMainView: UIView {
 
     var subTitleLabel = [
             UILabel().then {
-                $0.text = "이번달은 n개의 O를 찍었어요!"
+                $0.text = "이번달은 n개의 스탬프를 찍었어요!"
                 $0.font = UIFont.pretendard(weight: .medium, size: 18)
                 $0.textColor = .white
             },
@@ -28,7 +29,27 @@ class ChallengeMainView: UIView {
             }
         ]
 
-    // TODO: Add dropdown
+    var selectMonthButton = UIButton()
+        .then {
+            $0.setTitleColor(.white, for: .normal)
+            $0.titleLabel?.font = UIFont.pretendard(weight: .regular, size: 16.0)
+            $0.setImage(UIImage(named: "ExpandSmall")?.resizedImage(size: CGSize(width: 8.0, height: 4.0)), for: .normal)
+            $0.semanticContentAttribute = .forceRightToLeft
+            $0.imageEdgeInsets = UIEdgeInsets(top: 0, left: 8.0, bottom: 0, right: 0)
+            $0.layer.cornerRadius = 20.0
+            $0.layer.borderWidth = 1.0
+            $0.layer.borderColor = UIColor(rgb: 0x3F3F3F).cgColor
+        }
+
+    var dropdown = DropDown()
+        .then {
+            $0.dataSource = [Int](1...12).map { "\($0)월" }
+            $0.backgroundColor = UIColor.appColor(.backgroundGray)
+            $0.selectionBackgroundColor = UIColor.appColor(.alertBoxGray)
+            $0.cornerRadius = 5.0
+            $0.textFont = UIFont.pretendard(weight: .regular, size: 16.0)
+            $0.textColor = .white
+        }
 
     var expansionButton = UIButton()
         .then {
@@ -109,8 +130,19 @@ class ChallengeMainView: UIView {
             $0.right.equalToSuperview().offset(-20.0)
         }
 
-        self.addSubview(calendarView)
+        self.addSubview(selectMonthButton)
+        selectMonthButton.snp.makeConstraints {
+            $0.right.equalToSuperview().offset(-20.0)
+            $0.centerY.equalTo(subTitleLabel[0])
+            $0.height.equalTo(35.0)
+            $0.width.equalTo(70.0)
+        }
 
+        self.addSubview(dropdown)
+        dropdown.anchorView = selectMonthButton
+        dropdown.bottomOffset = CGPoint(x: 0, y: 35.0)
+
+        self.addSubview(calendarView)
         calendarView.snp.makeConstraints {
             $0.top.equalTo(subTitleLabel[0].snp.bottom).offset(15.0)
             $0.left.equalToSuperview().offset(20.0)

@@ -1,6 +1,7 @@
 PODS:
   - Alamofire (5.5.0)
   - Differentiator (5.0.0)
+  - DropDown (2.3.13)
   - FSCalendar (2.8.2)
   - IQKeyboardManagerSwift (6.5.9)
   - RxAlamofire (6.1.1):
@@ -28,6 +29,7 @@ PODS:
 
 DEPENDENCIES:
   - Alamofire
+  - DropDown
   - FSCalendar
   - IQKeyboardManagerSwift
   - RxAlamofire (~> 6.0)
@@ -44,6 +46,7 @@ SPEC REPOS:
   trunk:
     - Alamofire
     - Differentiator
+    - DropDown
     - FSCalendar
     - IQKeyboardManagerSwift
     - RxAlamofire
@@ -60,6 +63,7 @@ SPEC REPOS:
 SPEC CHECKSUMS:
   Alamofire: 1c4fb5369c3fe93d2857c780d8bbe09f06f97e7c
   Differentiator: e8497ceab83c1b10ca233716d547b9af21b9344d
+  DropDown: 8a2116376c1981888557f72ec2ffc9a5e0e456ec
   FSCalendar: e6a2eb9c571bf0719ed797ef807e08426753c241
   IQKeyboardManagerSwift: 6e839c575c4aa1078d58a596e41244e77abe918f
   RxAlamofire: beb75a1c452d0de225651db4903f5d29d034a620
@@ -73,6 +77,6 @@ SPEC CHECKSUMS:
   SwiftyJSON: 2f33a42c6fbc52764d96f13368585094bfd8aa5e
   Then: acfe0be7e98221c6204e12f8161459606d5d822d
 
-PODFILE CHECKSUM: 21b45e3c54dc812109f7292186cf5a589cf13582
+PODFILE CHECKSUM: 86625d1b5b982e2dc5758df696d075270e16830e
 
 COCOAPODS: 1.11.2

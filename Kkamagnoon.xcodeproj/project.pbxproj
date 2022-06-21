@@ -116,6 +116,8 @@
 		0433170F27C3EB9900FE0E34 /* RelaySectionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0433170E27C3EB9900FE0E34 /* RelaySectionModel.swift */; };
 		0433171127C3EBD600FE0E34 /* RelayResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0433171027C3EBD600FE0E34 /* RelayResponseModel.swift */; };
 		04354AB62860994700B135DB /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04354AB52860994700B135DB /* BaseViewController.swift */; };
+		04354AB8286168AD00B135DB /* Formatter+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04354AB7286168AD00B135DB /* Formatter+Ext.swift */; };
+		04354ABA28616B5F00B135DB /* ExpandSmall.png in Resources */ = {isa = PBXBuildFile; fileRef = 04354AB928616B5F00B135DB /* ExpandSmall.png */; };
 		0439770E27C906C000935E0E /* CompletedCharacter.png in Resources */ = {isa = PBXBuildFile; fileRef = 0439770D27C906C000935E0E /* CompletedCharacter.png */; };
 		0439771027C908AC00935E0E /* SuccessPopUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0439770F27C908AC00935E0E /* SuccessPopUpViewController.swift */; };
 		0439771227C9094100935E0E /* SucceedPopUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0439771127C9094100935E0E /* SucceedPopUpView.swift */; };
@@ -351,6 +353,8 @@
 		0433170E27C3EB9900FE0E34 /* RelaySectionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RelaySectionModel.swift; sourceTree = "<group>"; };
 		0433171027C3EBD600FE0E34 /* RelayResponseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RelayResponseModel.swift; sourceTree = "<group>"; };
 		04354AB52860994700B135DB /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
+		04354AB7286168AD00B135DB /* Formatter+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Formatter+Ext.swift"; sourceTree = "<group>"; };
+		04354AB928616B5F00B135DB /* ExpandSmall.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ExpandSmall.png; sourceTree = "<group>"; };
 		0439770D27C906C000935E0E /* CompletedCharacter.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = CompletedCharacter.png; sourceTree = "<group>"; };
 		0439770F27C908AC00935E0E /* SuccessPopUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuccessPopUpViewController.swift; sourceTree = "<group>"; };
 		0439771127C9094100935E0E /* SucceedPopUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SucceedPopUpView.swift; sourceTree = "<group>"; };
@@ -816,6 +820,7 @@
 		045F52A027C88D990082673B /* ArrowButton */ = {
 			isa = PBXGroup;
 			children = (
+				04354AB928616B5F00B135DB /* ExpandSmall.png */,
 				0439771327C90F0800935E0E /* Back.png */,
 				045F52A127C88DBA0082673B /* Expand.png */,
 				045F52A227C88DBA0082673B /* GoRight.png */,
@@ -1206,6 +1211,7 @@
 				04FD046227D7137700EC87DC /* ChallengeSelectingTagVC+Ext.swift */,
 				04FD046427D7143D00EC87DC /* SuccessPopUpVC+Ext.swift */,
 				04301E0827F0C08D00A2ED93 /* UIImage+Ext.swift */,
+				04354AB7286168AD00B135DB /* Formatter+Ext.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -1379,6 +1385,7 @@
 				0439771827C911B100935E0E /* More.png in Resources */,
 				0439771627C910C700935E0E /* Search.png in Resources */,
 				040790C527B90E64006C5374 /* Pretendard-ExtraBold.otf in Resources */,
+				04354ABA28616B5F00B135DB /* ExpandSmall.png in Resources */,
 				045F52A427C88DBA0082673B /* GoRight.png in Resources */,
 				045F52C027C8B4A20082673B /* Comment.png in Resources */,
 				0464F9CC27A578AE0054FD83 /* Assets.xcassets in Resources */,
@@ -1679,6 +1686,7 @@
 				04DAAE5C27B2CE5100AECFE4 /* BottomReactionView.swift in Sources */,
 				0464F9C527A578AA0054FD83 /* SceneDelegate.swift in Sources */,
 				040790EB27BA24C1006C5374 /* RelayDetailViewController.swift in Sources */,
+				04354AB8286168AD00B135DB /* Formatter+Ext.swift in Sources */,
 				04A40D3727BE25E3004DAB19 /* RelayRequestModel.swift in Sources */,
 				04A40D6727BF6A17004DAB19 /* ViewModelType.swift in Sources */,
 				04DAAE6427B4196F00AECFE4 /* BottomSheetViewController.swift in Sources */,

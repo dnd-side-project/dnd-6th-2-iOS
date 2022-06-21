@@ -18,6 +18,7 @@ target 'Kkamagnoon' do
   pod 'Then'
   pod 'FSCalendar'
   pod 'RxGesture'
+  pod 'DropDown'
 
   # Pods for Kkamagnoon
 
