@@ -16,6 +16,7 @@ class ChallengeViewModel: ViewModelType {
         let cardTap = PublishSubject<UITapGestureRecognizer>()
         let expansionButtonTap = PublishSubject<Void>()
         let goToFeedButtonTap = PublishSubject<Void>()
+        let selectMonthButtonTap = PublishSubject<Void>()
     }
 
     struct Output {
@@ -28,6 +29,19 @@ class ChallengeViewModel: ViewModelType {
         let goToBellNotice = PublishRelay<Void>()
         let goToWriting = PublishRelay<Void>()
         let goToFeed = PublishRelay<Void>()
+        let openDropdown = PublishRelay<Void>()
+
+        let month = BehaviorRelay<String>(value: {
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "MMM"
+            return dateFormatter.string(from: Date())
+        }())
+
+        let year = BehaviorRelay<String>(value: {
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "yyyy"
+            return dateFormatter.string(from: Date())
+        }())
     }
 
     var input: Input
@@ -58,8 +72,8 @@ class ChallengeViewModel: ViewModelType {
             .disposed(by: disposeBag)
     }
 
-    func bindChallengeStamp(month: String, year: String) {
-        challengeService.getChallengeStamp(month: month, year: year)
+    func bindChallengeStamp() {
+        challengeService.getChallengeStamp(month: output.month.value, year: output.year.value)
             .withUnretained(self)
             .subscribe(onNext: { owner, challengeStamp in
                 owner.output.challangeStamp.onNext(challengeStamp)
@@ -115,6 +129,27 @@ class ChallengeViewModel: ViewModelType {
             .withUnretained(self)
             .bind { owner, _ in
                 owner.output.goToFeed.accept(())
+            }
+            .disposed(by: disposeBag)
+
+        input.selectMonthButtonTap
+            .withUnretained(self)
+            .bind { owner, _ in
+                owner.output.openDropdown.accept(())
+            }
+            .disposed(by: disposeBag)
+
+        output.month
+            .withUnretained(self)
+            .bind { owner, _ in
+                owner.bindChallengeStamp()
+            }
+            .disposed(by: disposeBag)
+
+        output.year
+            .withUnretained(self)
+            .bind { owner, _ in
+                owner.bindChallengeStamp()
             }
             .disposed(by: disposeBag)
     }

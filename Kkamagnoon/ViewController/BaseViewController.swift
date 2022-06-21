@@ -19,8 +19,12 @@ class BaseViewController: UIViewController {
         guard let e = e as? NetworkError else {
             return
         }
-
-        ErrorAlertPopup.showIn(viewController: self, message: e.errorDescription, subMessage: e.errorDescriptionDetail)
+        
+        if e.isUnauthorizedError {
+            //refreshToken
+        } else {
+            ErrorAlertPopup.showIn(viewController: self, message: e.errorDescription, subMessage: e.errorDescriptionDetail)
+        }
     }
 
 }

@@ -47,7 +47,7 @@ class FeedService: Service {
                     throw NetworkError.serverError
 
                 default:
-                    throw NetworkError.emptyData
+                    return ArticlesResponse(articles: [], next_cursor: nil)
                 }
             }
     }

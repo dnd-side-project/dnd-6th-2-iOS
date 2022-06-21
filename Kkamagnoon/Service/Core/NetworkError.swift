@@ -38,6 +38,15 @@ enum NetworkError: LocalizedError {
     /// 500
     /// 서버 에러
     case serverError
+    
+    var isUnauthorizedError: Bool {
+        switch self {
+        case .unauthorized:
+            return true
+        default:
+            return false
+        }
+    }
 
     var errorDescription: String {
         switch self {
